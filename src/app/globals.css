@@ -60,3 +60,7 @@ button:focus {
     text-wrap: balance;
   }
 }
+
+.container {
+  max-width: 1660px;
+}

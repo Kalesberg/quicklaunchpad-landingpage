@@ -40,8 +40,8 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-gray-900 text-white p-4">
-      <div className="container mx-auto flex items-center justify-between">
+    <header className="bg-gray-900">
+      <div className="container w-full mx-auto flex items-center justify-between text-white py-4 px-4 md:px-14 xl:px-24">
         <div className="flex items-center space-x-4">
           <Image src="/logo.png" alt="Logo" width={32} height={32} />
           <nav>

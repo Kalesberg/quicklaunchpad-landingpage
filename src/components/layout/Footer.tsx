@@ -5,7 +5,7 @@ import Image from "next/image";
 const Footer: React.FC = () => {
   return (
     <footer className="bg-gray-900 text-white py-8 px-4">
-      <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 px-4 md:px-14 xl:px-24">
         <div>
           <h3 className="font-bold mb-4">Products</h3>
           <ul className="space-y-2">
@@ -127,7 +127,7 @@ const Footer: React.FC = () => {
           </form>
         </div>
       </div>
-      <div className="container mx-auto mt-8 flex justify-between items-center text-sm">
+      <div className="container mx-auto mt-8 flex justify-between items-center text-sm px-4 md:px-14 xl:px-24">
         <span>© 2024 QuickSwap</span>
         <Link href="/terms">Terms of use</Link>
       </div>

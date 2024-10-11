@@ -9,7 +9,7 @@ import HeroSection from "components/ui/home/HeroSection";
 
 export default function Home() {
   return (
-    <div className="container mx-auto px-4">
+    <div className="container mx-auto px-4 md:px-14 xl:px-24">
       <HeroSection />
       <LaunchNotice />
       <StepsToJoin />
