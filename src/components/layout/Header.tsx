@@ -1,21 +1,43 @@
 "use client";
 
+import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
 const Header = () => {
-  const [activeItem, setActiveItem] = useState("Swap");
+  const [activeItem, setActiveItem] = useState("Launchpad");
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   const navItems = [
-    "Swap",
-    "Launchpad",
-    "Farms",
-    "Pool",
-    "Earn",
-    "Partners",
-    "Dragons Lair",
+    { name: "Swap", href: "/swap" },
+    { name: "Launchpad", href: "/launchpad" },
+    { name: "Farms", href: "/farms" },
+    { name: "Pool", href: "/pool" },
+    {
+      name: "Earn",
+      children: [
+        { name: "Staking", href: "/earn/staking" },
+        { name: "Yield Farming", href: "/earn/yield-farming" },
+      ],
+    },
+    {
+      name: "Partners",
+      children: [
+        { name: "Ecosystem", href: "/partners/ecosystem" },
+        { name: "Integrations", href: "/partners/integrations" },
+      ],
+    },
+    { name: "Dragons Lair", href: "/dragons-lair" },
   ];
+
+  const handleDropdown = (itemName: string) => {
+    if (openDropdown === itemName) {
+      setOpenDropdown(null);
+    } else {
+      setOpenDropdown(itemName);
+    }
+  };
 
   return (
     <header className="bg-gray-900 text-white p-4">
@@ -25,32 +47,52 @@ const Header = () => {
           <nav>
             <ul className="flex space-x-4">
               {navItems.map((item) => (
-                <li key={item}>
-                  <Link
-                    href={`/${item.toLowerCase()}`}
-                    className={`hover:text-blue-400 ${
-                      activeItem === item ? "text-blue-400" : ""
-                    }`}
-                    onClick={() => setActiveItem(item)}
-                  >
-                    {item}
-                  </Link>
+                <li key={item.name} className="relative">
+                  {item.children ? (
+                    <div>
+                      <button
+                        onClick={() => handleDropdown(item.name)}
+                        className={`hover:text-blue-400 ${
+                          activeItem === item.name ? "text-blue-400" : ""
+                        } flex items-center`}
+                      >
+                        {item.name}
+                        <ChevronDownIcon className="w-4 h-4 ml-1" />
+                      </button>
+                      {openDropdown === item.name && (
+                        <ul className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-gray-800 ring-1 ring-black ring-opacity-5">
+                          {item.children.map((child) => (
+                            <li key={child.name}>
+                              <Link
+                                href={child.href}
+                                className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700"
+                                onClick={() => setActiveItem(child.name)}
+                              >
+                                {child.name}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      className={`hover:text-blue-400 ${
+                        activeItem === item.name ? "text-blue-400" : ""
+                      }`}
+                      onClick={() => setActiveItem(item.name)}
+                    >
+                      {item.name}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
           </nav>
         </div>
-        <div className="flex items-center space-x-4">
-          <div className="bg-gray-700 rounded-full p-1">
-            <Image
-              src="/profile-icon.png"
-              alt="Profile"
-              width={24}
-              height={24}
-              className="rounded-full"
-            />
-          </div>
-          <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+        <div className="flex items-center">
+          <button className="bg-blue-500 hover:bg-blue-600 text-base h-[44px] text-white font-semibold py-2 px-3 rounded-lg">
             Connect Wallet
           </button>
         </div>

@@ -1,9 +1,10 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-black text-white py-8 px-4">
+    <footer className="bg-gray-900 text-white py-8 px-4">
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
         <div>
           <h3 className="font-bold mb-4">Products</h3>
@@ -48,7 +49,7 @@ const Footer: React.FC = () => {
               <Link href="/convert-quick">Convert QUICK</Link>
             </li>
             <li>
-              <Link href="/dapp-os">dappOS</Link>
+              <Link href="/dapp0s">dapp0s</Link>
             </li>
             <li>
               <Link href="/analytics">Analytics</Link>
@@ -69,20 +70,20 @@ const Footer: React.FC = () => {
             </li>
             <li>
               <a
-                href="https://gitbook.io/quickswap"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                GitBook
-              </a>
-            </li>
-            <li>
-              <a
                 href="https://docs.quickswap.exchange"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 Docs
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://quickswap.gitbook.io"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                GitBook
               </a>
             </li>
           </ul>
@@ -99,17 +100,15 @@ const Footer: React.FC = () => {
           </ul>
         </div>
         <div>
-          <div className="flex items-center mb-4">
-            <img
-              src="/quickswap-logo.png"
-              alt="QuickSwap"
-              className="h-6 w-6 mr-2"
-            />
-            <span className="font-bold">QUICKSWAP</span>
-          </div>
-          <p className="mb-4 text-sm">
+          <Image
+            src="/quickswap-logo.png"
+            alt="QuickSwap"
+            width={150}
+            height={30}
+          />
+          <p className="my-4 text-sm">
             QuickSwap's community is building a comprehensive decentralized
-            trading platform on the Polygon ecosystem for the future of finance.
+            trading platform in the Polygon ecosystem for the future of finance.
             Join the dragon army!
           </p>
           <h4 className="font-bold mb-2">QuickSwap's Email Newsletter</h4>
@@ -130,7 +129,7 @@ const Footer: React.FC = () => {
       </div>
       <div className="container mx-auto mt-8 flex justify-between items-center text-sm">
         <span>© 2024 QuickSwap</span>
-        <Link href="/terms">Terms of Use</Link>
+        <Link href="/terms">Terms of use</Link>
       </div>
     </footer>
   );
