@@ -16,7 +16,7 @@ const FAQItem: React.FC<FAQItem & { isOpen: boolean; toggle: () => void }> = ({
 }) => (
   <div className="mb-4">
     <button
-      className="w-full text-left bg-gray-800 p-4 rounded-lg flex justify-between items-center"
+      className="w-full text-left bg-[#1B1E29] p-4 rounded-t-lg flex justify-between items-center"
       onClick={toggle}
     >
       <span className="text-lg font-semibold">{question}</span>
@@ -27,11 +27,11 @@ const FAQItem: React.FC<FAQItem & { isOpen: boolean; toggle: () => void }> = ({
       )}
     </button>
     <div
-      className={`mt-2 overflow-hidden transition-all duration-300 ease-in-out ${
+      className={`overflow-hidden transition-all duration-300 ease-in-out ${
         isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
       }`}
     >
-      <div className="p-4 bg-gray-700 rounded-lg">
+      <div className="p-4 bg-[#1B1E29] rounded-b-lg">
         <p className="text-gray-300">{answer}</p>
       </div>
     </div>
@@ -69,7 +69,7 @@ const FAQ: React.FC = () => {
 
   return (
     <section className="mb-12">
-      <h2 className="text-3xl font-bold mb-6">Frequently Asked Questions</h2>
+      <h2 className="text-3xl text-center font-bold mb-6">Frequently Asked Questions</h2>
       <div>
         {faqItems.map((item, index) => (
           <FAQItem

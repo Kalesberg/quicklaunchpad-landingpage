@@ -43,7 +43,7 @@ const LaunchCard: React.FC<LaunchProps> = ({
     <div className="p-4">
       <div className="flex items-center mb-2">
         <Image
-          src="/project-logo.png"
+          src="/assets/images/project-logo.png"
           alt={name}
           width={24}
           height={24}
@@ -76,7 +76,7 @@ const LaunchCard: React.FC<LaunchProps> = ({
 const LiveUpcomingLaunches: React.FC = () => {
   const launches: LaunchProps[] = [
     {
-      image: "/launch-image-1.jpg",
+      image: "/assets/images/launch-image.png",
       name: "Launch Name",
       description:
         "The Most Specialized Blockchain Network for AI Data Monetization & GPU Training",
@@ -86,7 +86,7 @@ const LiveUpcomingLaunches: React.FC = () => {
       status: "live",
     },
     {
-      image: "/launch-image-2.jpg",
+      image: "/assets/images/launch-image.png",
       name: "Launch Name",
       description:
         "The Most Specialized Blockchain Network for AI Data Monetization & GPU Training",
@@ -96,7 +96,7 @@ const LiveUpcomingLaunches: React.FC = () => {
       status: "upcoming",
     },
     {
-      image: "/launch-image-3.jpg",
+      image: "/assets/images/launch-image.png",
       name: "Launch Name",
       description: "Web3 skill-based gaming project",
       totalRaise: "$150,000",
@@ -108,8 +108,8 @@ const LiveUpcomingLaunches: React.FC = () => {
 
   return (
     <section className="mb-12">
-      <h2 className="text-3xl font-bold mb-2">Live & Upcoming Launches</h2>
-      <p className="text-gray-400 mb-6">
+      <h2 className="text-3xl text-center font-bold mb-2">Live & Upcoming Launches</h2>
+      <p className="text-gray-400 text-center mb-6">
         Get early access to the hottest new projects.
       </p>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

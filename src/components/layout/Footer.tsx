@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-gray-900 text-white py-8 px-4">
+    <footer className="bg-[#12131A] text-white py-8 px-4">
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 px-4 md:px-14 xl:px-24">
         <div>
           <h3 className="font-bold mb-4">Products</h3>

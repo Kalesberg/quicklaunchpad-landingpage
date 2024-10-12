@@ -4,7 +4,7 @@ import Button from "components/common/Button";
 
 const HeroSection: React.FC = () => {
   return (
-    <section className="relative py-20 text-left">
+    <section className="relative mb-7 p-20 text-left">
       <div className="z-10 relative max-w-2xl">
         <h1 className="text-5xl font-bold mb-4 text-white">
           Stay ahead of the curve with exclusive early access
@@ -19,17 +19,17 @@ const HeroSection: React.FC = () => {
         <div className="mt-8 text-gray-400 flex items-center">
           Powered by
           <Image
-            src="/trustswap-logo.png"
+            src="/assets/images/trustswap_logo_white.png"
             alt="TrustSwap"
-            width={100}
-            height={20}
+            width={150}
+            height={50}
             className="ml-2"
           />
         </div>
       </div>
       <div className="absolute inset-0 z-0">
         <Image
-          src="/hero-background.jpg"
+          src="/assets/images/banner.webp"
           alt="Hero Background"
           layout="fill"
           objectFit="cover"
