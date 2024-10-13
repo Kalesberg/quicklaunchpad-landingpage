@@ -6,9 +6,10 @@ import {
 } from "@heroicons/react/16/solid";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import clsx from "clsx";
 import { getConfig } from "config";
+import { usePathname } from "next/navigation";
 
 interface Network {
   chainId: number;
@@ -36,7 +37,7 @@ enum ChainId {
 }
 
 const Header = () => {
-  const [activeItem, setActiveItem] = useState("Launchpad");
+  const [activeItem, setActiveItem] = useState("/");
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [moreLinksOpen, setMoreLinksOpen] = useState(false);
   const [isOpenNetwork, setIsOpenNetwork] = useState(false);
@@ -44,14 +45,19 @@ const Header = () => {
   const [selectedNetwork, setSelectedNetwork] = useState<Network | null>({
     chainId: ChainId.MATIC,
   });
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setActiveItem(pathname)
+  },[])
 
   const navItems = [
     { name: "Swap", href: "/swap" },
     {
       name: "Launchpad",
       children: [
-        { name: "Launchpad Homepage", href: "/launchpad-homepage" },
-        { name: "QuickLaunch Dashboard", href: "/quicklaunch-dashboard" },
+        { name: "Launchpad Homepage", href: "/" },
+        { name: "QuickLaunch Dashboard", href: "/dashboard" },
       ],
       isNew: true,
     },
@@ -72,6 +78,16 @@ const Header = () => {
       ],
     },
     { name: "Dragons Lair", href: "/dragons-lair" },
+  ];
+
+  const navItemsDashboard = [
+    { name: "Launchpads", href: "/dashboard", icon: "ic-dashboard.svg" },
+    {
+      name: "My Launches",
+      href: "/dashboard/my-launches",
+      icon: "ic-label.svg",
+    },
+    { name: "Profile", href: "/dashboard/profile", icon: "ic-user.svg" },
   ];
 
   const moreLinks = [
@@ -135,34 +151,124 @@ const Header = () => {
     }
   };
 
+  const checkIsDashboardPage = () => {
+    return pathname?.includes("/dashboard");
+  };
+
   return (
     <header className="bg-[#12131A]">
-      <div className="container w-full mx-auto flex items-center justify-between text-white py-4 px-4 md:px-14 xl:px-24">
-        <div className="flex items-center space-x-4">
-          <Image
-            src="https://beta.quickswap.exchange/static/media/quickIcon.aa0f5ef593b1a9f00bab835581e318f3.svg"
-            alt="Logo"
-            width={32}
-            height={32}
-          />
-          <nav>
-            <ul className="flex items-center space-x-8">
-              {navItems.map((item) => (
-                <li key={item.name} className="relative">
-                  {item.children ? (
-                    <div>
+      <div
+        className={`container w-full mx-auto flex items-center justify-between text-white py-4 px-4 ${
+          checkIsDashboardPage() ? "md:px-[110px]" : "md:px-[70px]"
+        }`}
+      >
+        {checkIsDashboardPage() ? (
+          <>
+            <Image
+              src="/assets/images/quicklaunch-trustswap.png"
+              alt="Logo"
+              width={200}
+              height={36}
+            />
+            <nav className="flex justify-between items-center gap-3">
+              {navItemsDashboard.map((item, idx) => (
+                <Link
+                  key={idx}
+                  href={item.href}
+                  onClick={() => setActiveItem(item.href)}
+                >
+                  <div
+                    className={`flex items-center gap-2 px-3 py-[10px] ${
+                      activeItem === item.href &&
+                      "bg-[#919EAB1F] rounded-lg"
+                    }`}
+                  >
+                    <Image
+                      src={`/assets/icons/${item.icon}`}
+                      alt="icon"
+                      style={{filter:`${activeItem === item.href && 'invert(96%) sepia(6%) saturate(164%) hue-rotate(173deg) brightness(200%) contrast(102%)'}`}}
+                      width={18}
+                      height={18}
+                    />
+                    <span className={`text-[#696C80] text-sm font-medium leading-[22px] ${activeItem === item.href && "text-[#EBECF2]"}`}>
+                      {item.name}
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </nav>
+          </>
+        ) : (
+          <div className="flex items-center space-x-4">
+            <Image
+              src="https://beta.quickswap.exchange/static/media/quickIcon.aa0f5ef593b1a9f00bab835581e318f3.svg"
+              alt="Logo"
+              width={32}
+              height={32}
+            />
+            <nav>
+              <ul className="flex items-center space-x-8">
+                {navItems.map((item) => (
+                  <li key={item.name} className="relative">
+                    {item.children ? (
+                      <div>
+                        <div className="flex gap-1 items-center">
+                          <button
+                            onClick={() => handleDropdown(item.name)}
+                            className={`relative hover:text-blue-400 ${
+                              item.children.find((child) => child.href === activeItem)
+                                ? "text-[#D9D9D9] after:absolute after:-bottom-4 after:left-0 after:block after:bg-[#448AFF] after:w-full after:h-[2px]"
+                                : "text-[#7c7c81]"
+                            } flex items-center`}
+                          >
+                            {item.name}
+                            <ChevronDownIcon className="w-4 h-4 ml-1" />
+                          </button>
+                          {item?.isNew && (
+                            <span className="flex px-1 py-[0.5px] h-4 text-[0.625rem] text-white rounded-xl bg-[#233455]">
+                              <Image
+                                src="/assets/images/fire.png"
+                                alt="fire"
+                                width={10}
+                                height={12}
+                                className="mr-1"
+                              />
+                              New
+                            </span>
+                          )}
+                        </div>
+                        {openDropdown === item.name && (
+                          <ul className="absolute left-0 z-10 mt-2 w-48 rounded-md shadow-lg bg-[#1B1E29] ring-1 ring-black ring-opacity-5">
+                            {item.children.map((child) => (
+                              <li key={child.name}>
+                                <Link
+                                  href={child.href}
+                                  className={`block px-4 py-2 text-sm text-[#696C80] hover:bg-gray-700 ${
+                                    activeItem === child.href &&
+                                    "text-[#D9D9D9]"
+                                  }`}
+                                  onClick={() => setActiveItem(child.href)}
+                                >
+                                  {child.name}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    ) : (
                       <div className="flex gap-1 items-center">
-                        <button
-                          onClick={() => handleDropdown(item.name)}
+                        <Link
+                          href={item.href}
                           className={`relative hover:text-blue-400 ${
-                            activeItem === item.name
-                              ? "text-[#D9D9D9] after:absolute after:-bottom-4 after:left-0 after:block after:bg-[#448AFF] after:w-full after:h-[2px]"
+                            activeItem === item.href
+                              ? "text-[#D9D9D9] after:absolute after:-bottom-4 after:left-0 after:bg-[#448AFF] after:w-full after:h-[2px]"
                               : "text-[#7c7c81]"
-                          } flex items-center`}
+                          }`}
+                          onClick={() => setActiveItem(item.href)}
                         >
                           {item.name}
-                          <ChevronDownIcon className="w-4 h-4 ml-1" />
-                        </button>
+                        </Link>
                         {item?.isNew && (
                           <span className="flex px-1 py-[0.5px] h-4 text-[0.625rem] text-white rounded-xl bg-[#233455]">
                             <Image
@@ -176,76 +282,35 @@ const Header = () => {
                           </span>
                         )}
                       </div>
-                      {openDropdown === item.name && (
-                        <ul className="absolute left-0 z-10 mt-2 w-48 rounded-md shadow-lg bg-[#1B1E29] ring-1 ring-black ring-opacity-5">
-                          {item.children.map((child) => (
-                            <li key={child.name}>
-                              <Link
-                                href={child.href}
-                                className="block px-4 py-2 text-sm text-[#696C80] hover:bg-gray-700"
-                                onClick={() => setActiveItem(child.name)}
-                              >
-                                {child.name}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
-                  ) : (
-                    <div className="flex gap-1 items-center">
-                      <Link
-                        href={item.href}
-                        className={`relative hover:text-blue-400 ${
-                          activeItem === item.name
-                            ? "text-[#D9D9D9] after:absolute after:-bottom-4 after:left-0 after:bg-[#448AFF] after:w-full after:h-[2px]"
-                            : "text-[#7c7c81]"
-                        }`}
-                        onClick={() => setActiveItem(item.name)}
-                      >
-                        {item.name}
-                      </Link>
-                      {item?.isNew && (
-                        <span className="flex px-1 py-[0.5px] h-4 text-[0.625rem] text-white rounded-xl bg-[#233455]">
-                          <Image
-                            src="/assets/images/fire.png"
-                            alt="fire"
-                            width={10}
-                            height={12}
-                            className="mr-1"
-                          />
-                          New
-                        </span>
-                      )}
-                    </div>
+                    )}
+                  </li>
+                ))}
+                <li
+                  className="relative text-[#696C80] w-9 h-9 cursor-pointer hover:bg-[#252833] hover:rounded-[10px]"
+                  onMouseEnter={() => setMoreLinksOpen(true)}
+                  onMouseLeave={() => setMoreLinksOpen(false)}
+                >
+                  <EllipsisHorizontalIcon className="w-4 h-full m-auto" />
+                  {moreLinksOpen && (
+                    <ul className="absolute left-0 z-10 mt-2 w-48 rounded-md shadow-lg bg-[#1B1E29] ring-1 ring-black ring-opacity-5 before:absolute before:-top-5 before:left-2 before:w-full before:h-5">
+                      {moreLinks.map((link) => (
+                        <li key={link.name}>
+                          <Link
+                            href={link.href}
+                            className="block px-4 py-2 text-sm text-[#696C80] hover:bg-gray-700"
+                            onClick={() => setActiveItem(link.href)}
+                          >
+                            {link.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
                   )}
                 </li>
-              ))}
-              <li
-                className="relative text-[#696C80] w-9 h-9 cursor-pointer hover:bg-[#252833] hover:rounded-[10px]"
-                onMouseEnter={() => setMoreLinksOpen(true)}
-                onMouseLeave={() => setMoreLinksOpen(false)}
-              >
-                <EllipsisHorizontalIcon className="w-4 h-full m-auto" />
-                {moreLinksOpen && (
-                  <ul className="absolute left-0 z-10 mt-2 w-48 rounded-md shadow-lg bg-[#1B1E29] ring-1 ring-black ring-opacity-5 before:absolute before:-top-5 before:left-2 before:w-full before:h-5">
-                    {moreLinks.map((link) => (
-                      <li key={link.name}>
-                        <Link
-                          href={link.href}
-                          className="block px-4 py-2 text-sm text-[#696C80] hover:bg-gray-700"
-                          onClick={() => setActiveItem(link.name)}
-                        >
-                          {link.name}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </li>
-            </ul>
-          </nav>
-        </div>
+              </ul>
+            </nav>
+          </div>
+        )}
         <div className="w-auto flex gap-6 items-center justify-end">
           <ChainSelected
             networkInfo={networkInfo}
