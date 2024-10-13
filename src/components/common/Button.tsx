@@ -24,7 +24,7 @@ const Button: React.FC<ButtonProps> = ({
 
   const variantStyles = {
     primary: "bg-blue-500 hover:bg-blue-600 text-white",
-    secondary: "bg-gray-500 hover:bg-gray-600 text-white",
+    secondary: "bg-[#448aff12] hover:bg-[#448aff12] text-[#448AFF]",
   };
   const sizeStyles = {
     small: "text-base",
@@ -51,7 +51,7 @@ const Button: React.FC<ButtonProps> = ({
       <Link
         className={buttonStyles}
         {...(props as LinkProps)}
-        href={props.href || "#"}
+        href={props?.href || "#"}
       >
         {children}
       </Link>

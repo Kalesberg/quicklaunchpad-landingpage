@@ -19,16 +19,16 @@ const LaunchRow: React.FC<LaunchProps> = ({
   participants,
   initialPrice,
 }) => (
-  <div className="bg-gray-800 rounded-lg p-5 flex items-center justify-between mb-2">
+  <div className="bg-[#1B1E29] rounded-lg p-5 flex items-center justify-between mb-16">
     <div className="flex items-center gap-6">
-    <Image
-      src={logo}
-      alt={name}
-      width={40}
-      height={40}
-      className="rounded-full"
-    />
-    <span className="font-semibold">{name}</span>
+      <Image
+        src={logo}
+        alt={name}
+        width={40}
+        height={40}
+        className="rounded-full"
+      />
+      <span className="font-semibold">{name}</span>
     </div>
     <div>
       <span className="text-[#C7CAD9] text-xs leading-4">Blockchain</span>
@@ -102,8 +102,10 @@ const PreviousLaunches: React.FC = () => {
 
   return (
     <section className="mb-12">
-      <h2 className="text-2xl text-center font-bold mb-4">Previous Launches</h2>
-      <p className="text-gray-400 text-center mb-6">
+      <h2 className="text-[32px] text-center font-bold mb-4">
+        Previous Launches
+      </h2>
+      <p className="text-gray-400 text-center text-base mb-6">
         Previous launches on QuickSwap Launchpad.
       </p>
       <div className="space-y-2">
@@ -112,7 +114,7 @@ const PreviousLaunches: React.FC = () => {
         ))}
       </div>
       <div className="text-center mt-6">
-        <Link href="#" className="text-blue-500 hover:text-blue-400">
+        <Link href="#" className="text-blue-500 hover:text-blue-400 font-bold">
           See All Previous Launches
         </Link>
       </div>

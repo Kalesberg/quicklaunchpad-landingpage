@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
+import clsx from "clsx";
 
 interface FAQItem {
   question: string;
@@ -20,11 +21,12 @@ const FAQItem: React.FC<FAQItem & { isOpen: boolean; toggle: () => void }> = ({
       onClick={toggle}
     >
       <span className="text-lg font-semibold">{question}</span>
-      {isOpen ? (
-        <ChevronUpIcon className="w-5 h-5 transition-transform duration-300" />
-      ) : (
-        <ChevronDownIcon className="w-5 h-5 transition-transform duration-300" />
-      )}
+      <ChevronDownIcon
+        className={clsx({
+          ["w-5 h-5 transition-transform duration-300"]: true,
+          ["rotate-180"]: isOpen,
+        })}
+      />
     </button>
     <div
       className={`overflow-hidden transition-all duration-300 ease-in-out ${
@@ -57,6 +59,51 @@ const FAQ: React.FC = () => {
       answer:
         "Yes. KYC is required for participating in any project on QuickLaunch. Our partnership with Blockpass has simplified the KYC process. You can register via the QuickLaunch dashboard.",
     },
+    {
+      question: "What if I am already currently KYC’ed by BlockPass?",
+      answer: `That makes the process easier. Connect to the QuickLaunch dashboard, register to KYC, and when prompted to start KYC, make sure you use the previously KYC’d email address.
+You should see a prompt from BlockPass saying, “If you have previously created a Blockpass Identity, you should use that email address here.” Once you use your KYC’d email address, you will not need to repeat the KYC process.`,
+    },
+    {
+      question: "Is there a fee to participate in a QuickLaunch?",
+      answer: `There are no fees to opt in and no token staking requirements.`,
+    },
+    {
+      question: "What crypto tokens can be used to participate in IDOs?",
+      answer: `Stablecoins: USDT or USDC on Polygon.`,
+    },
+    {
+      question: "How can I increase my odds of winning the lottery?",
+      answer: `This is a system-generated lottery that is automatically calculated.`,
+    },
+    {
+      question: "Is the QuickLaunch lottery provably fair?",
+      answer: `Our Lottery works completely off-chain, it shuffles the participants using the Fisher-Yates algorithm to randomize their order, then selects the first maxWinners as the random winners. This way we ensure a fair and unbiased selection by leveraging Math.random() for randomness.`,
+    },
+    {
+      question: "How can I contact QuickLaunch for questions or problems?",
+      answer: `You can contact us directly through our Telegram channel, where our moderators will be available to assist you with any questions or issues you may have.`,
+    },
+    {
+      question: "What is the PIN number in the emails I get from QuickLaunch?",
+      answer: `The PIN number included in the emails you receive from QuickLaunch is a personal and unique identifier assigned to each registered user. This helps verify that the email is from us, not a scammer. If you ever receive an email without your unique PIN or notice any discrepancies, please reach out to our Telegram support team for assistance. 
+`,
+    },
+    {
+      question:
+        "How can I verify that emails I receive from QuickLaunch are legitimate?",
+      answer: `We always send our emails from the address no-reply@mail.quicklaunchpad.io, and they will include your personal unique PIN number. The legitimacy of our emails is confirmed by both the sender’s address and the presence of your PIN. To ensure your safety, please do not engage with or provide any information in response to suspicious emails. Always double-check both the sender’s address and your PIN number to verify authenticity.`,
+    },
+    {
+      question:
+        "I received an email about QuickLaunch with a link. What should I do? ",
+      answer: `Except for verifying your email, we never include links in our emails. This is to protect your security and prevent phishing attempts. If you are in doubt, please reach out to our support team. Always prioritize your online safety!`,
+    },
+    {
+      question:
+        "I received a direct message (DM) on Telegram claiming to be from QuickLaunch. How do I check if this is legitimate?",
+      answer: `We never initiate direct messages (DMs) on Telegram. If you receive a message from someone claiming to be from us, it is a scammer. Always use our official Telegram channel for support, and avoid engaging with any direct messages that are sent to you.`,
+    },
   ];
 
   const toggleItem = (index: number) => {
@@ -68,8 +115,10 @@ const FAQ: React.FC = () => {
   };
 
   return (
-    <section className="mb-12">
-      <h2 className="text-3xl text-center font-bold mb-6">Frequently Asked Questions</h2>
+    <section className="py-12 max-w-[712px] mx-auto">
+      <h2 className="text-[32px] text-center font-bold mb-16">
+        Frequently Asked Questions
+      </h2>
       <div>
         {faqItems.map((item, index) => (
           <FAQItem

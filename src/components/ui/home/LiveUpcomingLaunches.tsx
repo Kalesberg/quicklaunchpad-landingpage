@@ -21,11 +21,17 @@ const LaunchCard: React.FC<LaunchProps> = ({
   launchDate,
   status,
 }) => (
-  <div className="bg-gray-800 rounded-lg overflow-hidden">
-    <div className="relative h-48">
-      <Image src={image} alt={name} layout="fill" objectFit="cover" />
+  <div className="bg-gray-800 rounded-2xl overflow-hidden">
+    <div className="relative h-48 py-4">
+      <Image
+        src={image}
+        alt={name}
+        layout="fill"
+        objectFit="cover"
+        className="rounded-t-2xl"
+      />
       <span
-        className={`absolute top-2 right-2 px-2 py-1 rounded-full text-xs ${
+        className={`absolute top-4 right-4 px-2 py-1 rounded-md text-xs ${
           status === "live"
             ? "bg-green-500"
             : status === "upcoming"
@@ -40,7 +46,8 @@ const LaunchCard: React.FC<LaunchProps> = ({
           : "TBA"}
       </span>
     </div>
-    <div className="p-4">
+
+    <div className="p-6 flex flex-col h-[calc(100%-12rem)]">
       <div className="flex items-center mb-2">
         <Image
           src="/assets/images/project-logo.png"
@@ -51,22 +58,29 @@ const LaunchCard: React.FC<LaunchProps> = ({
         />
         <h3 className="text-xl font-semibold">{name}</h3>
       </div>
+
       <p className="text-sm text-gray-400 mb-4">{description}</p>
-      <div className="grid grid-cols-2 gap-2 text-sm mb-4">
-        <div>
+
+      <div className="grid grid-cols-1 gap-2 text-sm mb-4">
+        <div className="w-full flex justify-between items-center gap-3">
           <p className="text-gray-400">Total raise</p>
           <p>{totalRaise}</p>
         </div>
-        <div>
+        <div className="w-full flex justify-between items-center gap-3">
           <p className="text-gray-400">Initial price</p>
           <p>{initialPrice}</p>
         </div>
-        <div className="col-span-2">
+        <div className="w-full flex justify-between items-center gap-3">
           <p className="text-gray-400">Launch date</p>
           <p>{launchDate}</p>
         </div>
       </div>
-      <Button variant="primary" size="medium" fullWidth>
+      <div className="flex-grow"></div>
+      <Button
+        variant={status === "live" ? "primary" : "secondary"}
+        size="medium"
+        fullWidth
+      >
         {status === "live" ? "Participate Now" : "More Details"}
       </Button>
     </div>
@@ -108,8 +122,10 @@ const LiveUpcomingLaunches: React.FC = () => {
 
   return (
     <section className="mb-12">
-      <h2 className="text-3xl text-center font-bold mb-2">Live & Upcoming Launches</h2>
-      <p className="text-gray-400 text-center mb-6">
+      <h2 className="text-[32px] text-center font-bold mb-5">
+        Live & Upcoming Launches
+      </h2>
+      <p className="text-[#C7CAD9] text-center mb-10">
         Get early access to the hottest new projects.
       </p>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

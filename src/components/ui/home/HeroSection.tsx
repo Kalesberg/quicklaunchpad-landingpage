@@ -4,19 +4,21 @@ import Button from "components/common/Button";
 
 const HeroSection: React.FC = () => {
   return (
-    <section className="relative mb-7 p-20 text-left">
-      <div className="z-10 relative max-w-2xl">
-        <h1 className="text-5xl font-bold mb-4 text-white">
+    <section className="relative flex items-end justify-start mb-12 p-20 text-left min-h-[735px]">
+      <div className="z-10 relative max-w-[520px]">
+        <h1 className="text-5xl leading-[1.2] font-bold mb-5 text-white">
           Stay ahead of the curve with exclusive early access
         </h1>
-        <p className="text-xl mb-8 text-gray-300">
+        <p className="text-xl mb-10 text-gray-300">
           Highly-vetted Web3 projects you can trust. Supported by
           industry-leading creators and funds.
         </p>
+
         <Button variant="primary" size="large">
           Open QuickLaunch Dashboard
         </Button>
-        <div className="mt-8 text-gray-400 flex items-center">
+
+        <div className="mt-16 text-gray-400 flex items-center">
           Powered by
           <Image
             src="/assets/images/trustswap_logo_white.png"
@@ -27,13 +29,13 @@ const HeroSection: React.FC = () => {
           />
         </div>
       </div>
-      <div className="absolute inset-0 z-0">
+      <div className="absolute w-full h-full left-0 top-0 inset-0 z-0">
         <Image
           src="/assets/images/banner.webp"
           alt="Hero Background"
           layout="fill"
           objectFit="cover"
-          className="opacity-80"
+          className="opacity-80 w-full h-full object-cover"
         />
       </div>
     </section>
