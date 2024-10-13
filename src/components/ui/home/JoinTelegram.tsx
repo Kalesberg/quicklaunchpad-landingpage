@@ -1,40 +1,34 @@
 import React from "react";
 import Image from "next/image";
 import Button from "components/common/Button";
+import TelegramIcon from "../../../../public/assets/images/home/tele-bg.png";
 
 const JoinTelegram: React.FC = () => {
   return (
-    <section className="bg-gradient-to-r from-gray-800 to-gray-900 rounded-lg p-8 mb-12 relative overflow-hidden">
-      <div className="relative z-10 flex justify-between items-center">
-        <div className="max-w-2xl">
-          <h2 className="text-3xl font-bold mb-4">Join us on Telegram</h2>
+    <section className="bg-[#1C1E29] rounded-lg mt-24 mb-36 p-16 relative overflow-hidden">
+      <div className="max-w-[1064px] relative z-10 flex gap-16 items-center">
+        <div className="max-w-[734px]">
+          <h2 className="text-[32px] font-bold mb-4">Join us on Telegram</h2>
           <p className="text-gray-300 mb-6">
             Join our Telegram channel for exclusive updates on upcoming crypto
             launches, industry insights, and real-time discussions. Connect with
             like-minded individuals and be the first to know about the latest
             opportunities in the blockchain space.
           </p>
-          <Button variant="primary" size="large" as="button">
-            Join Us On Telegram
-          </Button>
         </div>
-        <div className="hidden lg:block">
-          <Image
-            src="/telegram-icon.png"
-            alt="Telegram"
-            width={150}
-            height={150}
-            className="opacity-50"
-          />
-        </div>
+
+        <Button variant="secondary" size="large" as="button" className="px-9">
+          Join Us On Telegram
+        </Button>
       </div>
-      <div className="absolute top-0 right-0 bottom-0 left-1/2 z-0">
+      <div className="absolute bottom-0 right-0 z-0">
         <Image
-          src="/telegram-background.jpg"
+          src={TelegramIcon.src}
           alt="Telegram Background"
-          layout="fill"
-          objectFit="cover"
-          className="opacity-10"
+          width={251}
+          height={251}
+          objectFit="contain"
+          className=""
         />
       </div>
     </section>
