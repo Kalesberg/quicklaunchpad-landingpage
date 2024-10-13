@@ -19,7 +19,7 @@ const LaunchRow: React.FC<LaunchProps> = ({
   participants,
   initialPrice,
 }) => (
-  <div className="bg-[#1B1E29] rounded-lg p-5 flex items-center justify-between mb-16">
+  <div className="bg-[#1B1E29] rounded-lg p-5 flex items-center justify-between">
     <div className="flex items-center gap-6">
       <Image
         src={logo}

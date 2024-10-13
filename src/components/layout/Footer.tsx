@@ -1,105 +1,104 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import clsx from "clsx";
+import { FireIcon } from "@heroicons/react/16/solid";
+
+const FooterSection: React.FC<{
+  title: string;
+  links: { href: string; text: string; isNew?: boolean }[];
+}> = ({ title, links }) => (
+  <div>
+    <h3
+      className={clsx({
+        ["font-bold mb-6 text-base h-6"]: true,
+        ["xl:block hidden"]: !title,
+      })}
+    >
+      {title}
+    </h3>
+    <ul className="space-y-[21px]">
+      {links.map(({ href, text, isNew }) => (
+        <li key={href}>
+          <Link
+            href={href}
+            className="flex items-center gap-x-2 whitespace-nowrap"
+          >
+            {text}
+            {isNew && (
+              <div className="flex items-center w-max bg-gray-800 text-white text-xs px-2 py-1 rounded-full">
+                <FireIcon className="text-red-500 mr-1 w-4 h-4" />
+                New
+              </div>
+            )}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  </div>
+);
+
+const ExternalLink: React.FC<{ href: string; children: React.ReactNode }> = ({
+  href,
+  children,
+}) => (
+  <a href={href} target="_blank" rel="noopener noreferrer">
+    {children}
+  </a>
+);
 
 const Footer: React.FC = () => {
+  const productLinks = [
+    { href: "/swap", text: "Swap" },
+    { href: "/perps-v1", text: "Perps V1" },
+    { href: "/perps-faktor", text: "Perps: Faktor", isNew: true },
+    { href: "/pool", text: "Pool" },
+    { href: "/farm", text: "Farm" },
+    { href: "/bonds", text: "Bonds" },
+    { href: "/launchpad", text: "Launchpad", isNew: true },
+    { href: "/dragons-lair", text: "Dragons Lair" },
+    { href: "/gaming-hub", text: "Gaming Hub" },
+    { href: "/leaderboard", text: "Leaderboard" },
+    { href: "/convert-quick", text: "Convert QUICK" },
+    { href: "/dapp0s", text: "dapp0s" },
+    { href: "/analytics", text: "Analytics" },
+  ];
+
+  const developerLinks = [
+    { href: "https://github.com/QuickSwap", text: "GitHub" },
+    { href: "https://docs.quickswap.exchange", text: "Docs" },
+    { href: "https://quickswap.gitbook.io", text: "GitBook" },
+  ];
+
+  const governanceLinks = [
+    { href: "/proposals", text: "Proposals" },
+    { href: "/vote", text: "Vote" },
+  ];
+
   return (
     <footer className="bg-[#12131A] text-white py-8 px-4">
-      <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 px-4 md:px-14 xl:px-24">
-        <div>
-          <h3 className="font-bold mb-4">Products</h3>
-          <ul className="space-y-2">
-            <li>
-              <Link href="/swap">Swap</Link>
-            </li>
-            <li>
-              <Link href="/perps-v1">Perps V1</Link>
-            </li>
-            <li>
-              <Link href="/perps-faktor">
-                Perps: Faktor{" "}
-                <span className="bg-blue-500 text-xs px-1 rounded">New</span>
-              </Link>
-            </li>
-            <li>
-              <Link href="/pool">Pool</Link>
-            </li>
-            <li>
-              <Link href="/farm">Farm</Link>
-            </li>
-            <li>
-              <Link href="/bonds">Bonds</Link>
-            </li>
-            <li>
-              <Link href="/launchpad">
-                Launchpad{" "}
-                <span className="bg-blue-500 text-xs px-1 rounded">New</span>
-              </Link>
-            </li>
-            <li>
-              <Link href="/dragons-lair">Dragons Lair</Link>
-            </li>
-            <li>
-              <Link href="/gaming-hub">Gaming Hub</Link>
-            </li>
-            <li>
-              <Link href="/leaderboard">Leaderboard</Link>
-            </li>
-            <li>
-              <Link href="/convert-quick">Convert QUICK</Link>
-            </li>
-            <li>
-              <Link href="/dapp0s">dapp0s</Link>
-            </li>
-            <li>
-              <Link href="/analytics">Analytics</Link>
-            </li>
-          </ul>
+      <div className="container mx-auto px-4 md:px-14 xl:px-24 flex justify-between items-start lg:flex-row flex-col gap-x-[100px] 2xl:gap-x-[200px] gap-y-16">
+        <div className="w-full flex items-start justify-between gap-[100px]">
+          <div className="flex gap-x-20 gap-y-[21px] xl:flex-row flex-col">
+            <FooterSection title="Products" links={productLinks?.slice(0, 6)} />
+            <FooterSection title="" links={productLinks?.slice(6)} />
+          </div>
+
+          <div>
+            <h3 className="font-bold mb-6 text-base">Developers</h3>
+            <ul className="space-y-[21px]">
+              {developerLinks.map(({ href, text }) => (
+                <li key={href}>
+                  <ExternalLink href={href}>{text}</ExternalLink>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <FooterSection title="Governance" links={governanceLinks} />
         </div>
-        <div>
-          <h3 className="font-bold mb-4">Developers</h3>
-          <ul className="space-y-2">
-            <li>
-              <a
-                href="https://github.com/QuickSwap"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://docs.quickswap.exchange"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Docs
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://quickswap.gitbook.io"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                GitBook
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <h3 className="font-bold mb-4">Governance</h3>
-          <ul className="space-y-2">
-            <li>
-              <Link href="/proposals">Proposals</Link>
-            </li>
-            <li>
-              <Link href="/vote">Vote</Link>
-            </li>
-          </ul>
-        </div>
-        <div>
+
+        <div className="max-w-[310px]">
           <Image
             src="/quickswap-logo.png"
             alt="QuickSwap"
@@ -111,7 +110,8 @@ const Footer: React.FC = () => {
             trading platform in the Polygon ecosystem for the future of finance.
             Join the dragon army!
           </p>
-          <h4 className="font-bold mb-2">QuickSwap's Email Newsletter</h4>
+          <p className="font-bold mb-5 text-sm">QuickSwap's Email Newsletter</p>
+
           <form className="flex">
             <input
               type="email"
@@ -127,8 +127,9 @@ const Footer: React.FC = () => {
           </form>
         </div>
       </div>
+
       <div className="container mx-auto mt-8 flex justify-between items-center text-sm px-4 md:px-14 xl:px-24">
-        <span>© 2024 QuickSwap</span>
+        <span>© {new Date().getFullYear()} QuickSwap</span>
         <Link href="/terms">Terms of use</Link>
       </div>
     </footer>
