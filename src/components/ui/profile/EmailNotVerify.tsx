@@ -6,7 +6,7 @@ import PowderIcon from "../../../../public/assets/images/powder.png";
 import MetaMaskIcon from "../../../../public/assets/images/metamask.png";
 import clsx from "clsx";
 import { useState } from "react";
-import { PencilIcon } from "@heroicons/react/16/solid";
+import { ArrowPathIcon, PencilIcon } from "@heroicons/react/16/solid";
 
 export default function EmailNotVerify() {
   const [isEmailVerified, setIsEmailVerified] = useState(false);
@@ -37,10 +37,21 @@ export default function EmailNotVerify() {
             <span>—</span>
           </div>
 
-          <p className="text-[#448AFF] text-sm font-bold flex items-center gap-2 cursor-pointer">
-            <PencilIcon className="text-[#448AFF] w-5 h-5" />
-            Change email
-          </p>
+          <div className="flex items-center gap-2 justify-end w-full">
+            <p className="text-[#448AFF] text-sm font-bold flex items-center gap-2 cursor-pointer">
+              <PencilIcon className="text-[#448AFF] w-5 h-5" />
+              Change email
+            </p>
+
+            <Button
+              variant="secondary"
+              size="small"
+              className="px-3 h-[36px]"
+              icon={<ArrowPathIcon className="text-[#448AFF] w-5 h-5" />}
+            >
+              Resend verification link
+            </Button>
+          </div>
         </div>
       </div>
 
