@@ -49,8 +49,8 @@ const Header = () => {
   const pathname = usePathname();
 
   useEffect(() => {
-    setActiveItem(pathname)
-  },[pathname])
+    setActiveItem(pathname);
+  }, [pathname]);
 
   const navItems = [
     { name: "Swap", href: "/swap" },
@@ -180,18 +180,26 @@ const Header = () => {
                 >
                   <div
                     className={`flex items-center gap-2 px-3 py-[10px] ${
-                      activeItem === item.href &&
-                      "bg-[#919EAB1F] rounded-lg"
+                      activeItem === item.href && "bg-[#919EAB1F] rounded-lg"
                     }`}
                   >
                     <Image
                       src={`/assets/icons/${item.icon}`}
                       alt="icon"
-                      style={{filter:`${activeItem === item.href && 'invert(96%) sepia(6%) saturate(164%) hue-rotate(173deg) brightness(200%) contrast(102%)'}`}}
+                      style={{
+                        filter: `${
+                          activeItem === item.href &&
+                          "invert(96%) sepia(6%) saturate(164%) hue-rotate(173deg) brightness(200%) contrast(102%)"
+                        }`,
+                      }}
                       width={18}
                       height={18}
                     />
-                    <span className={`text-[#696C80] text-sm font-medium leading-[22px] ${activeItem === item.href && "text-[#EBECF2]"}`}>
+                    <span
+                      className={`text-[#696C80] text-sm font-medium leading-[22px] ${
+                        activeItem === item.href && "text-[#EBECF2]"
+                      }`}
+                    >
                       {item.name}
                     </span>
                   </div>
@@ -217,7 +225,9 @@ const Header = () => {
                           <button
                             onClick={() => handleDropdown(item.name)}
                             className={`relative hover:text-blue-400 ${
-                              item.children.find((child) => child.href === activeItem)
+                              item.children.find(
+                                (child) => child.href === activeItem
+                              )
                                 ? "text-[#D9D9D9] after:absolute after:-bottom-4 after:left-0 after:block after:bg-[#448AFF] after:w-full after:h-[2px]"
                                 : "text-[#7c7c81]"
                             } flex items-center`}
