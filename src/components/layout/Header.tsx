@@ -3,6 +3,7 @@
 import {
   ChevronDownIcon,
   EllipsisHorizontalIcon,
+  FireIcon,
 } from "@heroicons/react/16/solid";
 import Image from "next/image";
 import Link from "next/link";
@@ -49,7 +50,7 @@ const Header = () => {
 
   useEffect(() => {
     setActiveItem(pathname)
-  },[])
+  },[pathname])
 
   const navItems = [
     { name: "Swap", href: "/swap" },
@@ -225,14 +226,8 @@ const Header = () => {
                             <ChevronDownIcon className="w-4 h-4 ml-1" />
                           </button>
                           {item?.isNew && (
-                            <span className="flex px-1 py-[0.5px] h-4 text-[0.625rem] text-white rounded-xl bg-[#233455]">
-                              <Image
-                                src="/assets/images/fire.png"
-                                alt="fire"
-                                width={10}
-                                height={12}
-                                className="mr-1"
-                              />
+                            <span className="flex items-center px-1 py-[0.5px] h-4 text-[0.625rem] text-white rounded-xl bg-[#233455]">
+                              <FireIcon className="text-red-500 mr-1 w-3 h-3" />
                               New
                             </span>
                           )}
@@ -270,14 +265,8 @@ const Header = () => {
                           {item.name}
                         </Link>
                         {item?.isNew && (
-                          <span className="flex px-1 py-[0.5px] h-4 text-[0.625rem] text-white rounded-xl bg-[#233455]">
-                            <Image
-                              src="/assets/images/fire.png"
-                              alt="fire"
-                              width={10}
-                              height={12}
-                              className="mr-1"
-                            />
+                          <span className="flex items-center px-1 py-[0.5px] h-4 text-[0.625rem] text-white rounded-xl bg-[#233455]">
+                            <FireIcon className="text-red-500 mr-1 w-[10px] h-3" />
                             New
                           </span>
                         )}

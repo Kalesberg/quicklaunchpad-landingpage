@@ -22,7 +22,7 @@ const FooterSection: React.FC<{
         <li key={href}>
           <Link
             href={href}
-            className="flex items-center gap-x-2 whitespace-nowrap"
+            className="flex items-center gap-x-2 whitespace-nowrap text-[#FFFFFFA3]"
           >
             {text}
             {isNew && (
@@ -88,7 +88,7 @@ const Footer: React.FC = () => {
             <h3 className="font-bold mb-6 text-base">Developers</h3>
             <ul className="space-y-[21px]">
               {developerLinks.map(({ href, text }) => (
-                <li key={href}>
+                <li key={href} className="text-[#FFFFFFA3]">
                   <ExternalLink href={href}>{text}</ExternalLink>
                 </li>
               ))}
@@ -100,12 +100,12 @@ const Footer: React.FC = () => {
 
         <div className="max-w-[310px]">
           <Image
-            src="/quickswap-logo.png"
+            src="/assets/images/quicklaunch-logo-footer.png"
             alt="QuickSwap"
             width={150}
             height={30}
           />
-          <p className="my-4 text-sm">
+          <p className="my-4 text-sm text-[#FFFFFFA3]">
             QuickSwap's community is building a comprehensive decentralized
             trading platform in the Polygon ecosystem for the future of finance.
             Join the dragon army!
@@ -129,8 +129,8 @@ const Footer: React.FC = () => {
       </div>
 
       <div className="container mx-auto mt-8 flex justify-between items-center text-sm px-4 md:px-14 xl:px-24">
-        <span>© {new Date().getFullYear()} QuickSwap</span>
-        <Link href="/terms">Terms of use</Link>
+        <span className="text-[#FFFFFFA3]">© {new Date().getFullYear()} QuickSwap</span>
+        <Link className="text-[#FFFFFFA3]" href="/terms">Terms of use</Link>
       </div>
     </footer>
   );

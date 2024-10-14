@@ -64,3 +64,7 @@ button:focus {
 .container {
   max-width: 1660px;
 }
+
+.container-dashboard{
+  max-width: 1160px;
+}
