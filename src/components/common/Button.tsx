@@ -8,6 +8,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: "small" | "medium" | "large";
   fullWidth?: boolean;
   as?: "button" | "a";
+  href?: string
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -24,7 +25,7 @@ const Button: React.FC<ButtonProps> = ({
 
   const variantStyles = {
     primary: "bg-blue-500 hover:bg-blue-600 text-white",
-    secondary: "bg-[#448aff12] hover:bg-[#448aff12] text-[#448AFF]",
+    secondary: "bg-[#EBECF2] hover:bg-[#d7d7d7] text-[#448AFF]",
   };
   const sizeStyles = {
     small: "text-base",

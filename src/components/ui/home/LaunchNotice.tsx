@@ -125,7 +125,7 @@ const LaunchNotice: React.FC<{
           <p>Launch date: 24 Jan 2024 2:00 AM UTC +3</p>
         </div>
 
-        <Button variant="primary" size="medium" className="min-w-16 h-9 rounded-lg bg-[#EBECF2] px-3">
+        <Button variant="secondary" size="medium" className="min-w-16 h-9 rounded-lg bg-[#EBECF2] px-3">
           <span className="text-[#282D3D] font-bold text-sm leading-6">More Details</span>
         </Button>
       </div>
