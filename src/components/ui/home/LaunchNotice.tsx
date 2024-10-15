@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import Image from "next/image";
 import Button from "components/common/Button";
@@ -8,10 +9,12 @@ import {
   GithubIcon,
   TwitterIcon,
 } from "../../../../public/assets/images/social-icons";
+import { useRouter } from "next/navigation";
 
 const LaunchNotice: React.FC<{
   isDashboard?: boolean;
 }> = ({ isDashboard = false }) => {
+  const router = useRouter();
   return !isDashboard ? (
     <section className="relative px-[100px] pt-[50px] pb-7 mb-12 overflow-hidden border-l-2 border-r border-black">
       <Image
@@ -125,7 +128,7 @@ const LaunchNotice: React.FC<{
           <p>Launch date: 24 Jan 2024 2:00 AM UTC +3</p>
         </div>
 
-        <Button variant="secondary" size="medium" className="min-w-16 h-9 rounded-lg bg-[#EBECF2] px-3">
+        <Button onClick={() => router.push('/dashboard/launch-info/launch-name')} variant="secondary" size="medium" className="min-w-16 h-9 rounded-lg bg-[#EBECF2] px-3">
           <span className="text-[#282D3D] font-bold text-sm leading-6">More Details</span>
         </Button>
       </div>
