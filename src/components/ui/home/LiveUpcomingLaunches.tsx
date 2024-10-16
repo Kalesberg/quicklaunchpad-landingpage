@@ -21,13 +21,13 @@ const LaunchCard: React.FC<LaunchProps> = ({
   launchDate,
   status,
 }) => (
-  <div className="bg-gray-800 rounded-2xl overflow-hidden">
+  <div className="bg-[#1B1E29] rounded-2xl overflow-hidden">
     <div className="relative h-48 py-4">
       <Image
         src={image}
         alt={name}
-        layout="fill"
-        objectFit="cover"
+        fill
+        style={{objectFit:"cover"}}
         className="rounded-t-2xl"
       />
       <span
@@ -48,30 +48,38 @@ const LaunchCard: React.FC<LaunchProps> = ({
     </div>
 
     <div className="p-6 flex flex-col h-[calc(100%-12rem)]">
-      <div className="flex items-center mb-2">
+      <div className="flex justify-between items-center">
+        <div className="flex items-center mb-2">
+          <Image
+            src="/assets/images/project-logo.png"
+            alt={name}
+            width={24}
+            height={24}
+            className="rounded-full mr-2"
+          />
+          <h3 className="text-xl font-semibold">{name}</h3>
+        </div>
         <Image
-          src="/assets/images/project-logo.png"
-          alt={name}
+          src="/assets/images/chain-avatar.png"
+          alt="chain avatar"
           width={24}
           height={24}
-          className="rounded-full mr-2"
         />
-        <h3 className="text-xl font-semibold">{name}</h3>
       </div>
 
-      <p className="text-sm text-gray-400 mb-4">{description}</p>
+      <p className="text-sm text-[#EBECF2] mb-4">{description}</p>
 
       <div className="grid grid-cols-1 gap-2 text-sm mb-4">
         <div className="w-full flex justify-between items-center gap-3">
-          <p className="text-gray-400">Total raise</p>
+          <p className="text-[#C7CAD9]">Total raise</p>
           <p>{totalRaise}</p>
         </div>
         <div className="w-full flex justify-between items-center gap-3">
-          <p className="text-gray-400">Initial price</p>
+          <p className="text-[#C7CAD9]">Initial price</p>
           <p>{initialPrice}</p>
         </div>
         <div className="w-full flex justify-between items-center gap-3">
-          <p className="text-gray-400">Launch date</p>
+          <p className="text-[#C7CAD9]">Launch date</p>
           <p>{launchDate}</p>
         </div>
       </div>
@@ -100,7 +108,7 @@ const LiveUpcomingLaunches: React.FC = () => {
       status: "live",
     },
     {
-      image: "/assets/images/launch-image.png",
+      image: "/assets/images/launch-image-1.png",
       name: "Launch Name",
       description:
         "The Most Specialized Blockchain Network for AI Data Monetization & GPU Training",
@@ -110,7 +118,7 @@ const LiveUpcomingLaunches: React.FC = () => {
       status: "upcoming",
     },
     {
-      image: "/assets/images/launch-image.png",
+      image: "/assets/images/launch-image-2.png",
       name: "Launch Name",
       description: "Web3 skill-based gaming project",
       totalRaise: "TBA",

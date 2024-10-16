@@ -159,8 +159,8 @@ const Header = () => {
   return (
     <header className="bg-[#12131A]">
       <div
-        className={`container w-full mx-auto flex items-center justify-between text-white py-4 px-4 ${
-          checkIsDashboardPage() ? "md:px-[110px]" : "md:px-[70px]"
+        className={`container w-full mx-auto flex items-center justify-between text-white py-4 px-6 ${
+          checkIsDashboardPage() ? "md:px-[110px]" : ""
         }`}
       >
         {checkIsDashboardPage() ? (

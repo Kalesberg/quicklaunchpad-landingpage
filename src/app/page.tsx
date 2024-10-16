@@ -9,15 +9,17 @@ import HeroSection from "components/ui/home/HeroSection";
 
 export default function Home() {
   return (
-    <div className="container mx-auto px-4 md:px-14 xl:px-24">
+    <div className="container mx-auto">
       <HeroSection />
-      <LaunchNotice />
-      <StepsToJoin />
-      <LiveUpcomingLaunches />
-      <JoinTelegram />
-      <PreviousLaunches />
-      <FAQ />
-      <CTA />
+      <div className="max-w-[1248px] mx-auto">
+        <LaunchNotice />
+        <StepsToJoin />
+        <LiveUpcomingLaunches />
+        <JoinTelegram />
+        <PreviousLaunches />
+        <FAQ />
+        <CTA />
+      </div>
     </div>
   );
 }

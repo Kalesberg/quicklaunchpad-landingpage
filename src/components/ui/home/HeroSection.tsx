@@ -15,7 +15,7 @@ const HeroSection: React.FC = () => {
         </p>
 
         <Button variant="primary" size="large">
-          Open QuickLaunch Dashboard
+          Participate now
         </Button>
 
         <div className="mt-16 text-gray-400 flex items-center">
@@ -23,19 +23,19 @@ const HeroSection: React.FC = () => {
           <Image
             src="/assets/images/trustswap_logo_white.png"
             alt="TrustSwap"
-            width={150}
-            height={50}
+            width={160}
+            height={40}
             className="ml-2"
           />
         </div>
       </div>
       <div className="absolute w-full h-full left-0 top-0 inset-0 z-0">
         <Image
-          src="/assets/images/banner.webp"
+          src="/assets/images/Background.png"
           alt="Hero Background"
-          layout="fill"
-          objectFit="cover"
-          className="opacity-80 w-full h-full object-cover"
+          fill
+          style={{objectFit:"cover"}}
+          className="opacity-80 w-full h-full object-cover fill"
         />
       </div>
     </section>
