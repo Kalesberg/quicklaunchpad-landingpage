@@ -208,7 +208,7 @@ const Header = () => {
             </nav>
           </>
         ) : (
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4 gap-12">
             <Image
               src="https://beta.quickswap.exchange/static/media/quickIcon.aa0f5ef593b1a9f00bab835581e318f3.svg"
               alt="Logo"
