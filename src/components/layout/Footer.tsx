@@ -106,11 +106,11 @@ const Footer: React.FC = () => {
             height={30}
           />
           <p className="my-4 text-sm text-[#FFFFFFA3]">
-            QuickSwap's community is building a comprehensive decentralized
+            QuickSwap&apos;s community is building a comprehensive decentralized
             trading platform in the Polygon ecosystem for the future of finance.
             Join the dragon army!
           </p>
-          <p className="font-bold mb-5 text-sm">QuickSwap's Email Newsletter</p>
+          <p className="font-bold mb-5 text-sm">QuickSwap&apos;s Email Newsletter</p>
 
           <form className="flex">
             <input
