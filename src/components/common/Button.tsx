@@ -8,7 +8,8 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: "small" | "medium" | "large";
   fullWidth?: boolean;
   as?: "button" | "a";
-  href?: string
+  href?: string;
+  icon?: any;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -21,16 +22,16 @@ const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   const baseStyles =
-    "font-semibold px-3 text-base h-[44px] rounded-lg transition-colors duration-200";
+    "font-semibold px-3 text-base h-[44px] rounded-lg transition-colors duration-200 flex items-center justify-center gap-2";
 
   const variantStyles = {
     primary: "bg-blue-500 hover:bg-blue-600 text-white",
-    secondary: "bg-[#EBECF2] hover:bg-[#d7d7d7] text-[#448AFF]",
+    secondary: "bg-[#448AFF14] hover:bg-[#448AFF14] text-[#448AFF]",
   };
   const sizeStyles = {
-    small: "text-base",
+    small: "text-sm",
     medium: "text-base",
-    large: "text-base",
+    large: "text-lg",
   };
 
   const widthStyle = fullWidth ? "w-full" : "";
@@ -44,7 +45,7 @@ const Button: React.FC<ButtonProps> = ({
         type={props?.type as "button" | "submit" | "reset" | undefined}
         {...(props as ButtonHTMLAttributes<HTMLButtonElement>)}
       >
-        {children}
+        {props?.icon} {children}
       </button>
     );
   } else {

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
+import { ChevronDownIcon } from "@heroicons/react/24/solid";
 import clsx from "clsx";
 
 interface FAQItem {
@@ -15,7 +15,7 @@ const FAQItem: React.FC<FAQItem & { isOpen: boolean; toggle: () => void }> = ({
   isOpen,
   toggle,
 }) => (
-  <div className="mb-4">
+  <div className="mb-4 shadow-[0_8px_16px_0_#919EAB29]">
     <button
       className="w-full text-left bg-[#1B1E29] p-4 rounded-t-lg flex justify-between items-center"
       onClick={toggle}

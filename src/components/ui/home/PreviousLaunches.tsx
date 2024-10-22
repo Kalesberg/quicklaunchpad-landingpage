@@ -4,6 +4,7 @@ import Link from "next/link";
 
 interface LaunchProps {
   name: string;
+  avatar: string;
   logo: string;
   blockchain: string;
   totalRaise: string;
@@ -13,6 +14,7 @@ interface LaunchProps {
 
 const LaunchRow: React.FC<LaunchProps> = ({
   name,
+  avatar,
   logo,
   blockchain,
   totalRaise,
@@ -22,13 +24,13 @@ const LaunchRow: React.FC<LaunchProps> = ({
   <div className="bg-[#1B1E29] rounded-lg p-5 flex items-center justify-between">
     <div className="flex items-center gap-6">
       <Image
-        src={logo}
+        src={avatar}
         alt={name}
-        width={40}
-        height={40}
-        className="rounded-full"
+        width={64}
+        height={64}
+        className="w-16 h-16 rounded-full"
       />
-      <span className="font-semibold">{name}</span>
+      <span>{name}</span>
     </div>
     <div>
       <span className="text-[#C7CAD9] text-xs leading-4">Blockchain</span>
@@ -49,7 +51,7 @@ const LaunchRow: React.FC<LaunchProps> = ({
       <p className="text-xs text-[#C7CAD9] ">Initial Price</p>
       <p>{initialPrice}</p>
     </div>
-    <Link href="#" className="text-blue-500 hover:text-blue-400">
+    <Link href="#" className="text-blue-500 text-sm font-bold hover:text-blue-400">
       Details
     </Link>
   </div>
@@ -59,6 +61,7 @@ const PreviousLaunches: React.FC = () => {
   const launches: LaunchProps[] = [
     {
       name: "[Launch Name]",
+      avatar: "/assets/images/launch-info-img.png",
       logo: "/assets/images/project-logo.png",
       blockchain: "Polygon",
       totalRaise: "$200,000",
@@ -67,6 +70,7 @@ const PreviousLaunches: React.FC = () => {
     },
     {
       name: "[Launch Name]",
+      avatar: "/assets/images/launch-info-img.png",
       logo: "/assets/images/project-logo.png",
       blockchain: "Polygon",
       totalRaise: "$200,000",
@@ -75,6 +79,7 @@ const PreviousLaunches: React.FC = () => {
     },
     {
       name: "[Launch Name]",
+      avatar: "/assets/images/launch-info-img.png",
       logo: "/assets/images/project-logo.png",
       blockchain: "Polygon",
       totalRaise: "$200,000",
@@ -83,6 +88,7 @@ const PreviousLaunches: React.FC = () => {
     },
     {
       name: "[Launch Name]",
+      avatar: "/assets/images/launch-info-img.png",
       logo: "/assets/images/project-logo.png",
       blockchain: "Polygon",
       totalRaise: "$200,000",
@@ -91,6 +97,7 @@ const PreviousLaunches: React.FC = () => {
     },
     {
       name: "[Launch Name]",
+      avatar: "/assets/images/launch-info-img.png",
       logo: "/assets/images/project-logo.png",
       blockchain: "Polygon",
       totalRaise: "$200,000",
@@ -114,7 +121,7 @@ const PreviousLaunches: React.FC = () => {
         ))}
       </div>
       <div className="text-center mt-6">
-        <Link href="#" className="text-blue-500 hover:text-blue-400 font-bold">
+        <Link href="#" className="text-blue-500 text-sm hover:text-blue-400 font-bold">
           See All Previous Launches
         </Link>
       </div>

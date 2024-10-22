@@ -77,7 +77,7 @@ const Footer: React.FC = () => {
 
   return (
     <footer className="bg-[#12131A] text-white py-8 px-4">
-      <div className="container mx-auto px-4 md:px-14 xl:px-24 flex justify-between items-start lg:flex-row flex-col gap-x-[100px] 2xl:gap-x-[200px] gap-y-16">
+      <div className="container mx-auto px-12 flex justify-between items-start lg:flex-row flex-col gap-x-[100px] 2xl:gap-x-[200px] gap-y-16">
         <div className="w-full flex items-start justify-between gap-[100px]">
           <div className="flex gap-x-20 gap-y-[21px] xl:flex-row flex-col">
             <FooterSection title="Products" links={productLinks?.slice(0, 6)} />
@@ -127,10 +127,14 @@ const Footer: React.FC = () => {
           </form>
         </div>
       </div>
-
-      <div className="container mx-auto mt-8 flex justify-between items-center text-sm px-4 md:px-14 xl:px-24">
-        <span className="text-[#FFFFFFA3]">© {new Date().getFullYear()} QuickSwap</span>
-        <Link className="text-[#FFFFFFA3]" href="/terms">Terms of use</Link>
+      <div className="container w-full h-[1.5px] mx-auto px-12 after:content-[''] after:block after:w-full after:h-full after:bg-[#FFFFFF0A]"></div>
+      <div className="container mx-auto mt-8 px-12 flex justify-between items-center text-sm">
+        <span className="text-[#FFFFFFA3]">
+          © {new Date().getFullYear()} QuickSwap
+        </span>
+        <Link className="text-[#FFFFFFA3]" href="/terms">
+          Terms of use
+        </Link>
       </div>
     </footer>
   );
