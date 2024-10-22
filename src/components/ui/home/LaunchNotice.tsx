@@ -11,7 +11,7 @@ import {
 
 const LaunchNotice: React.FC = () => {
   return (
-    <section className="mb-12 overflow-hidden">
+    <section className="mb-12 pb-[100px] overflow-hidden">
       <div className="rounded-lg p-8 relative overflow-hidden">
         <div className="relative z-10">
           <div className="flex items-center mb-2">

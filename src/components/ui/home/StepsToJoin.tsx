@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "components/common/Button";
 
-const StepsToJoin: React.FC = () => {
+const StepsToJoin: React.FC<{openModal?: boolean, setOpenModal?: any}> = ({openModal, setOpenModal}) => {
   const steps = [
     {
       title: "Connect Wallet",
@@ -93,14 +93,18 @@ const StepsToJoin: React.FC = () => {
     },
   ];
 
+  const handleModal = () => {
+    setOpenModal(!openModal)
+  }
+
   return (
-    <section className="mb-12 py-[100px] rounded-lg">
+    <section className="mb-12 pb-[100px] rounded-lg">
       <div className="mb-8">
         <h2 className="text-[32px] font-bold mb-4">Steps to join launchpad</h2>
         <p className="text-white font-bold mb-4">
           Participate in your first sale in just 4 steps.
         </p>
-        <Button variant="primary" size="medium" className="w-[250px]">
+        <Button variant="primary" size="medium" className="w-[250px]" onClick={handleModal}>
           Get Started
         </Button>
       </div>

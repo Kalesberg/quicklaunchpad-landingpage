@@ -2,8 +2,10 @@ import React from "react";
 import Image from "next/image";
 import Button from "components/common/Button";
 import TelegramIcon from "../../../../public/assets/images/home/tele-bg.png";
+import { useRouter } from "next/navigation";
 
 const JoinTelegram: React.FC = () => {
+  const router = useRouter();
   return (
     <section className="bg-[#1C1E29] rounded-lg mt-24 mb-36 p-16 relative overflow-hidden">
       <div className="max-w-[1064px] relative z-10 flex gap-16 items-center">
@@ -17,7 +19,15 @@ const JoinTelegram: React.FC = () => {
           </p>
         </div>
 
-        <Button variant="secondary" size="large" as="button" className="px-9">
+        <Button
+          variant="secondary"
+          size="large"
+          as="button"
+          className="px-9"
+          onClick={() => {
+            router.push("https://web.telegram.org/");
+          }}
+        >
           <svg
             width="18"
             height="15"
@@ -41,7 +51,7 @@ const JoinTelegram: React.FC = () => {
           alt="Telegram Background"
           width={251}
           height={251}
-          style={{objectFit:"contain"}}
+          style={{ objectFit: "contain" }}
         />
       </div>
     </section>

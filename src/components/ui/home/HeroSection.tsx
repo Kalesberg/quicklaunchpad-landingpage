@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Button from "components/common/Button";
 
-const HeroSection: React.FC = () => {
+const HeroSection: React.FC<{caseLaunch: number, openModal?: boolean, setOpenModal?: any}> = ({caseLaunch, openModal, setOpenModal}) => {
+  const handleModal = () => {
+    if(caseLaunch !== 0) return;
+    setOpenModal(!openModal)
+  }
   return (
     <section className="relative flex items-end justify-start mb-12 p-20 text-left min-h-[735px]">
       <div className="z-10 relative max-w-[520px]">
@@ -14,8 +18,8 @@ const HeroSection: React.FC = () => {
           industry-leading creators and funds.
         </p>
 
-        <Button variant="primary" size="large">
-          Participate now
+        <Button variant="primary" size="large" className="min-w-[275px] !text-base leading-6" onClick={handleModal}>
+          {caseLaunch !== 0 ? ' Open QuickLaunch Dashboard' : 'Be the first to know'}
         </Button>
 
         <div className="mt-16 text-gray-400 flex items-center">

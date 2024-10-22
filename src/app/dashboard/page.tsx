@@ -12,7 +12,7 @@ export default function DashboardPage() {
         Back
       </Link>
       <div className="mx-6">
-        <LaunchNotice isDashboard={true} />
+        <LaunchNotice />
         <LiveUpcomingLaunches />
         <PreviousLaunches />
       </div>
