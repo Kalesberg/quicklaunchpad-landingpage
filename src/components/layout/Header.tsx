@@ -48,6 +48,10 @@ const Header = () => {
   });
   const pathname = usePathname();
 
+  const checkIsDashboardPage = () => {
+    return pathname?.includes("/dashboard");
+  };
+
   useEffect(() => {
     setActiveItem(pathname);
   }, [pathname]);
@@ -83,11 +87,11 @@ const Header = () => {
 
   const navItemsDashboard = [
     { name: "Launchpads", href: "/dashboard", icon: "ic-dashboard.svg" },
-    {
-      name: "My Launches",
-      href: "/dashboard/my-launches",
-      icon: "ic-label.svg",
-    },
+    // {
+    //   name: "My Launches",
+    //   href: "/dashboard/my-launches",
+    //   icon: "ic-label.svg",
+    // },
     { name: "Profile", href: "/dashboard/profile", icon: "ic-user.svg" },
   ];
 
@@ -150,10 +154,6 @@ const Header = () => {
     } else {
       setOpenDropdown(itemName);
     }
-  };
-
-  const checkIsDashboardPage = () => {
-    return pathname?.includes("/dashboard");
   };
 
   return (

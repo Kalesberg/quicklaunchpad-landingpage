@@ -5,7 +5,7 @@ import React from "react";
 const CTA: React.FC = () => {
   return (
     <section className="relative z-10 text-center mt-16 mb-28 py-28 rounded-3xl overflow-hidden">
-      <div className="backdrop-blur-[128px] h-full w-full bg-[#1B1E29] absolute top-0 left-0 -z-[1] opacity-95 rounded-3xl"></div>
+      <div className="backdrop-blur-[128px] h-full w-full bg-[#1B1E29] absolute top-0 left-0 -z-[1] opacity-95 rounded-3xl overflow-hidden"></div>
       <Image
         src="/assets/images/4dee09caf5949d0260bcdbb0b8e9a52a.png"
         alt="icon"

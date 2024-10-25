@@ -1,8 +1,11 @@
+"use client";
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import clsx from "clsx";
 import { FireIcon } from "@heroicons/react/16/solid";
+import { usePathname } from "next/navigation";
+import { TelegramIcon } from "../../../public/assets/images/social-icons";
 
 const FooterSection: React.FC<{
   title: string;
@@ -48,6 +51,12 @@ const ExternalLink: React.FC<{ href: string; children: React.ReactNode }> = ({
 );
 
 const Footer: React.FC = () => {
+  const pathname = usePathname();
+
+  const checkIsDashboardPage = () => {
+    return pathname?.includes("/dashboard");
+  };
+
   const productLinks = [
     { href: "/swap", text: "Swap" },
     { href: "/perps-v1", text: "Perps V1" },
@@ -76,66 +85,97 @@ const Footer: React.FC = () => {
   ];
 
   return (
-    <footer className="bg-[#12131A] text-white py-8 px-4">
-      <div className="container mx-auto px-12 flex justify-between items-start lg:flex-row flex-col gap-x-[100px] 2xl:gap-x-[200px] gap-y-16">
-        <div className="w-full flex items-start justify-between gap-[100px]">
-          <div className="flex gap-x-20 gap-y-[21px] xl:flex-row flex-col">
-            <FooterSection title="Products" links={productLinks?.slice(0, 6)} />
-            <FooterSection title="" links={productLinks?.slice(6)} />
+    <footer className={`bg-[#12131A] text-white py-8 ${!checkIsDashboardPage() ? 'px-4' : 'px-0'} `}>
+      {!checkIsDashboardPage() ? (
+        <>
+          <div className="container mx-auto px-12 flex justify-between items-start lg:flex-row flex-col gap-x-[100px] 2xl:gap-x-[200px] gap-y-16">
+            <div className="w-full flex items-start justify-between gap-[100px]">
+              <div className="flex gap-x-20 gap-y-[21px] xl:flex-row flex-col">
+                <FooterSection
+                  title="Products"
+                  links={productLinks?.slice(0, 6)}
+                />
+                <FooterSection title="" links={productLinks?.slice(6)} />
+              </div>
+
+              <div>
+                <h3 className="font-bold mb-6 text-base">Developers</h3>
+                <ul className="space-y-[21px]">
+                  {developerLinks.map(({ href, text }) => (
+                    <li key={href} className="text-[#FFFFFFA3]">
+                      <ExternalLink href={href}>{text}</ExternalLink>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <FooterSection title="Governance" links={governanceLinks} />
+            </div>
+
+            <div className="max-w-[310px]">
+              <Image
+                src="/assets/images/quicklaunch-logo-footer.png"
+                alt="QuickSwap"
+                width={150}
+                height={30}
+              />
+              <p className="my-4 text-sm text-[#FFFFFFA3]">
+                QuickSwap's community is building a comprehensive decentralized
+                trading platform in the Polygon ecosystem for the future of
+                finance. Join the dragon army!
+              </p>
+              <p className="font-bold mb-5 text-sm">
+                QuickSwap's Email Newsletter
+              </p>
+
+              <form className="flex">
+                <input
+                  type="email"
+                  placeholder="Enter email"
+                  className="bg-gray-800 text-white px-3 py-2 rounded-l-md flex-grow"
+                />
+                <button
+                  type="submit"
+                  className="bg-purple-600 text-white px-4 py-2 rounded-r-md"
+                >
+                  Subscribe
+                </button>
+              </form>
+            </div>
           </div>
-
-          <div>
-            <h3 className="font-bold mb-6 text-base">Developers</h3>
-            <ul className="space-y-[21px]">
-              {developerLinks.map(({ href, text }) => (
-                <li key={href} className="text-[#FFFFFFA3]">
-                  <ExternalLink href={href}>{text}</ExternalLink>
-                </li>
-              ))}
-            </ul>
+          <div className="container w-full h-[1.5px] mx-auto px-12 after:content-[''] after:block after:w-full after:h-full after:bg-[#FFFFFF0A]"></div>
+          <div className="container mx-auto mt-8 px-12 flex justify-between items-center text-sm">
+            <span className="text-[#FFFFFFA3]">
+              © {new Date().getFullYear()} QuickSwap
+            </span>
+            <Link className="text-[#FFFFFFA3]" href="/terms">
+              Terms of use
+            </Link>
           </div>
-
-          <FooterSection title="Governance" links={governanceLinks} />
-        </div>
-
-        <div className="max-w-[310px]">
-          <Image
-            src="/assets/images/quicklaunch-logo-footer.png"
-            alt="QuickSwap"
-            width={150}
-            height={30}
-          />
-          <p className="my-4 text-sm text-[#FFFFFFA3]">
-            QuickSwap's community is building a comprehensive decentralized
-            trading platform in the Polygon ecosystem for the future of finance.
-            Join the dragon army!
-          </p>
-          <p className="font-bold mb-5 text-sm">QuickSwap's Email Newsletter</p>
-
-          <form className="flex">
-            <input
-              type="email"
-              placeholder="Enter email"
-              className="bg-gray-800 text-white px-3 py-2 rounded-l-md flex-grow"
-            />
-            <button
-              type="submit"
-              className="bg-purple-600 text-white px-4 py-2 rounded-r-md"
-            >
-              Subscribe
-            </button>
-          </form>
-        </div>
-      </div>
-      <div className="container w-full h-[1.5px] mx-auto px-12 after:content-[''] after:block after:w-full after:h-full after:bg-[#FFFFFF0A]"></div>
-      <div className="container mx-auto mt-8 px-12 flex justify-between items-center text-sm">
-        <span className="text-[#FFFFFFA3]">
-          © {new Date().getFullYear()} QuickSwap
-        </span>
-        <Link className="text-[#FFFFFFA3]" href="/terms">
-          Terms of use
-        </Link>
-      </div>
+        </>
+      ) : (
+        <>
+          <div className="container w-full h-[1.5px] mx-auto px-0 after:content-[''] after:block after:w-full after:h-full after:bg-[#FFFFFF0A]"></div>
+          <div className="container mx-auto mt-8 px-10 flex justify-between items-center text-sm">
+            <div className="flex items-center gap-8">
+              <Link className="text-[#FFFFFFA3]" href="/terms">
+                Terms of use
+              </Link>
+              <Link
+                className="text-[#C7CAD9] flex items-center gap-1"
+                href="https://web.telegram.org/"
+              >
+                <TelegramIcon className="w-[18px] h-[18px]" />
+                Telegram Support
+              </Link>
+            </div>
+            <span className="text-xs leading-5 text-[#696C80]">
+              © {new Date().getFullYear()} QuickLaunch powered by TrustSwap. All
+              rights reserved.
+            </span>
+          </div>
+        </>
+      )}
     </footer>
   );
 };

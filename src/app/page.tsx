@@ -25,7 +25,7 @@ export default function Home() {
         setOpenModal={setOpenModal}
       />
       <div className="max-w-[1248px] mx-auto">
-        {caseLaunch !== 0 && <LaunchNotice />}
+        {caseLaunch !== 0 && <LaunchNotice status="upcoming" />}
         <StepsToJoin openModal={openModal} setOpenModal={setOpenModal} />
         {caseLaunch > 1 && <LiveUpcomingLaunches />}
         <JoinTelegram />

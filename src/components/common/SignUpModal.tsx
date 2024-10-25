@@ -151,11 +151,11 @@ const SignUpModal: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
             <div className="px-4 pt-2">
               <div className="text-xs font-normal leading-5 text-[#696C80] text-center">
                 <p>By sending this form, you agree to the</p>{" "}
-                <a className="text-xs font-normal leading-5 text-[#448AFF] underline">
+                <a href="#" className="text-xs font-normal leading-5 text-[#448AFF] underline">
                   Terms and Conditions
                 </a>{" "}
                 and{" "}
-                <a className="text-xs font-normal leading-5 text-[#448AFF] underline">
+                <a href="#" className="text-xs font-normal leading-5 text-[#448AFF] underline">
                   Privacy Policy
                 </a>
               </div>

@@ -5,16 +5,21 @@ import PreviousLaunches from "components/ui/home/PreviousLaunches";
 import Link from "next/link";
 
 export default function DashboardPage() {
+  // 0: no launches
+  // 1: The only launch
+  // 2: multiple live launches
+  // 3: multiple live & previous launches
+  let caseLaunch = 0;
   return (
-    <div className="container-dashboard mx-auto px-4 md:px-14 xl:px-24">
+    <div className="container-dashboard mx-auto px-4">
       <Link href={"/"} className="flex items-center">
         <ChevronLeftIcon className="w-4 h-4 mr-1" />
         Back
       </Link>
       <div className="mx-6">
-        <LaunchNotice />
-        <LiveUpcomingLaunches />
-        <PreviousLaunches />
+        {caseLaunch !== 0 && <LaunchNotice status="upcoming" />}
+        {caseLaunch > 1 && <LiveUpcomingLaunches />}
+        {caseLaunch > 2 && <PreviousLaunches />}
       </div>
     </div>
   );

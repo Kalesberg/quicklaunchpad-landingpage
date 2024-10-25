@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React from "react";
 import Image from "next/image";
 import Button from "components/common/Button";
@@ -11,9 +11,9 @@ import {
 } from "../../../../public/assets/images/social-icons";
 import { useRouter } from "next/navigation";
 
-const LaunchNotice: React.FC = () => {
+const LaunchNotice: React.FC<{ status?: string }> = ({ status }) => {
   const router = useRouter();
-  return  (
+  return (
     <div className="rounded-2xl p-8 mt-[30px] mb-[25px] relative overflow-hidden">
       <div className="relative z-10">
         <div className="flex items-center mb-2">
@@ -49,18 +49,40 @@ const LaunchNotice: React.FC = () => {
           <p>Launch date: 24 Jan 2024 2:00 AM UTC +3</p>
         </div>
 
-        <Button onClick={() => router.push('/dashboard/launch-info/launch-name')} variant="secondary" size="medium" className="min-w-16 h-9 rounded-lg bg-[#EBECF2] px-3">
-          <span className="text-[#282D3D] font-bold text-sm leading-6">More Details</span>
+        <Button
+          onClick={() =>
+            router.push(`/dashboard/launch-info/launch-name?status=${status}`)
+          }
+          variant="secondary"
+          size="medium"
+          className="min-w-16 h-9 rounded-lg bg-[#EBECF2] px-3"
+        >
+          <span className="text-[#282D3D] font-bold text-sm leading-6">
+            More Details
+          </span>
         </Button>
       </div>
 
       <div className="absolute top-8 right-8 flex justify-between items-center text-sm z-10">
-        <span className="bg-green-500 text-black font-semibold px-2 py-1 rounded-md text-xs">
-          00:39:78 left
+        <span
+          className={`text-black font-bold px-2 py-1 rounded-md text-xs ${
+            status === "live"
+              ? "bg-[#0FC679]"
+              : status === "upcoming"
+              ? "bg-[#FDD835]"
+              : "bg-[#C684FF]"
+          }`}
+        >
+          {status === "live"
+            ? "Open"
+            : status === "upcoming"
+            ? "Upcoming"
+            : "Closed"}
         </span>
       </div>
 
-      <div className="absolute top-0 right-0 bottom-0 w-full z-0 rounded-lg bg-cover bg-[url('/assets/images/launch-bg.png')] before:content-['']
+      <div
+        className="absolute top-0 right-0 bottom-0 w-full z-0 rounded-lg bg-cover bg-[url('/assets/images/launch-bg.png')] before:content-['']
             before:absolute
             before:inset-0
             before:block
@@ -70,7 +92,7 @@ const LaunchNotice: React.FC = () => {
             before:to-100%
             before:opacity-100
             before:z-[-1]"
-        ></div>
+      ></div>
     </div>
   );
 };
