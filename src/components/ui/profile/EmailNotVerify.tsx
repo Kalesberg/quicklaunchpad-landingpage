@@ -5,11 +5,9 @@ import Button from "components/common/Button";
 import PowderIcon from "../../../../public/assets/images/powder.png";
 import MetaMaskIcon from "../../../../public/assets/images/metamask.png";
 import clsx from "clsx";
-import { useState } from "react";
 import { ArrowPathIcon, PencilIcon } from "@heroicons/react/16/solid";
 
 export default function EmailNotVerify() {
-  const [isEmailVerified, setIsEmailVerified] = useState(false);
 
   return (
     <div className="my-6 grid md:grid-cols-2 grid-cols-1 gap-6">

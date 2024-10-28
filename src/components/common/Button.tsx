@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React, { ButtonHTMLAttributes, AnchorHTMLAttributes } from "react";
+import React, { ButtonHTMLAttributes } from "react";
 import { LinkProps } from "next/link";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {

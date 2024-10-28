@@ -64,7 +64,7 @@ const SignUpModal: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
                 Thank you for your interest in QuickLaunch
               </h2>
               <p className="text-sm text-[#C7CAD9] mb-6 text-center">
-                We've received your request and will be in touch shortly at <span className="font-semibold">{email}</span>.
+                We&apos;ve received your request and will be in touch shortly at <span className="font-semibold">{email}</span>.
               </p>
               <Button
                 variant="primary"
@@ -89,7 +89,7 @@ const SignUpModal: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
             </div>
             <div className="pb-4">
               <p className="text-sm text-[#C7CAD9] mb-6 text-justify">
-                Drop your email here, and we’ll keep you in the loop with all
+                Drop your email here, and we&apos;ll keep you in the loop with all
                 the exciting updates about QuickSwap Launches!
               </p>
               <div className="mb-6">

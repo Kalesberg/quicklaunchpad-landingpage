@@ -10,15 +10,15 @@ import {
   YoutubeIcon,
 } from "../../../../../public/assets/images/social-icons";
 import Button from "components/common/Button";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import clsx from "clsx";
 import { useSearchParams } from "next/navigation";
 
 export default function LaunchInfoDetailPage() {
   const [selectedTab, setSelectedTab] = useState<string>("about");
   const searchParams = useSearchParams();
-  let status = searchParams.get("status");
-  let KYCStatus = true;
+  const status = searchParams.get("status");
+  const KYCStatus = true;
   const tabs = [{ label: "About the Launch", value: "about" }].concat(
     status === "upcoming"
       ? []
@@ -191,19 +191,19 @@ export default function LaunchInfoDetailPage() {
                     Introducing [Launch Name]
                   </h2>
                   <p className="mb-2">
-                    YakDAO’s approach is innovative in several ways. By
+                    YakDAO&apos;s approach is innovative in several ways. By
                     utilizing a deflationary token model that mimics strategies
                     employed in private equity funds, they are overcoming the
                     barriers that typically prevent individual investors from
                     accessing this lucrative market.
                   </p>
                   <p className="mb-2">
-                    The yields from YakDAO’s properties are used to create
+                    The yields from YakDAO&apos;s properties are used to create
                     consistent buy pressure on the $YAKS token, offering rewards
                     for those who choose to stake it. This strategy leverages
                     decentralized finance (DeFi) mechanisms to create a form of
                     monetary democracy, allowing retail investment in an asset
-                    class that has been largely controlled by the world’s
+                    class that has been largely controlled by the world&apos;s
                     wealthiest investors
                   </p>
                 </div>
@@ -244,11 +244,11 @@ export default function LaunchInfoDetailPage() {
                     className="mx-auto"
                   />
                   <h2 className="text-lg leading-7 font-bold">
-                    Claim Isn't Available At The Moment
+                    Claim Isn&apos;t Available At The Moment
                   </h2>
                   <p className="text-sm leading-6">
                     Tokens are not claimable yet. If you would like to
-                    participate, you must complete KYC.
+                    participate, you must complete KYC.
                   </p>
                   <Button
                     variant="primary"

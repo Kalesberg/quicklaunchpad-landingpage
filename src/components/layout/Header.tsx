@@ -352,7 +352,7 @@ export const ChainSelected = ({
         onClick={() => setIsOpenNetwork(!isOpenNetwork)}
       >
         <div className="relative">
-          <img
+          <Image
             src={
               networkActive["nativeCurrencyImage"]
                 ? networkActive["nativeCurrencyImage"]
@@ -360,6 +360,8 @@ export const ChainSelected = ({
             }
             alt={networkActive["networkName"]}
             className="w-5 h-5 mr-1"
+            width={20}
+            height={20}
           />
         </div>
         <span>
@@ -412,7 +414,7 @@ export const ChainSelected = ({
                     }
                   >
                     <div className="flex items-center justify-start text-left w-full text-sm font-semibold">
-                      <img
+                      <Image
                         src={
                           network.chainId
                             ? config["nativeCurrencyImage"]
@@ -422,6 +424,8 @@ export const ChainSelected = ({
                           network.chainId ? config["networkName"] : network.name
                         }
                         className="w-6 h-6 mr-2 rounded-xl"
+                        width={24}
+                        height={24}
                       />
                       {network.chainId ? config["networkName"] : network.name}
                     </div>
