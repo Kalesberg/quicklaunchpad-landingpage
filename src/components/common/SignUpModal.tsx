@@ -141,7 +141,7 @@ const SignUpModal: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
                 size="large"
                 className="w-full !text-[15px] font-bold capitalize leading-6"
                 onClick={() => {
-                  router.push("https://web.telegram.org/");
+                  router.push("https://t.me/QuickLaunchOfficial");
                 }}
               >
                 <TelegramIcon className="w-[18px] h-[18px] text-[#448AFF] hover:text-white cursor-pointer" />

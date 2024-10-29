@@ -25,7 +25,7 @@ const JoinTelegram: React.FC = () => {
           as="button"
           className="px-9"
           onClick={() => {
-            router.push("https://web.telegram.org/");
+            router.push("https://t.me/QuickLaunchOfficial");
           }}
         >
           <svg

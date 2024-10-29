@@ -34,7 +34,7 @@ const FAQItem: React.FC<FAQItem & { isOpen: boolean; toggle: () => void }> = ({
       }`}
     >
       <div className="p-4 bg-[#1B1E29] rounded-b-lg">
-        <p className="text-gray-300">{answer}</p>
+        <p className="text-gray-300" dangerouslySetInnerHTML={{ __html: answer }}></p>
       </div>
     </div>
   </div>
@@ -82,11 +82,11 @@ You should see a prompt from BlockPass saying, “If you have previously created
     },
     {
       question: "How can I contact QuickLaunch for questions or problems?",
-      answer: `You can contact us directly through our Telegram channel, where our moderators will be available to assist you with any questions or issues you may have.`,
+      answer: `You can contact us directly through our <a href="https://t.me/QuickLaunchOfficial" class="text-[#448AFF] leading-6 border-b border-[#448AFF]">Telegram channel</a>, where our moderators will be available to assist you with any questions or issues you may have.`,
     },
     {
       question: "What is the PIN number in the emails I get from QuickLaunch?",
-      answer: `The PIN number included in the emails you receive from QuickLaunch is a personal and unique identifier assigned to each registered user. This helps verify that the email is from us, not a scammer. If you ever receive an email without your unique PIN or notice any discrepancies, please reach out to our Telegram support team for assistance. 
+      answer: `The PIN number included in the emails you receive from QuickLaunch is a personal and unique identifier assigned to each registered user. This helps verify that the email is from us, not a scammer. If you ever receive an email without your unique PIN or notice any discrepancies, please reach out to our <a href="https://t.me/QuickLaunchOfficial" class="text-[#448AFF] leading-6 border-b border-[#448AFF]">Telegram support</a> team for assistance. 
 `,
     },
     {
@@ -97,12 +97,17 @@ You should see a prompt from BlockPass saying, “If you have previously created
     {
       question:
         "I received an email about QuickLaunch with a link. What should I do? ",
-      answer: `Except for verifying your email, we never include links in our emails. This is to protect your security and prevent phishing attempts. If you are in doubt, please reach out to our support team. Always prioritize your online safety!`,
+      answer: `Except for verifying your email, we never include links in our emails. This is to protect your security and prevent phishing attempts. If you are in doubt, please reach out to our <a href="https://t.me/QuickLaunchOfficial" class="text-[#448AFF] leading-6 border-b border-[#448AFF]">support team</a>. Always prioritize your online safety!`,
     },
     {
       question:
         "I received a direct message (DM) on Telegram claiming to be from QuickLaunch. How do I check if this is legitimate?",
-      answer: `We never initiate direct messages (DMs) on Telegram. If you receive a message from someone claiming to be from us, it is a scammer. Always use our official Telegram channel for support, and avoid engaging with any direct messages that are sent to you.`,
+      answer: `We never initiate direct messages (DMs) on Telegram. If you receive a message from someone claiming to be from us, it is a scammer. Always use our <a href="https://t.me/QuickLaunchOfficial" class="text-[#448AFF] leading-6 border-b border-[#448AFF]">official Telegram channel</a> for support, and avoid engaging with any direct messages that are sent to you.`,
+    },
+    {
+      question:
+        "Why didn't I receive an email announcing the new launchpad?",
+      answer: `Connect your wallet and go to the profile page. Make sure that email notifications are enabled. If they are enabled and you still don't receive new announcement emails, please reach out to our <a href="https://t.me/QuickLaunchOfficial" class="text-[#448AFF] leading-6 border-b border-[#448AFF]">support team</a> for further assistance.`,
     },
   ];
 
