@@ -24,9 +24,7 @@ const JoinTelegram: React.FC = () => {
           size="large"
           as="button"
           className="px-9"
-          onClick={() => {
-            router.push("https://t.me/QuickLaunchOfficial");
-          }}
+          onClick={(event) => {event.preventDefault(); window.open('https://t.me/QuickLaunchOfficial');}}
         >
           <svg
             width="18"
