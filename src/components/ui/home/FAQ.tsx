@@ -9,6 +9,12 @@ interface FAQItem {
   answer: string;
 }
 
+interface FAQList {
+  id: string;
+  name: string;
+  faq: FAQItem[];
+}
+
 const FAQItem: React.FC<FAQItem & { isOpen: boolean; toggle: () => void }> = ({
   question,
   answer,
@@ -34,82 +40,117 @@ const FAQItem: React.FC<FAQItem & { isOpen: boolean; toggle: () => void }> = ({
       }`}
     >
       <div className="p-4 bg-[#1B1E29] rounded-b-lg">
-        <p className="text-gray-300" dangerouslySetInnerHTML={{ __html: answer }}></p>
+        <p
+          className="text-gray-300"
+          dangerouslySetInnerHTML={{ __html: answer }}
+        ></p>
       </div>
     </div>
   </div>
 );
 
 const FAQ: React.FC = () => {
-  const [openItems, setOpenItems] = useState<number[]>([]);
-
-  const faqItems: FAQItem[] = [
+  const faqList: FAQList[] = [
     {
-      question: "What is the QuickLaunch Launchpad?",
-      answer:
-        "This is a Web3 Launchpad by QuickSwap (powered by TrustSwap) that facilitates a token sale and helps blockchain-based projects raise capital.",
+      id: "quickLaunch-launchpad",
+      name: "QuickLaunch Launchpad",
+      faq: [
+        {
+          question: "What is the QuickLaunch Launchpad?",
+          answer:
+            "This is a Web3 Launchpad by QuickSwap (powered by TrustSwap) that facilitates a token sale and helps blockchain-based projects raise capital.",
+        },
+        {
+          question: "What is the process for participating in a QuickLaunch?",
+          answer:
+            "The QuickLaunch Launchpad uses a Lottery system where a certain amount of whitelisted users are randomly selected to participate in a project launch. There are three simple steps: First, you sign into the dashboard and then KYC with our KYC provider. Once you are successfully KYC'd, you are eligible to participate in a QuickLaunch. Next, you find a project you would like to participate in and register to be whitelisted for the project's launch. This means you are expressing interest in participating and are participating in the lottery. Then, once the lottery is run, if you are selected, you will receive a notification that you can contribute your allocated amount to the project via the dashboard. When the project launch is completed, you will be notified via the dashboard about where and how to claim your tokens.",
+        },
+      ],
     },
     {
-      question: "What is the process for participating in a QuickLaunch?",
-      answer:
-        "The QuickLaunch Launchpad uses a Lottery system where a certain amount of whitelisted users are randomly selected to participate in a project launch. There are three simple steps: First, you sign into the dashboard and then KYC with our KYC provider. Once you are successfully KYC'd, you are eligible to participate in a QuickLaunch. Next, you find a project you would like to participate in and register to be whitelisted for the project's launch. This means you are expressing interest in participating and are participating in the lottery. Then, once the lottery is run, if you are selected, you will receive a notification that you can contribute your allocated amount to the project via the dashboard. When the project launch is completed, you will be notified via the dashboard about where and how to claim your tokens.",
+      id: "kyc",
+      name: "KYC",
+      faq: [
+        {
+          question: "Do I have to KYC to access QuickLaunch?",
+          answer:
+            "Yes. KYC is required for participating in any project on QuickLaunch. Our partnership with Blockpass has simplified the KYC process. You can register via the QuickLaunch dashboard.",
+        },
+        {
+          question: "What if I am already currently KYC’ed by BlockPass?",
+          answer: `That makes the process easier. Connect to the QuickLaunch dashboard, register to KYC, and when prompted to start KYC, make sure you use the previously KYC’d email address.
+    You should see a prompt from BlockPass saying, “If you have previously created a Blockpass Identity, you should use that email address here.” Once you use your KYC’d email address, you will not need to repeat the KYC process.`,
+        },
+      ],
     },
     {
-      question: "Do I have to KYC to access QuickLaunch?",
-      answer:
-        "Yes. KYC is required for participating in any project on QuickLaunch. Our partnership with Blockpass has simplified the KYC process. You can register via the QuickLaunch dashboard.",
+      id: "fee",
+      name: "Fee",
+      faq: [
+        {
+          question: "Is there a fee to participate in a QuickLaunch?",
+          answer: `There are no fees to opt in and no token staking requirements.`,
+        },
+        {
+          question: "What crypto tokens can be used to participate in IDOs?",
+          answer: `Stablecoins: USDT or USDC on Polygon.`,
+        },
+      ],
     },
     {
-      question: "What if I am already currently KYC’ed by BlockPass?",
-      answer: `That makes the process easier. Connect to the QuickLaunch dashboard, register to KYC, and when prompted to start KYC, make sure you use the previously KYC’d email address.
-You should see a prompt from BlockPass saying, “If you have previously created a Blockpass Identity, you should use that email address here.” Once you use your KYC’d email address, you will not need to repeat the KYC process.`,
+      id: "lottery",
+      name: "Lottery",
+      faq: [
+        {
+          question: "How can I increase my odds of winning the lottery?",
+          answer: `This is a system-generated lottery that is automatically calculated.`,
+        },
+        {
+          question: "Is the QuickLaunch lottery provably fair?",
+          answer: `Our Lottery works completely off-chain, it shuffles the participants using the Fisher-Yates algorithm to randomize their order, then selects the first maxWinners as the random winners. This way we ensure a fair and unbiased selection by leveraging Math.random() for randomness.`,
+        },
+      ],
     },
     {
-      question: "Is there a fee to participate in a QuickLaunch?",
-      answer: `There are no fees to opt in and no token staking requirements.`,
-    },
-    {
-      question: "What crypto tokens can be used to participate in IDOs?",
-      answer: `Stablecoins: USDT or USDC on Polygon.`,
-    },
-    {
-      question: "How can I increase my odds of winning the lottery?",
-      answer: `This is a system-generated lottery that is automatically calculated.`,
-    },
-    {
-      question: "Is the QuickLaunch lottery provably fair?",
-      answer: `Our Lottery works completely off-chain, it shuffles the participants using the Fisher-Yates algorithm to randomize their order, then selects the first maxWinners as the random winners. This way we ensure a fair and unbiased selection by leveraging Math.random() for randomness.`,
-    },
-    {
-      question: "How can I contact QuickLaunch for questions or problems?",
-      answer: `You can contact us directly through our <a href="https://t.me/QuickLaunchOfficial"  target="_blank" class="text-[#448AFF] leading-6 border-b border-[#448AFF]">Telegram channel</a>, where our moderators will be available to assist you with any questions or issues you may have.`,
-    },
-    {
-      question: "What is the PIN number in the emails I get from QuickLaunch?",
-      answer: `The PIN number included in the emails you receive from QuickLaunch is a personal and unique identifier assigned to each registered user. This helps verify that the email is from us, not a scammer. If you ever receive an email without your unique PIN or notice any discrepancies, please reach out to our <a href="https://t.me/QuickLaunchOfficial" target="_blank" class="text-[#448AFF] leading-6 border-b border-[#448AFF]">Telegram support</a> team for assistance. 
-`,
-    },
-    {
-      question:
-        "How can I verify that emails I receive from QuickLaunch are legitimate?",
-      answer: `We always send our emails from the address no-reply@mail.quicklaunchpad.io, and they will include your personal unique PIN number. The legitimacy of our emails is confirmed by both the sender’s address and the presence of your PIN. To ensure your safety, please do not engage with or provide any information in response to suspicious emails. Always double-check both the sender’s address and your PIN number to verify authenticity.`,
-    },
-    {
-      question:
-        "I received an email about QuickLaunch with a link. What should I do? ",
-      answer: `Except for verifying your email, we never include links in our emails. This is to protect your security and prevent phishing attempts. If you are in doubt, please reach out to our <a href="https://t.me/QuickLaunchOfficial" target="_blank" class="text-[#448AFF] leading-6 border-b border-[#448AFF]">support team</a>. Always prioritize your online safety!`,
-    },
-    {
-      question:
-        "I received a direct message (DM) on Telegram claiming to be from QuickLaunch. How do I check if this is legitimate?",
-      answer: `We never initiate direct messages (DMs) on Telegram. If you receive a message from someone claiming to be from us, it is a scammer. Always use our <a href="https://t.me/QuickLaunchOfficial" target="_blank" class="text-[#448AFF] leading-6 border-b border-[#448AFF]">official Telegram channel</a> for support, and avoid engaging with any direct messages that are sent to you.`,
-    },
-    {
-      question:
-        "Why didn't I receive an email announcing the new launchpad?",
-      answer: `Connect your wallet and go to the profile page. Make sure that email notifications are enabled. If they are enabled and you still don't receive new announcement emails, please reach out to our <a href="https://t.me/QuickLaunchOfficial" target="_blank" class="text-[#448AFF] leading-6 border-b border-[#448AFF]">support team</a> for further assistance.`,
+      id: "contact",
+      name: "Contact",
+      faq: [
+        {
+          question: "How can I contact QuickLaunch for questions or problems?",
+          answer: `You can contact us directly through our <a href="https://t.me/QuickLaunchOfficial"  target="_blank" class="text-[#448AFF] leading-6 border-b border-[#448AFF]">Telegram channel</a>, where our moderators will be available to assist you with any questions or issues you may have.`,
+        },
+        {
+          question:
+            "What is the PIN number in the emails I get from QuickLaunch?",
+          answer: `The PIN number included in the emails you receive from QuickLaunch is a personal and unique identifier assigned to each registered user. This helps verify that the email is from us, not a scammer. If you ever receive an email without your unique PIN or notice any discrepancies, please reach out to our <a href="https://t.me/QuickLaunchOfficial" target="_blank" class="text-[#448AFF] leading-6 border-b border-[#448AFF]">Telegram support</a> team for assistance. 
+    `,
+        },
+        {
+          question:
+            "How can I verify that emails I receive from QuickLaunch are legitimate?",
+          answer: `We always send our emails from the address no-reply@mail.quicklaunchpad.io, and they will include your personal unique PIN number. The legitimacy of our emails is confirmed by both the sender’s address and the presence of your PIN. To ensure your safety, please do not engage with or provide any information in response to suspicious emails. Always double-check both the sender’s address and your PIN number to verify authenticity.`,
+        },
+        {
+          question:
+            "I received an email about QuickLaunch with a link. What should I do? ",
+          answer: `Except for verifying your email, we never include links in our emails. This is to protect your security and prevent phishing attempts. If you are in doubt, please reach out to our <a href="https://t.me/QuickLaunchOfficial" target="_blank" class="text-[#448AFF] leading-6 border-b border-[#448AFF]">support team</a>. Always prioritize your online safety!`,
+        },
+        {
+          question:
+            "I received a direct message (DM) on Telegram claiming to be from QuickLaunch. How do I check if this is legitimate?",
+          answer: `We never initiate direct messages (DMs) on Telegram. If you receive a message from someone claiming to be from us, it is a scammer. Always use our <a href="https://t.me/QuickLaunchOfficial" target="_blank" class="text-[#448AFF] leading-6 border-b border-[#448AFF]">official Telegram channel</a> for support, and avoid engaging with any direct messages that are sent to you.`,
+        },
+        {
+          question:
+            "Why didn't I receive an email announcing the new launchpad?",
+          answer: `Connect your wallet and go to the profile page. Make sure that email notifications are enabled. If they are enabled and you still don't receive new announcement emails, please reach out to our <a href="https://t.me/QuickLaunchOfficial" target="_blank" class="text-[#448AFF] leading-6 border-b border-[#448AFF]">support team</a> for further assistance.`,
+        },
+      ],
     },
   ];
+
+  const [openItems, setOpenItems] = useState<number[]>([]);
+  const [tabActive, setTabActive] = useState<string>(faqList[0].id);
 
   const toggleItem = (index: number) => {
     setOpenItems((prevOpenItems) =>
@@ -119,21 +160,43 @@ You should see a prompt from BlockPass saying, “If you have previously created
     );
   };
 
+  const handleSelectTab = (tabId: string) => {
+    setOpenItems([]);
+    setTabActive(tabId);
+  };
+
   return (
-    <section className="py-12 max-w-[712px] mx-auto">
-      <h2 className="text-[32px] text-center font-bold mb-16">
-        Frequently Asked Questions
-      </h2>
-      <div>
-        {faqItems.map((item, index) => (
-          <FAQItem
-            key={index}
-            question={item.question}
-            answer={item.answer}
-            isOpen={openItems.includes(index)}
-            toggle={() => toggleItem(index)}
-          />
-        ))}
+    <section className="flex gap-10 py-12 max-w-[1064px] mx-auto">
+      <div className="flex-[50%]">
+        <h2 className="text-[32px] leading-8 font-bold mb-16">
+          Frequently Asked Questions
+        </h2>
+        <div className="flex flex-wrap items-center gap-2">
+          {faqList.map((faq) => (
+            <div
+              key={faq.id}
+              className={`bg-[#1B1E29] p-4 cursor-pointer hover:bg-blue-500 ${
+                faq.id === tabActive && "bg-blue-500"
+              }`}
+              onClick={() => handleSelectTab(faq.id)}
+            >
+              {faq.name}
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="flex-[50%]">
+        {faqList
+          .find((faq) => faq.id === tabActive)
+          ?.faq?.map((item, index) => (
+            <FAQItem
+              key={index}
+              question={item.question}
+              answer={item.answer}
+              isOpen={openItems.includes(index)}
+              toggle={() => toggleItem(index)}
+            />
+          ))}
       </div>
     </section>
   );

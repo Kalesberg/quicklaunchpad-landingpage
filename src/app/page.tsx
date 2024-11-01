@@ -2,7 +2,7 @@
 import LaunchNotice from "components/ui/home/LaunchNotice";
 import StepsToJoin from "components/ui/home/StepsToJoin";
 import LiveUpcomingLaunches from "components/ui/home/LiveUpcomingLaunches";
-import JoinTelegram from "components/ui/home/JoinTelegram";
+import JoinSocialMedia from "components/ui/home/JoinSocialMedia";
 import PreviousLaunches from "components/ui/home/PreviousLaunches";
 import FAQ from "components/ui/home/FAQ";
 import CTA from "components/ui/home/CTA";
@@ -28,7 +28,7 @@ export default function Home() {
         {caseLaunch !== 0 && <LaunchNotice status="upcoming" />}
         <StepsToJoin openModal={openModal} setOpenModal={setOpenModal} />
         {caseLaunch > 1 && <LiveUpcomingLaunches />}
-        <JoinTelegram />
+        <JoinSocialMedia />
         {caseLaunch > 2 && <PreviousLaunches />}
         <FAQ />
         <CTA />

@@ -25,7 +25,7 @@ const HeroSection: React.FC<{caseLaunch: number, openModal?: boolean, setOpenMod
         </p>
 
         <Button variant="primary" size="large" className="min-w-[275px] !text-base leading-6" onClick={handleClick}>
-          {caseLaunch !== 0 ? ' Open QuickLaunch Dashboard' : 'Be the first to know'}
+          {caseLaunch !== 0 ? ' Open QuickLaunch Dashboard' : 'Join the Waitlist'}
         </Button>
 
         <div className="mt-16 text-gray-400 flex items-center">

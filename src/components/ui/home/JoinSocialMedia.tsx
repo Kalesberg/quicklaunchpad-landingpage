@@ -1,30 +1,43 @@
 import React from "react";
 import Image from "next/image";
 import Button from "components/common/Button";
-import TelegramIcon from "../../../../public/assets/images/home/tele-bg.png";
-import { useRouter } from "next/navigation";
+import SocialMediaIcon from "../../../../public/assets/images/home/social-media-bg.png";
+import {
+  TwitterIcon,
+  TelegramIcon,
+} from "../../../../public/assets/images/social-icons";
+import { EnvelopeIcon } from "@heroicons/react/24/solid";
 
-const JoinTelegram: React.FC = () => {
-  const router = useRouter();
+const JoinSocialMedia: React.FC = () => {
   return (
-    <section className="bg-[#1C1E29] rounded-lg mt-24 mb-36 p-16 relative overflow-hidden">
+    <section className="bg-[#1C1E29] rounded-lg mt-24 mb-36 p-8 relative overflow-hidden">
       <div className="max-w-[1064px] relative z-10 flex gap-16 items-center">
         <div className="max-w-[734px]">
-          <h2 className="text-[32px] font-bold mb-4">Join us on Telegram</h2>
+          <h2 className="text-[32px] font-bold mb-4">
+            Follow us on Social Media
+          </h2>
           <p className="text-gray-300 mb-6">
-            Join our Telegram channel for exclusive updates on upcoming crypto
+            Follow us on social media for exclusive updates on upcoming crypto
             launches, industry insights, and real-time discussions. Connect with
             like-minded individuals and be the first to know about the latest
             opportunities in the blockchain space.
           </p>
+          <div className="flex space-x-5 mt-2 mb-4">
+            <TelegramIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
+            <TwitterIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
+            <EnvelopeIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
+          </div>
         </div>
 
         <Button
           variant="secondary"
           size="large"
           as="button"
-          className="px-9"
-          onClick={(event) => {event.preventDefault(); window.open('https://t.me/QuickLaunchOfficial');}}
+          className="max-w-72 px-9"
+          onClick={(event) => {
+            event.preventDefault();
+            window.open("https://t.me/QuickLaunchOfficial");
+          }}
         >
           <svg
             width="18"
@@ -45,15 +58,15 @@ const JoinTelegram: React.FC = () => {
       </div>
       <div className="absolute bottom-0 right-0 z-0">
         <Image
-          src={TelegramIcon.src}
+          src={SocialMediaIcon.src}
           alt="Telegram Background"
           width={251}
           height={251}
-          style={{ objectFit: "contain" }}
+          className="object-contain"
         />
       </div>
     </section>
   );
 };
 
-export default JoinTelegram;
+export default JoinSocialMedia;

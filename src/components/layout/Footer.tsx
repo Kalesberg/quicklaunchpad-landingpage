@@ -63,11 +63,11 @@ const Footer: React.FC = () => {
     { href: "/perps-faktor", text: "Perps: Faktor", isNew: true },
     { href: "/pool", text: "Pool" },
     { href: "/farm", text: "Farm" },
-    { href: "/bonds", text: "Bonds" },
     { href: "/launchpad", text: "Launchpad", isNew: true },
     { href: "/dragons-lair", text: "Dragons Lair" },
     { href: "/gaming-hub", text: "Gaming Hub" },
     { href: "/leaderboard", text: "Leaderboard" },
+    { href: "/bonds", text: "Bonds" },
     { href: "/convert-quick", text: "Convert QUICK" },
     { href: "/dapp0s", text: "dapp0s" },
     { href: "/analytics", text: "Analytics" },
@@ -85,7 +85,11 @@ const Footer: React.FC = () => {
   ];
 
   return (
-    <footer className={`bg-[#12131A] text-white py-8 ${!checkIsDashboardPage() ? 'px-4' : 'px-0'} `}>
+    <footer
+      className={`bg-[#12131A] text-white py-8 ${
+        !checkIsDashboardPage() ? "px-4" : "px-0"
+      } `}
+    >
       {!checkIsDashboardPage() ? (
         <>
           <div className="container mx-auto px-12 flex justify-between items-start lg:flex-row flex-col gap-x-[100px] 2xl:gap-x-[200px] gap-y-16">
@@ -93,9 +97,10 @@ const Footer: React.FC = () => {
               <div className="flex gap-x-20 gap-y-[21px] xl:flex-row flex-col">
                 <FooterSection
                   title="Products"
-                  links={productLinks?.slice(0, 6)}
+                  links={productLinks?.slice(0, 5)}
                 />
-                <FooterSection title="" links={productLinks?.slice(6)} />
+                <FooterSection title="" links={productLinks?.slice(5, 9)} />
+                <FooterSection title="" links={productLinks?.slice(9)} />
               </div>
 
               <div>
@@ -120,9 +125,9 @@ const Footer: React.FC = () => {
                 height={30}
               />
               <p className="my-4 text-sm text-[#FFFFFFA3]">
-                QuickSwap&apos;s community is building a comprehensive decentralized
-                trading platform in the Polygon ecosystem for the future of
-                finance. Join the dragon army!
+                QuickSwap&apos;s community is building a comprehensive
+                decentralized trading platform in the Polygon ecosystem for the
+                future of finance. Join the dragon army!
               </p>
               <p className="font-bold mb-5 text-sm">
                 QuickSwap&apos;s Email Newsletter

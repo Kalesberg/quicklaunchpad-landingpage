@@ -1,7 +1,10 @@
 import React from "react";
 import Button from "components/common/Button";
 
-const StepsToJoin: React.FC<{openModal?: boolean, setOpenModal?: any}> = ({openModal, setOpenModal}) => {
+const StepsToJoin: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
+  openModal,
+  setOpenModal,
+}) => {
   const steps = [
     {
       title: "Connect Wallet",
@@ -94,8 +97,8 @@ const StepsToJoin: React.FC<{openModal?: boolean, setOpenModal?: any}> = ({openM
   ];
 
   const handleModal = () => {
-    setOpenModal(!openModal)
-  }
+    setOpenModal(!openModal);
+  };
 
   return (
     <section className="mb-12 pb-[100px] rounded-lg">
@@ -104,9 +107,6 @@ const StepsToJoin: React.FC<{openModal?: boolean, setOpenModal?: any}> = ({openM
         <p className="text-white font-bold mb-4">
           Participate in your first sale in just 4 steps.
         </p>
-        <Button variant="primary" size="medium" className="w-[250px]" onClick={handleModal}>
-          Get Started
-        </Button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -117,7 +117,9 @@ const StepsToJoin: React.FC<{openModal?: boolean, setOpenModal?: any}> = ({openM
           >
             <div className="w-full flex justify-between gap-3 items-center mb-4">
               <div className="relative w-12 h-12 p-2 text-[#448AFF] bg-[#222735] rounded-lg">
-                <div className="absolute top-[50%] left-[50%] transform -translate-x-1/2 -translate-y-1/2">{step.icon}</div>
+                <div className="absolute top-[50%] left-[50%] transform -translate-x-1/2 -translate-y-1/2">
+                  {step.icon}
+                </div>
               </div>
               <svg
                 width="79"
@@ -147,6 +149,14 @@ const StepsToJoin: React.FC<{openModal?: boolean, setOpenModal?: any}> = ({openM
           </div>
         ))}
       </div>
+      <Button
+        variant="primary"
+        size="medium"
+        className="max-w-[350px] mx-auto my-6"
+        onClick={handleModal}
+      >
+        I’m Interested, Keep Me Updated
+      </Button>
     </section>
   );
 };
