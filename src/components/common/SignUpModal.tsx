@@ -2,7 +2,6 @@ import { XMarkIcon } from "@heroicons/react/20/solid";
 import React, { useState } from "react";
 import Button from "./Button";
 import { TelegramIcon } from "../../../public/assets/images/social-icons";
-import { useRouter } from "next/navigation";
 import { ExclamationCircleIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 
@@ -14,15 +13,14 @@ const SignUpModal: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
   const [noValidEmail, setNoValidEmail] = useState(false);
   const [noValidText, setNoValidText] = useState("");
   const [confirm, setConfirm] = useState(false);
-  const router = useRouter();
-  const handleModal = (isClose : boolean = false) => {
-    if(!isClose){
+  const handleModal = (isClose: boolean = false) => {
+    if (!isClose) {
       setConfirm(!confirm);
     }
     setOpenModal(!openModal);
     setEmail("");
   };
-  
+
   const handleOnChange = (e: any) => {
     setEmail(e.target.value);
   };
@@ -64,7 +62,8 @@ const SignUpModal: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
                 Thank you for your interest in QuickLaunch
               </h2>
               <p className="text-sm text-[#C7CAD9] mb-6 text-center">
-                We&apos;ve received your request and will be in touch shortly at <span className="font-semibold">{email}</span>.
+                We&apos;ve received your request and will be in touch shortly at{" "}
+                <span className="font-semibold">{email}</span>.
               </p>
               <Button
                 variant="primary"
@@ -89,8 +88,8 @@ const SignUpModal: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
             </div>
             <div className="pb-4">
               <p className="text-sm text-[#C7CAD9] mb-6 text-justify">
-                Drop your email here, and we&apos;ll keep you in the loop with all
-                the exciting updates about QuickSwap Launches!
+                Drop your email here, and we&apos;ll keep you in the loop with
+                all the exciting updates about QuickSwap Launches!
               </p>
               <div className="mb-6">
                 <div
@@ -140,7 +139,10 @@ const SignUpModal: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
                 variant="secondary"
                 size="large"
                 className="w-full !text-[15px] font-bold capitalize leading-6"
-                onClick={(event) => {event.preventDefault(); window.open('https://t.me/QuickLaunchOfficial');}}
+                onClick={(event) => {
+                  event.preventDefault();
+                  window.open("https://t.me/QuickLaunchOfficial");
+                }}
               >
                 <TelegramIcon className="w-[18px] h-[18px] text-[#448AFF] hover:text-white cursor-pointer" />
                 Join us on Telegram
@@ -149,11 +151,17 @@ const SignUpModal: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
             <div className="px-4 pt-2">
               <div className="text-xs font-normal leading-5 text-[#696C80] text-center">
                 <p>By sending this form, you agree to the</p>{" "}
-                <a href="#" className="text-xs font-normal leading-5 text-[#448AFF] underline">
+                <a
+                  href="#"
+                  className="text-xs font-normal leading-5 text-[#448AFF] underline"
+                >
                   Terms and Conditions
                 </a>{" "}
                 and{" "}
-                <a href="#" className="text-xs font-normal leading-5 text-[#448AFF] underline">
+                <a
+                  href="#"
+                  className="text-xs font-normal leading-5 text-[#448AFF] underline"
+                >
                   Privacy Policy
                 </a>
               </div>

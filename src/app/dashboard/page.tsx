@@ -1,4 +1,5 @@
 import { ChevronLeftIcon } from "@heroicons/react/16/solid";
+import Footer from "components/layout/Footer";
 import LaunchNotice from "components/ui/home/LaunchNotice";
 import LiveUpcomingLaunches from "components/ui/home/LiveUpcomingLaunches";
 import PreviousLaunches from "components/ui/home/PreviousLaunches";
@@ -21,6 +22,7 @@ export default function DashboardPage() {
         {caseLaunch > 1 && <LiveUpcomingLaunches />}
         {caseLaunch > 2 && <PreviousLaunches />}
       </div>
+      {caseLaunch !== 0 && <Footer />}
     </div>
   );
 }

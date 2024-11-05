@@ -9,6 +9,7 @@ import CTA from "components/ui/home/CTA";
 import HeroSection from "components/ui/home/HeroSection";
 import { useState } from "react";
 import SignUpModal from "components/common/SignUpModal";
+import Footer from "components/layout/Footer";
 
 export default function Home() {
   // 0: no launches
@@ -32,6 +33,7 @@ export default function Home() {
         {caseLaunch > 2 && <PreviousLaunches />}
         <FAQ />
         <CTA />
+        <Footer/>
       </div>
       <SignUpModal openModal={openModal} setOpenModal={setOpenModal} />
     </div>

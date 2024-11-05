@@ -59,7 +59,7 @@ const Header = () => {
   const navItems = [
     { name: "Swap", href: "/swap" },
     {
-      name: "Launchpad",
+      name: "QuickLaunch",
       children: [
         { name: "Launchpad Homepage", href: "/" },
         { name: "QuickLaunch Dashboard", href: "/dashboard" },

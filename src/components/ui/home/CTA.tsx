@@ -4,7 +4,7 @@ import React from "react";
 
 const CTA: React.FC = () => {
   return (
-    <section className="relative z-10 text-center mt-16 mb-28 py-10 rounded-3xl overflow-hidden">
+    <section className="relative z-10 text-center mb-[120px] py-10 rounded-3xl overflow-hidden">
       <div className="backdrop-blur-[128px] h-full w-full bg-[#1B1E29] absolute top-0 left-0 -z-[1] opacity-95 rounded-3xl overflow-hidden"></div>
       <Image
         src="/assets/images/4dee09caf5949d0260bcdbb0b8e9a52a.png"
@@ -69,23 +69,16 @@ const CTA: React.FC = () => {
         height={94}
         className="absolute top-[149px] left-[997px] -z-10"
       />
-      <h2 className="text-3xl font-bold mb-4 max-w-full mx-auto px-6">
-      Are you ready to launch your project with QuickLaunch – Apply Below!
+      <h2 className="text-[30px] font-bold leading-9 mb-8 max-w-full mx-auto px-6">
+      Ready to launch your project on Polygon with QuickLaunch? Apply below!
       </h2>
       <div className="flex items-center justify-center gap-4 mt-[50px]">
         <Button
           variant="primary"
           size="medium"
-          className="max-w-[141px] w-full"
+          className="max-w-[250px] w-full"
         >
           Apply now
-        </Button>
-        <Button
-          variant="secondary"
-          size="medium"
-          className="max-w-[115px] w-full bg-[#EBECF2] text-black"
-        >
-          Learn more
         </Button>
       </div>
     </section>

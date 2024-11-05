@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
 import clsx from "clsx";
+import Image from "next/image";
 
 interface FAQItem {
   question: string;
@@ -12,6 +13,7 @@ interface FAQItem {
 interface FAQList {
   id: string;
   name: string;
+  logo: string;
   faq: FAQItem[];
 }
 
@@ -21,9 +23,9 @@ const FAQItem: React.FC<FAQItem & { isOpen: boolean; toggle: () => void }> = ({
   isOpen,
   toggle,
 }) => (
-  <div className="mb-4 shadow-[0_8px_16px_0_#919EAB29]">
+  <div>
     <button
-      className="w-full text-left bg-[#1B1E29] p-4 rounded-t-lg flex justify-between items-center"
+      className="w-full text-left pl-4 pr-2 py-3 flex justify-between items-center border-t border-[#282D3D80]"
       onClick={toggle}
     >
       <span className="text-lg font-semibold">{question}</span>
@@ -39,7 +41,7 @@ const FAQItem: React.FC<FAQItem & { isOpen: boolean; toggle: () => void }> = ({
         isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
       }`}
     >
-      <div className="p-4 bg-[#1B1E29] rounded-b-lg">
+      <div className="p-4">
         <p
           className="text-gray-300"
           dangerouslySetInnerHTML={{ __html: answer }}
@@ -52,8 +54,9 @@ const FAQItem: React.FC<FAQItem & { isOpen: boolean; toggle: () => void }> = ({
 const FAQ: React.FC = () => {
   const faqList: FAQList[] = [
     {
-      id: "quickLaunch-launchpad",
-      name: "QuickLaunch Launchpad",
+      id: "getting-started",
+      name: "Getting Started",
+      logo: "start-icon.svg",
       faq: [
         {
           question: "What is the QuickLaunch Launchpad?",
@@ -65,12 +68,6 @@ const FAQ: React.FC = () => {
           answer:
             "The QuickLaunch Launchpad uses a Lottery system where a certain amount of whitelisted users are randomly selected to participate in a project launch. There are three simple steps: First, you sign into the dashboard and then KYC with our KYC provider. Once you are successfully KYC'd, you are eligible to participate in a QuickLaunch. Next, you find a project you would like to participate in and register to be whitelisted for the project's launch. This means you are expressing interest in participating and are participating in the lottery. Then, once the lottery is run, if you are selected, you will receive a notification that you can contribute your allocated amount to the project via the dashboard. When the project launch is completed, you will be notified via the dashboard about where and how to claim your tokens.",
         },
-      ],
-    },
-    {
-      id: "kyc",
-      name: "KYC",
-      faq: [
         {
           question: "Do I have to KYC to access QuickLaunch?",
           answer:
@@ -84,8 +81,9 @@ const FAQ: React.FC = () => {
       ],
     },
     {
-      id: "fee",
-      name: "Fee",
+      id: "fees-eligibility",
+      name: "Fees & Eligibility",
+      logo: "fees-eligibility-icon.svg",
       faq: [
         {
           question: "Is there a fee to participate in a QuickLaunch?",
@@ -95,12 +93,6 @@ const FAQ: React.FC = () => {
           question: "What crypto tokens can be used to participate in IDOs?",
           answer: `Stablecoins: USDT or USDC on Polygon.`,
         },
-      ],
-    },
-    {
-      id: "lottery",
-      name: "Lottery",
-      faq: [
         {
           question: "How can I increase my odds of winning the lottery?",
           answer: `This is a system-generated lottery that is automatically calculated.`,
@@ -112,19 +104,10 @@ const FAQ: React.FC = () => {
       ],
     },
     {
-      id: "contact",
-      name: "Contact",
+      id: "security",
+      name: "Security",
+      logo: "security-icon.svg",
       faq: [
-        {
-          question: "How can I contact QuickLaunch for questions or problems?",
-          answer: `You can contact us directly through our <a href="https://t.me/QuickLaunchOfficial"  target="_blank" class="text-[#448AFF] leading-6 border-b border-[#448AFF]">Telegram channel</a>, where our moderators will be available to assist you with any questions or issues you may have.`,
-        },
-        {
-          question:
-            "What is the PIN number in the emails I get from QuickLaunch?",
-          answer: `The PIN number included in the emails you receive from QuickLaunch is a personal and unique identifier assigned to each registered user. This helps verify that the email is from us, not a scammer. If you ever receive an email without your unique PIN or notice any discrepancies, please reach out to our <a href="https://t.me/QuickLaunchOfficial" target="_blank" class="text-[#448AFF] leading-6 border-b border-[#448AFF]">Telegram support</a> team for assistance. 
-    `,
-        },
         {
           question:
             "How can I verify that emails I receive from QuickLaunch are legitimate?",
@@ -142,8 +125,25 @@ const FAQ: React.FC = () => {
         },
         {
           question:
+            "What is the PIN number in the emails I get from QuickLaunch?",
+          answer: `The PIN number included in the emails you receive from QuickLaunch is a personal and unique identifier assigned to each registered user. This helps verify that the email is from us, not a scammer. If you ever receive an email without your unique PIN or notice any discrepancies, please reach out to our <a href="https://t.me/QuickLaunchOfficial" target="_blank" class="text-[#448AFF] leading-6 border-b border-[#448AFF]">Telegram support</a> team for assistance. 
+    `,
+        },
+      ],
+    },
+    {
+      id: "troubleshooting",
+      name: "Troubleshooting",
+      logo: "troubleshooting-icon.svg",
+      faq: [
+        {
+          question:
             "Why didn't I receive an email announcing the new launchpad?",
           answer: `Connect your wallet and go to the profile page. Make sure that email notifications are enabled. If they are enabled and you still don't receive new announcement emails, please reach out to our <a href="https://t.me/QuickLaunchOfficial" target="_blank" class="text-[#448AFF] leading-6 border-b border-[#448AFF]">support team</a> for further assistance.`,
+        },
+        {
+          question: "How can I contact QuickLaunch for questions or problems?",
+          answer: `You can contact us directly through our <a href="https://t.me/QuickLaunchOfficial"  target="_blank" class="text-[#448AFF] leading-6 border-b border-[#448AFF]">Telegram channel</a>, where our moderators will be available to assist you with any questions or issues you may have.`,
         },
       ],
     },
@@ -166,37 +166,81 @@ const FAQ: React.FC = () => {
   };
 
   return (
-    <section className="flex gap-10 py-12 max-w-[1064px] mx-auto">
-      <div className="flex-[50%]">
-        <h2 className="text-[32px] leading-8 font-bold mb-16">
-          Frequently Asked Questions
-        </h2>
-        <div className="flex flex-wrap items-center gap-2">
-          {faqList.map((faq) => (
-            <div
-              key={faq.id}
-              className={`bg-[#1B1E29] p-4 cursor-pointer hover:bg-blue-500 ${
-                faq.id === tabActive && "bg-blue-500"
-              }`}
-              onClick={() => handleSelectTab(faq.id)}
-            >
-              {faq.name}
-            </div>
-          ))}
+    <section className="max-w-[1000px] mx-auto mb-[120px] px-4 md:px-0">
+      <h2 className="text-[20px] md:text-[32px] text-center leading-[30px] md:leading-8 font-bold mb-8">
+        Frequently Asked Questions
+      </h2>
+      <div className="flex flex-col md:flex-row gap-4 md:gap-10">
+        <div className="flex-[40%]">
+          <div className="grid grid-cols-2 md:grid-cols-1 items-center gap-2">
+            {faqList.map((faq) => (
+              <div
+                key={faq.id}
+                className={`flex flex-col md:flex-row items-center gap-4 text-[#282D3D] p-4 cursor-pointer text-[17px] md:text-2xl text-center font-bold leading-[26px] md:leading-9 hover:text-[#EBECF2] transition-all ${
+                  tabActive === faq.id && "text-[#EBECF2]"
+                }`}
+                onClick={() => handleSelectTab(faq.id)}
+              >
+                <div
+                  className={`w-9 h-9 md:w-12 md:h-12 p-[9px] md:p-3 mx-auto md:mx-0 mb-2 rounded-[9px] md:rounded-xl bg-[#282D3D99] border border-[#282D3D] border-1 ${
+                    faq.id === tabActive && "bg-[#40455799] border-[#404557]"
+                  }`}
+                >
+                  <Image
+                    src={`/assets/images/${faq.logo}`}
+                    alt={faq.name}
+                    width={24}
+                    height={24}
+                    className="w-6 h-6"
+                    style={{
+                      filter: `${
+                        tabActive === faq.id
+                          ? "invert(54%) sepia(30%) saturate(6598%) hue-rotate(200deg) brightness(100%) contrast(103%)"
+                          : ""
+                      }`,
+                    }}
+                  />
+                </div>
+                {faq.name}
+                {tabActive === faq.id && (
+                  <svg
+                    width="79"
+                    height="14"
+                    viewBox="0 0 79 14"
+                    fill="none"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="hidden md:block text-[#4d5d7994] ml-auto"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g>
+                      <path
+                        d="M1 7H78M78 7L72 1M78 7L72 13"
+                        stroke="#4d5d7994"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </g>
+                  </svg>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-      <div className="flex-[50%]">
-        {faqList
-          .find((faq) => faq.id === tabActive)
-          ?.faq?.map((item, index) => (
-            <FAQItem
-              key={index}
-              question={item.question}
-              answer={item.answer}
-              isOpen={openItems.includes(index)}
-              toggle={() => toggleItem(index)}
-            />
-          ))}
+        <div className="flex-[60%] md:mt-4">
+          {faqList
+            .find((faq) => faq.id === tabActive)
+            ?.faq?.map((item, index) => (
+              <FAQItem
+                key={index}
+                question={item.question}
+                answer={item.answer}
+                isOpen={openItems.includes(index)}
+                toggle={() => toggleItem(index)}
+              />
+            ))}
+        </div>
       </div>
     </section>
   );

@@ -31,7 +31,7 @@ const StepsToJoin: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
     {
       title: "Complete KYC",
       description:
-        "To confirm eligibility to invest in launchpad projects, get whitelisted by completing the KYC.",
+        "To confirm eligibility to participate in launchpad projects, get whitelisted by completing the KYC (Know Your Customer) process.",
       icon: (
         <svg
           width="22"
@@ -101,11 +101,11 @@ const StepsToJoin: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
   };
 
   return (
-    <section className="mb-12 pb-[100px] rounded-lg">
+    <section className="mb-12 rounded-lg">
       <div className="mb-8">
-        <h2 className="text-[32px] font-bold mb-4">Steps to join launchpad</h2>
-        <p className="text-white font-bold mb-4">
-          Participate in your first sale in just 4 steps.
+        <h2 className="text-[#EBECF2] text-[32px] font-bold mb-4">Getting Started</h2>
+        <p className="text-white leading-6 mb-4">
+        Participate in your first launchpad in 4 simple steps.
         </p>
       </div>
 
@@ -113,7 +113,7 @@ const StepsToJoin: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
         {steps.map((step, index) => (
           <div
             key={index}
-            className="bg-[#1C1E29] size-[294px] p-6 rounded-2xl flex flex-col"
+            className="bg-[#1C1E29] size-[294px] p-8 rounded-3xl flex flex-col"
           >
             <div className="w-full flex justify-between gap-3 items-center mb-4">
               <div className="relative w-12 h-12 p-2 text-[#448AFF] bg-[#222735] rounded-lg">
@@ -155,7 +155,7 @@ const StepsToJoin: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
         className="max-w-[350px] mx-auto my-6"
         onClick={handleModal}
       >
-        I’m Interested, Keep Me Updated
+        I’m Interested - Keep Me Updated
       </Button>
     </section>
   );
