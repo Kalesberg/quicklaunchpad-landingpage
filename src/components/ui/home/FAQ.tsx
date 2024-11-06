@@ -66,17 +66,17 @@ const FAQ: React.FC = () => {
         {
           question: "What is the process for participating in a QuickLaunch?",
           answer:
-            "The QuickLaunch Launchpad uses a Lottery system where a certain amount of whitelisted users are randomly selected to participate in a project launch. There are three simple steps: First, you sign into the dashboard and then KYC with our KYC provider. Once you are successfully KYC'd, you are eligible to participate in a QuickLaunch. Next, you find a project you would like to participate in and register to be whitelisted for the project's launch. This means you are expressing interest in participating and are participating in the lottery. Then, once the lottery is run, if you are selected, you will receive a notification that you can contribute your allocated amount to the project via the dashboard. When the project launch is completed, you will be notified via the dashboard about where and how to claim your tokens.",
+            "The QuickLaunch Launchpad uses a Lottery system where a certain amount of whitelisted users are randomly selected to participate in a project launch.There are three simple steps. First, you sign into the dashboard and then KYC with our KYC provider. Once you are successfully KYC’d, you are eligible to participate in a QuickLaunch. Next, you find a project you would like to participate in and register to be whitelisted for the project’s launch. This means you are expressing interest in participating and are participating in the lottery. Then, once the lottery is run, if you are selected, you will receive a notification that you can contribute your allocated amount to the project via the dashboard. When the project launch is completed, you will be notified via the dashboard about where and how to claim your tokens.",
         },
         {
-          question: "Do I have to KYC to access QuickLaunch?",
+          question: "Do I have access to KYC to access QuickLaunch?",
           answer:
-            "Yes. KYC is required for participating in any project on QuickLaunch. Our partnership with Blockpass has simplified the KYC process. You can register via the QuickLaunch dashboard.",
+            "Yes. KYC is required for all users participating in any project on QuickLaunch. Through a partnership with Blockpass, the KYC process has been simplified and allows you to register via the QuickLaunch dashboard.",
         },
         {
           question: "What if I am already currently KYC’ed by BlockPass?",
           answer: `That makes the process easier. Connect to the QuickLaunch dashboard, register to KYC, and when prompted to start KYC, make sure you use the previously KYC’d email address.
-    You should see a prompt from BlockPass saying, “If you have previously created a Blockpass Identity, you should use that email address here.” Once you use your KYC’d email address, you will not need to repeat the KYC process.`,
+You should see a prompt from BlockPass saying, “If you have previously created a Blockpass Identity, you should use that email address here.” Once you use your KYC’d email address, you will not need to repeat the KYC process.`,
         },
       ],
     },
@@ -99,7 +99,7 @@ const FAQ: React.FC = () => {
         },
         {
           question: "Is the QuickLaunch lottery provably fair?",
-          answer: `Our Lottery works completely off-chain, it shuffles the participants using the Fisher-Yates algorithm to randomize their order, then selects the first maxWinners as the random winners. This way we ensure a fair and unbiased selection by leveraging Math.random() for randomness.`,
+          answer: `The Lottery system works completely off-chain, shuffling the participants using the Fisher-Yates algorithm to randomise their order. It then selects the first maxWinners as the random winners. This is to ensure a fair and unbiased selection by leveraging Math.random() for randomness.`,
         },
       ],
     },
@@ -111,23 +111,22 @@ const FAQ: React.FC = () => {
         {
           question:
             "How can I verify that emails I receive from QuickLaunch are legitimate?",
-          answer: `We always send our emails from the address no-reply@mail.quicklaunchpad.io, and they will include your personal unique PIN number. The legitimacy of our emails is confirmed by both the sender’s address and the presence of your PIN. To ensure your safety, please do not engage with or provide any information in response to suspicious emails. Always double-check both the sender’s address and your PIN number to verify authenticity.`,
+          answer: `Emails are always sent from no-reply@mail.quicklaunchpad.io, and they will include your personal unique PIN number. The legitimacy of these emails is confirmed by both the sender’s address and the presence of your PIN. To ensure your safety, please do not engage with or provide any information in response to suspicious emails. Always double-check both the sender’s address and your PIN number to verify authenticity.`,
         },
         {
           question:
-            "I received an email about QuickLaunch with a link. What should I do? ",
-          answer: `Except for verifying your email, we never include links in our emails. This is to protect your security and prevent phishing attempts. If you are in doubt, please reach out to our <a href="https://t.me/QuickLaunchOfficial" target="_blank" class="text-[#448AFF] leading-6 border-b border-[#448AFF]">support team</a>. Always prioritize your online safety!`,
+            "I received an email about QuickLaunch with a link. What should I do?",
+          answer: `Except for verifying your email, links are never included in emails from QuickLaunch. This is to protect your security and prevent phishing attempts. If you are in doubt, please reach out to support/moderators on official social media channels. Always prioritise your online safety!`,
         },
         {
           question:
-            "I received a direct message (DM) on Telegram claiming to be from QuickLaunch. How do I check if this is legitimate?",
-          answer: `We never initiate direct messages (DMs) on Telegram. If you receive a message from someone claiming to be from us, it is a scammer. Always use our <a href="https://t.me/QuickLaunchOfficial" target="_blank" class="text-[#448AFF] leading-6 border-b border-[#448AFF]">official Telegram channel</a> for support, and avoid engaging with any direct messages that are sent to you.`,
+            "I received a DM (direct message) on Telegram claiming to be from QuickLaunch. How do I check if this is legitimate?",
+          answer: `QuickLaunch support moderators never initiate DMs (direct messages) on Telegram. If you receive a message from someone claiming to be from QuickLaunch, it is a scammer. Always use the official Telegram channel for support, and avoid engaging with any direct messages that are sent to you.`,
         },
         {
           question:
             "What is the PIN number in the emails I get from QuickLaunch?",
-          answer: `The PIN number included in the emails you receive from QuickLaunch is a personal and unique identifier assigned to each registered user. This helps verify that the email is from us, not a scammer. If you ever receive an email without your unique PIN or notice any discrepancies, please reach out to our <a href="https://t.me/QuickLaunchOfficial" target="_blank" class="text-[#448AFF] leading-6 border-b border-[#448AFF]">Telegram support</a> team for assistance. 
-    `,
+    answer:`The PIN number included in the emails you receive from QuickLaunch is a personal and unique identifier assigned to each registered user. This helps verify that the email is from us, not a scammer. If you ever receive an email without your unique PIN or notice any discrepancies, please reach out to our <a href="https://t.me/QuickLaunchOfficial" target="_blank" class="text-[#448AFF] leading-6 border-b border-[#448AFF]">Telegram support</a> team for assistance.`
         },
       ],
     },
@@ -138,12 +137,12 @@ const FAQ: React.FC = () => {
       faq: [
         {
           question:
-            "Why didn't I receive an email announcing the new launchpad?",
-          answer: `Connect your wallet and go to the profile page. Make sure that email notifications are enabled. If they are enabled and you still don't receive new announcement emails, please reach out to our <a href="https://t.me/QuickLaunchOfficial" target="_blank" class="text-[#448AFF] leading-6 border-b border-[#448AFF]">support team</a> for further assistance.`,
+            "Why didn’t I receive an email announcing the new launchpad?",
+          answer: `Connect your wallet and go to the profile page, then make sure that email notifications are enabled. If they are enabled and you still don't receive new announcement emails, please reach out on official social media channels for further assistance.`,
         },
         {
-          question: "How can I contact QuickLaunch for questions or problems?",
-          answer: `You can contact us directly through our <a href="https://t.me/QuickLaunchOfficial"  target="_blank" class="text-[#448AFF] leading-6 border-b border-[#448AFF]">Telegram channel</a>, where our moderators will be available to assist you with any questions or issues you may have.`,
+          question: "How can I contact QuickLaunch for questions or issues?",
+          answer: `You can contact QuickLaunch directly through the official <a href="https://t.me/QuickLaunchOfficial"  target="_blank" class="text-[#448AFF] leading-6 border-b border-[#448AFF]">Telegram channel</a>, where moderators will be available to assist you with any questions or issues you may have.`,
         },
       ],
     },

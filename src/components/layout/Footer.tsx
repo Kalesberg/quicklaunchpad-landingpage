@@ -118,10 +118,10 @@ const Footer: React.FC = () => {
               <Image
                 src="/assets/images/quicklaunch-logo-footer.png"
                 alt="QuickSwap"
-                width={150}
-                height={30}
+                width={120}
+                height={20}
               />
-              <p className="my-4 text-sm text-[#FFFFFFA3]">
+              <p className="my-4 text-sm font-medium text-[#FFFFFFA3]">
                 QuickSwap&apos;s community is building a comprehensive
                 decentralized trading platform in the Polygon ecosystem for the
                 future of finance. Join the dragon army!
@@ -130,15 +130,15 @@ const Footer: React.FC = () => {
                 QuickSwap&apos;s Email Newsletter
               </p>
 
-              <form className="flex">
+              <form className="relative flex">
                 <input
                   type="email"
                   placeholder="Enter email"
-                  className="bg-gray-800 text-white px-3 py-2 rounded-l-md flex-grow"
+                  className="bg-gray-800 text-white px-3 py-2 rounded-lg flex-grow"
                 />
                 <button
                   type="submit"
-                  className="bg-purple-600 text-white px-4 py-2 rounded-r-md"
+                  className="absolute right-1 top-1/2 -translate-y-1/2 bg-purple-600 text-white px-4 py-1 rounded-lg"
                 >
                   Subscribe
                 </button>
