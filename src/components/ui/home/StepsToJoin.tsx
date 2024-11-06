@@ -75,7 +75,7 @@ const StepsToJoin: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
     {
       title: "Contribute funds",
       description:
-        "Selected users can then contribute their funds to the launchpad project and await the IDO date to receive tokens.",
+        "Selected users can contribute their funds to the launchpad project and await the IDO date to receive tokens.",
       icon: (
         <svg
           width="22"
