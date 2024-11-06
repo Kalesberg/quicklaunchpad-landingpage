@@ -101,15 +101,15 @@ const StepsToJoin: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
   };
 
   return (
-    <section className="mb-12 rounded-lg">
+    <section className="mb-12 px-8 lg:px-0 rounded-lg">
       <div className="mb-8">
-        <h2 className="text-[#EBECF2] text-[32px] font-bold mb-4">Getting Started</h2>
+        <h2 className="text-[#EBECF2] text-2xl lg:text-[32px] font-bold mb-4">Getting Started</h2>
         <p className="text-white leading-6 mb-4">
         Participate in your first launchpad in 4 simple steps.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 justify-items-center">
         {steps.map((step, index) => (
           <div
             key={index}

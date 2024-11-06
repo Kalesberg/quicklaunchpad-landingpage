@@ -90,8 +90,8 @@ const Footer: React.FC = () => {
     >
       {!checkIsDashboardPage() ? (
         <>
-          <div className="container mx-auto flex justify-between items-start lg:flex-row flex-col gap-x-[100px] 2xl:gap-x-[120px] gap-y-16">
-            <div className="w-full flex items-start justify-between gap-[100px]">
+          <div className="container mx-auto px-8 lg:px-0 flex justify-between items-start flex-col lg:flex-row gap-x-[100px] 2xl:gap-x-[120px] gap-y-16">
+            <div className="w-full flex items-start flex-wrap justify-between gap-6 lg:gap-[100px]">
               <div className="flex gap-x-20 gap-y-[21px] xl:flex-row flex-col">
                 <FooterSection
                   title="Products"
@@ -100,7 +100,7 @@ const Footer: React.FC = () => {
                 <FooterSection title="" links={productLinks?.slice(6)} />
               </div>
 
-              <div>
+              {/* <div>
                 <h3 className="font-bold mb-6 text-base">Developers</h3>
                 <ul className="space-y-[21px]">
                   {developerLinks.map(({ href, text }) => (
@@ -109,8 +109,8 @@ const Footer: React.FC = () => {
                     </li>
                   ))}
                 </ul>
-              </div>
-
+              </div> */}
+              <FooterSection title="Developers" links={developerLinks} />
               <FooterSection title="Governance" links={governanceLinks} />
             </div>
 
@@ -145,8 +145,8 @@ const Footer: React.FC = () => {
               </form>
             </div>
           </div>
-          <div className="container w-full h-[1.5px] mx-auto after:content-[''] after:block after:w-full after:h-full after:bg-[#FFFFFF0A]"></div>
-          <div className="container mx-auto mt-8 flex justify-between items-center text-sm">
+          <div className="container w-full h-[1.5px] mx-auto mt-8 lg:mt-0 px-8 lg:px-0 after:content-[''] after:block after:w-full after:h-full after:bg-[#FFFFFF0A]"></div>
+          <div className="container mx-auto mt-8 px-8 lg:px-0 flex justify-between items-center text-sm">
             <span className="text-[#FFFFFFA3]">
               © {new Date().getFullYear()} QuickSwap
             </span>

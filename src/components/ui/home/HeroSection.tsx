@@ -18,7 +18,7 @@ const HeroSection: React.FC<{
     }
   };
   return (
-    <section className="relative flex items-end justify-start mb-8 px-20 py-16 text-left min-h-[650px]">
+    <section className="relative flex items-end justify-start mb-8 px-10 lg:px-20 py-8 lg:py-16 text-left min-h-0 lg:min-h-[650px]">
       <div className="z-10 relative max-w-[520px]">
         {caseLaunch === 0 && (
           <span className="bg-[#448AFF29] inline-block mb-6 px-4 py-[2px] rounded-2xl text-[#61F3F3] text-lg font-bold leading-7">
@@ -26,7 +26,7 @@ const HeroSection: React.FC<{
           </span>
         )}
 
-        <h1 className="text-5xl leading-[1.2] font-bold mb-5 text-white">
+        <h1 className="text-4xl lg:text-5xl leading-[1.2] font-bold mb-5 text-white">
           Get exclusive early access to new project IDOs on Polygon
         </h1>
         <p className="mb-10 text-[#C7CAD9] leading-6">

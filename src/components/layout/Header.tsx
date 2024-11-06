@@ -40,12 +40,13 @@ enum ChainId {
 const Header = () => {
   const [activeItem, setActiveItem] = useState("/");
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  const [moreLinksOpen, setMoreLinksOpen] = useState(false);
-  const [isOpenNetwork, setIsOpenNetwork] = useState(false);
+  const [moreLinksOpen, setMoreLinksOpen] = useState<boolean>(false);
+  const [isOpenNetwork, setIsOpenNetwork] = useState<boolean>(false);
   const [selectedTab, setSelectedTab] = useState<string>("mainnets");
   const [selectedNetwork, setSelectedNetwork] = useState<Network | null>({
     chainId: ChainId.MATIC,
   });
+  const [openMobileMenu, setOpenMobileMenu] = useState<boolean>(false);
   const pathname = usePathname();
 
   const checkIsDashboardPage = () => {
@@ -159,7 +160,7 @@ const Header = () => {
   return (
     <header className="bg-[#12131A]">
       <div
-        className={`container w-full mx-auto flex items-center justify-between text-white py-4 px-6 ${
+        className={`hidden container w-full mx-auto lg:flex items-center justify-between text-white py-4 px-6 ${
           checkIsDashboardPage() ? "md:px-[110px]" : ""
         }`}
       >
@@ -327,6 +328,92 @@ const Header = () => {
             Connect Wallet
           </button>
         </div>
+      </div>
+      <div
+        className={`relative flex lg:hidden container w-full min-h-16 mx-auto items-center justify-between bg-[#12131A] text-white py-4 px-6`}
+      >
+        <Image
+          src="/assets/images/menu-button.svg"
+          alt=""
+          width={36}
+          height={36}
+          onClick={() => setOpenMobileMenu(!openMobileMenu)}
+        />
+        <button className="bg-blue-500 hover:bg-blue-600 text-base h-[44px] text-white font-semibold py-2 px-3 rounded-3xl">
+          Connect Wallet
+        </button>
+        {openMobileMenu && (
+          <nav className={`absolute top-16 left-0 z-[999] w-full h-auto bg-[#12131A] animate-contentShow`}>
+            <ul className="flex flex-col items-center space-y-8">
+              {navItems.concat(moreLinks).map((item) => (
+                <li key={item.name} className="relative">
+                  {item.children ? (
+                    <div>
+                      <div className="flex gap-1 items-center">
+                        <button
+                          onClick={() => handleDropdown(item.name)}
+                          className={`relative px-4 hover:text-blue-400 ${
+                            item.children.find(
+                              (child) => child.href === activeItem
+                            )
+                              ? "text-[#D9D9D9] after:absolute after:-bottom-4 after:left-0 after:block after:bg-[#448AFF] after:w-full after:h-[2px] after:px-4"
+                              : "text-[#7c7c81]"
+                          } flex items-center`}
+                        >
+                          {item.name}
+                          <ChevronDownIcon className="w-4 h-4 ml-1" />
+                        </button>
+                        {item?.isNew && (
+                          <span className="flex items-center px-1 py-[0.5px] h-4 text-[0.625rem] text-white rounded-xl bg-[#233455]">
+                            <FireIcon className="text-red-500 mr-1 w-3 h-3" />
+                            New
+                          </span>
+                        )}
+                      </div>
+                      {openDropdown === item.name && (
+                        <ul className="absolute left-0 z-10 mt-2 w-48 rounded-md shadow-lg bg-[#1B1E29] ring-1 ring-black ring-opacity-5">
+                          {item.children.map((child) => (
+                            <li key={child.name}>
+                              <Link
+                                href={child.href}
+                                className={`block px-4 py-2 text-sm text-[#696C80] hover:bg-gray-700 ${
+                                  activeItem === child.href && "text-[#D9D9D9]"
+                                }`}
+                                onClick={() => setActiveItem(child.href)}
+                              >
+                                {child.name}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="flex gap-1 items-center">
+                      <Link
+                        href={item.href}
+                        className={`relative px-4 py-2 hover:text-blue-400 ${
+                          activeItem === item.href
+                            ? "text-[#D9D9D9] after:absolute after:-bottom-4 after:left-0 after:bg-[#448AFF] after:w-full after:h-[2px]"
+                            : "text-[#7c7c81]"
+                        }`}
+                        onClick={() => setActiveItem(item.href)}
+                      >
+                        {item.name}
+                      </Link>
+                      {item?.isNew && (
+                        <span className="flex items-center px-1 py-[0.5px] h-4 text-[0.625rem] text-white rounded-xl bg-[#233455]">
+                          <FireIcon className="text-red-500 mr-1 w-[10px] h-3" />
+                          New
+                        </span>
+                      )}
+                    </div>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
       </div>
     </header>
   );
