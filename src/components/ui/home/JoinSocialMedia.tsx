@@ -16,10 +16,10 @@ const JoinSocialMedia: React.FC = () => {
             Follow us on Social Media
           </h2>
           <p className="text-gray-300 mb-6">
-            Follow us on social media for exclusive updates on upcoming crypto
-            launches, industry insights, and real-time discussions. Connect with
-            like-minded individuals and be the first to know about the latest
-            opportunities in the blockchain space.
+            Follow QuickLaunch on social media channels for exclusive updates on
+            upcoming crypto launches, industry insights, and real-time
+            discussions. Connect with like-minded individuals and be the first
+            to know about the latest opportunities for IDOs on Polygon.
           </p>
           <div className="flex space-x-5 mt-2 mb-4">
             <TelegramIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
