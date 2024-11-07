@@ -66,7 +66,7 @@ const FAQ: React.FC = () => {
         {
           question: "What is the process for participating in a QuickLaunch?",
           answer:
-            "The QuickLaunch Launchpad uses a Lottery system where a certain amount of whitelisted users are randomly selected to participate in a project launch.There are three simple steps. First, you sign into the dashboard and then KYC with our KYC provider. Once you are successfully KYC’d, you are eligible to participate in a QuickLaunch. Next, you find a project you would like to participate in and register to be whitelisted for the project’s launch. This means you are expressing interest in participating and are participating in the lottery. Then, once the lottery is run, if you are selected, you will receive a notification that you can contribute your allocated amount to the project via the dashboard. When the project launch is completed, you will be notified via the dashboard about where and how to claim your tokens.",
+            "The QuickLaunch Launchpad uses a Lottery system where a certain amount of whitelisted users are randomly selected to participate in a project launch. There are three simple steps. First, you sign into the dashboard and then KYC with our KYC provider. Once you are successfully KYC’d, you are eligible to participate in a QuickLaunch. Next, you find a project you would like to participate in and register to be whitelisted for the project’s launch. This means you are expressing interest in participating and are participating in the lottery. Then, once the lottery is run, if you are selected, you will receive a notification that you can contribute your allocated amount to the project via the dashboard. When the project launch is completed, you will be notified via the dashboard about where and how to claim your tokens.",
         },
         {
           question: "Do I have access to KYC to access QuickLaunch?",
@@ -126,7 +126,7 @@ You should see a prompt from BlockPass saying, “If you have previously created
         {
           question:
             "What is the PIN number in the emails I get from QuickLaunch?",
-    answer:`The PIN number included in the emails you receive from QuickLaunch is a personal and unique identifier assigned to each registered user. This helps verify that the email is from us, not a scammer. If you ever receive an email without your unique PIN or notice any discrepancies, please reach out to our <a href="https://t.me/QuickLaunchOfficial" target="_blank" class="text-[#448AFF] leading-6 border-b border-[#448AFF]">Telegram support</a> team for assistance.`
+          answer: `The PIN number included in the emails you receive from QuickLaunch is a personal and unique identifier assigned to each registered user. This helps verify that the email is from us, not a scammer. If you ever receive an email without your unique PIN or notice any discrepancies, please reach out to our <a href="https://t.me/QuickLaunchOfficial" target="_blank" class="text-[#448AFF] leading-6 border-b border-[#448AFF]">Telegram support</a> team for assistance.`,
         },
       ],
     },

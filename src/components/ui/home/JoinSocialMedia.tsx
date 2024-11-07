@@ -13,7 +13,7 @@ const JoinSocialMedia: React.FC = () => {
       <div className="max-w-[1064px] relative z-10 flex gap-16 items-center">
         <div className="max-w-[734px]">
           <h2 className="text-2xl lg:text-[32px] font-bold mb-3">
-            Follow us on Social Media
+            Follow on Social Media
           </h2>
           <p className="text-gray-300 mb-6">
             Follow QuickLaunch on social media channels for exclusive updates on

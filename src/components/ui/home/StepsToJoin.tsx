@@ -51,7 +51,7 @@ const StepsToJoin: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
       ),
     },
     {
-      title: "Participate in lottery",
+      title: "Lottery Participation",
       description:
         "Once eligible, users will be randomly selected via a lottery system to participate in the launch.",
       icon: (
@@ -103,9 +103,11 @@ const StepsToJoin: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
   return (
     <section className="mb-12 px-8 lg:px-0 rounded-lg">
       <div className="mb-8">
-        <h2 className="text-[#EBECF2] text-2xl lg:text-[32px] font-bold mb-4">Getting Started</h2>
+        <h2 className="text-[#EBECF2] text-2xl lg:text-[32px] font-bold mb-4">
+          Getting Started
+        </h2>
         <p className="text-white leading-6 mb-4">
-        Participate in your first launchpad in 4 simple steps.
+          Participate in your first launchpad in 4 simple steps.
         </p>
       </div>
 

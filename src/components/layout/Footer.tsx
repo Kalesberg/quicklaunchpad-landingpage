@@ -85,9 +85,7 @@ const Footer: React.FC = () => {
   ];
 
   return (
-    <footer
-      className={`bg-[#12131A] text-white py-8 px-0`}
-    >
+    <footer className={`bg-[#12131A] text-white py-8 px-0`}>
       {!checkIsDashboardPage() ? (
         <>
           <div className="container mx-auto px-8 lg:px-0 flex justify-between items-start flex-col lg:flex-row gap-x-[100px] 2xl:gap-x-[120px] gap-y-16">
@@ -123,8 +121,8 @@ const Footer: React.FC = () => {
               />
               <p className="my-4 text-sm font-medium text-[#FFFFFFA3]">
                 QuickSwap&apos;s community is building a comprehensive
-                decentralized trading platform in the Polygon ecosystem for the
-                future of finance. Join the dragon army!
+                decentralised trading platform in the Polygon ecosystem to
+                accelerate the future of finance. Join the dragon army!
               </p>
               <p className="font-bold mb-5 text-sm">
                 QuickSwap&apos;s Email Newsletter
