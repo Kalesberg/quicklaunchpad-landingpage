@@ -101,12 +101,12 @@ const StepsToJoin: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
   };
 
   return (
-    <section className="mb-12 px-8 lg:px-0 rounded-lg">
+    <section className="mb-[88px] lg:mb-12 px-3 lg:px-0 rounded-lg">
       <div className="mb-8">
-        <h2 className="text-[#EBECF2] text-2xl lg:text-[32px] font-bold mb-4">
+        <h2 className="text-[#EBECF2] text-[32px] lg:text-2xl lg:text-[32px] font-bold mb-3 lg:mb-4 leading-10">
           Getting Started
         </h2>
-        <p className="text-white leading-6 mb-4">
+        <p className="text-[#C7CAD9] leading-6 mb-4">
           Participate in your first launchpad in 4 simple steps.
         </p>
       </div>
@@ -115,9 +115,9 @@ const StepsToJoin: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
         {steps.map((step, index) => (
           <div
             key={index}
-            className="bg-[#1C1E29] size-[294px] p-8 rounded-3xl flex flex-col"
+            className="bg-[#1C1E29] h-[250px] w-full size-0 lg:size-[294px] p-8 rounded-3xl flex flex-col"
           >
-            <div className="w-full flex justify-between gap-3 items-center mb-4">
+            <div className="w-full flex justify-between gap-3 items-center mb-6 lg:mb-4">
               <div className="relative w-12 h-12 p-2 text-[#448AFF] bg-[#222735] rounded-lg">
                 <div className="absolute top-[50%] left-[50%] transform -translate-x-1/2 -translate-y-1/2">
                   {step.icon}
@@ -130,7 +130,7 @@ const StepsToJoin: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
                 fill="none"
                 strokeWidth="1.5"
                 stroke="currentColor"
-                className="text-[#4d5d7994]"
+                className="text-[#4d5d7994] hidden lg:block"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <g>
@@ -143,9 +143,29 @@ const StepsToJoin: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
                   />
                 </g>
               </svg>
+              <svg
+                width="48"
+                height="14"
+                viewBox="0 0 79 14"
+                fill="none"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="text-[#4d5d7994] block lg:hidden rotate-90"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g>
+                  <path
+                    d="M1 7H78M78 7L72 1M78 7L72 13"
+                    stroke="#4d5d7994"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </g>
+              </svg>
             </div>
-            <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
-            <p className="text-[#C7CAD9] text-sm font-medium flex-grow">
+            <h3 className="text-xl font-semibold mb-3 lg:mb-2">{step.title}</h3>
+            <p className="text-[#C7CAD9] text-sm font-normal lg:font-medium flex-grow">
               {step.description}
             </p>
           </div>
@@ -154,7 +174,7 @@ const StepsToJoin: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
       <Button
         variant="primary"
         size="medium"
-        className="max-w-[350px] mx-auto my-6"
+        className="max-w-[350px] mx-auto mt-8 lg:mt-6"
         onClick={handleModal}
       >
         I’m Interested - Keep Me Updated

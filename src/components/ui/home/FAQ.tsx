@@ -66,7 +66,7 @@ const FAQ: React.FC = () => {
         {
           question: "What is the process for participating in a QuickLaunch?",
           answer:
-            "The QuickLaunch Launchpad uses a Lottery system where a certain amount of whitelisted users are randomly selected to participate in a project launch. There are three simple steps. First, you sign into the dashboard and then KYC with our KYC provider. Once you are successfully KYC’d, you are eligible to participate in a QuickLaunch. Next, you find a project you would like to participate in and register to be whitelisted for the project’s launch. This means you are expressing interest in participating and are participating in the lottery. Then, once the lottery is run, if you are selected, you will receive a notification that you can contribute your allocated amount to the project via the dashboard. When the project launch is completed, you will be notified via the dashboard about where and how to claim your tokens.",
+            "The QuickLaunch Launchpad uses a Lottery system where a certain amount of whitelisted users are randomly selected to participate in a project launch.<br> There are three simple steps.<br> First, you sign into the dashboard and then KYC with our KYC provider. Once you are successfully KYC’d, you are eligible to participate in a QuickLaunch.<br> Next, you find a project you would like to participate in and register to be whitelisted for the project’s launch. This means you are expressing interest in participating and are participating in the lottery.<br> Then, once the lottery is run, if you are selected, you will receive a notification that you can contribute your allocated amount to the project via the dashboard.<br> When the project launch is completed, you will be notified via the dashboard about where and how to claim your tokens.",
         },
         {
           question: "Do I have access to KYC to access QuickLaunch?",
@@ -111,7 +111,7 @@ You should see a prompt from BlockPass saying, “If you have previously created
         {
           question:
             "How can I verify that emails I receive from QuickLaunch are legitimate?",
-          answer: `Emails are always sent from no-reply@mail.quicklaunchpad.io, and they will include your personal unique PIN number. The legitimacy of these emails is confirmed by both the sender’s address and the presence of your PIN. To ensure your safety, please do not engage with or provide any information in response to suspicious emails. Always double-check both the sender’s address and your PIN number to verify authenticity.`,
+          answer: `Emails are always sent from <b>no-reply@mail.quicklaunchpad.io</b>, and they will include your personal unique PIN number. The legitimacy of these emails is confirmed by both the sender’s address and the presence of your PIN. To ensure your safety, please do not engage with or provide any information in response to suspicious emails. Always double-check both the sender’s address and your PIN number to verify authenticity.`,
         },
         {
           question:
@@ -121,7 +121,7 @@ You should see a prompt from BlockPass saying, “If you have previously created
         {
           question:
             "I received a DM (direct message) on Telegram claiming to be from QuickLaunch. How do I check if this is legitimate?",
-          answer: `QuickLaunch support moderators never initiate DMs (direct messages) on Telegram. If you receive a message from someone claiming to be from QuickLaunch, it is a scammer. Always use the official Telegram channel for support, and avoid engaging with any direct messages that are sent to you.`,
+          answer: `QuickLaunch support moderators <span class="border-b">never</span> initiate DMs (direct messages) on Telegram. If you receive a message from someone claiming to be from QuickLaunch, it is a scammer. Always use the official Telegram channel for support, and avoid engaging with any direct messages that are sent to you.`,
         },
         {
           question:
@@ -142,7 +142,7 @@ You should see a prompt from BlockPass saying, “If you have previously created
         },
         {
           question: "How can I contact QuickLaunch for questions or issues?",
-          answer: `You can contact QuickLaunch directly through the official <a href="https://t.me/QuickLaunchOfficial"  target="_blank" class="text-[#448AFF] leading-6 border-b border-[#448AFF]">Telegram channel</a>, where moderators will be available to assist you with any questions or issues you may have.`,
+          answer: `You can contact QuickLaunch directly through the <a href="https://t.me/QuickLaunchOfficial"  target="_blank" class="text-[#448AFF] leading-6 border-b border-[#448AFF]">official Telegram channel</a>, where moderators will be available to assist you with any questions or issues you may have.`,
         },
       ],
     },
@@ -165,11 +165,11 @@ You should see a prompt from BlockPass saying, “If you have previously created
   };
 
   return (
-    <section className="max-w-[1000px] mx-auto mb-[120px] px-4 md:px-0">
-      <h2 className="text-[20px] md:text-[32px] text-center leading-[30px] md:leading-8 font-bold mb-8">
+    <section className="max-w-[1000px] mx-auto mb-[88px] lg:mb-[120px] px-4 md:px-0">
+      <h2 className="text-[32px] text-left lg:text-center leading-[48px] md:leading-8 font-bold mb-8">
         Frequently Asked Questions
       </h2>
-      <div className="flex flex-col md:flex-row gap-4 md:gap-10">
+      <div className="hidden lg:flex flex-col md:flex-row gap-4 md:gap-10">
         <div className="flex-[40%]">
           <div className="grid grid-cols-2 md:grid-cols-1 items-center gap-2">
             {faqList.map((faq) => (
@@ -239,6 +239,75 @@ You should see a prompt from BlockPass saying, “If you have previously created
                 toggle={() => toggleItem(index)}
               />
             ))}
+        </div>
+      </div>
+      <div className="flex lg:hidden flex-col gap-4">
+        <div className="grid grid-cols-1 gap-6">
+          {faqList.map((item) => (
+            <div key={item.id}>
+              <div
+                className={`flex items-center gap-4 text-[#282D3D] cursor-pointer text-2xl text-center font-bold leading-9 hover:text-[#EBECF2] transition-all ${
+                  tabActive === item.id && "text-[#EBECF2]"
+                }`}
+                onClick={() => handleSelectTab(item.id)}
+              >
+                <div
+                  className={`w-12 h-12 p-3 mb-2 rounded-[9px] md:rounded-xl bg-[#282D3D99] border border-[#282D3D] border-1 ${
+                    item.id === tabActive && "bg-[#40455799] border-[#404557]"
+                  }`}
+                >
+                  <Image
+                    src={`/assets/images/${item.logo}`}
+                    alt={item.name}
+                    width={24}
+                    height={24}
+                    className="w-6 h-6"
+                    style={{
+                      filter: `${
+                        tabActive === item.id
+                          ? "invert(54%) sepia(30%) saturate(6598%) hue-rotate(200deg) brightness(100%) contrast(103%)"
+                          : ""
+                      }`,
+                    }}
+                  />
+                </div>
+                {item.name}
+                {tabActive === item.id && (
+                  <svg
+                    width="79"
+                    height="14"
+                    viewBox="0 0 79 14"
+                    fill="none"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="hidden md:block text-[#4d5d7994] ml-auto"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g>
+                      <path
+                        d="M1 7H78M78 7L72 1M78 7L72 13"
+                        stroke="#4d5d7994"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </g>
+                  </svg>
+                )}
+              </div>
+              <div className={`mt-[25px] ${item.id === tabActive ? 'block' : 'hidden'}`}>
+                {item.faq?.map((faqItem, index) => (
+                    <FAQItem
+                      key={index}
+                      question={faqItem.question}
+                      answer={faqItem.answer}
+                      isOpen={openItems.includes(index)}
+                      toggle={() => toggleItem(index)}
+                    />
+                  ))}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

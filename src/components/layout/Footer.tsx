@@ -10,8 +10,9 @@ import { TelegramIcon } from "../../../public/assets/images/social-icons";
 const FooterSection: React.FC<{
   title: string;
   links: { href: string; text: string; isNew?: boolean }[];
-}> = ({ title, links }) => (
-  <div>
+  className?: string;
+}> = ({ title, links, className }) => (
+  <div className={className}>
     <h3
       className={clsx({
         ["font-bold mb-6 text-base h-6"]: true,
@@ -85,31 +86,35 @@ const Footer: React.FC = () => {
   ];
 
   return (
-    <footer className={`bg-[#12131A] text-white py-8 px-0`}>
+    <footer className={`bg-[#12131A] text-white py-0 lg:py-8 px-0`}>
       {!checkIsDashboardPage() ? (
         <>
-          <div className="container mx-auto px-8 lg:px-0 flex justify-between items-start flex-col lg:flex-row gap-x-[100px] 2xl:gap-x-[120px] gap-y-16">
-            <div className="w-full flex items-start flex-wrap justify-between gap-6 lg:gap-[100px]">
-              <div className="flex gap-x-20 gap-y-[21px] xl:flex-row flex-col">
+          <div className="container mx-auto px-3 lg:px-0 flex justify-between items-start flex-col lg:flex-row gap-x-[100px] 2xl:gap-x-[120px] gap-y-10 lg:gap-y-16">
+            <div className="w-full grid grid-cols-5 md:grid-cols-3 lg:flex lg:items-start lg:flex-wrap gap-10 lg:gap-[100px]">
+              <div className="flex col-span-2 gap-x-10 gap-y-[21px] md:row-start-1">
                 <FooterSection
                   title="Products"
                   links={productLinks?.slice(0, 6)}
+                  className="hidden lg:block"
                 />
-                <FooterSection title="" links={productLinks?.slice(6)} />
+                <FooterSection
+                  title="Products"
+                  links={productLinks?.slice(0, 7)}
+                  className="block lg:hidden"
+                />
+                <FooterSection
+                  title=""
+                  links={productLinks?.slice(6)}
+                  className="hidden lg:block"
+                />
+                <FooterSection
+                  title=""
+                  links={productLinks?.slice(7)}
+                  className="block lg:hidden mt-12"
+                />
               </div>
-
-              {/* <div>
-                <h3 className="font-bold mb-6 text-base">Developers</h3>
-                <ul className="space-y-[21px]">
-                  {developerLinks.map(({ href, text }) => (
-                    <li key={href} className="text-[#FFFFFFA3]">
-                      <ExternalLink href={href}>{text}</ExternalLink>
-                    </li>
-                  ))}
-                </ul>
-              </div> */}
-              <FooterSection title="Developers" links={developerLinks} />
-              <FooterSection title="Governance" links={governanceLinks} />
+              <FooterSection title="Developers" links={developerLinks} className="row-start-2 md:row-start-1" />
+              <FooterSection title="Governance" links={governanceLinks} className="col-start-3 md:col-start-1 row-start-2 lg:row-start-1 " />
             </div>
 
             <div className="max-w-[310px]">
@@ -119,12 +124,12 @@ const Footer: React.FC = () => {
                 width={120}
                 height={20}
               />
-              <p className="my-4 text-sm font-medium text-[#FFFFFFA3]">
+              <p className="my-[22px] lg:my-4 text-sm font-medium leading-5 text-[#FFFFFFA3]">
                 QuickSwap&apos;s community is building a comprehensive
                 decentralised trading platform in the Polygon ecosystem to
                 accelerate the future of finance. Join the dragon army!
               </p>
-              <p className="font-bold mb-5 text-sm">
+              <p className="font-semibold lg:font-bold mb-[22px] text-sm">
                 QuickSwap&apos;s Email Newsletter
               </p>
 
@@ -143,8 +148,8 @@ const Footer: React.FC = () => {
               </form>
             </div>
           </div>
-          <div className="container w-full h-[1.5px] mx-auto mt-8 lg:mt-0 px-8 lg:px-0 after:content-[''] after:block after:w-full after:h-full after:bg-[#FFFFFF0A]"></div>
-          <div className="container mx-auto mt-8 px-8 lg:px-0 flex justify-between items-center text-sm">
+          <div className="container w-full h-[1.5px] mx-auto mt-10 lg:mt-0 px-3 lg:px-0 after:content-[''] after:block after:w-full after:h-full after:bg-[#FFFFFF0A]"></div>
+          <div className="container mx-auto mt-8 px-3 lg:px-0 flex justify-between items-center text-sm">
             <span className="text-[#FFFFFFA3]">
               © {new Date().getFullYear()} QuickSwap
             </span>
@@ -156,20 +161,20 @@ const Footer: React.FC = () => {
       ) : (
         <>
           <div className="container w-full h-[1.5px] mx-auto px-0 after:content-[''] after:block after:w-full after:h-full after:bg-[#FFFFFF0A]"></div>
-          <div className="container mx-auto mt-8 px-10 flex justify-between items-center text-sm">
+          <div className="container mx-auto mt-8 mb-6 px-10 flex justify-between items-center text-sm">
             <div className="flex items-center gap-8">
               <Link className="text-[#FFFFFFA3]" href="/terms">
                 Terms of use
               </Link>
               <Link
-                className="text-[#C7CAD9] flex items-center gap-1"
+                className="text-[#FFFFFFA3] flex items-center gap-1"
                 href="https://web.telegram.org/"
               >
                 <TelegramIcon className="w-[18px] h-[18px]" />
                 Telegram Support
               </Link>
             </div>
-            <span className="text-xs leading-5 text-[#696C80]">
+            <span className="text-xs leading-5 text-[#FFFFFFA3]">
               © {new Date().getFullYear()} QuickLaunch powered by TrustSwap. All
               rights reserved.
             </span>

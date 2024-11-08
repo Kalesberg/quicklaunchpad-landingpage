@@ -330,20 +330,36 @@ const Header = () => {
         </div>
       </div>
       <div
-        className={`relative flex lg:hidden container w-full min-h-16 mx-auto items-center justify-between bg-[#12131A] text-white py-4 px-6`}
+        className={`relative flex lg:hidden container w-full min-h-16 mx-auto items-center justify-between bg-[#12131A] text-white py-3 px-4`}
       >
         <Image
-          src="/assets/images/menu-button.svg"
-          alt=""
-          width={36}
-          height={36}
-          onClick={() => setOpenMobileMenu(!openMobileMenu)}
+          src="https://beta.quickswap.exchange/static/media/quickIcon.aa0f5ef593b1a9f00bab835581e318f3.svg"
+          alt="Logo"
+          width={32}
+          height={32}
         />
-        <button className="bg-blue-500 hover:bg-blue-600 text-base h-[44px] text-white font-semibold py-2 px-3 rounded-3xl">
-          Connect Wallet
-        </button>
+        <div className="w-auto flex gap-3 items-center justify-end">
+          <ChainSelected
+            networkInfo={networkInfo}
+            isOpenNetwork={isOpenNetwork}
+            setIsOpenNetwork={setIsOpenNetwork}
+            selectedNetwork={selectedNetwork}
+            tabs={tabs}
+            selectedTab={selectedTab}
+            setSelectedTab={setSelectedTab}
+            handleNetworkSelect={(n: any) => {
+              handleNetworkSelect(n);
+            }}
+          />
+          <button className="bg-blue-500 hover:bg-blue-600 text-base h-[44px] text-white font-semibold py-2 px-3 rounded-3xl">
+            Connect Wallet
+          </button>
+        </div>
+
         {openMobileMenu && (
-          <nav className={`absolute top-16 left-0 z-[999] w-full h-auto bg-[#12131A] animate-contentShow`}>
+          <nav
+            className={`absolute top-16 left-0 z-[999] w-full h-auto bg-[#12131A] animate-contentShow`}
+          >
             <ul className="flex flex-col items-center space-y-8">
               {navItems.concat(moreLinks).map((item) => (
                 <li key={item.name} className="relative">
