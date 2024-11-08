@@ -41,14 +41,14 @@ const FooterSection: React.FC<{
   </div>
 );
 
-const ExternalLink: React.FC<{ href: string; children: React.ReactNode }> = ({
-  href,
-  children,
-}) => (
-  <a href={href} target="_blank" rel="noopener noreferrer">
-    {children}
-  </a>
-);
+// const ExternalLink: React.FC<{ href: string; children: React.ReactNode }> = ({
+//   href,
+//   children,
+// }) => (
+//   <a href={href} target="_blank" rel="noopener noreferrer">
+//     {children}
+//   </a>
+// );
 
 const Footer: React.FC = () => {
   const pathname = usePathname();
