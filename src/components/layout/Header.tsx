@@ -46,7 +46,7 @@ const Header = () => {
   const [selectedNetwork, setSelectedNetwork] = useState<Network | null>({
     chainId: ChainId.MATIC,
   });
-  const [openMobileMenu, setOpenMobileMenu] = useState<boolean>(false);
+  const [openMobileMenu] = useState<boolean>(false);
   const pathname = usePathname();
 
   const checkIsDashboardPage = () => {
