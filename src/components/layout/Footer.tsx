@@ -86,11 +86,11 @@ const Footer: React.FC = () => {
   ];
 
   return (
-    <footer className={`bg-[#12131A] text-white py-0 lg:py-8 px-0`}>
+    <footer className={`bg-[#12131A] text-white py-0 px-4 lg:py-8`}>
       {!checkIsDashboardPage() ? (
         <>
-          <div className="container mx-auto px-3 lg:px-0 flex justify-between items-start flex-col lg:flex-row gap-x-[100px] 2xl:gap-x-[120px] gap-y-10 lg:gap-y-16">
-            <div className="w-full grid grid-cols-5 md:grid-cols-3 lg:flex lg:items-start lg:flex-wrap gap-10 lg:gap-[100px]">
+          <div className="container mx-auto px-0 flex justify-between items-start flex-col lg:flex-row gap-x-[100px] 2xl:gap-x-[120px] gap-y-10 lg:gap-y-16">
+            <div className="w-full grid grid-cols-4 lg:grid-cols-3 lg:flex lg:items-start lg:flex-wrap gap-10 lg:gap-[100px]">
               <div className="flex col-span-2 gap-x-10 gap-y-[21px] md:row-start-1">
                 <FooterSection
                   title="Products"
@@ -149,7 +149,7 @@ const Footer: React.FC = () => {
             </div>
           </div>
           <div className="container w-full h-[1.5px] mx-auto mt-10 lg:mt-0 px-3 lg:px-0 after:content-[''] after:block after:w-full after:h-full after:bg-[#FFFFFF0A]"></div>
-          <div className="container mx-auto mt-8 px-3 lg:px-0 flex justify-between items-center text-sm">
+          <div className="container mx-auto my-6 px-3 lg:px-0 flex justify-between items-center text-sm">
             <span className="text-[#FFFFFFA3]">
               © {new Date().getFullYear()} QuickSwap
             </span>

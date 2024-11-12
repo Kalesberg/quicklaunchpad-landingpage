@@ -25,13 +25,13 @@ const FAQItem: React.FC<FAQItem & { isOpen: boolean; toggle: () => void }> = ({
 }) => (
   <div>
     <button
-      className="w-full text-left pl-4 pr-2 py-3 flex justify-between items-center border-t border-[#282D3D80]"
+      className="w-full text-left pl-3 pr-2 py-3 flex justify-between items-center border-t border-[#282D3D]"
       onClick={toggle}
     >
-      <span className="text-lg font-semibold">{question}</span>
+      <span className="text-base lg:text-lg leading-6 font-semibold">{question}</span>
       <ChevronDownIcon
         className={clsx({
-          ["w-5 h-5 transition-transform duration-300"]: true,
+          ["min-w-5 h-5 p-[2px] lg:p-0 transition-transform duration-300"]: true,
           ["rotate-180"]: isOpen,
         })}
       />
@@ -246,13 +246,13 @@ You should see a prompt from BlockPass saying, “If you have previously created
           {faqList.map((item) => (
             <div key={item.id}>
               <div
-                className={`flex items-center gap-4 text-[#282D3D] cursor-pointer text-2xl text-center font-bold leading-9 hover:text-[#EBECF2] transition-all ${
+                className={`flex items-center gap-4 text-[#696C80] cursor-pointer text-2xl text-center font-bold leading-9 hover:text-[#EBECF2] transition-all ${
                   tabActive === item.id && "text-[#EBECF2]"
                 }`}
                 onClick={() => handleSelectTab(item.id)}
               >
                 <div
-                  className={`w-12 h-12 p-3 mb-2 rounded-[9px] md:rounded-xl bg-[#282D3D99] border border-[#282D3D] border-1 ${
+                  className={`w-12 h-12 p-3 mb-2 rounded-[9px] md:rounded-xl bg-[#282D3D99] border border-[#282D3D] ${
                     item.id === tabActive && "bg-[#40455799] border-[#404557]"
                   }`}
                 >
