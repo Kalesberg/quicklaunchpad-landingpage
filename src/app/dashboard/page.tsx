@@ -10,7 +10,7 @@ export default function DashboardPage() {
   // 1: The only launch
   // 2: multiple live launches
   // 3: multiple live & previous launches
-  const caseLaunch = 0;
+  const caseLaunch: number = 1;
   return (
     <div className="container-dashboard mx-auto px-4">
       <Link href={"/"} className="flex items-center">
