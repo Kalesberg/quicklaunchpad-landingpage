@@ -49,6 +49,7 @@ const SubscribeForm: React.FC = () => {
         resetForm();
       }, 3000);
     } catch (error) {
+      console.log(error);
       setStatus(500);
       setMessage("Error joining the newsletter.");
       setTimeout(() => {
