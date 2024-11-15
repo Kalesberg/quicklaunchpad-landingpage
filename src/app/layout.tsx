@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Header from "components/layout/Header";
+import MainProvider from "context/MainContext";
 
 export const metadata: Metadata = {
   title: "QuickSwap Launchpad",
@@ -15,8 +16,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased bg-[#12131A] text-white">
-        <Header />
-        <main className="min-h-screen">{children}</main>
+        <MainProvider>
+          <Header />
+          <main className="min-h-screen">{children}</main>
+        </MainProvider>
       </body>
     </html>
   );

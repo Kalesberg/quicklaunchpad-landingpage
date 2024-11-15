@@ -4,6 +4,7 @@ import Button from "./Button";
 import { TelegramIcon } from "../../../public/assets/images/social-icons";
 import { ExclamationCircleIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
+import { isValidEmail } from "utils";
 
 const SignUpModal: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
   openModal,
@@ -26,11 +27,10 @@ const SignUpModal: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
   };
 
   const handleSubmit = () => {
-    const isValidEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
     if (!email) {
       setNoValidEmail(true);
       setNoValidText("Please fill out all the required fields.");
-    } else if (email.match(isValidEmail)) {
+    } else if (isValidEmail(email)) {
       setNoValidEmail(false);
       setConfirm(true);
     } else {

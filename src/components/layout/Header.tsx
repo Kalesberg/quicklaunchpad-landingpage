@@ -11,6 +11,12 @@ import { useEffect, useState } from "react";
 import clsx from "clsx";
 import { getConfig } from "config";
 import { usePathname } from "next/navigation";
+import {
+  useAppKit,
+  useAppKitAccount,
+  useWalletInfo,
+} from "@reown/appkit/react";
+import { shortenAddress } from "utils";
 
 interface Network {
   chainId: number;
@@ -48,6 +54,9 @@ const Header = () => {
   });
   const [openMobileMenu] = useState<boolean>(false);
   const pathname = usePathname();
+  const { open } = useAppKit();
+  const { address } = useAppKitAccount();
+  const { walletInfo } = useWalletInfo();
 
   const checkIsDashboardPage = () => {
     return pathname?.includes("/dashboard");
@@ -324,9 +333,11 @@ const Header = () => {
               handleNetworkSelect(n);
             }}
           />
-          <button className="bg-blue-500 hover:bg-blue-600 text-base h-[44px] text-white font-semibold py-2 px-3 rounded-lg">
-            Connect Wallet
-          </button>
+          <ConnectWallet
+            address={address}
+            walletInfo={walletInfo}
+            open={open}
+          />
         </div>
       </div>
       <div
@@ -351,9 +362,11 @@ const Header = () => {
               handleNetworkSelect(n);
             }}
           />
-          <button className="bg-blue-500 hover:bg-blue-600 text-base h-[44px] text-white font-semibold py-2 px-3 rounded-3xl">
-            Connect Wallet
-          </button>
+          <ConnectWallet
+            address={address}
+            walletInfo={walletInfo}
+            open={open}
+          />
         </div>
 
         {openMobileMenu && (
@@ -546,4 +559,40 @@ export const ChainSelected = ({
       )}
     </div>
   );
+};
+
+export const ConnectWallet = ({ address, walletInfo, open }: any) => {
+  return <>
+  {
+    !!address ? (
+      <div
+        className="px-2 py-2 bg-[#161B28] rounded-lg flex items-center gap-1 text-sm font-semibold transition-all duration-300 ease-in-out cursor-pointer"
+        onClick={() => open({ view: "Account" })}
+      >
+        {walletInfo?.icon && (
+          <Image
+            src={walletInfo?.icon}
+            width={24}
+            height={24}
+            alt={walletInfo?.name ? walletInfo.name : "wallet icon"}
+          />
+        )}
+        <p className="text-[#C7CAD9] text-sm leading-5 font-medium">
+          {shortenAddress(address)}
+        </p>
+  
+        <span>
+          <ChevronDownIcon className="w-4 h-4" color="#C7CAD9" />
+        </span>
+      </div>
+    ) : (
+      <button
+        className="bg-blue-500 hover:bg-blue-600 text-base h-[44px] text-white font-semibold py-2 px-3 rounded-lg"
+        onClick={() => open()}
+      >
+        Connect Wallet
+      </button>
+    )
+  }
+  </>
 };

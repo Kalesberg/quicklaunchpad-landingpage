@@ -6,6 +6,7 @@ import clsx from "clsx";
 import { FireIcon } from "@heroicons/react/16/solid";
 import { usePathname } from "next/navigation";
 import { TelegramIcon } from "../../../public/assets/images/social-icons";
+import SubscribeForm from "components/common/SubscribeForm";
 
 const FooterSection: React.FC<{
   title: string;
@@ -41,15 +42,6 @@ const FooterSection: React.FC<{
     </ul>
   </div>
 );
-
-// const ExternalLink: React.FC<{ href: string; children: React.ReactNode }> = ({
-//   href,
-//   children,
-// }) => (
-//   <a href={href} target="_blank" rel="noopener noreferrer">
-//     {children}
-//   </a>
-// );
 
 const Footer: React.FC = () => {
   const pathname = usePathname();
@@ -113,8 +105,16 @@ const Footer: React.FC = () => {
                   className="block lg:hidden mt-12"
                 />
               </div>
-              <FooterSection title="Developers" links={developerLinks} className="row-start-2 md:row-start-1" />
-              <FooterSection title="Governance" links={governanceLinks} className="col-start-3 md:col-start-1 row-start-2 lg:row-start-1 " />
+              <FooterSection
+                title="Developers"
+                links={developerLinks}
+                className="row-start-2 md:row-start-1"
+              />
+              <FooterSection
+                title="Governance"
+                links={governanceLinks}
+                className="col-start-3 md:col-start-1 row-start-2 lg:row-start-1 "
+              />
             </div>
 
             <div className="max-w-[310px]">
@@ -133,19 +133,7 @@ const Footer: React.FC = () => {
                 QuickSwap&apos;s Email Newsletter
               </p>
 
-              <form className="relative flex">
-                <input
-                  type="email"
-                  placeholder="Enter email"
-                  className="bg-gray-800 text-white px-3 py-2 rounded-lg flex-grow"
-                />
-                <button
-                  type="submit"
-                  className="absolute right-1 top-1/2 -translate-y-1/2 bg-purple-600 text-white px-4 py-1 rounded-lg"
-                >
-                  Subscribe
-                </button>
-              </form>
+              <SubscribeForm />
             </div>
           </div>
           <div className="container w-full h-[1.5px] mx-auto mt-10 lg:mt-0 px-3 lg:px-0 after:content-[''] after:block after:w-full after:h-full after:bg-[#FFFFFF0A]"></div>
