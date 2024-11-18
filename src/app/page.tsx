@@ -16,7 +16,7 @@ export default function Home() {
   // 1: The only launch
   // 2: multiple live launches
   // 3: multiple live & previous launches
-  const caseLaunch: number = 1;
+  const caseLaunch: number = 0;
   const [openModal, setOpenModal] = useState(false);
   return (
     <div className="container mx-auto">
@@ -33,7 +33,7 @@ export default function Home() {
         {caseLaunch > 2 && <PreviousLaunches />}
         <FAQ />
         <CTA />
-        <Footer/>
+        <Footer />
       </div>
       <SignUpModal openModal={openModal} setOpenModal={setOpenModal} />
     </div>
