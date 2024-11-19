@@ -4,7 +4,14 @@ import { MainContext } from "context";
 import { useState } from "react";
 import { createAppKit } from "@reown/appkit/react";
 import { Ethers5Adapter } from "@reown/appkit-adapter-ethers5";
-import { mainnet, arbitrum, avalanche, base, optimism, polygon } from '@reown/appkit/networks'
+import {
+  mainnet,
+  arbitrum,
+  avalanche,
+  base,
+  optimism,
+  polygon,
+} from "@reown/appkit/networks";
 
 enum ChainId {
   MUMBAI = 80001,
@@ -25,20 +32,20 @@ enum ChainId {
 }
 
 // 1. Get projectId at https://cloud.reown.com
-const projectId =
-  process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID ??
-  "5e99152ab0dd533988ccf9b0b15dac25";
+const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID ?? "";
 
 // 2. Create a metadata object
 const metadata = {
   name: "quicklaunch",
   description: "QuickSwap Launchpad",
-  url: "https://reown.com/appkit", // origin must match your domain & subdomain
-  icons: ["https://assets.reown.com/reown-profile-pic.png"],
+  url: "https://quicklaunchpad-landingpage.vercel.app", // origin must match your domain & subdomain
+  icons: [
+    "https://beta.quickswap.exchange/static/media/quickIcon.aa0f5ef593b1a9f00bab835581e318f3.svg",
+  ],
 };
 
 // 3. Create the AppKit instance
-const modal = createAppKit({
+createAppKit({
   adapters: [new Ethers5Adapter()],
   metadata,
   networks: [mainnet, arbitrum, avalanche, base, optimism, polygon],
@@ -49,7 +56,7 @@ const MainProvider = ({ children }: any) => {
   const [chainId, setChainId] = useState(ChainId.MATIC);
 
   return (
-    <MainContext.Provider value={{ chainId, setChainId, modal }}>
+    <MainContext.Provider value={{ chainId, setChainId }}>
       {children}
     </MainContext.Provider>
   );
