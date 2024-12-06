@@ -16,7 +16,7 @@ export default function Home() {
   // 1: The only launch
   // 2: multiple live launches
   // 3: multiple live & previous launches
-  const caseLaunch: number = 0;
+  const caseLaunch: number = 3;
   const [openModal, setOpenModal] = useState(false);
   return (
     <div className="container mx-auto">
@@ -27,7 +27,7 @@ export default function Home() {
       />
       <div className="max-w-[1248px] mx-auto">
         {caseLaunch !== 0 && <LaunchNotice status="upcoming" />}
-        <StepsToJoin openModal={openModal} setOpenModal={setOpenModal} />
+        <StepsToJoin />
         {caseLaunch > 1 && <LiveUpcomingLaunches />}
         <JoinSocialMedia />
         {caseLaunch > 2 && <PreviousLaunches />}

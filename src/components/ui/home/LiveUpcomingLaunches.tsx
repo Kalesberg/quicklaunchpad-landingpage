@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React from "react";
 import Image from "next/image";
 import Button from "components/common/Button";
@@ -138,7 +138,7 @@ const LiveUpcomingLaunches: React.FC = () => {
 
   return (
     <section className="mb-12">
-      <h2 className="text-[32px] text-center font-bold mb-5">
+      <h2 className="text-[32px] text-center font-semibold mb-5">
         Live & Upcoming Launches
       </h2>
       <p className="text-[#C7CAD9] text-center mb-10">

@@ -51,7 +51,10 @@ const LaunchRow: React.FC<LaunchProps> = ({
       <p className="text-xs text-[#C7CAD9] ">Initial Price</p>
       <p>{initialPrice}</p>
     </div>
-    <Link href="#" className="text-blue-500 text-sm font-bold hover:text-blue-400">
+    <Link
+      href="#"
+      className="text-blue-500 text-sm font-bold hover:text-blue-400"
+    >
       Details
     </Link>
   </div>
@@ -109,7 +112,7 @@ const PreviousLaunches: React.FC = () => {
 
   return (
     <section className="mb-12">
-      <h2 className="text-[32px] text-center font-bold mb-4">
+      <h2 className="text-[32px] text-center font-semibold mb-4">
         Previous Launches
       </h2>
       <p className="text-gray-400 text-center text-base mb-6">
@@ -121,7 +124,10 @@ const PreviousLaunches: React.FC = () => {
         ))}
       </div>
       <div className="text-center mt-6">
-        <Link href="#" className="text-blue-500 text-sm hover:text-blue-400 font-bold">
+        <Link
+          href="#"
+          className="text-blue-500 text-sm hover:text-blue-400 font-bold"
+        >
           See All Previous Launches
         </Link>
       </div>

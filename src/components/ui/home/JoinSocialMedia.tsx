@@ -9,10 +9,10 @@ import { EnvelopeIcon } from "@heroicons/react/24/solid";
 
 const JoinSocialMedia: React.FC = () => {
   return (
-    <section className="bg-[#1C1E29] rounded-3xl my-[120px] px-6 py-8 lg:p-12 mx-4 lg:mx-0 mb-[88px] relative overflow-hidden">
+    <section className="bg-[#1C1E29] rounded-3xl my-[120px] px-6 py-6 lg:p-8 mx-4 lg:mx-0 mb-[88px] relative overflow-hidden">
       <div className="max-w-[1064px] relative z-10 flex gap-16 items-center">
         <div className="max-w-[734px]">
-          <h2 className="text-[32px] leading-[48px] font-bold mb-3">
+          <h2 className="text-[32px] leading-[48px] font-semibold mb-3">
             Follow on Social Media
           </h2>
           <p className="text-[#C7CAD9] text-base leading-6 mb-6">

@@ -4,7 +4,14 @@ import React from "react";
 
 const CTA: React.FC = () => {
   return (
-    <section className="relative z-10 text-center mb-[88px] lg:mb-[120px] py-10 px-4 md:px-0 mx-4 lg:mx-0 rounded-2xl lg:rounded-3xl overflow-hidden" style={{ WebkitMaskImage: '-webkit-radial-gradient(circle, white 100%, black 100%)', WebkitTransform: 'translateZ(0)'}}>
+    <section
+      className="relative z-10 text-center mb-[88px] lg:mb-[120px] py-10 px-4 md:px-0 mx-4 lg:mx-0 rounded-2xl lg:rounded-3xl overflow-hidden"
+      style={{
+        WebkitMaskImage:
+          "-webkit-radial-gradient(circle, white 100%, black 100%)",
+        WebkitTransform: "translateZ(0)",
+      }}
+    >
       <div className="backdrop-blur-[128px] h-full w-full bg-[#1B1E29] absolute top-0 left-0 -z-[1] opacity-95 rounded-2xl lg:rounded-3xl overflow-hidden"></div>
       <Image
         src="/assets/images/4dee09caf5949d0260bcdbb0b8e9a52a.png"
@@ -111,8 +118,8 @@ const CTA: React.FC = () => {
         height={94}
         className="hidden lg:block absolute top-[149px] left-[997px] -z-10"
       />
-      <h2 className="text-[#EBECF2] text-2xl lg:text-[30px] font-bold leading-8 lg:leading-9 mb-8 max-w-full mx-auto px-6">
-      Ready to launch your project on Polygon with QuickLaunch? Apply below!
+      <h2 className="text-[#EBECF2] text-2xl lg:text-[30px] font-semibold leading-8 lg:leading-9 mb-8 max-w-full mx-auto px-6">
+        Ready to launch your project on Polygon with QuickLaunch? Apply below!
       </h2>
       <div className="flex items-center justify-center mt-6 lg:mt-[50px]">
         <Button
