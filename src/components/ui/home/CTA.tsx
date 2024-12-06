@@ -3,6 +3,12 @@ import Image from "next/image";
 import React from "react";
 
 const CTA: React.FC = () => {
+  const handleOpenGoogleForm = () => {
+    window.open(
+      "https://docs.google.com/forms/d/e/1FAIpQLSf5C5pJwVt7jNrlO6TmmWdRB1UvLcxYZDbtALJgAlQzwQeOxw/viewform",
+      "_blank"
+    );
+  };
   return (
     <section
       className="relative z-10 text-center mb-[88px] lg:mb-[120px] py-10 px-4 md:px-0 mx-4 lg:mx-0 rounded-2xl lg:rounded-3xl overflow-hidden"
@@ -126,6 +132,7 @@ const CTA: React.FC = () => {
           variant="primary"
           size="medium"
           className="max-w-[250px] !h-12 w-full !bg-[#448AFF]"
+          onClick={() => handleOpenGoogleForm()}
         >
           Apply now
         </Button>
