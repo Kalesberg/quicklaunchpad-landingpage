@@ -22,9 +22,22 @@ const JoinSocialMedia: React.FC = () => {
             to know about the latest opportunities for IDOs on Polygon.
           </p>
           <div className="flex space-x-5 mt-2 mb-4">
-            <TelegramIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
-            <TwitterIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
-            <EnvelopeIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
+            <a href="https://t.me/QuickLaunchOfficial" target="_blank">
+              <TelegramIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
+            </a>
+
+            <a
+              href="https://x.com/quickswapdex?s=21&t=nQjWO49uC8GB7M59QlcWjQ"
+              target="_blank"
+            >
+              <TwitterIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
+            </a>
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSf5C5pJwVt7jNrlO6TmmWdRB1UvLcxYZDbtALJgAlQzwQeOxw/viewform"
+              target="_blank"
+            >
+              <EnvelopeIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
+            </a>
           </div>
         </div>
       </div>
