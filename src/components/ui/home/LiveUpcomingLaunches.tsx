@@ -4,6 +4,8 @@ import Image from "next/image";
 import Button from "components/common/Button";
 import { useRouter } from "next/navigation";
 
+import { getProjectsByStatus } from "app/api";
+
 interface LaunchProps {
   image: string;
   name: string;
@@ -104,6 +106,7 @@ const LaunchCard: React.FC<LaunchProps> = ({
 };
 
 const LiveUpcomingLaunches: React.FC = () => {
+
   const launches: LaunchProps[] = [
     {
       image: "/assets/images/launch-image.png",
