@@ -6,7 +6,7 @@ const CTA: React.FC = () => {
   const handleOpenGoogleForm = () => {
     window.open(
       "https://docs.google.com/forms/d/e/1FAIpQLSf5C5pJwVt7jNrlO6TmmWdRB1UvLcxYZDbtALJgAlQzwQeOxw/viewform",
-      "_blank"
+      "_blank",
     );
   };
   return (

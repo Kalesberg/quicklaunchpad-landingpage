@@ -9,7 +9,7 @@ export async function POST(req: Request) {
 
     if (!email) {
       return Response.json({ message: "Email is required" }, { status: 400 });
-    }else if(!isValidEmail(email)){
+    } else if (!isValidEmail(email)) {
       return Response.json({ message: "Email invalid" }, { status: 400 });
     }
 
@@ -35,7 +35,7 @@ export async function POST(req: Request) {
       const errorData = await response.json();
       return Response.json(
         { error: errorData.detail },
-        { status: response.status }
+        { status: response.status },
       );
     }
 

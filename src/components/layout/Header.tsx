@@ -236,7 +236,7 @@ const Header = () => {
                             onClick={() => handleDropdown(item.name)}
                             className={`relative hover:text-blue-400 ${
                               item.children.find(
-                                (child) => child.href === activeItem
+                                (child) => child.href === activeItem,
                               )
                                 ? "text-[#D9D9D9] after:absolute after:-bottom-4 after:left-0 after:block after:bg-[#448AFF] after:w-full after:h-[2px]"
                                 : "text-[#7c7c81]"
@@ -383,7 +383,7 @@ const Header = () => {
                           onClick={() => handleDropdown(item.name)}
                           className={`relative px-4 hover:text-blue-400 ${
                             item.children.find(
-                              (child) => child.href === activeItem
+                              (child) => child.href === activeItem,
                             )
                               ? "text-[#D9D9D9] after:absolute after:-bottom-4 after:left-0 after:block after:bg-[#448AFF] after:w-full after:h-[2px] after:px-4"
                               : "text-[#7c7c81]"

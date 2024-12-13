@@ -158,7 +158,7 @@ You should see a prompt from BlockPass saying, “If you have previously created
     setOpenItems((prevOpenItems) =>
       prevOpenItems.includes(index)
         ? prevOpenItems.filter((i) => i !== index)
-        : [...prevOpenItems, index]
+        : [...prevOpenItems, index],
     );
   };
 

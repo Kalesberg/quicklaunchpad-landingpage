@@ -5,7 +5,7 @@ import Button from "components/common/Button";
 import { useRouter } from "next/navigation";
 
 import { getProjectsByStatus } from "app/api";
-import { ProjectStatus } from 'state/type'
+import { ProjectStatus } from "state/type";
 
 interface LaunchProps {
   image: string;
@@ -42,15 +42,15 @@ const LaunchCard: React.FC<LaunchProps> = ({
             status === "live"
               ? "bg-[#0FC679]"
               : status === "upcoming"
-              ? "bg-blue-500"
-              : "bg-[#FDD835]"
+                ? "bg-blue-500"
+                : "bg-[#FDD835]"
           }`}
         >
           {status === "live"
             ? "00:25:78 left"
             : status === "upcoming"
-            ? "In 2 days"
-            : "TBA"}
+              ? "In 2 days"
+              : "TBA"}
         </span>
       </div>
 
@@ -107,13 +107,12 @@ const LaunchCard: React.FC<LaunchProps> = ({
 };
 
 const LiveUpcomingLaunches: React.FC = () => {
-
   const fetchLaunches = useCallback(async () => {
     try {
       const response = await getProjectsByStatus(ProjectStatus.Live);
-      console.log('live response', response);
+      console.log("live response", response);
     } catch (err) {
-      console.log('[LiveUpcomingLaunches] projects Club error: ', err);
+      console.log("[LiveUpcomingLaunches] projects Club error: ", err);
     }
   }, []);
 

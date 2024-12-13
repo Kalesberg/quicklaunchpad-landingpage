@@ -24,9 +24,7 @@
             "description": "Project not found"
           }
         },
-        "tags": [
-          "projects"
-        ]
+        "tags": ["projects"]
       },
       "patch": {
         "operationId": "ProjectsController_updateProject",
@@ -66,9 +64,7 @@
             "description": "Project not found"
           }
         },
-        "tags": [
-          "projects"
-        ]
+        "tags": ["projects"]
       },
       "delete": {
         "operationId": "ProjectsController_deleteProject",
@@ -95,9 +91,7 @@
             "description": "Project not found"
           }
         },
-        "tags": [
-          "projects"
-        ]
+        "tags": ["projects"]
       }
     },
     "/projects": {
@@ -126,9 +120,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "projects"
-        ]
+        "tags": ["projects"]
       },
       "post": {
         "operationId": "ProjectsController_createProject",
@@ -155,9 +147,7 @@
             "description": "Unauthorized"
           }
         },
-        "tags": [
-          "projects"
-        ]
+        "tags": ["projects"]
       }
     },
     "/projects/{id}/content": {
@@ -183,9 +173,7 @@
             "description": "Project content not found"
           }
         },
-        "tags": [
-          "projects"
-        ]
+        "tags": ["projects"]
       },
       "post": {
         "operationId": "ProjectsController_createProjectContent",
@@ -223,9 +211,7 @@
             "description": "Unauthorized"
           }
         },
-        "tags": [
-          "projects"
-        ]
+        "tags": ["projects"]
       }
     },
     "/projects/{pid}/content": {
@@ -268,9 +254,7 @@
             "description": "Project content not found"
           }
         },
-        "tags": [
-          "projects"
-        ]
+        "tags": ["projects"]
       }
     },
     "/projects/{id}/csv": {
@@ -299,9 +283,7 @@
             "description": "Unauthorized"
           }
         },
-        "tags": [
-          "projects"
-        ]
+        "tags": ["projects"]
       }
     },
     "/projects/pledge": {
@@ -372,9 +354,7 @@
     "title": "Trustpad Projects API",
     "description": "API documentation for Trustpad Projects",
     "version": "1.0",
-    "contact": {
-
-    }
+    "contact": {}
   },
   "tags": [],
   "servers": [],
@@ -382,21 +362,15 @@
     "schemas": {
       "ProjectInputDto": {
         "type": "object",
-        "properties": {
-
-        }
+        "properties": {}
       },
       "ProjectUpdateDto": {
         "type": "object",
-        "properties": {
-
-        }
+        "properties": {}
       },
       "PledgeInputDto": {
         "type": "object",
-        "properties": {
-
-        }
+        "properties": {}
       }
     }
   }

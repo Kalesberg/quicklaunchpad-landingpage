@@ -76,15 +76,15 @@ const LaunchNotice: React.FC<{ status?: string }> = ({ status }) => {
             status === "live"
               ? "bg-[#0FC679]"
               : status === "upcoming"
-              ? "bg-[#FDD835]"
-              : "bg-[#C684FF]"
+                ? "bg-[#FDD835]"
+                : "bg-[#C684FF]"
           }`}
         >
           {status === "live"
             ? "Open"
             : status === "upcoming"
-            ? "Upcoming"
-            : "Closed"}
+              ? "Upcoming"
+              : "Closed"}
         </span>
       </div>
 

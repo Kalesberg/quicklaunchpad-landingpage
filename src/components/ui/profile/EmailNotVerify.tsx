@@ -8,7 +8,6 @@ import clsx from "clsx";
 import { ArrowPathIcon, PencilIcon } from "@heroicons/react/16/solid";
 
 export default function EmailNotVerify() {
-
   return (
     <div className="my-6 grid md:grid-cols-2 grid-cols-1 gap-6">
       <div className="bg-[#1B1E29] rounded-xl p-6">

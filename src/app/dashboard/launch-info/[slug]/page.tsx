@@ -25,7 +25,7 @@ export default function LaunchInfoDetailPage() {
       : [
           { label: "My Contribution", value: "contribution" },
           { label: "Claim", value: "claim" },
-        ]
+        ],
   );
 
   return (
@@ -65,15 +65,15 @@ export default function LaunchInfoDetailPage() {
                         status === "live"
                           ? "bg-[#0FC67929] text-[#0FC679]"
                           : status === "upcoming"
-                          ? "bg-[#FDD83529] text-[#FDD835]"
-                          : "bg-[#8E33FF29] text-[#C684FF]"
+                            ? "bg-[#FDD83529] text-[#FDD835]"
+                            : "bg-[#8E33FF29] text-[#C684FF]"
                       }`}
                     >
                       {status === "live"
                         ? "Open"
                         : status === "upcoming"
-                        ? "Upcoming"
-                        : "Closed"}
+                          ? "Upcoming"
+                          : "Closed"}
                     </span>
                     <span
                       className={`min-w-24 h-[24px] px-2 py-1 rounded-md text-xs text-center font-bold ${

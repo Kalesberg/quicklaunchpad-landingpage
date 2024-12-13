@@ -1,16 +1,16 @@
-import polygon from './polygon.json'
-import dogechain from './dogechain.json'
-import zktestnet from './zktestnet.json'
-import zkmainnet from './zkmainnet.json'
-import manta from './manta.json'
-import zkartana from './zkartana.json'
-import tIMX from './tIMX.json'
-import qlpmanager from './qlpmanager.json'
-import x1 from './x1.json'
-import IMX from './imx.json'
-import astarZkevm from './astarzkevm.json'
-import layerX from './layerx.json'
-import orderlyFeeTiers from './orderlyFeeTiers.json'
+import polygon from "./polygon.json";
+import dogechain from "./dogechain.json";
+import zktestnet from "./zktestnet.json";
+import zkmainnet from "./zkmainnet.json";
+import manta from "./manta.json";
+import zkartana from "./zkartana.json";
+import tIMX from "./tIMX.json";
+import qlpmanager from "./qlpmanager.json";
+import x1 from "./x1.json";
+import IMX from "./imx.json";
+import astarZkevm from "./astarzkevm.json";
+import layerX from "./layerx.json";
+import orderlyFeeTiers from "./orderlyFeeTiers.json";
 
 enum ChainId {
   MUMBAI = 80001,
@@ -27,7 +27,7 @@ enum ChainId {
   TIMX = 13473,
   IMX = 13371,
   ASTARZKEVM = 3776,
-  LAYERX = 196
+  LAYERX = 196,
 }
 
 const configs: any = {
@@ -42,22 +42,22 @@ const configs: any = {
   [ChainId.IMX]: IMX,
   [ChainId.ASTARZKEVM]: astarZkevm,
   [ChainId.LAYERX]: layerX,
-}
+};
 
 export const getConfig = (network: ChainId | undefined) => {
   if (!network) {
-    return configs[ChainId.MATIC]
+    return configs[ChainId.MATIC];
   }
-  const config = configs[network]
-  return config
-}
+  const config = configs[network];
+  return config;
+};
 
 export const getQlpManager = () => {
-  return qlpmanager
-}
+  return qlpmanager;
+};
 
 export const getOrderlyFeeTiers = () => {
-  return orderlyFeeTiers
-}
+  return orderlyFeeTiers;
+};
 
-export const AML_SCORE_THRESHOLD = 7
+export const AML_SCORE_THRESHOLD = 7;
