@@ -1,10 +1,11 @@
 "use client";
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import Image from "next/image";
 import Button from "components/common/Button";
 import { useRouter } from "next/navigation";
 
 import { getProjectsByStatus } from "app/api";
+import { ProjectStatus } from 'state/type'
 
 interface LaunchProps {
   image: string;
@@ -106,6 +107,19 @@ const LaunchCard: React.FC<LaunchProps> = ({
 };
 
 const LiveUpcomingLaunches: React.FC = () => {
+
+  const fetchLaunches = useCallback(async () => {
+    try {
+      const response = await getProjectsByStatus(ProjectStatus.Live);
+      console.log('live response', response);
+    } catch (err) {
+      console.log('[LiveUpcomingLaunches] projects Club error: ', err);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchLaunches();
+  }, [fetchLaunches]);
 
   const launches: LaunchProps[] = [
     {
