@@ -14,7 +14,7 @@ const LaunchRow: React.FC<Project> = (p: Project) => {
   const blockchain = ChainIdToName[p.chainId] || "";
   return (
     <div className="bg-[#1B1E29] rounded-lg p-5 flex items-center justify-between">
-      <div className="flex items-center gap-6">
+      <div className="flex items-center gap-6 max-w-56 min-w-56">
         <Image
           src="/assets/images/launch-info-img.png"
           alt={p.projectName}
@@ -94,8 +94,7 @@ const PreviousLaunches: React.FC = () => {
       </div>
       <div className="text-center mt-6">
         <Button
-          href="#"
-          className="text-blue-500 text-sm hover:text-blue-400 font-bold"
+          className="text-blue-500 text-sm hover:text-blue-400 font-bold m-auto"
           onClick={() => setLaunches(allLaunches)}
         >
           See All Previous Launches
