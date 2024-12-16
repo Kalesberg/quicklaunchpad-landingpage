@@ -6,8 +6,12 @@ import { getProjectsByStatus } from "app/api";
 import { Project, ProjectStatus, ChainIdToName } from "state/type";
 import { previousProjects } from "state/projects_temp";
 import Button from "components/common/Button";
+import { useRouter } from "next/navigation";
+import { useDispatch } from 'react-redux';
+import { updateSelectedProject } from "state/projectSlice";
 
 interface LaunchProps {
+  pid: string;
   name: string;
   avatar: string;
   logo: string;
@@ -17,74 +21,63 @@ interface LaunchProps {
   initialPrice: string;
 }
 
-const LaunchRow: React.FC<LaunchProps> = ({
-  name,
-  avatar,
-  logo,
-  blockchain,
-  totalRaise,
-  participants,
-  initialPrice,
-}) => (
+const LaunchRow: React.FC<Project> = (p: Project) => {
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const blockchain = ChainIdToName[p.chainId] || '';
+  return (
   <div className="bg-[#1B1E29] rounded-lg p-5 flex items-center justify-between">
     <div className="flex items-center gap-6">
       <Image
-        src={avatar}
-        alt={name}
+        src="/assets/images/launch-info-img.png"
+        alt={p.projectName}
         width={64}
         height={64}
         className="w-16 h-16 rounded-full"
       />
-      <span>{name}</span>
+      <span>{p.projectName}</span>
     </div>
     <div>
       <span className="text-[#C7CAD9] text-xs leading-4">Blockchain</span>
       <div className="flex items-center space-x-2">
-        <Image src={logo} alt={blockchain} width={20} height={20} />
+        <Image src="/assets/images/project-logo.png" alt={blockchain} width={20} height={20} />
         <span>{blockchain}</span>
       </div>
     </div>
     <div>
       <p className="text-xs text-[#C7CAD9] ">Total Raise</p>
-      <p>{totalRaise}</p>
+      <p>{p.totalPoolAmount}</p>
     </div>
     <div>
       <p className="text-xs text-[#C7CAD9] ">Participants</p>
-      <p>{participants}</p>
+      <p>{ p.allocation?.participants?.length || 0}</p>
     </div>
     <div>
       <p className="text-xs text-[#C7CAD9] ">Initial Price</p>
-      <p>{initialPrice}</p>
+      <p>{ p.initialPrice}</p>
     </div>
-    <Link
-      href="#"
+    <Button
       className="text-blue-500 text-sm font-bold hover:text-blue-400"
+      onClick={() =>{
+        dispatch(updateSelectedProject(p))
+        router.push(`/dashboard/launch-info/${p.pid}?status=${status}`)
+      }}
     >
       Details
-    </Link>
-  </div>
-);
+    </Button>
+  </div>)
+}
 
 const PreviousLaunches: React.FC = () => {
-  const [launches, setLaunches] = useState<LaunchProps[]>([]);
-  const [allLaunches, setAllLaunches] = useState<LaunchProps[]>([]);
+  const [launches, setLaunches] = useState<Project[]>([]);
+  const [allLaunches, setAllLaunches] = useState<Project[]>([]);
 
   const fetchLaunches = useCallback(async () => {
     try {
       // console.log("fetching completed projects");
       // const response = await getProjectsByStatus(ProjectStatus.Completed);
       // console.log(response)
-      const res = previousProjects.map(p => {
-        return {
-          name: p.projectName,
-          avatar: "/assets/images/launch-info-img.png",
-          logo: "/assets/images/project-logo.png",
-          blockchain: ChainIdToName[p.chainId] || '',
-          totalRaise: p.totalPoolAmount,
-          participants: p.allocation?.participants?.length || 0,
-          initialPrice: p.initialPrice
-        }
-      });
+      const res = previousProjects;
       setAllLaunches(res);
       setLaunches(res.slice(0, 5));
     } catch (err) {

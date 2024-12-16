@@ -12,6 +12,8 @@ import {
   optimism,
   polygon,
 } from "@reown/appkit/networks";
+import { Provider } from 'react-redux';
+import store from '../redux/store';
 
 enum ChainId {
   MUMBAI = 80001,
@@ -57,7 +59,9 @@ const MainProvider = ({ children }: any) => {
 
   return (
     <MainContext.Provider value={{ chainId, setChainId }}>
-      {children}
+      <Provider store={store}>
+        {children}
+      </Provider>
     </MainContext.Provider>
   );
 };

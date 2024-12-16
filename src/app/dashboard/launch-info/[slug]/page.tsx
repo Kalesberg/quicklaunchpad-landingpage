@@ -13,8 +13,11 @@ import Button from "components/common/Button";
 import { useState } from "react";
 import clsx from "clsx";
 import { useSearchParams } from "next/navigation";
+import { useSelector } from 'react-redux';
 
 export default function LaunchInfoDetailPage() {
+  const { project } = useSelector((state: any) => state || {});
+  console.log('getting the project detail', project);
   const [selectedTab, setSelectedTab] = useState<string>("about");
   const searchParams = useSearchParams();
   const status = searchParams.get("status");
