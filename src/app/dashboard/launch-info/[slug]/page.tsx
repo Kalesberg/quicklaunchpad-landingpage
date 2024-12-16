@@ -114,11 +114,41 @@ export default function LaunchInfoDetailPage() {
                   </Link>
                 </div>
                 <div className="flex space-x-5 mt-2 mb-4">
-                  <TelegramIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
-                  <YoutubeIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
-                  <DiscordIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
-                  <GithubIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
-                  <TwitterIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
+                  {project.socials?.telegram && <Link
+                    href={project.socials.telegram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <TelegramIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
+                  </Link>}
+                  {project.socials?.youtube && <Link
+                    href={project.socials.youtube}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <YoutubeIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
+                  </Link>}
+                  {project.socials?.discord && <Link
+                    href={project.socials.discord}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <DiscordIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
+                  </Link>}
+                  {project.socials?.github && <Link
+                    href={project.socials.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <GithubIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
+                  </Link>}
+                  {project.socials?.twitter && <Link
+                    href={project.socials.twitter}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <TwitterIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
+                  </Link>}
                 </div>
               </div>
             </div>
@@ -408,7 +438,7 @@ export default function LaunchInfoDetailPage() {
                   <h3 className="text-[#EBECF2] text-base leading-6 font-semibold">
                     Lottery
                   </h3>
-                  <p className="text-[#696C80] text-xs leading-4">
+                  <p className="text-[#C7CAD9] text-xs leading-4">
                     Winners have been announced on {project.pledgeEndDate}
                   </p>
                 </div>
@@ -423,7 +453,7 @@ export default function LaunchInfoDetailPage() {
                   <h3 className="text-[#EBECF2] text-base leading-6 font-semibold">
                     Contribution
                   </h3>
-                  <p className="text-[#696C80] text-xs leading-4">
+                  <p className="text-[#cCAD9] text-xs leading-4">
                     Expires on {project.contributionEndDate}
                   </p>
                 </div>

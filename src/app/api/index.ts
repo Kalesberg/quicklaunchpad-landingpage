@@ -24,3 +24,15 @@ export const getProjectsByStatus = async (status: ProjectStatus) => {
     return p;
   });
 };
+
+export const getProjectsById = async (pid: string) => {
+  // const res = await projectApi.get(`/projects/${pid}`);
+  // console.log(res);
+  // return res;
+  const p = previousProjects[0];
+  p.pledgeStartDate = convertDateTime(p.pledgeStartDate);
+  p.pledgeEndDate = convertDateTime(p.pledgeEndDate);
+  p.contributionStartDate = convertDateTime(p.contributionStartDate);
+  p.contributionEndDate = convertDateTime(p.contributionEndDate);
+  return p;
+};
