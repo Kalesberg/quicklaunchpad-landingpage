@@ -1,11 +1,22 @@
 import { ProjectStatus, Project } from "state/type";
 import { previousProjects } from "state/projects_temp";
-import { convertDateTime } from '../../utils';
+import { contentTemp } from "state/content_temp";
+import { convertDateTime } from "../../utils";
 
 const BASE_URL = "https://quicklaunchpad.io/";
+const CONTENT_BASE_URL =
+  "https://strapi.quicklaunchpad.io/api/project-contents/";
+
 import axios from "axios";
 
 export const projectApi = axios.create({
+  baseURL: BASE_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+export const contentApi = axios.create({
   baseURL: BASE_URL,
   headers: {
     "Content-Type": "application/json",
@@ -16,7 +27,7 @@ export const getProjectsByStatus = async (status: ProjectStatus) => {
   // const res = await projectApi.get(`/projects?status=${status}`);
   // console.log(res);
   // return res;
-  return previousProjects.map(p => {
+  return previousProjects.map((p) => {
     p.pledgeStartDate = convertDateTime(p.pledgeStartDate);
     p.pledgeEndDate = convertDateTime(p.pledgeEndDate);
     p.contributionStartDate = convertDateTime(p.contributionStartDate);
@@ -35,4 +46,11 @@ export const getProjectsById = async (pid: string) => {
   p.contributionStartDate = convertDateTime(p.contributionStartDate);
   p.contributionEndDate = convertDateTime(p.contributionEndDate);
   return p;
+};
+
+export const getProjectsContent = async (contentId: string) => {
+  // const res = await contentApi.get(`${contentId}?populate=*`);
+  // console.log(res);
+  const res = contentTemp;
+  return res;
 };

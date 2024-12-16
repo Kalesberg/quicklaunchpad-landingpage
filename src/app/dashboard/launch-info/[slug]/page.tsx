@@ -1,4 +1,5 @@
 "use client";
+import React, { useCallback, useEffect, useState } from "react";
 import { ChevronLeftIcon } from "@heroicons/react/16/solid";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,27 +11,47 @@ import {
   YoutubeIcon,
 } from "../../../../../public/assets/images/social-icons";
 import Button from "components/common/Button";
-import { useState } from "react";
 import clsx from "clsx";
 import { useSearchParams } from "next/navigation";
-import { useSelector } from 'react-redux';
-import { convertDateTime } from 'utils';
+import { useSelector } from "react-redux";
+import { convertDateTime } from "utils";
 import { Project } from "state/type";
+import { getProjectsContent } from "app/api";
 
 export default function LaunchInfoDetailPage() {
-  const { project } = useSelector((state: {project: Project}) => state || {});
-  console.log('getting the project detail', project);
+  const { project } = useSelector((state: { project: Project }) => state || {});
+
+
+  console.log("getting the project detail", project);
   const [selectedTab, setSelectedTab] = useState<string>("about");
   const status = project.status;
   const KYCStatus = !!project.kycProvider;
-  const tabs = [{ label: "About the Launch", value: "about" }].concat(
-    status === "upcoming"
-      ? []
-      : [
-          { label: "My Contribution", value: "contribution" },
-          { label: "Claim", value: "claim" },
-        ],
-  );
+  const tabs = [{ label: "About the Launch", value: "about" }]
+
+  const [content, setConent] = useState<any>(null);
+
+  // .concat(
+  //   status === "upcoming"
+  //     ? []
+  //     : [
+  //         { label: "My Contribution", value: "contribution" },
+  //         { label: "Claim", value: "claim" },
+  //       ],
+  // );
+
+  const fetchProjectContent = useCallback(async () => {
+    try {
+      const res = await getProjectsContent(project.contentUrl);
+      setConent(res?.data?.attributes?.content);
+    } catch (err) {
+      console.log("[PreviousLaunches] projects Club error: ", err);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchProjectContent();
+  }, [fetchProjectContent]);
+
 
   return (
     <div className="container-dashboard mx-auto px-4">
@@ -114,41 +135,51 @@ export default function LaunchInfoDetailPage() {
                   </Link>
                 </div>
                 <div className="flex space-x-5 mt-2 mb-4">
-                  {project.socials?.telegram && <Link
-                    href={project.socials.telegram}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <TelegramIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
-                  </Link>}
-                  {project.socials?.youtube && <Link
-                    href={project.socials.youtube}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <YoutubeIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
-                  </Link>}
-                  {project.socials?.discord && <Link
-                    href={project.socials.discord}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <DiscordIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
-                  </Link>}
-                  {project.socials?.github && <Link
-                    href={project.socials.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <GithubIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
-                  </Link>}
-                  {project.socials?.twitter && <Link
-                    href={project.socials.twitter}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <TwitterIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
-                  </Link>}
+                  {project.socials?.telegram && (
+                    <Link
+                      href={project.socials.telegram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <TelegramIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
+                    </Link>
+                  )}
+                  {project.socials?.youtube && (
+                    <Link
+                      href={project.socials.youtube}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <YoutubeIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
+                    </Link>
+                  )}
+                  {project.socials?.discord && (
+                    <Link
+                      href={project.socials.discord}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <DiscordIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
+                    </Link>
+                  )}
+                  {project.socials?.github && (
+                    <Link
+                      href={project.socials.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <GithubIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
+                    </Link>
+                  )}
+                  {project.socials?.twitter && (
+                    <Link
+                      href={project.socials.twitter}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <TwitterIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
+                    </Link>
+                  )}
                 </div>
               </div>
             </div>
@@ -221,25 +252,24 @@ export default function LaunchInfoDetailPage() {
             <div className="p-6 flex flex-col w-full justify-start items-start gap-2">
               {selectedTab === "about" && (
                 <div className="text-[#EBECF2] text-sm leading-6">
-                  <h2 className="text-lg font-bold leading-7 mb-2">
-                    Introducing [Launch Name]
-                  </h2>
-                  <p className="mb-2">
-                    YakDAO&apos;s approach is innovative in several ways. By
-                    utilizing a deflationary token model that mimics strategies
-                    employed in private equity funds, they are overcoming the
-                    barriers that typically prevent individual investors from
-                    accessing this lucrative market.
-                  </p>
-                  <p className="mb-2">
-                    The yields from YakDAO&apos;s properties are used to create
-                    consistent buy pressure on the $YAKS token, offering rewards
-                    for those who choose to stake it. This strategy leverages
-                    decentralized finance (DeFi) mechanisms to create a form of
-                    monetary democracy, allowing retail investment in an asset
-                    class that has been largely controlled by the world&apos;s
-                    wealthiest investors
-                  </p>
+                  {content && content.map((c: any) => (
+                    c.type === 'paragraph' ? <p className="pb-2">
+                      {
+                        c.children.map((ch:any) => (
+                          ch.type === 'text' ? ch.bold ? <strong>{ch.text}</strong> :
+                            <span>{ch.text}</span> :
+                            ch.type === 'link' ? <a href={ch.url} target="_blank">{ch.url}</a> : null
+                          ))
+                      }
+                    </p>
+                    : c.type === 'image' ? <Image
+                      src={c.image.url}
+                      alt={c.image.alternativeText}
+                      width={c.image.width}
+                      height={c.image.height}
+                      className="mx-auto pb-2"
+                    /> : (null)
+                  ))}
                 </div>
               )}
               {selectedTab === "contribution" && (
@@ -483,8 +513,7 @@ export default function LaunchInfoDetailPage() {
                 </div>
               </div>
             </>
-          )
-        }
+          )}
         </div>
       </div>
     </div>

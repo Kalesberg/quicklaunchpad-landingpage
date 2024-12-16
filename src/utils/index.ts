@@ -22,22 +22,22 @@ export function isValidEmail(email: string): boolean {
 }
 
 export const convertDateTime = (dateTimeString: string) => {
-  if (!dateTimeString) return '';
+  if (!dateTimeString) return "";
 
   const formattedDate = new Date(dateTimeString);
   // Format for date: 02 Dec 2024
-  const date = new Intl.DateTimeFormat('en-GB', {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
+  const date = new Intl.DateTimeFormat("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
   }).format(formattedDate);
 
   // Format for time: 6:00 AM
-  const time = new Intl.DateTimeFormat('en-US', {
-    hour: 'numeric',
-    minute: 'numeric',
+  const time = new Intl.DateTimeFormat("en-US", {
+    hour: "numeric",
+    minute: "numeric",
     hour12: true,
   }).format(formattedDate);
 
-  return date + ' ' + time;
-}
+  return date + " " + time;
+};

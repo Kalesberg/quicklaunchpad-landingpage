@@ -1,4 +1,4 @@
-import projectReducer from 'state/projectSlice';
+import projectReducer from "state/projectSlice";
 
 const rootReducer = projectReducer;
 

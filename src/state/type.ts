@@ -1,7 +1,7 @@
 export enum ProjectStatus {
   Live = "live",
   Completed = "completed",
-  Upcoming = 'upcoming'
+  Upcoming = "upcoming",
 }
 
 export type Project = {
@@ -77,4 +77,4 @@ export type Allocation = {
   _id: string;
 };
 
-export const ChainIdToName: Record<string, string> = { '0x89': 'Polygon'}
+export const ChainIdToName: Record<string, string> = { "0x89": "Polygon" };
