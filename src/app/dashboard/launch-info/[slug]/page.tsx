@@ -1,4 +1,5 @@
 "use client";
+import React, { useCallback, useEffect, useState } from "react";
 import { ChevronLeftIcon } from "@heroicons/react/16/solid";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,26 +11,48 @@ import {
   YoutubeIcon,
 } from "../../../../../public/assets/images/social-icons";
 import Button from "components/common/Button";
-import { useState } from "react";
 import clsx from "clsx";
-import { useSearchParams } from "next/navigation";
+import { getProjectsById, getProjectsContent } from "app/api";
 
 export default function LaunchInfoDetailPage() {
+  // const { project } = useSelector((state: { project: Project }) => state || {});
+  
+  // const project = getPro
+  const [project, setProject] = useState<any>(null);
+
+  console.log("getting the project detail", project);
   const [selectedTab, setSelectedTab] = useState<string>("about");
-  const searchParams = useSearchParams();
-  const status = searchParams.get("status");
-  const KYCStatus = true;
-  const tabs = [{ label: "About the Launch", value: "about" }].concat(
-    status === "upcoming"
-      ? []
-      : [
-          { label: "My Contribution", value: "contribution" },
-          { label: "Claim", value: "claim" },
-        ]
-  );
+  const tabs = [{ label: "About the Launch", value: "about" }]
+  // .concat(
+  //   status === "upcoming"
+  //     ? []
+  //     : [
+  //         { label: "My Contribution", value: "contribution" },
+  //         { label: "Claim", value: "claim" },
+  //       ],
+  // );
+
+  const [content, setConent] = useState<any>(null);
+
+  const fetchProjectById= useCallback(async () => {
+    try {
+      const res = await getProjectsById('');
+      setProject(res);
+      const res1 = await getProjectsContent(res.contentUrl);
+      setConent(res1?.data?.attributes?.content);
+
+    } catch (err) {
+      console.log("[PreviousLaunches] projects Club error: ", err);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchProjectById();
+  }, [fetchProjectById]);
+
 
   return (
-    <div className="container-dashboard mx-auto px-4">
+    project && <div className="container-dashboard mx-auto px-4">
       <Link href={"/dashboard"} className="flex items-center mb-6">
         <ChevronLeftIcon className="w-5 h-5 mr-2" />
         Back to Launchpads
@@ -57,64 +80,104 @@ export default function LaunchInfoDetailPage() {
               <div className="w-full">
                 <div className="flex justify-between mb-4">
                   <h1 className="text-[#EBECF2] text-[32px] font-bold leading-[48px]">
-                    Launch Name
+                    {project.projectName}
                   </h1>
                   <div className="flex justify-between gap-2">
                     <span
                       className={`min-w-24 h-[24px] px-2 py-1 rounded-md text-xs text-center font-bold ${
-                        status === "live"
+                        project.status === "live"
                           ? "bg-[#0FC67929] text-[#0FC679]"
-                          : status === "upcoming"
-                          ? "bg-[#FDD83529] text-[#FDD835]"
-                          : "bg-[#8E33FF29] text-[#C684FF]"
+                          : project.status === "upcoming"
+                            ? "bg-[#FDD83529] text-[#FDD835]"
+                            : "bg-[#8E33FF29] text-[#C684FF]"
                       }`}
                     >
-                      {status === "live"
+                      {project.status === "live"
                         ? "Open"
-                        : status === "upcoming"
-                        ? "Upcoming"
-                        : "Closed"}
+                        : project.status === "upcoming"
+                          ? "Upcoming"
+                          : "Closed"}
                     </span>
                     <span
                       className={`min-w-24 h-[24px] px-2 py-1 rounded-md text-xs text-center font-bold ${
-                        KYCStatus === true
+                        !!project.kycProvider === true
                           ? "bg-[#FF5C5C29] text-[#FF5C5C]"
                           : ""
                       }`}
                     >
-                      {KYCStatus === true ? "KYC Required" : ""}
+                      {!!project.kycProvider === true ? "KYC Required" : ""}
                     </span>
                   </div>
                 </div>
                 <p className="max-w-[500px] w-3/4 leading-6 text-[#EBECF2] whitespace-nowrap overflow-hidden text-ellipsis mb-4">
-                  This project is lorem ipsum dolor sit amet
+                  {project.description}
                 </p>
                 <div className="flex items-center gap-2 mb-4">
                   <Link
-                    href=""
+                    href={project.websiteUrl}
                     className="min-w-[80px] h-9 bg-[#448AFF14] text-[#448AFF] text-center text-sm font-bold leading-9 rounded-lg px-3"
                   >
                     Website
                   </Link>
                   <Link
-                    href=""
+                    href={project.whitepaperUrl}
                     className="min-w-[80px] h-9 bg-[#448AFF14] text-[#448AFF] text-center text-sm font-bold leading-9 rounded-lg px-3"
                   >
                     Whitepaper
                   </Link>
                   <Link
-                    href=""
+                    href={project.blogUrl}
                     className="min-w-[80px] h-9 bg-[#448AFF14] text-[#448AFF] text-center text-sm font-bold leading-9 rounded-lg px-3"
                   >
                     Blog
                   </Link>
                 </div>
                 <div className="flex space-x-5 mt-2 mb-4">
-                  <TelegramIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
-                  <YoutubeIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
-                  <DiscordIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
-                  <GithubIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
-                  <TwitterIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
+                  {project.socials?.telegram && (
+                    <Link
+                      href={project.socials.telegram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <TelegramIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
+                    </Link>
+                  )}
+                  {project.socials?.youtube && (
+                    <Link
+                      href={project.socials.youtube}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <YoutubeIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
+                    </Link>
+                  )}
+                  {project.socials?.discord && (
+                    <Link
+                      href={project.socials.discord}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <DiscordIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
+                    </Link>
+                  )}
+                  {project.socials?.github && (
+                    <Link
+                      href={project.socials.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <GithubIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
+                    </Link>
+                  )}
+                  {project.socials?.twitter && (
+                    <Link
+                      href={project.socials.twitter}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <TwitterIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
+                    </Link>
+                  )}
                 </div>
               </div>
             </div>
@@ -124,7 +187,7 @@ export default function LaunchInfoDetailPage() {
                   Total Raise
                 </h3>
                 <p className="text-[#EBECF2] text-2xl font-bold flex-grow">
-                  $150,000
+                  ${project.totalPoolAmount}
                 </p>
               </div>
               <div className="bg-[#282D3D] min-w-[158px] h-[106px] p-4 rounded-2xl flex flex-col">
@@ -132,7 +195,7 @@ export default function LaunchInfoDetailPage() {
                   Token Price
                 </h3>
                 <p className="text-[#EBECF2] text-2xl font-bold flex-grow">
-                  $0.10
+                  ${project.initialPrice}
                 </p>
               </div>
               <div className="bg-[#282D3D] min-w-[158px] h-[106px] p-4 rounded-2xl flex flex-col">
@@ -140,7 +203,7 @@ export default function LaunchInfoDetailPage() {
                   Number of Winners
                 </h3>
                 <p className="text-[#EBECF2] text-2xl font-bold flex-grow">
-                  500
+                  ${project.numberLotteryWinners || 0}
                 </p>
               </div>
               <div className="bg-[#282D3D] min-w-[158px] h-[106px] p-4 rounded-2xl flex flex-col">
@@ -148,7 +211,7 @@ export default function LaunchInfoDetailPage() {
                   Allocation
                 </h3>
                 <p className="text-[#EBECF2] text-2xl font-bold flex-grow">
-                  $250
+                  ${project.maxUserPledgeSize}
                 </p>
               </div>
             </div>
@@ -187,25 +250,24 @@ export default function LaunchInfoDetailPage() {
             <div className="p-6 flex flex-col w-full justify-start items-start gap-2">
               {selectedTab === "about" && (
                 <div className="text-[#EBECF2] text-sm leading-6">
-                  <h2 className="text-lg font-bold leading-7 mb-2">
-                    Introducing [Launch Name]
-                  </h2>
-                  <p className="mb-2">
-                    YakDAO&apos;s approach is innovative in several ways. By
-                    utilizing a deflationary token model that mimics strategies
-                    employed in private equity funds, they are overcoming the
-                    barriers that typically prevent individual investors from
-                    accessing this lucrative market.
-                  </p>
-                  <p className="mb-2">
-                    The yields from YakDAO&apos;s properties are used to create
-                    consistent buy pressure on the $YAKS token, offering rewards
-                    for those who choose to stake it. This strategy leverages
-                    decentralized finance (DeFi) mechanisms to create a form of
-                    monetary democracy, allowing retail investment in an asset
-                    class that has been largely controlled by the world&apos;s
-                    wealthiest investors
-                  </p>
+                  {content && content.map((c: any) => (
+                    c.type === 'paragraph' ? <p className="pb-2">
+                      {
+                        c.children.map((ch:any) => (
+                          ch.type === 'text' ? ch.bold ? <strong>{ch.text}</strong> :
+                            <span>{ch.text}</span> :
+                            ch.type === 'link' ? <a href={ch.url} target="_blank" className="text-[#448AFF]">{ch.url}</a> : null
+                          ))
+                      }
+                    </p>
+                    : c.type === 'image' ? <Image
+                      src={c.image.url}
+                      alt={c.image.alternativeText}
+                      width={c.image.width}
+                      height={c.image.height}
+                      className="mx-auto pb-2"
+                    /> : (null)
+                  ))}
                 </div>
               )}
               {selectedTab === "contribution" && (
@@ -297,7 +359,7 @@ export default function LaunchInfoDetailPage() {
                 </div>
               </div>
             </>
-          ) : (
+          ) : status === "live" ? (
             <>
               <div className="border-b-2 border-[#919EAB14] pb-4">
                 <h2 className="text-[#EBECF2] text-2xl leading-9 text-center font-bold">
@@ -330,7 +392,7 @@ export default function LaunchInfoDetailPage() {
                     Application period:
                   </p>
                   <p className="text-[#C7CAD9] text-xs leading-4 font-semibold">
-                    13 Mar 2024 04:00 PM – 15 Mar 2024 08:00 AM
+                    {project.pledgeStartDate} – {project.pledgeEndDate}
                   </p>
                   <Button
                     variant="primary"
@@ -344,7 +406,7 @@ export default function LaunchInfoDetailPage() {
                     Lottery
                   </h3>
                   <p className="text-[#696C80] text-xs leading-4">
-                    Winners will be announced 17 Mar 04:00 AM
+                    Winners will be announced {project.pledgeEndDate}
                   </p>
                 </div>
                 <div className="relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['3'] after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#DFE3E8] after:text-[#919EAB] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
@@ -362,6 +424,88 @@ export default function LaunchInfoDetailPage() {
                 </div>
                 <div className="relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 after:content-['5'] after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#DFE3E8] after:text-[#919EAB] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
                   <h3 className="text-[#696C80] text-base leading-6 font-semibold">
+                    Claim
+                  </h3>
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="border-b-2 border-[#919EAB14] pb-4">
+                <h2 className="text-[#EBECF2] text-2xl leading-9 text-center font-bold">
+                  Launch Timeline
+                </h2>
+              </div>
+              <div className="flex flex-col px-6 pt-4">
+                <div className="relative left-7 w-fit min-h-12 pb-4 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80]">
+                  <Image
+                    src="/assets/icons/ic-checkmark.svg"
+                    alt="icon"
+                    width={24}
+                    height={24}
+                    className="block absolute top-[10px] -left-[30px]"
+                  />
+                  <h3 className="text-[#EBECF2] text-base leading-6 font-semibold">
+                    Whitelist
+                  </h3>
+                  <p className="text-[#C7CAD9] text-xs leading-4">
+                    Application period:
+                  </p>
+                  <p className="text-[#C7CAD9] text-xs leading-4 font-semibold">
+                    {project.pledgeStartDate} – {project.pledgeEndDate}
+                  </p>
+                </div>
+                <div className="relative left-7 w-fit min-h-12 p-2 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80]">
+                  <Image
+                    src="/assets/icons/ic-checkmark.svg"
+                    alt="icon"
+                    width={24}
+                    height={24}
+                    className="block absolute top-[10px] -left-[30px]"
+                  />
+                  <h3 className="text-[#EBECF2] text-base leading-6 font-semibold">
+                    Lottery
+                  </h3>
+                  <p className="text-[#C7CAD9] text-xs leading-4">
+                    Winners have been announced on {project.pledgeEndDate}
+                  </p>
+                </div>
+                <div className="relative left-7 w-fit min-h-12 p-2 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80]">
+                  <Image
+                    src="/assets/icons/ic-checkmark.svg"
+                    alt="icon"
+                    width={24}
+                    height={24}
+                    className="block absolute top-[10px] -left-[30px]"
+                  />
+                  <h3 className="text-[#EBECF2] text-base leading-6 font-semibold">
+                    Contribution
+                  </h3>
+                  <p className="text-[#cCAD9] text-xs leading-4">
+                    Expires on {project.contributionEndDate}
+                  </p>
+                </div>
+                <div className="relative left-7 w-fit min-h-12 p-2 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80]">
+                  <Image
+                    src="/assets/icons/ic-checkmark.svg"
+                    alt="icon"
+                    width={24}
+                    height={24}
+                    className="block absolute top-[10px] -left-[30px]"
+                  />
+                  <h3 className="text-[#EBECF2] text-base leading-6 font-semibold">
+                    Completed
+                  </h3>
+                </div>
+                <div className="relative left-7 w-fit min-h-12 p-2 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80]">
+                  <Image
+                    src="/assets/icons/ic-checkmark.svg"
+                    alt="icon"
+                    width={24}
+                    height={24}
+                    className="block absolute top-[10px] -left-[30px]"
+                  />
+                  <h3 className="text-[#EBECF2] text-base leading-6 font-semibold">
                     Claim
                   </h3>
                 </div>

@@ -28,11 +28,18 @@ const LaunchNotice: React.FC<{ status?: string }> = ({ status }) => {
         </div>
 
         <div className="flex space-x-5 mt-2 mb-4">
-          <TelegramIcon className="w-4 h-4 text-gray-400 hover:text-white cursor-pointer" />
+          <a href="https://t.me/QuickLaunchOfficial" target="_blank">
+            <TelegramIcon className="w-4 h-4 text-gray-400 hover:text-white cursor-pointer" />
+          </a>
           <YoutubeIcon className="w-4 h-4 text-gray-400 hover:text-white cursor-pointer" />
           <DiscordIcon className="w-4 h-4 text-gray-400 hover:text-white cursor-pointer" />
           <GithubIcon className="w-4 h-4 text-gray-400 hover:text-white cursor-pointer" />
-          <TwitterIcon className="w-4 h-4 text-gray-400 hover:text-white cursor-pointer" />
+          <a
+            href="https://x.com/quickswapdex?s=21&t=nQjWO49uC8GB7M59QlcWjQ"
+            target="_blank"
+          >
+            <TwitterIcon className="w-4 h-4 text-gray-400 hover:text-white cursor-pointer" />
+          </a>
         </div>
 
         <p className="text-xl font-bold text-white mb-2">
@@ -69,15 +76,15 @@ const LaunchNotice: React.FC<{ status?: string }> = ({ status }) => {
             status === "live"
               ? "bg-[#0FC679]"
               : status === "upcoming"
-              ? "bg-[#FDD835]"
-              : "bg-[#C684FF]"
+                ? "bg-[#FDD835]"
+                : "bg-[#C684FF]"
           }`}
         >
           {status === "live"
             ? "Open"
             : status === "upcoming"
-            ? "Upcoming"
-            : "Closed"}
+              ? "Upcoming"
+              : "Closed"}
         </span>
       </div>
 

@@ -1,45 +1,46 @@
-import Mailgun from "mailgun.js";
 import { isValidEmail } from "utils";
-import FormData from "form-data";
 
 export async function POST(req: Request) {
   try {
     const { email } = await req.json();
-    const MailGunKey = process.env.MAILGUN_API_KEY;
-    const MailGunListAddress = process.env.MAILGUN_LIST_ADDRESS as string;
-
-    const mailgun = new Mailgun(FormData);
-    const mg = mailgun.client({
-      username: "api",
-      key: MailGunKey || "",
-    });
+    const MailchimpKey = process.env.MAILCHIMP_API_KEY;
+    const MailchimpServer = process.env.MAILCHIMP_API_SERVER;
+    const MailchimpAudience = process.env.MAILCHIMP_AUDIENCE_ID;
 
     if (!email) {
-      return Response.json({ message: "Email is required" }, { status: 500 });
+      return Response.json({ message: "Email is required" }, { status: 400 });
     } else if (!isValidEmail(email)) {
-      return Response.json({ message: "Email invalid" }, { status: 500 });
+      return Response.json({ message: "Email invalid" }, { status: 400 });
     }
 
-    if (!MailGunKey || !MailGunListAddress) {
-      throw new Error("Missing Mailgun environment variables");
+    if (!MailchimpKey || !MailchimpServer || !MailchimpAudience) {
+      throw new Error("Missing Mailchimp environment variables");
     }
 
-    const response = mg.lists.members
-      .createMember(MailGunListAddress, {
-        address: email,
-        name: email,
-        vars: "",
-        subscribed: "yes",
-        upsert: "yes", // optional, choose yes to insert if not exist, or update it exist
-      })
-      .then((data) => {
-        return Response.json({ data: data }, { status: 201 });
-      })
-      .catch((err) => {
-        return Response.json({ error: err.message }, { status: err.status });
-      });
+    const url = `https://${MailchimpServer}.api.mailchimp.com/3.0/lists/${MailchimpAudience}/members`;
 
-    return response;
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        Authorization: `api_key ${MailchimpKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email_address: email,
+        status: "subscribed",
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      return Response.json(
+        { error: errorData.detail },
+        { status: response.status },
+      );
+    }
+
+    const received = await response.json();
+    return Response.json(received);
   } catch (error) {
     console.error("Error:", error);
     return Response.json({ message: "Internal Server Error" }, { status: 500 });

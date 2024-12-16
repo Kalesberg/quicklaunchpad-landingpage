@@ -28,10 +28,13 @@ const FAQItem: React.FC<FAQItem & { isOpen: boolean; toggle: () => void }> = ({
       className="w-full text-left pl-3 pr-2 py-3 flex justify-between items-center border-t border-[#282D3D]"
       onClick={toggle}
     >
-      <span className="text-base lg:text-lg leading-6 font-semibold">{question}</span>
+      <span className="text-base lg:text-lg leading-6 font-semibold">
+        {question}
+      </span>
       <ChevronDownIcon
         className={clsx({
-          ["min-w-5 h-5 p-[2px] lg:p-0 transition-transform duration-300"]: true,
+          ["min-w-5 h-5 p-[2px] lg:p-0 transition-transform duration-300"]:
+            true,
           ["rotate-180"]: isOpen,
         })}
       />
@@ -155,7 +158,7 @@ You should see a prompt from BlockPass saying, “If you have previously created
     setOpenItems((prevOpenItems) =>
       prevOpenItems.includes(index)
         ? prevOpenItems.filter((i) => i !== index)
-        : [...prevOpenItems, index]
+        : [...prevOpenItems, index],
     );
   };
 
@@ -166,16 +169,16 @@ You should see a prompt from BlockPass saying, “If you have previously created
 
   return (
     <section className="max-w-[1000px] mx-auto mb-[88px] lg:mb-[120px] px-4 md:px-0">
-      <h2 className="text-[32px] text-left lg:text-center leading-[48px] md:leading-8 font-bold mb-8">
+      <h2 className="text-[32px] text-left lg:text-center leading-[48px] md:leading-8 font-semibold mb-8">
         Frequently Asked Questions
       </h2>
       <div className="hidden lg:flex flex-col md:flex-row gap-4 md:gap-10">
         <div className="flex-[40%]">
-          <div className="grid grid-cols-2 md:grid-cols-1 items-center gap-2">
+          <div className="grid grid-cols-2 md:grid-cols-1 items-center gap-1">
             {faqList.map((faq) => (
               <div
                 key={faq.id}
-                className={`flex flex-col md:flex-row items-center gap-4 text-[#282D3D] p-4 cursor-pointer text-[17px] md:text-2xl text-center font-bold leading-[26px] md:leading-9 hover:text-[#EBECF2] transition-all ${
+                className={`flex flex-col md:flex-row items-center gap-4 text-[#696C80] p-1 cursor-pointer text-[17px] md:text-2xl text-center font-semibold leading-[26px] md:leading-9 hover:text-[#EBECF2] transition-all ${
                   tabActive === faq.id && "text-[#EBECF2]"
                 }`}
                 onClick={() => handleSelectTab(faq.id)}
@@ -227,7 +230,7 @@ You should see a prompt from BlockPass saying, “If you have previously created
             ))}
           </div>
         </div>
-        <div className="flex-[60%] md:mt-4">
+        <div className="flex-[60%] md:mt-2">
           {faqList
             .find((faq) => faq.id === tabActive)
             ?.faq?.map((item, index) => (
@@ -295,16 +298,20 @@ You should see a prompt from BlockPass saying, “If you have previously created
                   </svg>
                 )}
               </div>
-              <div className={`mt-[25px] ${item.id === tabActive ? 'block' : 'hidden'}`}>
+              <div
+                className={`mt-[25px] ${
+                  item.id === tabActive ? "block" : "hidden"
+                }`}
+              >
                 {item.faq?.map((faqItem, index) => (
-                    <FAQItem
-                      key={index}
-                      question={faqItem.question}
-                      answer={faqItem.answer}
-                      isOpen={openItems.includes(index)}
-                      toggle={() => toggleItem(index)}
-                    />
-                  ))}
+                  <FAQItem
+                    key={index}
+                    question={faqItem.question}
+                    answer={faqItem.answer}
+                    isOpen={openItems.includes(index)}
+                    toggle={() => toggleItem(index)}
+                  />
+                ))}
               </div>
             </div>
           ))}

@@ -1,10 +1,9 @@
 import React from "react";
 import Button from "components/common/Button";
+import { useRouter } from "next/navigation";
 
-const StepsToJoin: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
-  openModal,
-  setOpenModal,
-}) => {
+const StepsToJoin: React.FC = () => {
+  const router = useRouter();
   const steps = [
     {
       title: "Connect Wallet",
@@ -97,13 +96,14 @@ const StepsToJoin: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
   ];
 
   const handleModal = () => {
-    setOpenModal(!openModal);
+    router.push("/dashboard");
+    // setOpenModal(!openModal);
   };
 
   return (
     <section className="mb-[88px] lg:mb-12 px-4 lg:px-0 rounded-lg">
       <div className="mb-8">
-        <h2 className="text-[#EBECF2] text-[32px] lg:text-2xl font-bold mb-3 lg:mb-4 leading-[48px] lg:leading-10">
+        <h2 className="text-[#EBECF2] text-[32px] lg:text-2xl font-semibold mb-3 lg:mb-4 leading-[48px] lg:leading-10">
           Getting Started
         </h2>
         <p className="text-[#C7CAD9] leading-6 mb-4">
@@ -111,11 +111,11 @@ const StepsToJoin: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 justify-items-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 justify-items-center">
         {steps.map((step, index) => (
           <div
             key={index}
-            className="bg-[#1B1E29] h-[250px] w-full size-0 lg:size-[294px] p-6 lg:p-8 rounded-3xl flex flex-col"
+            className="bg-[#1B1E29] h-[250px] w-full size-0 lg:size-[294px] p-6 lg:p-6 rounded-3xl flex flex-col"
           >
             <div className="w-full flex justify-between gap-3 items-center mb-6 lg:mb-4">
               <div className="relative w-12 h-12 p-2 text-[#448AFF] bg-[#222735] rounded-lg">
@@ -164,7 +164,9 @@ const StepsToJoin: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
                 </g>
               </svg>
             </div>
-            <h3 className="text-xl font-semibold leading-[30px] mb-3 lg:mb-2">{step.title}</h3>
+            <h3 className="text-xl font-semibold leading-[30px] mb-3 lg:mb-2">
+              {step.title}
+            </h3>
             <p className="text-[#C7CAD9] text-sm font-normal lg:font-medium leading-[22px] flex-grow">
               {step.description}
             </p>
@@ -174,10 +176,10 @@ const StepsToJoin: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
       <Button
         variant="primary"
         size="medium"
-        className="max-w-[350px] !bg-[#448AFF] !h-12 mx-auto mt-8 lg:mt-6"
+        className="min-w-[250px] !bg-[#448AFF] !h-12 mx-auto mt-8 lg:mt-6"
         onClick={handleModal}
       >
-        I’m Interested - Keep Me Updated
+        Get started now
       </Button>
     </section>
   );

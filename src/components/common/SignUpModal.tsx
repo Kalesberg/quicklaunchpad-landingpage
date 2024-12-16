@@ -132,7 +132,8 @@ const SignUpModal: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
                 Join us on Telegram
               </h3>
               <p className="text-sm text-[#C7CAD9] mb-4 text-center">
-              Join our Telegram channel for exclusive updates on upcoming crypto launches, industry insights, and real-time discussions
+                Join our Telegram channel for exclusive updates on upcoming
+                crypto launches, industry insights, and real-time discussions
               </p>
               <Button
                 variant="secondary"

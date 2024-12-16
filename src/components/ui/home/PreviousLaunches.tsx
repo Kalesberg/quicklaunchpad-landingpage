@@ -1,115 +1,87 @@
-import React from "react";
+"use client";
+import React, { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { getProjectsByStatus } from "app/api";
+import { Project, ProjectStatus, ChainIdToName } from "state/type";
+import Button from "components/common/Button";
+import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { updateSelectedProject } from "state/projectSlice";
 
-interface LaunchProps {
-  name: string;
-  avatar: string;
-  logo: string;
-  blockchain: string;
-  totalRaise: string;
-  participants: number;
-  initialPrice: string;
-}
-
-const LaunchRow: React.FC<LaunchProps> = ({
-  name,
-  avatar,
-  logo,
-  blockchain,
-  totalRaise,
-  participants,
-  initialPrice,
-}) => (
-  <div className="bg-[#1B1E29] rounded-lg p-5 flex items-center justify-between">
-    <div className="flex items-center gap-6">
-      <Image
-        src={avatar}
-        alt={name}
-        width={64}
-        height={64}
-        className="w-16 h-16 rounded-full"
-      />
-      <span>{name}</span>
-    </div>
-    <div>
-      <span className="text-[#C7CAD9] text-xs leading-4">Blockchain</span>
-      <div className="flex items-center space-x-2">
-        <Image src={logo} alt={blockchain} width={20} height={20} />
-        <span>{blockchain}</span>
+const LaunchRow: React.FC<Project> = (p: Project) => {
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const blockchain = ChainIdToName[p.chainId] || "";
+  return (
+    <div className="bg-[#1B1E29] rounded-lg p-5 flex items-center justify-between">
+      <div className="flex items-center gap-6 max-w-56 min-w-56">
+        <Image
+          src="/assets/images/launch-info-img.png"
+          alt={p.projectName}
+          width={64}
+          height={64}
+          className="w-16 h-16 rounded-full"
+        />
+        <span>{p.projectName}</span>
       </div>
+      <div>
+        <span className="text-[#C7CAD9] text-xs leading-4">Blockchain</span>
+        <div className="flex items-center space-x-2">
+          <Image
+            src="/assets/images/project-logo.png"
+            alt={blockchain}
+            width={20}
+            height={20}
+          />
+          <span>{blockchain}</span>
+        </div>
+      </div>
+      <div>
+        <p className="text-xs text-[#C7CAD9] ">Total Raise</p>
+        <p>{p.totalPoolAmount}</p>
+      </div>
+      <div>
+        <p className="text-xs text-[#C7CAD9] ">Participants</p>
+        <p>{p.allocation?.participants?.length || 0}</p>
+      </div>
+      <div>
+        <p className="text-xs text-[#C7CAD9] ">Initial Price</p>
+        <p>{p.initialPrice}</p>
+      </div>
+      <Button
+        className="text-blue-500 text-sm font-bold hover:text-blue-400"
+        onClick={() => {
+          dispatch(updateSelectedProject(p));
+          router.push(`/dashboard/launch-info/${p.pid}?status=${status}`);
+        }}
+      >
+        Details
+      </Button>
     </div>
-    <div>
-      <p className="text-xs text-[#C7CAD9] ">Total Raise</p>
-      <p>{totalRaise}</p>
-    </div>
-    <div>
-      <p className="text-xs text-[#C7CAD9] ">Participants</p>
-      <p>{participants}</p>
-    </div>
-    <div>
-      <p className="text-xs text-[#C7CAD9] ">Initial Price</p>
-      <p>{initialPrice}</p>
-    </div>
-    <Link href="#" className="text-blue-500 text-sm font-bold hover:text-blue-400">
-      Details
-    </Link>
-  </div>
-);
+  );
+};
 
 const PreviousLaunches: React.FC = () => {
-  const launches: LaunchProps[] = [
-    {
-      name: "[Launch Name]",
-      avatar: "/assets/images/launch-info-img.png",
-      logo: "/assets/images/project-logo.png",
-      blockchain: "Polygon",
-      totalRaise: "$200,000",
-      participants: 6987,
-      initialPrice: "$0.10",
-    },
-    {
-      name: "[Launch Name]",
-      avatar: "/assets/images/launch-info-img.png",
-      logo: "/assets/images/project-logo.png",
-      blockchain: "Polygon",
-      totalRaise: "$200,000",
-      participants: 6987,
-      initialPrice: "$0.10",
-    },
-    {
-      name: "[Launch Name]",
-      avatar: "/assets/images/launch-info-img.png",
-      logo: "/assets/images/project-logo.png",
-      blockchain: "Polygon",
-      totalRaise: "$200,000",
-      participants: 6987,
-      initialPrice: "$0.10",
-    },
-    {
-      name: "[Launch Name]",
-      avatar: "/assets/images/launch-info-img.png",
-      logo: "/assets/images/project-logo.png",
-      blockchain: "Polygon",
-      totalRaise: "$200,000",
-      participants: 6987,
-      initialPrice: "$0.10",
-    },
-    {
-      name: "[Launch Name]",
-      avatar: "/assets/images/launch-info-img.png",
-      logo: "/assets/images/project-logo.png",
-      blockchain: "Polygon",
-      totalRaise: "$200,000",
-      participants: 6987,
-      initialPrice: "$0.10",
-    },
-    // Add more launch objects here...
-  ];
+  const [launches, setLaunches] = useState<Project[]>([]);
+  const [allLaunches, setAllLaunches] = useState<Project[]>([]);
+
+  const fetchLaunches = useCallback(async () => {
+    try {
+      const projects = await getProjectsByStatus(ProjectStatus.Completed);
+      setAllLaunches(projects);
+      setLaunches(projects.slice(0, 5));
+    } catch (err) {
+      console.log("[PreviousLaunches] projects Club error: ", err);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchLaunches();
+  }, [fetchLaunches]);
 
   return (
     <section className="mb-12">
-      <h2 className="text-[32px] text-center font-bold mb-4">
+      <h2 className="text-[32px] text-center font-semibold mb-4">
         Previous Launches
       </h2>
       <p className="text-gray-400 text-center text-base mb-6">
@@ -121,9 +93,12 @@ const PreviousLaunches: React.FC = () => {
         ))}
       </div>
       <div className="text-center mt-6">
-        <Link href="#" className="text-blue-500 text-sm hover:text-blue-400 font-bold">
+        <Button
+          className="text-blue-500 text-sm hover:text-blue-400 font-bold m-auto"
+          onClick={() => setLaunches(allLaunches)}
+        >
           See All Previous Launches
-        </Link>
+        </Button>
       </div>
     </section>
   );

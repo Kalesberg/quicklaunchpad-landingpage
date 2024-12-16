@@ -236,7 +236,7 @@ const Header = () => {
                             onClick={() => handleDropdown(item.name)}
                             className={`relative hover:text-blue-400 ${
                               item.children.find(
-                                (child) => child.href === activeItem
+                                (child) => child.href === activeItem,
                               )
                                 ? "text-[#D9D9D9] after:absolute after:-bottom-4 after:left-0 after:block after:bg-[#448AFF] after:w-full after:h-[2px]"
                                 : "text-[#7c7c81]"
@@ -383,7 +383,7 @@ const Header = () => {
                           onClick={() => handleDropdown(item.name)}
                           className={`relative px-4 hover:text-blue-400 ${
                             item.children.find(
-                              (child) => child.href === activeItem
+                              (child) => child.href === activeItem,
                             )
                               ? "text-[#D9D9D9] after:absolute after:-bottom-4 after:left-0 after:block after:bg-[#448AFF] after:w-full after:h-[2px] after:px-4"
                               : "text-[#7c7c81]"
@@ -562,37 +562,37 @@ export const ChainSelected = ({
 };
 
 export const ConnectWallet = ({ address, walletInfo, open }: any) => {
-  return <>
-  {
-    !!address ? (
-      <div
-        className="px-2 py-2 bg-[#161B28] rounded-lg flex items-center gap-1 text-sm font-semibold transition-all duration-300 ease-in-out cursor-pointer"
-        onClick={() => open({ view: "Account" })}
-      >
-        {walletInfo?.icon && (
-          <Image
-            src={walletInfo?.icon}
-            width={24}
-            height={24}
-            alt={walletInfo?.name ? walletInfo.name : "wallet icon"}
-          />
-        )}
-        <p className="text-[#C7CAD9] text-sm leading-5 font-medium">
-          {shortenAddress(address)}
-        </p>
-  
-        <span>
-          <ChevronDownIcon className="w-4 h-4" color="#C7CAD9" />
-        </span>
-      </div>
-    ) : (
-      <button
-        className="bg-blue-500 hover:bg-blue-600 text-base h-[44px] text-white font-semibold py-2 px-3 rounded-lg"
-        onClick={() => open()}
-      >
-        Connect Wallet
-      </button>
-    )
-  }
-  </>
+  return (
+    <>
+      {!!address ? (
+        <div
+          className="px-2 py-2 bg-[#161B28] rounded-lg flex items-center gap-1 text-sm font-semibold transition-all duration-300 ease-in-out cursor-pointer"
+          onClick={() => open({ view: "Account" })}
+        >
+          {walletInfo?.icon && (
+            <Image
+              src={walletInfo?.icon}
+              width={24}
+              height={24}
+              alt={walletInfo?.name ? walletInfo.name : "wallet icon"}
+            />
+          )}
+          <p className="text-[#C7CAD9] text-sm leading-5 font-medium">
+            {shortenAddress(address)}
+          </p>
+
+          <span>
+            <ChevronDownIcon className="w-4 h-4" color="#C7CAD9" />
+          </span>
+        </div>
+      ) : (
+        <button
+          className="bg-blue-500 hover:bg-blue-600 text-base h-[44px] text-white font-semibold py-2 px-3 rounded-lg"
+          onClick={() => open()}
+        >
+          Connect Wallet
+        </button>
+      )}
+    </>
+  );
 };

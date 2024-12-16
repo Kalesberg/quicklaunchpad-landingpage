@@ -1,8 +1,11 @@
-'use client'
-import React from "react";
+"use client";
+import React, { useCallback, useEffect } from "react";
 import Image from "next/image";
 import Button from "components/common/Button";
 import { useRouter } from "next/navigation";
+
+import { getProjectsByStatus } from "app/api";
+import { ProjectStatus } from "state/type";
 
 interface LaunchProps {
   image: string;
@@ -39,15 +42,15 @@ const LaunchCard: React.FC<LaunchProps> = ({
             status === "live"
               ? "bg-[#0FC679]"
               : status === "upcoming"
-              ? "bg-blue-500"
-              : "bg-[#FDD835]"
+                ? "bg-blue-500"
+                : "bg-[#FDD835]"
           }`}
         >
           {status === "live"
             ? "00:25:78 left"
             : status === "upcoming"
-            ? "In 2 days"
-            : "TBA"}
+              ? "In 2 days"
+              : "TBA"}
         </span>
       </div>
 
@@ -104,6 +107,19 @@ const LaunchCard: React.FC<LaunchProps> = ({
 };
 
 const LiveUpcomingLaunches: React.FC = () => {
+  const fetchLaunches = useCallback(async () => {
+    try {
+      const response = await getProjectsByStatus(ProjectStatus.Live);
+      console.log("live response", response);
+    } catch (err) {
+      console.log("[LiveUpcomingLaunches] projects Club error: ", err);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchLaunches();
+  }, [fetchLaunches]);
+
   const launches: LaunchProps[] = [
     {
       image: "/assets/images/launch-image.png",
@@ -138,7 +154,7 @@ const LiveUpcomingLaunches: React.FC = () => {
 
   return (
     <section className="mb-12">
-      <h2 className="text-[32px] text-center font-bold mb-5">
+      <h2 className="text-[32px] text-center font-semibold mb-5">
         Live & Upcoming Launches
       </h2>
       <p className="text-[#C7CAD9] text-center mb-10">

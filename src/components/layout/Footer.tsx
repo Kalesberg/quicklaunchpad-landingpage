@@ -163,8 +163,8 @@ const Footer: React.FC = () => {
               </Link>
             </div>
             <span className="text-xs leading-5 text-[#FFFFFFA3]">
-              © {new Date().getFullYear()} QuickLaunch powered by TrustSwap. All
-              rights reserved.
+              © {new Date().getFullYear()} QuickLaunch powered by TrustSwap.
+              All rights reserved.
             </span>
           </div>
         </>

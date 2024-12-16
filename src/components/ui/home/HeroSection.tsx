@@ -18,7 +18,7 @@ const HeroSection: React.FC<{
     }
   };
   return (
-    <section className="relative flex flex-col-reverse lg:flex-row items-end justify-start mb-[88px] lg:mb-8 px-0 lg:px-20 py-0 lg:py-16 text-left min-h-0 lg:min-h-[650px]">
+    <section className="relative flex flex-col-reverse lg:flex-row items-end justify-start mb-[88px] lg:mb-8 px-0 lg:px-20 py-0 lg:py-16 text-left min-h-0 lg:min-h-[600px]">
       <div className="z-10 relative max-w-full w-full lg:max-w-[520px] px-4 lg:px-0">
         {caseLaunch === 0 && (
           <span className="hidden lg:inline-block bg-[#448AFF29] mb-6 px-4 py-[2px] rounded-2xl text-[#61F3F3] text-lg font-bold leading-7">
@@ -37,12 +37,10 @@ const HeroSection: React.FC<{
         <Button
           variant="primary"
           size="large"
-          className="min-w-[275px] bg-[#448AFF] !text-base leading-6 mt-8 lg:mt-0"
+          className="min-w-[250px] bg-[#448AFF] !text-base leading-6 mt-8 lg:mt-0"
           onClick={handleClick}
         >
-          {caseLaunch !== 0
-            ? " Open QuickLaunch Dashboard"
-            : "Join The QuickLaunch Waitlist"}
+          {caseLaunch !== 0 ? " Get started" : "Join The QuickLaunch Waitlist"}
         </Button>
 
         <div className="mt-10 lg:mt-16 text-[#637381] text-sm flex items-center">
