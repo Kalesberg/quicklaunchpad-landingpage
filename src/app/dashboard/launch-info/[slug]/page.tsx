@@ -12,24 +12,17 @@ import {
 } from "../../../../../public/assets/images/social-icons";
 import Button from "components/common/Button";
 import clsx from "clsx";
-import { useSearchParams } from "next/navigation";
-import { useSelector } from "react-redux";
-import { convertDateTime } from "utils";
-import { Project } from "state/type";
-import { getProjectsContent } from "app/api";
+import { getProjectsById, getProjectsContent } from "app/api";
 
 export default function LaunchInfoDetailPage() {
-  const { project } = useSelector((state: { project: Project }) => state || {});
-
+  // const { project } = useSelector((state: { project: Project }) => state || {});
+  
+  // const project = getPro
+  const [project, setProject] = useState<any>(null);
 
   console.log("getting the project detail", project);
   const [selectedTab, setSelectedTab] = useState<string>("about");
-  const status = project.status;
-  const KYCStatus = !!project.kycProvider;
   const tabs = [{ label: "About the Launch", value: "about" }]
-
-  const [content, setConent] = useState<any>(null);
-
   // .concat(
   //   status === "upcoming"
   //     ? []
@@ -39,22 +32,27 @@ export default function LaunchInfoDetailPage() {
   //       ],
   // );
 
-  const fetchProjectContent = useCallback(async () => {
+  const [content, setConent] = useState<any>(null);
+
+  const fetchProjectById= useCallback(async () => {
     try {
-      const res = await getProjectsContent(project.contentUrl);
-      setConent(res?.data?.attributes?.content);
+      const res = await getProjectsById('');
+      setProject(res);
+      const res1 = await getProjectsContent(res.contentUrl);
+      setConent(res1?.data?.attributes?.content);
+
     } catch (err) {
       console.log("[PreviousLaunches] projects Club error: ", err);
     }
   }, []);
 
   useEffect(() => {
-    fetchProjectContent();
-  }, [fetchProjectContent]);
+    fetchProjectById();
+  }, [fetchProjectById]);
 
 
   return (
-    <div className="container-dashboard mx-auto px-4">
+    project && <div className="container-dashboard mx-auto px-4">
       <Link href={"/dashboard"} className="flex items-center mb-6">
         <ChevronLeftIcon className="w-5 h-5 mr-2" />
         Back to Launchpads
@@ -87,27 +85,27 @@ export default function LaunchInfoDetailPage() {
                   <div className="flex justify-between gap-2">
                     <span
                       className={`min-w-24 h-[24px] px-2 py-1 rounded-md text-xs text-center font-bold ${
-                        status === "live"
+                        project.status === "live"
                           ? "bg-[#0FC67929] text-[#0FC679]"
-                          : status === "upcoming"
+                          : project.status === "upcoming"
                             ? "bg-[#FDD83529] text-[#FDD835]"
                             : "bg-[#8E33FF29] text-[#C684FF]"
                       }`}
                     >
-                      {status === "live"
+                      {project.status === "live"
                         ? "Open"
-                        : status === "upcoming"
+                        : project.status === "upcoming"
                           ? "Upcoming"
                           : "Closed"}
                     </span>
                     <span
                       className={`min-w-24 h-[24px] px-2 py-1 rounded-md text-xs text-center font-bold ${
-                        KYCStatus === true
+                        !!project.kycProvider === true
                           ? "bg-[#FF5C5C29] text-[#FF5C5C]"
                           : ""
                       }`}
                     >
-                      {KYCStatus === true ? "KYC Required" : ""}
+                      {!!project.kycProvider === true ? "KYC Required" : ""}
                     </span>
                   </div>
                 </div>
@@ -258,7 +256,7 @@ export default function LaunchInfoDetailPage() {
                         c.children.map((ch:any) => (
                           ch.type === 'text' ? ch.bold ? <strong>{ch.text}</strong> :
                             <span>{ch.text}</span> :
-                            ch.type === 'link' ? <a href={ch.url} target="_blank">{ch.url}</a> : null
+                            ch.type === 'link' ? <a href={ch.url} target="_blank" className="text-[#448AFF]">{ch.url}</a> : null
                           ))
                       }
                     </p>

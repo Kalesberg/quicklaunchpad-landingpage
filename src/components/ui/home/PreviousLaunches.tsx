@@ -1,7 +1,6 @@
 "use client";
 import React, { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { getProjectsByStatus } from "app/api";
 import { Project, ProjectStatus, ChainIdToName } from "state/type";
 import Button from "components/common/Button";
