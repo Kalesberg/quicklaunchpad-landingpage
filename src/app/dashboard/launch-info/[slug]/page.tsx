@@ -14,12 +14,13 @@ import { useState } from "react";
 import clsx from "clsx";
 import { useSearchParams } from "next/navigation";
 import { useSelector } from 'react-redux';
+import { convertDateTime } from 'utils';
+import { Project } from "state/type";
 
 export default function LaunchInfoDetailPage() {
-  const { project } = useSelector((state: any) => state || {});
+  const { project } = useSelector((state: {project: Project}) => state || {});
   console.log('getting the project detail', project);
   const [selectedTab, setSelectedTab] = useState<string>("about");
-  const searchParams = useSearchParams();
   const status = project.status;
   const KYCStatus = !!project.kycProvider;
   const tabs = [{ label: "About the Launch", value: "about" }].concat(
@@ -300,7 +301,7 @@ export default function LaunchInfoDetailPage() {
                 </div>
               </div>
             </>
-          ) : (
+          ) : status === "live" ? (
             <>
               <div className="border-b-2 border-[#919EAB14] pb-4">
                 <h2 className="text-[#EBECF2] text-2xl leading-9 text-center font-bold">
@@ -333,7 +334,7 @@ export default function LaunchInfoDetailPage() {
                     Application period:
                   </p>
                   <p className="text-[#C7CAD9] text-xs leading-4 font-semibold">
-                    13 Mar 2024 04:00 PM – 15 Mar 2024 08:00 AM
+                    {project.pledgeStartDate} – {project.pledgeEndDate}
                   </p>
                   <Button
                     variant="primary"
@@ -347,7 +348,7 @@ export default function LaunchInfoDetailPage() {
                     Lottery
                   </h3>
                   <p className="text-[#696C80] text-xs leading-4">
-                    Winners will be announced 17 Mar 04:00 AM
+                    Winners will be announced {project.pledgeEndDate}
                   </p>
                 </div>
                 <div className="relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['3'] after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#DFE3E8] after:text-[#919EAB] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
@@ -370,7 +371,90 @@ export default function LaunchInfoDetailPage() {
                 </div>
               </div>
             </>
-          )}
+          ) : (
+            <>
+              <div className="border-b-2 border-[#919EAB14] pb-4">
+                <h2 className="text-[#EBECF2] text-2xl leading-9 text-center font-bold">
+                  Launch Timeline
+                </h2>
+              </div>
+              <div className="flex flex-col px-6 pt-4">
+                <div className="relative left-7 w-fit min-h-12 pb-4 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80]">
+                  <Image
+                    src="/assets/icons/ic-checkmark.svg"
+                    alt="icon"
+                    width={24}
+                    height={24}
+                    className="block absolute top-[10px] -left-[30px]"
+                  />
+                  <h3 className="text-[#EBECF2] text-base leading-6 font-semibold">
+                    Whitelist
+                  </h3>
+                  <p className="text-[#C7CAD9] text-xs leading-4">
+                    Application period:
+                  </p>
+                  <p className="text-[#C7CAD9] text-xs leading-4 font-semibold">
+                    {project.pledgeStartDate} – {project.pledgeEndDate}
+                  </p>
+                </div>
+                <div className="relative left-7 w-fit min-h-12 p-2 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80]">
+                  <Image
+                    src="/assets/icons/ic-checkmark.svg"
+                    alt="icon"
+                    width={24}
+                    height={24}
+                    className="block absolute top-[10px] -left-[30px]"
+                  />
+                  <h3 className="text-[#EBECF2] text-base leading-6 font-semibold">
+                    Lottery
+                  </h3>
+                  <p className="text-[#696C80] text-xs leading-4">
+                    Winners have been announced on {project.pledgeEndDate}
+                  </p>
+                </div>
+                <div className="relative left-7 w-fit min-h-12 p-2 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80]">
+                  <Image
+                    src="/assets/icons/ic-checkmark.svg"
+                    alt="icon"
+                    width={24}
+                    height={24}
+                    className="block absolute top-[10px] -left-[30px]"
+                  />
+                  <h3 className="text-[#EBECF2] text-base leading-6 font-semibold">
+                    Contribution
+                  </h3>
+                  <p className="text-[#696C80] text-xs leading-4">
+                    Expires on {project.contributionEndDate}
+                  </p>
+                </div>
+                <div className="relative left-7 w-fit min-h-12 p-2 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80]">
+                  <Image
+                    src="/assets/icons/ic-checkmark.svg"
+                    alt="icon"
+                    width={24}
+                    height={24}
+                    className="block absolute top-[10px] -left-[30px]"
+                  />
+                  <h3 className="text-[#EBECF2] text-base leading-6 font-semibold">
+                    Completed
+                  </h3>
+                </div>
+                <div className="relative left-7 w-fit min-h-12 p-2 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80]">
+                  <Image
+                    src="/assets/icons/ic-checkmark.svg"
+                    alt="icon"
+                    width={24}
+                    height={24}
+                    className="block absolute top-[10px] -left-[30px]"
+                  />
+                  <h3 className="text-[#EBECF2] text-base leading-6 font-semibold">
+                    Claim
+                  </h3>
+                </div>
+              </div>
+            </>
+          )
+        }
         </div>
       </div>
     </div>

@@ -1,6 +1,7 @@
 export enum ProjectStatus {
   Live = "live",
   Completed = "completed",
+  Upcoming = 'upcoming'
 }
 
 export type Project = {

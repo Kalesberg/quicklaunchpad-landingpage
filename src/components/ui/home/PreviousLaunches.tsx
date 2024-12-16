@@ -10,17 +10,6 @@ import { useRouter } from "next/navigation";
 import { useDispatch } from 'react-redux';
 import { updateSelectedProject } from "state/projectSlice";
 
-interface LaunchProps {
-  pid: string;
-  name: string;
-  avatar: string;
-  logo: string;
-  blockchain: string;
-  totalRaise: string;
-  participants: number;
-  initialPrice: string;
-}
-
 const LaunchRow: React.FC<Project> = (p: Project) => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -74,12 +63,9 @@ const PreviousLaunches: React.FC = () => {
 
   const fetchLaunches = useCallback(async () => {
     try {
-      // console.log("fetching completed projects");
-      // const response = await getProjectsByStatus(ProjectStatus.Completed);
-      // console.log(response)
-      const res = previousProjects;
-      setAllLaunches(res);
-      setLaunches(res.slice(0, 5));
+      const projects = await getProjectsByStatus(ProjectStatus.Completed);
+      setAllLaunches(projects);
+      setLaunches(projects.slice(0, 5));
     } catch (err) {
       console.log("[PreviousLaunches] projects Club error: ", err);
     }
