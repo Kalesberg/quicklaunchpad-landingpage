@@ -20,8 +20,8 @@ export default function LaunchInfoDetailPage() {
   console.log('getting the project detail', project);
   const [selectedTab, setSelectedTab] = useState<string>("about");
   const searchParams = useSearchParams();
-  const status = searchParams.get("status");
-  const KYCStatus = true;
+  const status = project.status;
+  const KYCStatus = !!project.kycProvider;
   const tabs = [{ label: "About the Launch", value: "about" }].concat(
     status === "upcoming"
       ? []
@@ -60,7 +60,7 @@ export default function LaunchInfoDetailPage() {
               <div className="w-full">
                 <div className="flex justify-between mb-4">
                   <h1 className="text-[#EBECF2] text-[32px] font-bold leading-[48px]">
-                    Launch Name
+                    {project.projectName}
                   </h1>
                   <div className="flex justify-between gap-2">
                     <span
@@ -90,23 +90,23 @@ export default function LaunchInfoDetailPage() {
                   </div>
                 </div>
                 <p className="max-w-[500px] w-3/4 leading-6 text-[#EBECF2] whitespace-nowrap overflow-hidden text-ellipsis mb-4">
-                  This project is lorem ipsum dolor sit amet
+                  {project.description}
                 </p>
                 <div className="flex items-center gap-2 mb-4">
                   <Link
-                    href=""
+                    href={project.websiteUrl}
                     className="min-w-[80px] h-9 bg-[#448AFF14] text-[#448AFF] text-center text-sm font-bold leading-9 rounded-lg px-3"
                   >
                     Website
                   </Link>
                   <Link
-                    href=""
+                    href={project.whitepaperUrl}
                     className="min-w-[80px] h-9 bg-[#448AFF14] text-[#448AFF] text-center text-sm font-bold leading-9 rounded-lg px-3"
                   >
                     Whitepaper
                   </Link>
                   <Link
-                    href=""
+                    href={project.blogUrl}
                     className="min-w-[80px] h-9 bg-[#448AFF14] text-[#448AFF] text-center text-sm font-bold leading-9 rounded-lg px-3"
                   >
                     Blog
@@ -127,7 +127,7 @@ export default function LaunchInfoDetailPage() {
                   Total Raise
                 </h3>
                 <p className="text-[#EBECF2] text-2xl font-bold flex-grow">
-                  $150,000
+                  ${project.totalPoolAmount}
                 </p>
               </div>
               <div className="bg-[#282D3D] min-w-[158px] h-[106px] p-4 rounded-2xl flex flex-col">
@@ -135,7 +135,7 @@ export default function LaunchInfoDetailPage() {
                   Token Price
                 </h3>
                 <p className="text-[#EBECF2] text-2xl font-bold flex-grow">
-                  $0.10
+                  ${project.initialPrice}
                 </p>
               </div>
               <div className="bg-[#282D3D] min-w-[158px] h-[106px] p-4 rounded-2xl flex flex-col">
@@ -143,7 +143,7 @@ export default function LaunchInfoDetailPage() {
                   Number of Winners
                 </h3>
                 <p className="text-[#EBECF2] text-2xl font-bold flex-grow">
-                  500
+                  ${project.numberLotteryWinners || 0}
                 </p>
               </div>
               <div className="bg-[#282D3D] min-w-[158px] h-[106px] p-4 rounded-2xl flex flex-col">
@@ -151,7 +151,7 @@ export default function LaunchInfoDetailPage() {
                   Allocation
                 </h3>
                 <p className="text-[#EBECF2] text-2xl font-bold flex-grow">
-                  $250
+                  ${project.maxUserPledgeSize}
                 </p>
               </div>
             </div>
