@@ -1,3 +1,5 @@
+import { Project } from "./type";
+
 export const previousProjects = [
   {
     creationDate: "2024-11-09T14:03:55.421Z",
@@ -4097,4 +4099,4 @@ export const previousProjects = [
     claimEmailSent: true,
     coingeckoId: "22",
   },
-];
+] as any[];

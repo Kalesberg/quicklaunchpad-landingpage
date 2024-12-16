@@ -75,3 +75,5 @@ export type Allocation = {
   winners: { eoa: string; amount: number; _id: string }[];
   _id: string;
 };
+
+export const ChainIdToName: Record<string, string> = { '0x89': 'Polygon'}

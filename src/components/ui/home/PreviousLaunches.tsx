@@ -1,6 +1,11 @@
-import React from "react";
+"use client";
+import React, { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { getProjectsByStatus } from "app/api";
+import { Project, ProjectStatus, ChainIdToName } from "state/type";
+import { previousProjects } from "state/projects_temp";
+import Button from "components/common/Button";
 
 interface LaunchProps {
   name: string;
@@ -61,54 +66,35 @@ const LaunchRow: React.FC<LaunchProps> = ({
 );
 
 const PreviousLaunches: React.FC = () => {
-  const launches: LaunchProps[] = [
-    {
-      name: "[Launch Name]",
-      avatar: "/assets/images/launch-info-img.png",
-      logo: "/assets/images/project-logo.png",
-      blockchain: "Polygon",
-      totalRaise: "$200,000",
-      participants: 6987,
-      initialPrice: "$0.10",
-    },
-    {
-      name: "[Launch Name]",
-      avatar: "/assets/images/launch-info-img.png",
-      logo: "/assets/images/project-logo.png",
-      blockchain: "Polygon",
-      totalRaise: "$200,000",
-      participants: 6987,
-      initialPrice: "$0.10",
-    },
-    {
-      name: "[Launch Name]",
-      avatar: "/assets/images/launch-info-img.png",
-      logo: "/assets/images/project-logo.png",
-      blockchain: "Polygon",
-      totalRaise: "$200,000",
-      participants: 6987,
-      initialPrice: "$0.10",
-    },
-    {
-      name: "[Launch Name]",
-      avatar: "/assets/images/launch-info-img.png",
-      logo: "/assets/images/project-logo.png",
-      blockchain: "Polygon",
-      totalRaise: "$200,000",
-      participants: 6987,
-      initialPrice: "$0.10",
-    },
-    {
-      name: "[Launch Name]",
-      avatar: "/assets/images/launch-info-img.png",
-      logo: "/assets/images/project-logo.png",
-      blockchain: "Polygon",
-      totalRaise: "$200,000",
-      participants: 6987,
-      initialPrice: "$0.10",
-    },
-    // Add more launch objects here...
-  ];
+  const [launches, setLaunches] = useState<LaunchProps[]>([]);
+  const [allLaunches, setAllLaunches] = useState<LaunchProps[]>([]);
+
+  const fetchLaunches = useCallback(async () => {
+    try {
+      // console.log("fetching completed projects");
+      // const response = await getProjectsByStatus(ProjectStatus.Completed);
+      // console.log(response)
+      const res = previousProjects.map(p => {
+        return {
+          name: p.projectName,
+          avatar: "/assets/images/launch-info-img.png",
+          logo: "/assets/images/project-logo.png",
+          blockchain: ChainIdToName[p.chainId] || '',
+          totalRaise: p.totalPoolAmount,
+          participants: p.allocation?.participants?.length || 0,
+          initialPrice: p.initialPrice
+        }
+      });
+      setAllLaunches(res);
+      setLaunches(res.slice(0, 5));
+    } catch (err) {
+      console.log("[PreviousLaunches] projects Club error: ", err);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchLaunches();
+  }, [fetchLaunches]);
 
   return (
     <section className="mb-12">
@@ -124,12 +110,13 @@ const PreviousLaunches: React.FC = () => {
         ))}
       </div>
       <div className="text-center mt-6">
-        <Link
+        <Button
           href="#"
           className="text-blue-500 text-sm hover:text-blue-400 font-bold"
+          onClick={() => setLaunches(allLaunches)}
         >
           See All Previous Launches
-        </Link>
+        </Button>
       </div>
     </section>
   );
