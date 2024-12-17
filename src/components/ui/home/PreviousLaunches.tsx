@@ -98,7 +98,7 @@ const PreviousLaunches: React.FC = () => {
       </div>
       <div className="text-center mt-6">
         <Button
-          className="bg-transparent md:!bg-blue-500 !text-[#448AFF] md:!text-white text-sm !font-bold hover:text-blue-400 hover:bg-transparent font-bold m-auto"
+          className="bg-transparent md:!bg-blue-500 !text-[#448AFF] md:!text-white text-sm !font-bold hover:text-blue-400 hover:bg-transparent m-auto"
           onClick={() => setLaunches(allLaunches)}
         >
           See All Previous Launches
