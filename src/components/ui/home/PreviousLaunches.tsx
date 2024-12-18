@@ -31,7 +31,7 @@ const LaunchRow: React.FC<Project> = (p: Project) => {
           <span className="text-[#C7CAD9] text-xs leading-4">Blockchain</span>
           <div className="flex items-center">
             <Image
-              src="/assets/images/project-logo.png"
+              src="/assets/images/chain-avatar.png"
               alt={blockchain}
               width={24}
               height={24}

@@ -23,15 +23,15 @@ const LaunchCard: React.FC<Project> = (p: Project) => {
           className={`absolute top-4 right-4 px-2 py-1 rounded-md text-xs ${
             p.status === "upcoming"
               ? "bg-[#0FC679]"
-              : status === "pledging"
+              : p.status === "pledging"
                 ? "bg-blue-500"
                 : "bg-[#FDD835]"
           }`}
         >
           {p.status === "upcoming"
-            ? "00:25:78 left"
+            ? `${p.reminderLaunchTime} left`
             : p.status === "pledging"
-              ? "In 2 days"
+              ? `In ${p.reminderDay} days`
               : "TBA"}
         </span>
       </div>

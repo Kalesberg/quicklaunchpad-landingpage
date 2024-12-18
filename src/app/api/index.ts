@@ -3,7 +3,7 @@ import { previousProjects } from "state/projects_temp";
 import { upcomingProjects } from "state/upcoming_projects_temp";
 import { liveProjects } from "state/live_projects_temp";
 import { contentTemp } from "state/content_temp";
-import { convertDateTime } from "../../utils";
+import { convertDateTime, getReminderTimeStampString, getReminderDate } from "../../utils/time";
 
 const BASE_URL = "https://quicklaunchpad.io/";
 const CONTENT_BASE_URL =
@@ -42,6 +42,8 @@ export const getProjectsByStatus = async (status: ProjectStatus) => {
     p.pledgeEndDate = convertDateTime(p.pledgeEndDate);
     p.contributionStartDate = convertDateTime(p.contributionStartDate);
     p.contributionEndDate = convertDateTime(p.contributionEndDate);
+    p.reminderLaunchTime = getReminderTimeStampString(p.pledgeStartDate);
+    p.reminderDay = getReminderDate(p.pledgeEndDate);
     return p;
   });  
 };
@@ -64,6 +66,7 @@ export const getProjectsById = async (pid: string) => {
   p.pledgeEndDate = convertDateTime(p.pledgeEndDate);
   p.contributionStartDate = convertDateTime(p.contributionStartDate);
   p.contributionEndDate = convertDateTime(p.contributionEndDate);
+  p.reminderLaunchTime = getReminderTimeStampString(p.pledgeStartDate)
   return p;
 };
 

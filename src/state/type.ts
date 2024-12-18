@@ -43,6 +43,8 @@ export type Project = {
   contributions: Contribution[];
   socials: Social;
   allocation: Allocation;
+  reminderLaunchTime?: string;
+  reminderDay?: string;
 };
 
 export type Social = {
