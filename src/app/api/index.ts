@@ -2,6 +2,7 @@ import { ProjectStatus, Project } from "state/type";
 import { previousProjects } from "state/projects_temp";
 import { upcomingProjects } from "state/upcoming_projects_temp";
 import { liveProjects } from "state/live_projects_temp";
+import { contentTemp } from "state/content_temp";
 import { convertDateTime, getReminderTimeStampString, getReminderDate } from "../../utils/time";
 
 const BASE_URL = "https://quicklaunchpad.io/";
@@ -26,9 +27,27 @@ export const contentApi = axios.create({
 
 export const getProjectsByStatus = async (status: ProjectStatus) => {
   try {
-    const res = await projectApi.get(`/projects?status=${status}`);
-    const projects = res?.data as any[];
-    return projects.map((p) => {
+    // const res = await projectApi.get(`/projects?status=${status}`);
+    // const projects = res.data as any[];
+    // return projects.map((p) => {
+    //   p.pledgeStartDate = convertDateTime(p.pledgeStartDate);
+    //   p.pledgeEndDate = convertDateTime(p.pledgeEndDate);
+    //   p.contributionStartDate = convertDateTime(p.contributionStartDate);
+    //   p.contributionEndDate = convertDateTime(p.contributionEndDate);
+    //   p.reminderLaunchTime = getReminderTimeStampString(p.pledgeEndDate);
+    //   p.reminderLaunchTimeBig = getReminderTimeStampString(p.pledgeEndDate ,true);
+    //   p.reminderDay = getReminderDate(p.pledgeStartDate);
+    //   return p;
+    // });
+    let projects = []
+    if (status === ProjectStatus.Completed) {
+      projects = previousProjects;
+    } else if (status === ProjectStatus.Upcoming) {
+      projects = upcomingProjects;
+    } else {
+      projects = liveProjects;
+    }
+    return projects.map(p => {
       p.pledgeStartDate = convertDateTime(p.pledgeStartDate);
       p.pledgeEndDate = convertDateTime(p.pledgeEndDate);
       p.contributionStartDate = convertDateTime(p.contributionStartDate);
@@ -37,7 +56,7 @@ export const getProjectsByStatus = async (status: ProjectStatus) => {
       p.reminderLaunchTimeBig = getReminderTimeStampString(p.pledgeEndDate ,true);
       p.reminderDay = getReminderDate(p.pledgeStartDate);
       return p;
-    });
+    })
   } catch(e) {
     console.error(e)
     return [];
@@ -76,10 +95,7 @@ export const getProjectsById = async (pid: string, status: string) => {
 };
 
 export const getProjectsContent = async (contentId: string) => {
-  try {
-    const res = await contentApi.get(`${contentId}?populate=*`);
-    return res.data;  
-  } catch (e) {
-    console.error(e)
-  }
+  // const res = await contentApi.get(`${contentId}?populate=*`);
+  // return res.data;
+  return contentTemp;
 };
