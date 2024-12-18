@@ -22,7 +22,9 @@ const LaunchRow: React.FC<Project> = (p: Project) => {
           height={64}
           className="w-9 md:w-16 h-9 md:h-16 rounded-full"
         />
-        <span className="text-base leading-6 font-normal text-[#EBECF2]">{p.projectName}</span>
+        <span className="text-base leading-6 font-normal text-[#EBECF2]">
+          {p.projectName}
+        </span>
       </div>
       <div className="w-full flex items-baseline gap-x-2 md:gap-0 md:flex-row md:justify-around px-2 md:px-0">
         <div className="flex-1 md:flex-initial">
@@ -35,20 +37,28 @@ const LaunchRow: React.FC<Project> = (p: Project) => {
               height={24}
               className="w-6 h-6"
             />
-            <span className="text-base leading-6 font-normal text-[#EBECF2] px-4">{blockchain}</span>
+            <span className="text-base leading-6 font-normal text-[#EBECF2] px-4">
+              {blockchain}
+            </span>
           </div>
         </div>
         <div className="flex-1 md:flex-initial">
           <p className="text-xs text-[#C7CAD9] ">Total Raise</p>
-          <p className="text-base leading-6 font-normal text-[#EBECF2]">{p.totalPoolAmount}</p>
+          <p className="text-base leading-6 font-normal text-[#EBECF2]">
+            {p.totalPoolAmount}
+          </p>
         </div>
         <div className="hidden md:block">
           <p className="text-xs text-[#C7CAD9] ">Participants</p>
-          <p className="text-base leading-6 font-normal text-[#EBECF2]">{p.allocation?.participants?.length || 0}</p>
+          <p className="text-base leading-6 font-normal text-[#EBECF2]">
+            {p.allocation?.participants?.length || 0}
+          </p>
         </div>
         <div className="hidden md:block">
           <p className="text-xs text-[#C7CAD9] ">Initial Price</p>
-          <p className="text-base leading-6 font-normal text-[#EBECF2]">{p.initialPrice}</p>
+          <p className="text-base leading-6 font-normal text-[#EBECF2]">
+            {p.initialPrice}
+          </p>
         </div>
       </div>
       <Button

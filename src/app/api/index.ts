@@ -1,5 +1,7 @@
 import { ProjectStatus, Project } from "state/type";
 import { previousProjects } from "state/projects_temp";
+import { upcomingProjects } from "state/upcoming_projects_temp";
+import { liveProjects } from "state/live_projects_temp";
 import { contentTemp } from "state/content_temp";
 import { convertDateTime } from "../../utils";
 
@@ -27,13 +29,21 @@ export const getProjectsByStatus = async (status: ProjectStatus) => {
   // const res = await projectApi.get(`/projects?status=${status}`);
   // console.log(res);
   // return res;
-  return previousProjects.map((p) => {
+  let projects: any[]  = [];
+  if (status === ProjectStatus.Completed) {
+    projects = previousProjects;
+  } else if (status === ProjectStatus.Live) {
+    projects = liveProjects;
+  } else {
+    projects = upcomingProjects;
+  }
+  return projects.map((p) => {
     p.pledgeStartDate = convertDateTime(p.pledgeStartDate);
     p.pledgeEndDate = convertDateTime(p.pledgeEndDate);
     p.contributionStartDate = convertDateTime(p.contributionStartDate);
     p.contributionEndDate = convertDateTime(p.contributionEndDate);
     return p;
-  });
+  });  
 };
 
 export const getProjectsById = async (pid: string) => {
