@@ -46,6 +46,15 @@ export const getProjectsByStatus = async (status: ProjectStatus) => {
   });  
 };
 
+export const getUpcomingProject= async () => {
+  const p = await getProjectsByStatus(ProjectStatus.Upcoming);
+  if (p?.length) {
+    return p[0];
+  }
+  return null
+};
+
+
 export const getProjectsById = async (pid: string) => {
   // const res = await projectApi.get(`/projects/${pid}`);
   // console.log(res);

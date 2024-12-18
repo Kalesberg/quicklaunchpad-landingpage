@@ -21,16 +21,16 @@ const LaunchCard: React.FC<Project> = (p: Project) => {
         />
         <span
           className={`absolute top-4 right-4 px-2 py-1 rounded-md text-xs ${
-            status === "live"
+            p.status === "upcoming"
               ? "bg-[#0FC679]"
-              : status === "upcoming"
+              : status === "pledging"
                 ? "bg-blue-500"
                 : "bg-[#FDD835]"
           }`}
         >
-          {status === "live"
+          {p.status === "upcoming"
             ? "00:25:78 left"
-            : status === "upcoming"
+            : p.status === "pledging"
               ? "In 2 days"
               : "TBA"}
         </span>
@@ -77,11 +77,11 @@ const LaunchCard: React.FC<Project> = (p: Project) => {
           onClick={() =>
             router.push(`/dashboard/launch-info/launch-name?status=${status}`)
           }
-          variant={status === "live" ? "primary" : "secondary"}
+          variant={p.status === "upcoming" ? "primary" : "secondary"}
           size="medium"
           fullWidth
         >
-          {status === "live" ? "Participate Now" : "More Details"}
+          {p.status === "upcoming" ? "Participate Now" : "More Details"}
         </Button>
       </div>
     </div>
