@@ -6,8 +6,10 @@ import PowderIcon from "../../../../public/assets/images/powder.png";
 import MetaMaskIcon from "../../../../public/assets/images/metamask.png";
 import clsx from "clsx";
 import { ArrowPathIcon, PencilIcon } from "@heroicons/react/16/solid";
+import { useAppKitAccount } from "@reown/appkit/react";
 
 export default function EmailNotVerify() {
+  const { address } = useAppKitAccount();
   return (
     <div className="my-6 grid md:grid-cols-2 grid-cols-1 gap-6">
       <div className="bg-[#1B1E29] rounded-xl p-6">
@@ -24,7 +26,7 @@ export default function EmailNotVerify() {
               width={24}
               height={24}
             />
-            <span className="">0x21C9eC.....0BdEbD93</span>
+            <span className="">{address}</span>
           </div>
         </div>
 
