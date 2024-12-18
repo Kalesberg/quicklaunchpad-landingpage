@@ -16,9 +16,15 @@ import { getProjectsById, getProjectsContent } from "app/api";
 import { useSearchParams } from "next/navigation";
 import { ProjectStatus } from "state/type";
 import { getReminderTimeStampString, getReminderDate } from "utils/time";
+import {
+  useAppKit,
+  useAppKitAccount
+} from "@reown/appkit/react";
 
 export default function LaunchInfoDetailPage() {
   // const { project } = useSelector((state: { project: Project }) => state || {});
+  const { open } = useAppKit();
+  const { address } = useAppKitAccount();
 
   const [project, setProject] = useState<any>(null);
 
@@ -246,7 +252,7 @@ export default function LaunchInfoDetailPage() {
                 </div>
               </div>
             </div>
-            {status === "upcoming" && (
+            {(status === "upcoming" && !address) && (
               <div className="bg-[#00B8D933] flex justify-between items-center gap-4 rounded-2xl p-6 mb-5">
                 <p className="flex-1 md:flex-none text-[#CAFDF5] text-lg font-bold leading-7">
                   Connect your wallet to participate in QuickSwap launches
@@ -254,6 +260,7 @@ export default function LaunchInfoDetailPage() {
                 <Button
                   variant="primary"
                   className="flex-1 md:flex-none bg-[#00B8D914] text-[#61F3F3] !text-sm text-center !font-bold leading-6 rounded-lg px-3 hover:bg-[#00B8D966]"
+                  onClick={() => open()}
                 >
                   Connect Wallet
                 </Button>
@@ -429,12 +436,13 @@ export default function LaunchInfoDetailPage() {
                     <p className="text-[#C7CAD9] text-xs leading-4 font-semibold">
                       {project.pledgeStartDate} – {project.pledgeEndDate}
                     </p>
-                    <Button
+                    {!address && <Button
                       variant="primary"
                       className="!min-w-16 !h-9 capitalize"
+                      onClick={() => open()}
                     >
                       Connect wallet to participate
-                    </Button>
+                    </Button>}
                   </div>
                   <div className="relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['2'] after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#DFE3E8] after:text-[#919EAB] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
                     <h3 className="text-[#696C80] text-sm md:text-base leading-6 font-semibold">
