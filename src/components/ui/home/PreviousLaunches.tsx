@@ -65,7 +65,7 @@ const LaunchRow: React.FC<Project> = (p: Project) => {
         className="w-full md:w-auto max-h-9 !text-[#448AFF] md:!text-white !bg-[#448AFF14] md:!bg-blue-500 text-sm !font-bold leading-6 hover:text-blue-400 rounded-lg mt-[6px]"
         onClick={() => {
           dispatch(updateSelectedProject(p));
-          router.push(`/dashboard/launch-info/${p.pid}?status=${status}`);
+          router.push(`/dashboard/launch-info/${p.pid}?status=${p.status}`);
         }}
       >
         <span className="hidden md:block">Details</span>

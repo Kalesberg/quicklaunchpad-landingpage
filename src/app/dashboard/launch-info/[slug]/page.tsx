@@ -17,7 +17,6 @@ import { getProjectsById, getProjectsContent } from "app/api";
 export default function LaunchInfoDetailPage() {
   // const { project } = useSelector((state: { project: Project }) => state || {});
 
-  // const project = getPro
   const [project, setProject] = useState<any>(null);
 
   console.log("getting the project detail", project);
@@ -32,11 +31,13 @@ export default function LaunchInfoDetailPage() {
   //       ],
   // );
 
+
+
   const [content, setConent] = useState<any>(null);
 
   const fetchProjectById = useCallback(async () => {
     try {
-      const res = await getProjectsById("");
+      const res = await getProjectsById('', 'completed');
       setProject(res);
       const res1 = await getProjectsContent(res.contentUrl);
       setConent(res1?.data?.attributes?.content);

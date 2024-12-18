@@ -78,7 +78,7 @@ const LaunchNotice: React.FC<{ status?: string }> = ({ status }) => {
 
         <Button
           onClick={() =>
-            router.push(`/dashboard/launch-info/launch-name?status=${project.status}`)
+            router.push(`/dashboard/launch-info/${project.pid}?status=${project.status}`)
           }
           variant="secondary"
           size="medium"

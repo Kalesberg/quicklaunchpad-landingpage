@@ -57,16 +57,25 @@ export const getUpcomingProject= async () => {
 };
 
 
-export const getProjectsById = async (pid: string) => {
+export const getProjectsById = async (pid: string, status: string) => {
   // const res = await projectApi.get(`/projects/${pid}`);
   // console.log(res);
   // return res;
-  const p = previousProjects[0];
+  let p = null;
+  if (status === ProjectStatus.Completed) {
+    p = previousProjects[0];
+  } else if (status === ProjectStatus.Live) {
+    p = liveProjects[0];
+  } else {
+    p = upcomingProjects[0];
+  }
+  p = previousProjects[0];
   p.pledgeStartDate = convertDateTime(p.pledgeStartDate);
   p.pledgeEndDate = convertDateTime(p.pledgeEndDate);
   p.contributionStartDate = convertDateTime(p.contributionStartDate);
   p.contributionEndDate = convertDateTime(p.contributionEndDate);
   p.reminderLaunchTime = getReminderTimeStampString(p.pledgeStartDate)
+  p.reminderDay = getReminderDate(p.pledgeEndDate);
   return p;
 };
 

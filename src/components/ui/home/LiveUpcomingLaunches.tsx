@@ -75,7 +75,7 @@ const LaunchCard: React.FC<Project> = (p: Project) => {
         <div className="flex-grow"></div>
         <Button
           onClick={() =>
-            router.push(`/dashboard/launch-info/launch-name?status=${status}`)
+            router.push(`/dashboard/launch-info/${p.pid}?status=${p.status}`)
           }
           variant={p.status === "upcoming" ? "primary" : "secondary"}
           size="medium"
