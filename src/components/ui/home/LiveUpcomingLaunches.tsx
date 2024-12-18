@@ -1,11 +1,12 @@
 "use client";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import Button from "components/common/Button";
 import { useRouter } from "next/navigation";
 
 import { getProjectsByStatus } from "app/api";
 import { Project, ProjectStatus, ChainIdToName } from "state/type";
+import { getReminderTimeStampString, getReminderDate } from "utils/time";
 
 const LaunchCard: React.FC<Project> = (p: Project) => {
   const router = useRouter();
@@ -21,16 +22,16 @@ const LaunchCard: React.FC<Project> = (p: Project) => {
         />
         <span
           className={`absolute top-4 right-4 px-2 py-1 rounded-md text-xs ${
-            p.status === "upcoming"
+            p.status === "pledging"
               ? "bg-[#0FC679]"
-              : p.status === "pledging"
+              : p.status === "upcoming"
                 ? "bg-blue-500"
                 : "bg-[#FDD835]"
           }`}
         >
-          {p.status === "upcoming"
+          {p.status === "pledging"
             ? `${p.reminderLaunchTime} left`
-            : p.status === "pledging"
+            : p.status === "upcoming"
               ? `In ${p.reminderDay} days`
               : "TBA"}
         </span>
@@ -77,11 +78,11 @@ const LaunchCard: React.FC<Project> = (p: Project) => {
           onClick={() =>
             router.push(`/dashboard/launch-info/${p.pid}?status=${p.status}`)
           }
-          variant={p.status === "upcoming" ? "primary" : "secondary"}
+          variant={p.status === "pledging" ? "primary" : "secondary"}
           size="medium"
           fullWidth
         >
-          {p.status === "upcoming" ? "Participate Now" : "More Details"}
+          {p.status === "pledging" ? "Participate Now" : "More Details"}
         </Button>
       </div>
     </div>
@@ -89,11 +90,16 @@ const LaunchCard: React.FC<Project> = (p: Project) => {
 };
 
 const LiveUpcomingLaunches: React.FC = () => {
+
+  const [startTimer, setStartTimer] = useState(false);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+
   const [launches, setLaunches] = useState<Project[]>([]);
   const fetchLaunches = useCallback(async () => {
     try {
       const projects = await getProjectsByStatus(ProjectStatus.Live);
-      setLaunches(projects)
+      setLaunches(projects);
+      setStartTimer(true);
     } catch (err) {
       console.log("[LiveUpcomingLaunches] projects Club error: ", err);
     }
@@ -103,37 +109,26 @@ const LiveUpcomingLaunches: React.FC = () => {
     fetchLaunches();
   }, [fetchLaunches]);
 
-  // const launches: LaunchProps[] = [
-  //   {
-  //     image: "/assets/images/launch-image.png",
-  //     name: "Launch Name",
-  //     description:
-  //       "The Most Specialized Blockchain Network for AI Data Monetization & GPU Training",
-  //     totalRaise: "$150,000",
-  //     initialPrice: "$0.10",
-  //     launchDate: "13 Mar 2024",
-  //     status: "live",
-  //   },
-  //   {
-  //     image: "/assets/images/launch-image-1.png",
-  //     name: "Launch Name",
-  //     description:
-  //       "The Most Specialized Blockchain Network for AI Data Monetization & GPU Training",
-  //     totalRaise: "$150,000",
-  //     initialPrice: "$0.10",
-  //     launchDate: "13 Mar 2024",
-  //     status: "upcoming",
-  //   },
-  //   {
-  //     image: "/assets/images/launch-image-2.png",
-  //     name: "Launch Name",
-  //     description: "Web3 skill-based gaming project",
-  //     totalRaise: "TBA",
-  //     initialPrice: "TBA",
-  //     launchDate: "TBA",
-  //     status: "tba",
-  //   },
-  // ];
+  useEffect(() => {
+    if (!startTimer || timerRef.current) {
+      return;
+    }
+    timerRef.current = setInterval(() => {
+      const updated = launches.map(item => {
+        return {
+          ...item,
+          reminderLaunchTime: getReminderTimeStampString(item.pledgeEndDate),
+          reminderDay: getReminderDate(item.pledgeStartDate)       
+        }
+      });
+      setLaunches(updated);
+    }, 1000);
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
+  }, [startTimer]);
 
   return (
     <section className="mb-12">

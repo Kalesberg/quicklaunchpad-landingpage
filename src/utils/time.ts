@@ -21,7 +21,7 @@ export const convertDateTime = (dateTimeString: string) => {
     return date + " " + time;
 };
   
-export const getReminderTimeStampString = (dateStr: string) => {
+export const getReminderTimeStampString = (dateStr: string, big = false) => {
     const date = new Date(dateStr);
     const reminderTimeStamp = Math.floor((date.getTime() - Date.now()) / 1000);
     if (reminderTimeStamp <= 0) {
@@ -37,11 +37,11 @@ export const getReminderTimeStampString = (dateStr: string) => {
   
     return (
       getZeroTimeString(+day) +
-      ':' +
+      (big ? ' : ' : ':') +
       getZeroTimeString(+hours) +
-      ':' +
+      (big ? ' : ' : ':') +
       getZeroTimeString(+minutes) +
-      ':' +
+      (big ? ' : ' : ':') +
       getZeroTimeString(seconds)
     );
 };
@@ -53,7 +53,7 @@ export const getReminderDate = (dateStr: string) => {
       return '';
     }
     const day = Math.floor(reminderTimeStamp / days);  
-    return day
+    return day.toString();
 };
 
   

@@ -44,6 +44,7 @@ export type Project = {
   socials: Social;
   allocation: Allocation;
   reminderLaunchTime?: string;
+  reminderLaunchTimeBig?: string;
   reminderDay?: string;
 };
 

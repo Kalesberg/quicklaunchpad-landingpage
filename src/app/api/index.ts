@@ -42,8 +42,9 @@ export const getProjectsByStatus = async (status: ProjectStatus) => {
     p.pledgeEndDate = convertDateTime(p.pledgeEndDate);
     p.contributionStartDate = convertDateTime(p.contributionStartDate);
     p.contributionEndDate = convertDateTime(p.contributionEndDate);
-    p.reminderLaunchTime = getReminderTimeStampString(p.pledgeStartDate);
-    p.reminderDay = getReminderDate(p.pledgeEndDate);
+    p.reminderLaunchTime = getReminderTimeStampString(p.pledgeEndDate);
+    p.reminderLaunchTimeBig = getReminderTimeStampString(p.pledgeEndDate ,true);
+    p.reminderDay = getReminderDate(p.pledgeStartDate);
     return p;
   });  
 };
@@ -73,8 +74,9 @@ export const getProjectsById = async (pid: string, status: string) => {
   p.pledgeEndDate = convertDateTime(p.pledgeEndDate);
   p.contributionStartDate = convertDateTime(p.contributionStartDate);
   p.contributionEndDate = convertDateTime(p.contributionEndDate);
-  p.reminderLaunchTime = getReminderTimeStampString(p.pledgeStartDate)
-  p.reminderDay = getReminderDate(p.pledgeEndDate);
+  p.reminderLaunchTime = getReminderTimeStampString(p.pledgeEndDate);
+  p.reminderLaunchTimeBig = getReminderTimeStampString(p.pledgeEndDate ,true);
+  p.reminderDay = getReminderDate(p.pledgeStartDate);
   return p;
 };
 

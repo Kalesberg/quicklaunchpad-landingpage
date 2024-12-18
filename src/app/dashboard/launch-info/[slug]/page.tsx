@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useRef } from "react";
 import { ChevronLeftIcon } from "@heroicons/react/16/solid";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,6 +14,8 @@ import Button from "components/common/Button";
 import clsx from "clsx";
 import { getProjectsById, getProjectsContent } from "app/api";
 import { useSearchParams } from "next/navigation";
+import { ProjectStatus } from "state/type";
+import { getReminderTimeStampString, getReminderDate } from "utils/time";
 
 export default function LaunchInfoDetailPage() {
   // const { project } = useSelector((state: { project: Project }) => state || {});
@@ -34,6 +36,7 @@ export default function LaunchInfoDetailPage() {
 
   const searchParams = useSearchParams();
   const status = searchParams.get("status") || ''; 
+  const [startTimer, setStartTimer] = useState(false);
 
 
   const [content, setConent] = useState<any>(null);
@@ -41,6 +44,9 @@ export default function LaunchInfoDetailPage() {
   const fetchProjectById = useCallback(async () => {
     try {
       const res = await getProjectsById('', status);
+      if (res.status === ProjectStatus.Pledging) {
+        setStartTimer(true);
+      }
       setProject(res);
       const res1 = await getProjectsContent(res.contentUrl);
       setConent(res1?.data?.attributes?.content);
@@ -52,6 +58,27 @@ export default function LaunchInfoDetailPage() {
   useEffect(() => {
     fetchProjectById();
   }, [fetchProjectById]);
+
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    if (!startTimer || timerRef.current) {
+      return;
+    }
+    timerRef.current = setInterval(() => {
+      const updated = {
+          ...project,
+          reminderLaunchTimeBig: getReminderTimeStampString(project.pledgeEndDate, true),
+          reminderDay: getReminderDate(project.pledgeStartDate)       
+      };
+      setProject(updated);
+    }, 1000);
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
+  }, [startTimer]);
 
   return (
     project && (
@@ -88,14 +115,14 @@ export default function LaunchInfoDetailPage() {
                     <div className="flex justify-start md:justify-between gap-2">
                       <span
                         className={`max-w-20 md:max-w-full md:min-w-24 h-[24px] px-2 py-1 rounded-md text-xs text-center font-bold ${
-                          project.status === "live"
+                          project.status === "pledging"
                             ? "bg-[#0FC67929] text-[#0FC679]"
                             : project.status === "upcoming"
                               ? "bg-[#FDD83529] text-[#FDD835]"
                               : "bg-[#8E33FF29] text-[#C684FF]"
                         }`}
                       >
-                        {project.status === "live"
+                        {project.status === "pledging"
                           ? "Open"
                           : project.status === "upcoming"
                             ? "Upcoming"
@@ -376,7 +403,7 @@ export default function LaunchInfoDetailPage() {
                   </div>
                 </div>
               </>
-            ) : status === "live" ? (
+            ) : status === "pledging" ? (
               <>
                 <div className="border-b-2 border-[#919EAB14] pb-4">
                   <h2 className="text-[#EBECF2] text-xl md:text-2xl leading-9 text-center font-bold">
@@ -386,17 +413,8 @@ export default function LaunchInfoDetailPage() {
                     Participation time remaining
                   </p>
                   <div className="w-full flex items-center justify-center gap-2">
-                    <span className="text-[#EBECF2] text-[32px] leading-[48px] font-bold">
-                      36 :
-                    </span>
-                    <span className="text-[#EBECF2] text-[32px] leading-[48px] font-bold">
-                      09 :
-                    </span>
-                    <span className="text-[#EBECF2] text-[32px] leading-[48px] font-bold">
-                      06 :
-                    </span>
-                    <span className="text-[#EBECF2] text-[32px] leading-[48px] font-bold">
-                      04
+                    <span className="text-[#EBECF2] text-[32px] font-bold">
+                      {project.reminderLaunchTimeBig}
                     </span>
                   </div>
                 </div>
