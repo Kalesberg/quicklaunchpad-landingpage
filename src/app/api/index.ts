@@ -64,12 +64,11 @@ export const getProjectsById = async (pid: string, status: string) => {
   let p = null;
   if (status === ProjectStatus.Completed) {
     p = previousProjects[0];
-  } else if (status === ProjectStatus.Live) {
-    p = liveProjects[0];
-  } else {
+  } else if (status === ProjectStatus.Upcoming) {
     p = upcomingProjects[0];
+  } else {
+    p = liveProjects[1];
   }
-  p = previousProjects[0];
   p.pledgeStartDate = convertDateTime(p.pledgeStartDate);
   p.pledgeEndDate = convertDateTime(p.pledgeEndDate);
   p.contributionStartDate = convertDateTime(p.contributionStartDate);

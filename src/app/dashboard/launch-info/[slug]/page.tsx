@@ -13,6 +13,7 @@ import {
 import Button from "components/common/Button";
 import clsx from "clsx";
 import { getProjectsById, getProjectsContent } from "app/api";
+import { useSearchParams } from "next/navigation";
 
 export default function LaunchInfoDetailPage() {
   // const { project } = useSelector((state: { project: Project }) => state || {});
@@ -31,13 +32,15 @@ export default function LaunchInfoDetailPage() {
   //       ],
   // );
 
+  const searchParams = useSearchParams();
+  const status = searchParams.get("status") || ''; 
 
 
   const [content, setConent] = useState<any>(null);
 
   const fetchProjectById = useCallback(async () => {
     try {
-      const res = await getProjectsById('', 'completed');
+      const res = await getProjectsById('', status);
       setProject(res);
       const res1 = await getProjectsContent(res.contentUrl);
       setConent(res1?.data?.attributes?.content);
