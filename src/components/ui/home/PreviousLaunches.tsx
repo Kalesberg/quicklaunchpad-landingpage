@@ -11,8 +11,6 @@ import { updateSelectedProject } from "state/projectSlice";
 const LaunchRow: React.FC<Project> = (p: Project) => {
   const router = useRouter();
   const dispatch = useDispatch();
-
-  console.log('222', p);
   return (
     <div className="bg-[#1B1E29] rounded-2xl p-6 flex flex-col gap-[10px] md:gap-0 md:flex-row items-start md:items-center justify-between">
       <div className="max-w-64 md:min-w-64 flex items-center gap-4 md:gap-6">
