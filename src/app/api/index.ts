@@ -23,7 +23,7 @@ export const contentApi = axios.create({
   baseURL: CONTENT_BASE_URL,
   headers: {
     "Content-Type": "application/json",
-  },
+  }
 });
 
 export const getProjectsByStatus = async (status: ProjectStatus) => {

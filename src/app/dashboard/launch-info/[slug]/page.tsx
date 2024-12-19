@@ -89,6 +89,9 @@ export default function LaunchInfoDetailPage() {
     };
   }, [startTimer]);
 
+  const handleParticipate = () => {
+  };
+
   return (
     project && (
       <div className="container-dashboard mx-auto px-4">
@@ -139,12 +142,12 @@ export default function LaunchInfoDetailPage() {
                       </span>
                       <span
                         className={`min-w-24 h-[24px] px-2 py-1 rounded-md text-xs text-center font-bold ${
-                          !!project.kycProvider === true
+                          !!project.kycProvider
                             ? "bg-[#FF5C5C29] text-[#FF5C5C]"
                             : ""
                         }`}
                       >
-                        {!!project.kycProvider === true ? "KYC Required" : ""}
+                        {!!project.kycProvider ? "KYC Required" : ""}
                       </span>
                     </div>
                   </div>
@@ -429,7 +432,7 @@ export default function LaunchInfoDetailPage() {
                   </div>
                 </div>
                 <div className="flex flex-col px-6 pt-4">
-                  <div className="relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['1'] after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#448AFF] after:text-[#EBECF2] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
+                  <div className="mb-2 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['1'] after:absolute after:top-1/4 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#448AFF] after:text-[#EBECF2] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
                     <h3 className="text-[#EBECF2] text-sm md:text-base leading-6 font-semibold">
                       Whitelist
                     </h3>
@@ -439,15 +442,15 @@ export default function LaunchInfoDetailPage() {
                     <p className="text-[#C7CAD9] text-xs leading-4 font-semibold">
                       {project.pledgeStartDate} – {project.pledgeEndDate}
                     </p>
-                    {!address && <Button
+                    <Button
                       variant="primary"
                       className="!min-w-16 !h-9 capitalize"
-                      onClick={() => open()}
+                      onClick={() => !address ? open() : handleParticipate()}
                     >
-                      Connect wallet to participate
-                    </Button>}
+                      {!address ? 'Connect wallet to participate' : 'Participate now'}
+                    </Button>
                   </div>
-                  <div className="relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['2'] after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#DFE3E8] after:text-[#919EAB] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
+                  <div className="mb-2 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['2'] after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#DFE3E8] after:text-[#919EAB] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
                     <h3 className="text-[#696C80] text-sm md:text-base leading-6 font-semibold">
                       Lottery
                     </h3>
@@ -455,7 +458,7 @@ export default function LaunchInfoDetailPage() {
                       Winners will be announced {project.pledgeEndDate}
                     </p>
                   </div>
-                  <div className="relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['3'] after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#DFE3E8] after:text-[#919EAB] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
+                  <div className="mb-2 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['3'] after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#DFE3E8] after:text-[#919EAB] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
                     <h3 className="text-[#696C80] text-sm md:text-base leading-6 font-semibold">
                       Contribution
                     </h3>
@@ -463,7 +466,7 @@ export default function LaunchInfoDetailPage() {
                       Expires on 18 Mar 04:00 AM
                     </p>
                   </div>
-                  <div className="relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['4'] after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#DFE3E8] after:text-[#919EAB] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
+                  <div className="mb-2 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['4'] after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#DFE3E8] after:text-[#919EAB] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
                     <h3 className="text-[#696C80] text-sm md:text-base leading-6 font-semibold">
                       Completed
                     </h3>
