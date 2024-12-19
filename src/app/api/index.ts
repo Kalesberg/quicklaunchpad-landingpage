@@ -4,6 +4,7 @@ import { upcomingProjects } from "state/upcoming_projects_temp";
 import { liveProjects } from "state/live_projects_temp";
 import { contentTemp } from "state/content_temp";
 import { convertDateTime, getReminderTimeStampString, getReminderDate } from "../../utils/time";
+import { getConfig } from "config";
 
 const BASE_URL = "https://quicklaunchpad.io/";
 const CONTENT_BASE_URL =
@@ -55,6 +56,8 @@ export const getProjectsByStatus = async (status: ProjectStatus) => {
       p.reminderLaunchTime = getReminderTimeStampString(p.pledgeEndDate);
       p.reminderLaunchTimeBig = getReminderTimeStampString(p.pledgeEndDate ,true);
       p.reminderDay = getReminderDate(p.pledgeStartDate);
+      p.network = getConfig(parseInt(p.chainId, 16));
+
       return p;
     })
   } catch(e) {
@@ -91,6 +94,8 @@ export const getProjectsById = async (pid: string, status: string) => {
   p.reminderLaunchTime = getReminderTimeStampString(p.pledgeEndDate);
   p.reminderLaunchTimeBig = getReminderTimeStampString(p.pledgeEndDate ,true);
   p.reminderDay = getReminderDate(p.pledgeStartDate);
+  p.network = getConfig(parseInt(p.chainId, 16));
+
   return p;
 };
 

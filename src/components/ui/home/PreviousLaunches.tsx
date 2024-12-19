@@ -11,7 +11,8 @@ import { updateSelectedProject } from "state/projectSlice";
 const LaunchRow: React.FC<Project> = (p: Project) => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const blockchain = ChainIdToName[p.chainId] || "";
+
+  console.log('222', p);
   return (
     <div className="bg-[#1B1E29] rounded-2xl p-6 flex flex-col gap-[10px] md:gap-0 md:flex-row items-start md:items-center justify-between">
       <div className="max-w-64 md:min-w-64 flex items-center gap-4 md:gap-6">
@@ -31,14 +32,18 @@ const LaunchRow: React.FC<Project> = (p: Project) => {
           <span className="text-[#C7CAD9] text-xs leading-4">Blockchain</span>
           <div className="flex items-center">
             <Image
-              src="/assets/images/chain-avatar.png"
-              alt={blockchain}
+              src={
+                p?.network?.nativeCurrencyImage
+                  ? p?.network?.nativeCurrencyImage
+                  : "https://beta.quickswap.exchange/static/media/quickIcon.aa0f5ef593b1a9f00bab835581e318f3.svg"
+              }
+              alt=''
               width={24}
               height={24}
               className="w-6 h-6"
             />
             <span className="text-base leading-6 font-normal text-[#EBECF2] px-4">
-              {blockchain}
+              {p?.network?.networkName}
             </span>
           </div>
         </div>
