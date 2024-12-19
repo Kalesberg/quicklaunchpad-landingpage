@@ -25,7 +25,7 @@ export default function Home() {
         openModal={openModal}
         setOpenModal={setOpenModal}
       />
-      <div className="max-w-[1248px] mx-auto">
+      <div className="max-w-[1248px] mx-auto px-4 lg:px-2">
         {caseLaunch !== 0 && <LaunchNotice status="upcoming" />}
         <StepsToJoin />
         {caseLaunch > 1 && <LiveUpcomingLaunches />}
