@@ -13,7 +13,7 @@ import {
 import Button from "components/common/Button";
 import clsx from "clsx";
 import { getProjectsById, getProjectsContent } from "app/api";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useParams } from "next/navigation";
 import { ProjectStatus } from "state/type";
 import { getReminderTimeStampString, getReminderDate } from "utils/time";
 import {
@@ -28,7 +28,6 @@ export default function LaunchInfoDetailPage() {
 
   const [project, setProject] = useState<any>(null);
 
-  console.log("getting the project detail", project);
   const [selectedTab, setSelectedTab] = useState<string>("about");
   const tabs = [{ label: "About the Launch", value: "about" }];
   // .concat(
@@ -41,7 +40,11 @@ export default function LaunchInfoDetailPage() {
   // );
 
   const searchParams = useSearchParams();
+  const params = useParams();
+
   const status = searchParams.get("status") || ''; 
+  const projectId = params['slug'] || '';
+
   const [startTimer, setStartTimer] = useState(false);
 
 
@@ -49,7 +52,7 @@ export default function LaunchInfoDetailPage() {
 
   const fetchProjectById = useCallback(async () => {
     try {
-      const res = await getProjectsById('', status);
+      const res = await getProjectsById(projectId as string, status);
       if (res.status === ProjectStatus.Pledging) {
         setStartTimer(true);
       }

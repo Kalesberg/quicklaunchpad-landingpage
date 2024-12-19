@@ -28,26 +28,16 @@ export const contentApi = axios.create({
 
 export const getProjectsByStatus = async (status: ProjectStatus) => {
   try {
-    // const res = await projectApi.get(`/projects?status=${status}`);
-    // const projects = res.data as any[];
-    // return projects.map((p) => {
-    //   p.pledgeStartDate = convertDateTime(p.pledgeStartDate);
-    //   p.pledgeEndDate = convertDateTime(p.pledgeEndDate);
-    //   p.contributionStartDate = convertDateTime(p.contributionStartDate);
-    //   p.contributionEndDate = convertDateTime(p.contributionEndDate);
-    //   p.reminderLaunchTime = getReminderTimeStampString(p.pledgeEndDate);
-    //   p.reminderLaunchTimeBig = getReminderTimeStampString(p.pledgeEndDate ,true);
-    //   p.reminderDay = getReminderDate(p.pledgeStartDate);
-    //   return p;
-    // });
-    let projects = []
-    if (status === ProjectStatus.Completed) {
-      projects = previousProjects;
-    } else if (status === ProjectStatus.Upcoming) {
-      projects = upcomingProjects;
-    } else {
-      projects = liveProjects;
-    }
+    const res = await projectApi.get(`/projects?status=${status}`);
+    const projects = res.data as any[];
+    // let projects = []
+    // if (status === ProjectStatus.Completed) {
+    //   projects = previousProjects;
+    // } else if (status === ProjectStatus.Upcoming) {
+    //   projects = upcomingProjects;
+    // } else {
+    //   projects = liveProjects;
+    // }
     return projects.map(p => {
       p.pledgeStartDate = convertDateTime(p.pledgeStartDate);
       p.pledgeEndDate = convertDateTime(p.pledgeEndDate);
@@ -76,31 +66,34 @@ export const getUpcomingProject= async () => {
 
 
 export const getProjectsById = async (pid: string, status: string) => {
-  // const res = await projectApi.get(`/projects/${pid}`);
-  // console.log(res);
-  // return res;
-  let p = null;
-  if (status === ProjectStatus.Completed) {
-    p = previousProjects[0];
-  } else if (status === ProjectStatus.Upcoming) {
-    p = upcomingProjects[0];
-  } else {
-    p = liveProjects[1];
+  try {
+    const res = await projectApi.get(`/projects/${pid}`);
+    let p = null;
+    p = res.data;
+    // if (status === ProjectStatus.Completed) {
+    //   p = previousProjects[0];
+    // } else if (status === ProjectStatus.Upcoming) {
+    //   p = upcomingProjects[0];
+    // } else {
+    //   p = liveProjects[1];
+    // }
+    p.pledgeStartDate = convertDateTime(p.pledgeStartDate);
+    p.pledgeEndDate = convertDateTime(p.pledgeEndDate);
+    p.contributionStartDate = convertDateTime(p.contributionStartDate);
+    p.contributionEndDate = convertDateTime(p.contributionEndDate);
+    p.reminderLaunchTime = getReminderTimeStampString(p.pledgeEndDate);
+    p.reminderLaunchTimeBig = getReminderTimeStampString(p.pledgeEndDate ,true);
+    p.reminderDay = getReminderDate(p.pledgeStartDate);
+    p.network = getConfig(parseInt(p.chainId, 16));  
+    return p;  
+  } catch (e) {
+    console.error(e);
+    return null;
   }
-  p.pledgeStartDate = convertDateTime(p.pledgeStartDate);
-  p.pledgeEndDate = convertDateTime(p.pledgeEndDate);
-  p.contributionStartDate = convertDateTime(p.contributionStartDate);
-  p.contributionEndDate = convertDateTime(p.contributionEndDate);
-  p.reminderLaunchTime = getReminderTimeStampString(p.pledgeEndDate);
-  p.reminderLaunchTimeBig = getReminderTimeStampString(p.pledgeEndDate ,true);
-  p.reminderDay = getReminderDate(p.pledgeStartDate);
-  p.network = getConfig(parseInt(p.chainId, 16));
-
-  return p;
 };
 
 export const getProjectsContent = async (contentId: string) => {
-  // const res = await contentApi.get(`${contentId}?populate=*`);
-  // return res.data;
-  return contentTemp;
+  const res = await contentApi.get(`${contentId}?populate=*`);
+  return res.data;
+  // return contentTemp;
 };
