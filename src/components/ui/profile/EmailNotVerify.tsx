@@ -9,8 +9,12 @@ import { ArrowPathIcon, PencilIcon } from "@heroicons/react/16/solid";
 import { useAppKitAccount } from "@reown/appkit/react";
 import { shortenAddress } from "utils";
 
-export default function EmailNotVerify() {
+const EmailNotVerify : React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
+  openModal,
+  setOpenModal,
+}) => {
   const { address } = useAppKitAccount();
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
       <div className="w-full bg-[#1B1E29] rounded-xl p-4 md:p-6">
@@ -39,8 +43,9 @@ export default function EmailNotVerify() {
 
           <div className="w-full flex items-center gap-1 md:gap-2 justify-between md:justify-end flex-wrap">
             <Button
-              className="bg-transparent !text-[#448AFF] text-xs md:text-sm font-bold flex items-center gap-2 cursor-pointer !px-2 md:px-3"
-              icon={<PencilIcon className="text-[#448AFF] w-3 md:w-5 h-3 md:h-5" />}
+              className="bg-transparent !text-[#448AFF] text-xs md:text-sm font-bold flex items-center gap-2 cursor-pointer !px-2 md:px-3 group hover:!text-white"
+              icon={<PencilIcon className="text-[#448AFF] w-3 md:w-5 h-3 md:h-5 group-hover:text-white" />}
+              onClick={() => setOpenModal(!openModal)}
             >
               Change email
             </Button>
@@ -105,6 +110,8 @@ export default function EmailNotVerify() {
     </div>
   );
 }
+
+export default EmailNotVerify;
 
 export const Checkbox = ({ label, id, disabled }: any) => {
   return (
