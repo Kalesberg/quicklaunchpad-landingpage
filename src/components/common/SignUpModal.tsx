@@ -43,7 +43,7 @@ const SignUpModal: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
     openModal && (
       <div className="fixed top-0 left-0 z-50 w-full h-full bg-[#1b1e298c] flex justify-center items-center">
         {confirm ? (
-          <div className="max-w-[480px] bg-[#1B1E29] shadow-lg p-6 rounded-2xl">
+          <div className="max-w-[480px] bg-[#1B1E29] shadow-sm shadow-slate-800 p-6 rounded-2xl">
             <div className="flex justify-end mb-4">
               <XMarkIcon
                 className="w-[18px] h-[18px] text-[#919EAB] cursor-pointer"
@@ -76,7 +76,7 @@ const SignUpModal: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
             </div>
           </div>
         ) : (
-          <div className="max-w-[480px] bg-[#1B1E29] shadow-lg p-6 rounded-2xl">
+          <div className="max-w-[480px] bg-[#1B1E29] shadow-sm shadow-slate-800 p-6 rounded-2xl">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-bold leading-7 text-[#EBECF2]">
                 Sign up for updates
