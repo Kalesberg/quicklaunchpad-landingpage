@@ -157,7 +157,7 @@ export const getUser = async () => {
  * @param email: string
  * @returns user info
  */
-export const changeEmail = async (email: string) => { 
-  const res = await authApi.patch(`/identity/users`, {email});
+export const updateUser = async (payload: any) => { 
+  const res = await authApi.patch(`/identity/users`, payload);
   return res
 };
