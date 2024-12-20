@@ -28,16 +28,16 @@ export const contentApi = axios.create({
 
 export const getProjectsByStatus = async (status: ProjectStatus) => {
   try {
-    const res = await projectApi.get(`/projects?status=${status}`);
-    const projects = res.data as any[];
-    // let projects = []
-    // if (status === ProjectStatus.Completed) {
-    //   projects = previousProjects;
-    // } else if (status === ProjectStatus.Upcoming) {
-    //   projects = upcomingProjects;
-    // } else {
-    //   projects = liveProjects;
-    // }
+    // const res = await projectApi.get(`/projects?status=${status}`);
+    // const projects = res.data as any[];
+    let projects = []
+    if (status === ProjectStatus.Completed) {
+      projects = previousProjects;
+    } else if (status === ProjectStatus.Upcoming) {
+      projects = upcomingProjects;
+    } else {
+      projects = liveProjects;
+    }
     return projects.map(p => {
       p.pledgeStartDate = convertDateTime(p.pledgeStartDate);
       p.pledgeEndDate = convertDateTime(p.pledgeEndDate);
@@ -57,26 +57,27 @@ export const getProjectsByStatus = async (status: ProjectStatus) => {
 };
 
 export const getUpcomingProject= async () => {
-  const p = await getProjectsByStatus(ProjectStatus.Upcoming);
-  if (p?.length) {
-    return p[0];
-  }
-  return null
+  // const p = await getProjectsByStatus(ProjectStatus.Upcoming);
+  // if (p?.length) {
+  //   return p[0];
+  // }
+  // return null
+  return upcomingProjects[0];
 };
 
 
 export const getProjectsById = async (pid: string, status: string) => {
   try {
-    const res = await projectApi.get(`/projects/${pid}`);
+    // const res = await projectApi.get(`/projects/${pid}`);
     let p = null;
-    p = res.data;
-    // if (status === ProjectStatus.Completed) {
-    //   p = previousProjects[0];
-    // } else if (status === ProjectStatus.Upcoming) {
-    //   p = upcomingProjects[0];
-    // } else {
-    //   p = liveProjects[1];
-    // }
+    // p = res.data;
+    if (status === ProjectStatus.Completed) {
+      p = previousProjects[0];
+    } else if (status === ProjectStatus.Upcoming) {
+      p = upcomingProjects[0];
+    } else {
+      p = liveProjects[1];
+    }
     p.pledgeStartDate = convertDateTime(p.pledgeStartDate);
     p.pledgeEndDate = convertDateTime(p.pledgeEndDate);
     p.contributionStartDate = convertDateTime(p.contributionStartDate);
@@ -93,7 +94,70 @@ export const getProjectsById = async (pid: string, status: string) => {
 };
 
 export const getProjectsContent = async (contentId: string) => {
-  const res = await contentApi.get(`${contentId}?populate=*`);
-  return res.data;
-  // return contentTemp;
+  // const res = await contentApi.get(`${contentId}?populate=*`);
+  // return res.data;
+  return contentTemp;
+};
+
+
+export const authApi = axios.create({
+  baseURL: BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+authApi.interceptors.request.use(
+  (config) => {
+    const token = ''; // TODO: get token
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
+  },
+  (error) => {
+    // Handle the error
+    return Promise.reject(error);
+  }
+);
+
+
+export const getAuthCode = async () => { // return auth code - ex: 1KoMhhKDBbxw6wtGb
+    const res = await projectApi.get(`/identity/auth`);
+    console.log('auth code', res)
+    return res
+};
+
+/**
+ * 
+ * @returns access token
+ * TODO - confirm payload 
+ * 
+ */
+export const logIn = async () => { 
+  const res = await projectApi.post(`/identity/auth/login`);
+  console.log('auth code', res)
+  return res
+};
+
+/**
+ * 
+ * @returns user info
+ * TODO - confirm payload 
+ * 
+ */
+export const getUser = async () => { 
+  const res = await authApi.get(`/identity/users`);
+  return res
+};
+
+/**
+ * @param email: string
+ * @returns user info
+ */
+export const changeEmail = async (email: string) => { 
+  const res = await authApi.patch(`/identity/users`, {email});
+  return res
 };
