@@ -1,5 +1,5 @@
 "use client";
-
+import React, { useState } from "react";
 import Image from "next/image";
 import Button from "components/common/Button";
 import PowderIcon from "../../../../public/assets/images/powder.png";
@@ -9,12 +9,35 @@ import { ArrowPathIcon, PencilIcon } from "@heroicons/react/16/solid";
 import { useAppKitAccount } from "@reown/appkit/react";
 import { shortenAddress } from "utils";
 import { User } from "state/type";
+import { updateUser } from "../../../redux/rootReducer";
+import { updateUser as updateUserApi } from "app/api";
+import { useDispatch } from 'react-redux';
 
 const EmailNotVerify : React.FC<{ openModal?: boolean; setOpenModal?: any, user: User }> = ({
   openModal,
   setOpenModal,
   user
 }) => {
+
+  const dispatch = useDispatch();
+  const [upcomingNotify, setUpcomingNotify] = useState(!!user?.notifConfig?.emailNotifications);
+
+  const handleResendLink = async () => {
+    await updateUser({ email: user.email }); // TODO - add resend verification link api
+  }
+
+  const handleUpcomingCheckboxChange = async (event: any) => {
+    console.log('00000', event.target.checked)
+    setUpcomingNotify(event.target.checked)
+    const payload = {
+      notifConfig: {emailNotifications: event.target.checked}
+    }
+    const res = await updateUserApi(payload);
+    if (res) {
+      dispatch(updateUser(res))
+    }
+  }
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
       <div className="w-full bg-[#1B1E29] rounded-xl p-4 md:p-6">
@@ -54,6 +77,7 @@ const EmailNotVerify : React.FC<{ openModal?: boolean; setOpenModal?: any, user:
               variant="secondary"
               size="small"
               className="h-[36px] text-xs md:text-sm !px-2 md:px-3"
+              onClick={() => handleResendLink()}
               icon={<ArrowPathIcon className="text-[#448AFF] w-3 md:w-5 h-3 md:h-5" />}
             >
               Resend verification link
@@ -99,11 +123,14 @@ const EmailNotVerify : React.FC<{ openModal?: boolean; setOpenModal?: any, user:
             label="Receive email notifications about my active launches [Mandatory]."
             id="1"
             disabled
+            checked
           />
 
           <Checkbox
             label="Receive emails about upcoming launchpads, whitelist announcements and open dates."
             id="2"
+            checked={upcomingNotify}
+            handleCheckboxChange = {handleUpcomingCheckboxChange}
           />
         </div>
       </div>
@@ -113,7 +140,7 @@ const EmailNotVerify : React.FC<{ openModal?: boolean; setOpenModal?: any, user:
 
 export default EmailNotVerify;
 
-export const Checkbox = ({ label, id, disabled }: any) => {
+export const Checkbox = ({ label, id, disabled, checked, handleCheckboxChange }: any) => {
   return (
     <div className="flex items-center justify-start gap-2">
       <label
@@ -125,9 +152,11 @@ export const Checkbox = ({ label, id, disabled }: any) => {
         <input
           id={id}
           type="checkbox"
-          value=""
+          checked={checked}
           className="sr-only peer"
           disabled={disabled}
+          onChange={handleCheckboxChange}
+
         />
         <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#0FC679]"></div>
       </label>
