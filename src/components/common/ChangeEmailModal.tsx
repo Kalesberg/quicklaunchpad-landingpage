@@ -14,7 +14,7 @@ const ChangeEmailModal: React.FC<{
   user: User
 }> = ({ openModal, setOpenModal, user }) => {
   const dispatch = useDispatch();
-  const [email, setEmail] = useState(user?.email || "");
+  const [email, setEmail] = useState(user?.email);
   const [noValidEmail, setNoValidEmail] = useState(false);
   const [noValidText, setNoValidText] = useState("");
   const handleModal = () => {
