@@ -62,8 +62,8 @@ const EmailNotVerify : React.FC<{ openModal?: boolean; setOpenModal?: any, user:
           <div className="flex items-center gap-3 text-base">
             <span className="text-[#C7CAD9]">Email:</span>
             <span>{user ? user.email:'-'}</span>
+            {!user?.isEmailVerified &&<span className="text-[#61F3F3] bg-[#00B8D929] text-sm font-bold pt-1 pb-1 pl-2 pr-2 rounded-lg">Pending Verification</span>}
           </div>
-
           <div className="w-full flex items-center gap-1 md:gap-2 justify-between md:justify-end flex-wrap">
             <Button
               className="bg-transparent !text-[#448AFF] text-xs md:text-sm font-bold flex items-center gap-2 cursor-pointer !px-2 md:px-3 group hover:!text-white"
@@ -73,7 +73,7 @@ const EmailNotVerify : React.FC<{ openModal?: boolean; setOpenModal?: any, user:
               Change email
             </Button>
 
-            <Button
+            {!user?.isEmailVerified && <Button
               variant="secondary"
               size="small"
               className="h-[36px] text-xs md:text-sm !px-2 md:px-3"
@@ -81,7 +81,7 @@ const EmailNotVerify : React.FC<{ openModal?: boolean; setOpenModal?: any, user:
               icon={<ArrowPathIcon className="text-[#448AFF] w-3 md:w-5 h-3 md:h-5" />}
             >
               Resend verification link
-            </Button>
+            </Button>}
           </div>
         </div>
       </div>

@@ -174,3 +174,8 @@ export const updateUser = async (payload: any) => {
   const res = await authApi.patch(`/identity/users`, payload);
   return res?.data
 };
+
+export const emailVerify = async (code: string) => { 
+  const res = await authApi.get(`/identity/auth/validate/email/${code}`);
+  return res?.data
+};
