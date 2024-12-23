@@ -657,6 +657,7 @@ export default function LaunchInfoDetailPage() {
         <SubmitApplicationModal
           openModal={openSubmitApplicationModal}
           setOpenModal={setOpenSubmitApplicationModal}
+          project={project}
         />
         <ContributionModal
           openModal={openContributionModal}

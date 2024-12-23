@@ -2,11 +2,13 @@ import { XMarkIcon } from "@heroicons/react/20/solid";
 import React, { useState } from "react";
 import Button from "./Button";
 import Image from "next/image";
+import { Project } from "state/type";
 
 const SubmitApplicationModal: React.FC<{
   openModal: boolean | undefined;
   setOpenModal: (arg: boolean) => void;
-}> = ({ openModal, setOpenModal }) => {
+  project: Project
+}> = ({ openModal, setOpenModal, project }) => {
   const [confirm, setConfirm] = useState(false);
   const [error, setError] = useState(false);
 
@@ -44,7 +46,7 @@ const SubmitApplicationModal: React.FC<{
               </h2>
               <p className="text-sm text-[#C7CAD9] mb-6 text-center">
                 The winners will be announced on{" "}
-                <span className="font-semibold">13 Mar, 2024 08:00 AM</span>.
+                <span className="font-semibold">{project.pledgeEndDate}</span>.
                 If successful, you’ll be notified via email with further
                 instructions.
               </p>
@@ -77,7 +79,7 @@ const SubmitApplicationModal: React.FC<{
               </p>
               <div className="mb-4">
                 <h2 className="text-lg font-bold leading-7 text-[#EBECF2] mb-4">
-                  [Launch Name]
+                  {project.projectName}
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="flex flex-col gap-1">
@@ -109,7 +111,7 @@ const SubmitApplicationModal: React.FC<{
                       Lottery Date & Time
                     </p>
                     <p className="text-[#EBECF2] text-lg font-bold leading-7">
-                      13 Mar, 2024 08:00 AM
+                      {project.pledgeEndDate}
                     </p>
                   </div>
                 </div>
