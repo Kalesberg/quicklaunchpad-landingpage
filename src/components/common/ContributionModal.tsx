@@ -1,0 +1,271 @@
+"use client";
+
+import {
+  ArrowTopRightOnSquareIcon,
+  XMarkIcon,
+} from "@heroicons/react/20/solid";
+import Image from "next/image";
+import { useState } from "react";
+import Button from "./Button";
+import { CheckIcon } from "@heroicons/react/24/solid";
+import Link from "next/link";
+
+interface Network {
+  id: string;
+  name: string;
+  icon: string;
+}
+
+interface Token {
+  symbol: string;
+  name: string;
+  icon: string;
+  balance: number;
+}
+
+interface ContributionModalProps {
+  openModal: boolean;
+  setOpenModal: (arg: boolean) => void;
+}
+
+const ContributionModal: React.FC<ContributionModalProps> = ({
+  openModal,
+  setOpenModal,
+}) => {
+  const [selectedNetwork, setSelectedNetwork] = useState<string>("polygon");
+  const [selectedToken, setSelectedToken] = useState<string>("USDT");
+
+  const networks: Network[] = [
+    {
+      id: "polygon",
+      name: "Polygon",
+      icon: "/assets/images/4dee09caf5949d0260bcdbb0b8e9a52a.png",
+    },
+    { id: "bsc", name: "BSC", icon: "/assets/images/bsc.png" },
+    { id: "ethereum", name: "Ethereum", icon: "/assets/images/ethereum.png" },
+  ];
+
+  const tokens: Token[] = [
+    {
+      symbol: "USDT",
+      name: "Tether",
+      icon: "/assets/images/usdt.png",
+      balance: 150000.0,
+    },
+    {
+      symbol: "USDC",
+      name: "USDCoin",
+      icon: "/assets/images/usdc.png",
+      balance: 150.0,
+    },
+  ];
+
+  const [confirm, setConfirm] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+
+  const handleModal = () => {
+    setConfirm(false);
+    setOpenModal(!openModal);
+  };
+
+  const handleSubmit = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setConfirm(true);
+    }, 1500);
+  };
+
+  return (
+    openModal && (
+      <div className="fixed top-0 left-0 z-50 w-full h-full bg-[#1b1e298c] flex justify-center items-center">
+        {loading ? (
+          <div className="min-w-[520px] bg-[#1B1E29] shadow-sm shadow-slate-800 p-6 rounded-2xl">
+            {/* Header */}
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-[#EBECF2] text-xl font-semibold">
+                Contribute 2,000 {selectedToken}
+              </h2>
+            </div>
+            <div className="max-w-[520px] min-h-80 flex flex-col justify-center items-center gap-6">
+              <div className="loader mb-6"></div>
+              <p className="text-[#EBECF2] font-semibold leading-6">
+                Contribution underway, please wait...
+              </p>
+              <Link
+                href="#"
+                className="flex items-center gap-2 text-[#448AFF] text-[15px] font-bold leading-6 hover:underline"
+              >
+                Back to Launchpad{" "}
+                <ArrowTopRightOnSquareIcon width={24} height={24} />{" "}
+              </Link>
+            </div>
+          </div>
+        ) : (
+          <>
+            {confirm ? (
+              <div className="min-w-[520px] bg-[#1B1E29] shadow-sm shadow-slate-800 p-6 rounded-2xl">
+                <div className="flex justify-end mb-6">
+                  <XMarkIcon
+                    className="w-[18px] h-[18px] text-[#919EAB] cursor-pointer"
+                    onClick={handleModal}
+                  />
+                </div>
+                <div className="max-w-[520px] min-h-80 flex flex-col justify-center items-center gap-4">
+                  <Image
+                    src="/assets/images/contribute-success.png"
+                    alt="contribute success"
+                    width={179}
+                    height={126}
+                  />
+                  <p className="text-[#EBECF2] text-lg font-bold leading-7">
+                    2,000 USDT has been contributed successfully!
+                  </p>
+                  <Link
+                    href="#"
+                    className="flex items-center gap-2 text-[#448AFF] text-[15px] font-bold leading-6 hover:underline"
+                  >
+                    View on block explorer{" "}
+                    <ArrowTopRightOnSquareIcon width={24} height={24} />{" "}
+                  </Link>
+                </div>
+                <Button
+                  variant="primary"
+                  size="large"
+                  className="w-full !text-[15px] font-bold capitalize leading-6 hover:!bg-blue-600"
+                  onClick={handleModal}
+                >
+                  Got it!
+                </Button>
+              </div>
+            ) : (
+              <div className="min-w-[520px] bg-[#1B1E29] shadow-sm shadow-slate-800 p-6 rounded-2xl">
+                {/* Header */}
+                <div className="flex justify-between items-center mb-6">
+                  <h2 className="text-[#EBECF2] text-xl font-semibold">
+                    Contribute
+                  </h2>
+                  <XMarkIcon
+                    className="w-[18px] h-[18px] text-[#919EAB] cursor-pointer"
+                    onClick={handleModal}
+                  />
+                </div>
+
+                {/* Network Selection */}
+                <div className="mb-6">
+                  <label className="text-[#C7CAD9] text-xs font-semibold block mb-2">
+                    Network
+                  </label>
+                  <div className="flex items-center justify-between gap-3">
+                    {networks.map((network) => (
+                      <button
+                        key={network.id}
+                        onClick={() => setSelectedNetwork(network.id)}
+                        className={`min-w-36 flex items-center gap-2 text-[#EBECF2] text-sm font-bold leading-6 px-3 py-1 rounded-lg ${
+                          selectedNetwork === network.id
+                            ? "bg-[#448AFF1F] border border-[#448AFF]"
+                            : "bg-[#919EAB14]"
+                        }`}
+                      >
+                        <Image
+                          src={network.icon}
+                          alt={network.name}
+                          width={20}
+                          height={20}
+                        />
+                        <span>{network.name}</span>
+                        {selectedNetwork === network.id && (
+                          <CheckIcon width={20} height={20} color="#448AFF" />
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Token Selection */}
+                <div className="mb-6">
+                  <label className="text-[#C7CAD9] text-xs font-semibold block mb-2">
+                    Funding token
+                  </label>
+                  <div className="flex gap-2">
+                    {tokens.map((token) => (
+                      <button
+                        key={token.symbol}
+                        onClick={() => setSelectedToken(token.symbol)}
+                        className={`flex items-center justify-between w-full px-4 py-2 rounded-lg ${
+                          selectedToken === token.symbol
+                            ? "bg-[#448AFF1F] border border-[#448AFF]"
+                            : "bg-[#919EAB14]"
+                        }`}
+                      >
+                        <div className="flex items-center gap-2">
+                          <Image
+                            src={token.icon}
+                            alt={token.name}
+                            width={40}
+                            height={40}
+                          />
+                          <div className="text-left">
+                            <div className="text-[#EBECF2] text-sm leading-6 font-semibold">
+                              {token.symbol}
+                            </div>
+                            <div className="text-[#EBECF2] text-xs leading-5 font-normal">
+                              {token.name}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="text-[#EBECF2] text-xs leading-5 font-normal">
+                          {token.balance.toLocaleString()}
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {error && (
+                  <div className="bg-[#412127] flex items-center gap-2 p-2 rounded-lg mb-4">
+                    <Image
+                      src="/assets/images/ic-danger.png"
+                      alt="danger icon"
+                      width={24}
+                      height={24}
+                      className="w-6 h-6"
+                    />
+                    <p className="text-[#FFD6D6] text-sm leading-5">
+                      Wrong network! Please switch to BSC to contribute.
+                    </p>
+                  </div>
+                )}
+
+                <div className="h-[2px] bg-[#919EAB14] mb-6"></div>
+
+                {/* Contribution Amount */}
+                <div className="flex items-center justify-between mb-6">
+                  <label className="text-[#C7CAD9] text-lg font-bold block mb-2">
+                    Contribution amount:
+                  </label>
+                  <span className="text-[#C7CAD9] text-lg font-bold">
+                    2,000 {selectedToken}
+                  </span>
+                </div>
+
+                {/* Contribute Button */}
+                <Button
+                  variant="primary"
+                  size="large"
+                  className="w-full !text-[15px] font-bold capitalize leading-6 hover:!bg-blue-600"
+                  onClick={handleSubmit}
+                >
+                  Contribute 2,000 {selectedToken}
+                </Button>
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    )
+  );
+};
+
+export default ContributionModal;
