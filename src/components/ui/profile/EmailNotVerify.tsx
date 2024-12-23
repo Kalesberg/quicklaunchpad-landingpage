@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Button from "components/common/Button";
 import PowderIcon from "../../../../public/assets/images/powder.png";
@@ -12,6 +12,8 @@ import { User } from "state/type";
 import { updateUser } from "../../../reduxStore/rootReducer";
 import { updateUser as updateUserApi } from "app/api";
 import { useDispatch } from 'react-redux';
+
+declare const BlockpassKYCConnect: any
 
 const EmailNotVerify : React.FC<{ openModal?: boolean; setOpenModal?: any, user: User }> = ({
   openModal,
@@ -37,6 +39,11 @@ const EmailNotVerify : React.FC<{ openModal?: boolean; setOpenModal?: any, user:
       dispatch(updateUser(res))
     }
   }
+
+  useEffect(() => {
+    const blockpass = new BlockpassKYCConnect("quicklaunchpad_04b2e");
+    blockpass.startKYCConnect();  
+  }, []);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
@@ -106,9 +113,9 @@ const EmailNotVerify : React.FC<{ openModal?: boolean; setOpenModal?: any, user:
           Register your wallet and upload KYC documents for Launchpad
           participation. KYC is mandatory to participate in launchpad projects.
         </p>
-        <div className="flex items-center justify-between md:justify-end gap-3 flex-wrap">
+        <div  className="flex items-center justify-between md:justify-end gap-3 flex-wrap">
           <span className="text-sm text-[#919EAB]">Takes about 15 minutes</span>
-          <Button variant="primary" size="small" className="px-3 h-[36px]">
+          <Button id="blockpass-kyc-connect" variant="primary" size="small" className="px-3 h-[36px]">
             Complete KYC
           </Button>
         </div>
