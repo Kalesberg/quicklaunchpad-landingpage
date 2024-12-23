@@ -82,4 +82,18 @@ export type Allocation = {
   _id: string;
 };
 
+export type User = {
+  uid: string;
+  isAdmin: boolean;
+  email: string;
+  isEmailVerified: boolean;
+  kycStatus: string;
+  kycEmail: string;
+  altWallets: any;
+  swapScore: number;
+  notifConfig: {
+    emailNotifications?: boolean
+  }
+}
+
 export const ChainIdToName: Record<string, string> = { "0x89": "Polygon" };

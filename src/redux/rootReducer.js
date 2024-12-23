@@ -1,5 +1,22 @@
-import projectReducer from "state/projectSlice";
+import { createSlice } from "@reduxjs/toolkit";
 
-const rootReducer = projectReducer;
+const initialState = {
+    project: null,
+    user: null,
+};
+  
+const slice = createSlice({
+    name: "project",
+    initialState,
+    reducers: {
+        updateSelectedProject: (state, action) => {
+            state.project = action.payload;
+        },
+        updateUser: (state, action) => {
+            state.user = action.payload;
+        }
+    },
+});
 
-export default rootReducer;
+export const { updateSelectedProject, updateUser } = slice.actions;
+export default slice.reducer;

@@ -10,6 +10,7 @@ const SubmitApplicationModal: React.FC<{
   const [confirm, setConfirm] = useState(false);
   const [error, setError] = useState(false);
 
+  
   const handleModal = () => {
     setConfirm(false);
     setOpenModal(!openModal);

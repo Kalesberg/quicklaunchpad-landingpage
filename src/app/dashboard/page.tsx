@@ -11,6 +11,9 @@ export default function DashboardPage() {
   // 2: multiple live launches
   // 3: multiple live & previous launches
   const caseLaunch: number = 3;
+
+  
+
   return (
     <div className="container-dashboard mx-auto px-4">
       <Link href={"/"} className="flex items-center">
