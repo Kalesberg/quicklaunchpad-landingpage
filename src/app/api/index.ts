@@ -134,21 +134,21 @@ export const getAuthCode = async () => { // return auth code - ex: 1KoMhhKDBbxw6
  * TODO - confirm payload
  * 
  */
-export const logIn = async (address: string, nonce: string, signature: string, chainId: number | string) => { 
+export const logIn = async ( message: any, signature: string) => { 
   // const nonce = await getAuthCode()
   // if (!code) {
   //   return;
   // }
-  const message = {
-    address,
-    chainId,
-    domain: 'quicklaunchpad.io',
-    issuedAt: new Date().toISOString(),
-    nonce,
-    statement: 'Please sign this message via your web3 wallet to connect to QuickSwap Launchpad Dashboard.',
-    uri: 'https://quicklaunchpad.io',
-    version: '1'
-  }
+  // const message = {
+  //   address,
+  //   chainId,
+  //   domain: 'quicklaunchpad.io',
+  //   issuedAt: new Date().toISOString(),
+  //   nonce,
+  //   statement: 'Please sign this message via your web3 wallet to connect to QuickSwap Launchpad Dashboard.',
+  //   uri: 'https://quicklaunchpad.io',
+  //   version: '1'
+  // }
 
   const res = await projectApi.post(`/identity/auth/login`, {message, signature});
   console.log('calling post api', res)
@@ -163,7 +163,7 @@ export const logIn = async (address: string, nonce: string, signature: string, c
  */
 export const getUser = async () => {
   const res = await authApi.get(`/identity/users`);
-  return res
+  return res?.data
 };
 
 /**
@@ -172,5 +172,5 @@ export const getUser = async () => {
  */
 export const updateUser = async (payload: any) => { 
   const res = await authApi.patch(`/identity/users`, payload);
-  return res
+  return res?.data
 };

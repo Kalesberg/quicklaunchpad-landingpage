@@ -2,12 +2,19 @@ import React, { useState } from "react";
 import Button from "./Button";
 import { ExclamationCircleIcon } from "@heroicons/react/24/solid";
 import { isValidEmail } from "utils";
+import { updateUser } from "../../redux/rootReducer";
+import { updateUser as updateUserApi } from "app/api";
+
+import { useDispatch } from 'react-redux';
+import { User } from "state/type";
 
 const ChangeEmailModal: React.FC<{
   openModal: boolean;
   setOpenModal: (arg: boolean) => void;
-}> = ({ openModal, setOpenModal }) => {
-  const [email, setEmail] = useState("");
+  user: User
+}> = ({ openModal, setOpenModal, user }) => {
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState(user?.email || "");
   const [noValidEmail, setNoValidEmail] = useState(false);
   const [noValidText, setNoValidText] = useState("");
   const handleModal = () => {
@@ -19,12 +26,18 @@ const ChangeEmailModal: React.FC<{
     setEmail(e.target.value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!email) {
       setNoValidEmail(true);
       setNoValidText("Please fill out all the required fields.");
     } else if (isValidEmail(email)) {
       setNoValidEmail(false);
+      const res = await updateUserApi({ email });
+      console.log('updated user', res);
+      if (res) {
+        dispatch(updateUser(res))
+      }
+      setOpenModal(false);
     } else {
       setNoValidEmail(true);
       setNoValidText("Email invalid.");

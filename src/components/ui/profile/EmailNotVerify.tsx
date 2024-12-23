@@ -8,13 +8,13 @@ import clsx from "clsx";
 import { ArrowPathIcon, PencilIcon } from "@heroicons/react/16/solid";
 import { useAppKitAccount } from "@reown/appkit/react";
 import { shortenAddress } from "utils";
+import { User } from "state/type";
 
-const EmailNotVerify : React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
+const EmailNotVerify : React.FC<{ openModal?: boolean; setOpenModal?: any, user: User }> = ({
   openModal,
   setOpenModal,
+  user
 }) => {
-  const { address } = useAppKitAccount();
-
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
       <div className="w-full bg-[#1B1E29] rounded-xl p-4 md:p-6">
@@ -31,14 +31,14 @@ const EmailNotVerify : React.FC<{ openModal?: boolean; setOpenModal?: any }> = (
               width={24}
               height={24}
             />
-            <span className="">{shortenAddress(address ?? "")}</span>
+            <span className="">{shortenAddress(user?.uid ?? "")}</span>
           </div>
         </div>
 
         <div className="w-full flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3 text-base">
             <span className="text-[#C7CAD9]">Email:</span>
-            <span>—</span>
+            <span>{user ? user.email:'-'}</span>
           </div>
 
           <div className="w-full flex items-center gap-1 md:gap-2 justify-between md:justify-end flex-wrap">
