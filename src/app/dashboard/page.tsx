@@ -7,7 +7,7 @@ import LiveUpcomingLaunches from "components/ui/home/LiveUpcomingLaunches";
 import PreviousLaunches from "components/ui/home/PreviousLaunches";
 import Link from "next/link";
 import { useDispatch } from 'react-redux';
-import { updateUser } from "../../redux/rootReducer";
+import { updateUser } from "../../reduxStore/rootReducer";
 import { useAppKitAccount, useAppKitNetwork } from "@reown/appkit/react";
 import { signInWithWallet } from "app/service/userService";
 import { useSelector } from 'react-redux';

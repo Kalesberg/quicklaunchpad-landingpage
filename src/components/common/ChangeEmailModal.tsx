@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Button from "./Button";
 import { ExclamationCircleIcon } from "@heroicons/react/24/solid";
 import { isValidEmail } from "utils";
-import { updateUser } from "../../redux/rootReducer";
+import { updateUser } from "../../reduxStore/rootReducer";
 import { updateUser as updateUserApi } from "app/api";
 
 import { useDispatch } from 'react-redux';

@@ -7,12 +7,16 @@ import { useState } from "react";
 import { useSelector } from 'react-redux';
 import { User } from "state/type";
 import { useDispatch } from 'react-redux';
-import { updateUser } from "../../../redux/rootReducer";
+import { updateUser } from "reduxStore/rootReducer";
 import { useAppKitAccount, useAppKitNetwork } from "@reown/appkit/react";
 import { signInWithWallet } from "app/service/userService";
+import { useParams } from "next/navigation";
+import { emailVerify } from "app/api";
 
 export default function Page() {
 
+  const params = useParams();
+  const verifyCode = params["slug"] || ""
   const [openModal, setOpenModal] = useState(false);
 
   const dispatch = useDispatch();
@@ -28,12 +32,17 @@ export default function Page() {
     if (res) {
       dispatch(updateUser(res));
     }
+    if (verifyCode) {
+      const res1 = await emailVerify(verifyCode as string)
+      if (res1) {
+        dispatch(updateUser(res1));
+      }
+    }
   }, [address, user]);
 
   useEffect(() => {
     signIn();
   }, [signIn]);
-
 
   return (
     <div className="container-dashboard mx-auto px-4 md:px-14 xl:px-24">

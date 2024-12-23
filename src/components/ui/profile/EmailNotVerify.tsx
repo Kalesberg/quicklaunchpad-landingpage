@@ -9,7 +9,7 @@ import { ArrowPathIcon, PencilIcon } from "@heroicons/react/16/solid";
 import { useAppKitAccount } from "@reown/appkit/react";
 import { shortenAddress } from "utils";
 import { User } from "state/type";
-import { updateUser } from "../../../redux/rootReducer";
+import { updateUser } from "../../../reduxStore/rootReducer";
 import { updateUser as updateUserApi } from "app/api";
 import { useDispatch } from 'react-redux';
 
