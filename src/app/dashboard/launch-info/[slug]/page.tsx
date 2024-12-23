@@ -18,6 +18,7 @@ import { ProjectStatus } from "state/type";
 import { getReminderTimeStampString, getReminderDate } from "utils/time";
 import { useAppKit, useAppKitAccount } from "@reown/appkit/react";
 import SubmitApplicationModal from "components/common/SubmitApplicationModal";
+import ContributionModal from "components/common/ContributionModal";
 
 export default function LaunchInfoDetailPage() {
   // const { project } = useSelector((state: { project: Project }) => state || {});
@@ -25,7 +26,9 @@ export default function LaunchInfoDetailPage() {
   const { address } = useAppKitAccount();
 
   const [project, setProject] = useState<any>(null);
-  const [openModal, setOpenModal] = useState(false);
+  const [openSubmitApplicationModal, setOpenSubmitApplicationModal] =
+    useState(false);
+  const [openContributionModal, setOpenContributionModal] = useState(false);
   const [selectedTab, setSelectedTab] = useState<string>("about");
   const tabs = [{ label: "About the Launch", value: "about" }];
   // .concat(
@@ -90,7 +93,11 @@ export default function LaunchInfoDetailPage() {
   }, [startTimer]);
 
   const handleParticipate = () => {
-    setOpenModal(!openModal)
+    setOpenSubmitApplicationModal(!openSubmitApplicationModal);
+  };
+
+  const handleContribute = () => {
+    setOpenContributionModal(!openContributionModal);
   };
 
   return (
@@ -484,6 +491,83 @@ export default function LaunchInfoDetailPage() {
                     </div>
                   </div>
                 </>
+              ) : status === "contribute" ? (
+                <>
+                  <div className="border-b-2 border-[#919EAB14] pb-4">
+                    <h2 className="text-[#EBECF2] text-xl md:text-2xl leading-9 text-center font-bold">
+                      Contributions Are Open
+                    </h2>
+                    <p className="text-[#C7CAD9] text-center">
+                      Time remaining to send funds
+                    </p>
+                    <div className="w-full flex items-center justify-center gap-2">
+                      <span className="text-[#EBECF2] text-[32px] font-bold">
+                        {project.reminderLaunchTimeBig}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex flex-col px-6 pt-4">
+                    <div className="relative left-7 w-fit min-h-12 px-1 py-2 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-[18px] before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80]">
+                      <Image
+                        src="/assets/icons/ic-checkmark.svg"
+                        alt="icon"
+                        width={24}
+                        height={24}
+                        className="block absolute top-1/2 -left-[30px] -translate-y-1/2"
+                      />
+                      <h3 className="text-[#EBECF2] text-sm md:text-base leading-6 font-semibold">
+                        Whitelist
+                      </h3>
+                      <p className="text-[#C7CAD9] text-xs leading-4">
+                        You have been successfully whitelisted
+                      </p>
+                    </div>
+                    <div className="relative left-7 w-fit min-h-12 px-1 py-2 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-[18px] before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80]">
+                      <Image
+                        src="/assets/icons/ic-checkmark.svg"
+                        alt="icon"
+                        width={24}
+                        height={24}
+                        className="block absolute top-1/2 -left-[30px] -translate-y-1/2"
+                      />
+                      <h3 className="text-[#EBECF2] text-sm md:text-base leading-6 font-semibold">
+                        Lottery
+                      </h3>
+                      <p className="text-[#C7CAD9] text-xs leading-4">
+                        Congratulations, your entry was randomly selected to
+                        participate in this launch!
+                      </p>
+                    </div>
+                    <div className="mb-2 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['3'] after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#448AFF] after:text-[#EBECF2] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
+                      <h3 className="text-[#EBECF2] text-sm md:text-base leading-6 font-semibold">
+                        Contribution
+                      </h3>
+                      <p className="text-[#C7CAD9] text-xs leading-4">
+                        Contribution period:
+                      </p>
+                      <p className="text-[#C7CAD9] text-xs font-semibold leading-4">
+                        17 Mar 2024 04:00 AM – 18 Mar 2024 04:00 AM
+                      </p>
+                      <Button
+                        variant="primary"
+                        className="!min-w-16 !h-9 capitalize"
+                        onClick={() => handleContribute()}
+                      >
+                        Contribute
+                      </Button>
+                    </div>
+                    <div className="mb-2 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['4'] after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#DFE3E8] after:text-[#919EAB] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
+                      <h3 className="text-[#696C80] text-sm md:text-base leading-6 font-semibold">
+                        Completed
+                      </h3>
+                    </div>
+                    <div className="relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 after:content-['5'] after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#DFE3E8] after:text-[#919EAB] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
+                      <h3 className="text-[#696C80] text-base leading-6 font-semibold">
+                        Claim
+                      </h3>
+                    </div>
+                  </div>
+                </>
               ) : (
                 <>
                   <div className="border-b-2 border-[#919EAB14] pb-4">
@@ -570,7 +654,14 @@ export default function LaunchInfoDetailPage() {
             </div>
           </div>
         </div>
-        <SubmitApplicationModal openModal={openModal} setOpenModal={setOpenModal} />
+        <SubmitApplicationModal
+          openModal={openSubmitApplicationModal}
+          setOpenModal={setOpenSubmitApplicationModal}
+        />
+        <ContributionModal
+          openModal={openContributionModal}
+          setOpenModal={setOpenContributionModal}
+        />
       </>
     )
   );
