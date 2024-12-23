@@ -487,7 +487,7 @@ export const ChainSelected = ({
 
       {/* Dropdown */}
       {isOpenNetwork && (
-        <div className="absolute bg-[#1b1e29] -left-[35%] top-[45px] z-10 min-w-[320px] text-white rounded-2xl mt-2 shadow-lg">
+        <div className="absolute bg-[#1b1e29] -left-[35%] top-[45px] z-[999] min-w-[320px] text-white rounded-2xl mt-2 shadow-lg">
           <p className="p-4 pb-2 text-base font-medium">Select Network</p>
           <div className="relative flex justify-start p-3 gap-8 text-sm border-b border-[#1e263d80]">
             {tabs.map((t: any) => (

@@ -5,6 +5,7 @@ import { liveProjects } from "state/live_projects_temp";
 import { contentTemp } from "state/content_temp";
 import { convertDateTime, getReminderTimeStampString, getReminderDate } from "../../utils/time";
 import { getConfig } from "config";
+import { getToken } from "app/service/tokenService";
 
 const BASE_URL = "https://quicklaunchpad.io/";
 const CONTENT_BASE_URL =
@@ -109,12 +110,10 @@ export const authApi = axios.create({
 
 authApi.interceptors.request.use(
   (config) => {
-    const token = ''; // TODO: get token
-
+    const token = getToken();
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
-
     return config;
   },
   (error) => {
@@ -125,21 +124,35 @@ authApi.interceptors.request.use(
 
 
 export const getAuthCode = async () => { // return auth code - ex: 1KoMhhKDBbxw6wtGb
-    const res = await projectApi.get(`/identity/auth`);
-    console.log('auth code', res)
-    return res
+  const res = await projectApi.get(`/identity/auth`);
+  return res?.data
 };
 
 /**
  * 
  * @returns access token
- * TODO - confirm payload 
+ * TODO - confirm payload
  * 
  */
-export const logIn = async () => { 
-  const res = await projectApi.post(`/identity/auth/login`);
-  console.log('auth code', res)
-  return res
+export const logIn = async (address: string, nonce: string, signature: string, chainId: number | string) => { 
+  // const nonce = await getAuthCode()
+  // if (!code) {
+  //   return;
+  // }
+  const message = {
+    address,
+    chainId,
+    domain: 'quicklaunchpad.io',
+    issuedAt: new Date().toISOString(),
+    nonce,
+    statement: 'Please sign this message via your web3 wallet to connect to QuickSwap Launchpad Dashboard.',
+    uri: 'https://quicklaunchpad.io',
+    version: '1'
+  }
+
+  const res = await projectApi.post(`/identity/auth/login`, {message, signature});
+  console.log('calling post api', res)
+  return res?.data
 };
 
 /**
@@ -148,7 +161,7 @@ export const logIn = async () => {
  * TODO - confirm payload 
  * 
  */
-export const getUser = async () => { 
+export const getUser = async () => {
   const res = await authApi.get(`/identity/users`);
   return res
 };
