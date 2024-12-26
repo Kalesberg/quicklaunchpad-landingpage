@@ -106,7 +106,7 @@ export enum KycStatus {
   EXPIRED = 'expired',
 }
 
-export const kycStatuses: Record<KycStatus, {msg?: string, btn?: string, icon?: string, iconBg?:string, iconColor?: string, isCheck?: boolean}> = {
+export const kycStatuses: Record<KycStatus, Record<string, boolean | string>> = {
   [KycStatus.PENDING]: {
     msg: 'Your KYC information has been successfully submitted. Verification may take up to 24 hours. Please check your profile page for updates.',
     btn: 'Check KYC details',

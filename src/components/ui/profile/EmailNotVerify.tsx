@@ -24,14 +24,13 @@ const EmailNotVerify : React.FC<{ openModal?: boolean; setOpenModal?: any, user:
 
   const dispatch = useDispatch();
   const [upcomingNotify, setUpcomingNotify] = useState(!!user?.notifConfig?.emailNotifications);
-  const [kycStatus, setKycStatus] = useState<{msg?: string, btn?: string, icon?: string, iconBg?:string, iconColor?: string, isCheck?: boolean} | null>(null);
+  const [kycStatus, setKycStatus] = useState<Record<string, boolean | string>|null>(null);
 
   const handleResendLink = async () => {
     await updateUser({ email: user.email }); // TODO - add resend verification link api
   }
 
   const handleUpcomingCheckboxChange = async (event: any) => {
-    console.log('00000', event.target.checked)
     setUpcomingNotify(event.target.checked)
     const payload = {
       notifConfig: {emailNotifications: event.target.checked}

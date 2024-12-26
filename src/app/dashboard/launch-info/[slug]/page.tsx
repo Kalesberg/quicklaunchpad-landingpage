@@ -495,15 +495,11 @@ export default function LaunchInfoDetailPage() {
                         {project.pledgeStartDate} – {project.pledgeEndDate}
                       </p>
                       <Button
-                        variant={!address || !kycStatus?.variant? 'primary' : kycStatus.variant}
+                        variant={kycStatus ? kycStatus.variant : 'primary'}
                         className="!min-w-16 !h-9 capitalize"
-                        onClick={() =>
-                          !address || !kycStatus?.variant ? open() : handleParticipate()
-                        }
+                        onClick={() => kycStatus ? handleParticipate() : open()}
                       >
-                        {!address || !kycStatus?.variant
-                          ? "Connect wallet to participate"
-                          : kycStatus?.title}
+                        {kycStatus ? kycStatus.title : "Connect wallet to participate"}
                       </Button>
                       {!kycStatus?.canPart && <span className="text-[#C7CAD9] text-xs">Once your KYC is approved, you will be able to participate in this launch.</span>}
                     </div>
