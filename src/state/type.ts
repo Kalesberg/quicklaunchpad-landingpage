@@ -163,4 +163,35 @@ export const kycStatuses: Record<KycStatus, {msg?: string, btn?: string, icon?: 
   },
 }
 
+export const partBtnByKyc = {
+  [KycStatus.PENDING]: {
+    title: 'KYC is pending',
+    variant: 'secondary'
+  },
+  [KycStatus.APPROVED]: {
+    title: 'Participate now',
+    variant: 'primary',
+    canPart: true
+  },
+  [KycStatus.REJECTED]: {
+    title: 'KYC is rejected',
+    variant: 'secondary'
+  },
+  [KycStatus.IN_REVIEW]: {
+    title: 'KYC is pending',
+    variant: 'secondary'
+  },
+  [KycStatus.BLOCKED]: {
+    title: 'KYC is blocked',
+    variant: 'secondary'
+  },
+  [KycStatus.NOT_STARTED]: {
+    title: 'Complete KYC to participate',
+    variant: 'primary'
+  },
+  [KycStatus.EXPIRED]: {
+    title: 'KYC is expired',
+    variant: 'secondary'
+  },
+}
 export const ChainIdToName: Record<string, string> = { "0x89": "Polygon" };

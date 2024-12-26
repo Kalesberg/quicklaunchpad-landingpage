@@ -16,9 +16,15 @@ import { getProjectsById, getProjectsContent } from "app/api";
 import { useSearchParams, useParams } from "next/navigation";
 import { ProjectStatus } from "state/type";
 import { getReminderTimeStampString, getReminderDate } from "utils/time";
-import { useAppKit, useAppKitAccount } from "@reown/appkit/react";
+import { useAppKit, useAppKitAccount, useAppKitNetwork } from "@reown/appkit/react";
 import SubmitApplicationModal from "components/common/SubmitApplicationModal";
 import ContributionModal from "components/common/ContributionModal";
+import { useSelector, useDispatch } from 'react-redux';
+import { User } from "state/type";
+import { partBtnByKyc, KycStatus } from "state/type";
+import { updateUser } from "../../../../reduxStore/rootReducer";
+import { signInWithWallet } from "app/service/userService";
+import { useRouter } from "next/navigation";
 
 export default function LaunchInfoDetailPage() {
   // const { project } = useSelector((state: { project: Project }) => state || {});
@@ -26,6 +32,7 @@ export default function LaunchInfoDetailPage() {
   const { address } = useAppKitAccount();
 
   const [project, setProject] = useState<any>(null);
+  const { user } = useSelector((state: { user: User }) => state || {});
   const [openSubmitApplicationModal, setOpenSubmitApplicationModal] =
     useState(false);
   const [openContributionModal, setOpenContributionModal] = useState(false);
@@ -49,6 +56,12 @@ export default function LaunchInfoDetailPage() {
   const [startTimer, setStartTimer] = useState(false);
 
   const [content, setConent] = useState<any>(null);
+  const [kycStatus, setKycStatus] = useState<any>(null);
+
+  const { chainId } = useAppKitNetwork();
+  const dispatch = useDispatch();
+  const router = useRouter();
+
 
   const fetchProjectById = useCallback(async () => {
     try {
@@ -67,6 +80,32 @@ export default function LaunchInfoDetailPage() {
   useEffect(() => {
     fetchProjectById();
   }, [fetchProjectById]);
+
+  useEffect(() => {
+    if (user) {
+      const s = partBtnByKyc[user.kycStatus];
+      if (s) {
+        setKycStatus(s)
+      } else {
+        setKycStatus(partBtnByKyc[KycStatus.NOT_STARTED])
+      }
+    }
+  }, [user, setKycStatus]);
+
+  const signIn = useCallback(async () => {
+    if (user || !address || !chainId) {
+      return
+    }
+    const res = await signInWithWallet(address, chainId as number)
+    if (res) {
+      dispatch(updateUser(res));
+    }
+  }, [address, user]);
+
+  useEffect(() => {
+    signIn();
+  }, [signIn]);
+
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -93,7 +132,11 @@ export default function LaunchInfoDetailPage() {
   }, [startTimer]);
 
   const handleParticipate = () => {
-    setOpenSubmitApplicationModal(!openSubmitApplicationModal);
+    if (kycStatus?.canPart) {
+      setOpenSubmitApplicationModal(!openSubmitApplicationModal);
+    } else {
+      router.push(`/profile`)
+    }
   };
 
   const handleContribute = () => {
@@ -452,16 +495,17 @@ export default function LaunchInfoDetailPage() {
                         {project.pledgeStartDate} – {project.pledgeEndDate}
                       </p>
                       <Button
-                        variant="primary"
+                        variant={!address || !kycStatus?.variant? 'primary' : kycStatus.variant}
                         className="!min-w-16 !h-9 capitalize"
                         onClick={() =>
-                          !address ? open() : handleParticipate()
+                          !address || !kycStatus?.variant ? open() : handleParticipate()
                         }
                       >
-                        {!address
+                        {!address || !kycStatus?.variant
                           ? "Connect wallet to participate"
-                          : "Participate now"}
+                          : kycStatus?.title}
                       </Button>
+                      {!kycStatus?.canPart && <span className="text-[#C7CAD9] text-xs">Once your KYC is approved, you will be able to participate in this launch.</span>}
                     </div>
                     <div className="mb-2 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['2'] after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#DFE3E8] after:text-[#919EAB] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
                       <h3 className="text-[#696C80] text-sm md:text-base leading-6 font-semibold">
