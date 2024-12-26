@@ -102,7 +102,7 @@ const Header = () => {
     //   href: "/dashboard/my-launches",
     //   icon: "ic-label.svg",
     // },
-    { name: "Profile", href: "/dashboard/profile/1", icon: "ic-user.svg" },
+    { name: "Profile", href: "/dashboard/profile", icon: "ic-user.svg" },
   ];
 
   const moreLinks = [

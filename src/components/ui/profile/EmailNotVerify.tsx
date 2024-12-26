@@ -69,7 +69,7 @@ const EmailNotVerify : React.FC<{ openModal?: boolean; setOpenModal?: any, user:
           <div className="flex items-center gap-3 text-base">
             <span className="text-[#C7CAD9]">Email:</span>
             <span>{user ? user.email:'-'}</span>
-            {!user?.isEmailVerified &&<span className="text-[#61F3F3] bg-[#00B8D929] text-sm font-bold pt-1 pb-1 pl-2 pr-2 rounded-lg">Pending Verification</span>}
+            {(user.email!==''&&!user.isEmailVerified)&&<span className="text-[#61F3F3] bg-[#00B8D929] text-sm font-bold pt-1 pb-1 pl-2 pr-2 rounded-lg">Pending Verification</span>}
           </div>
           <div className="w-full flex items-center gap-1 md:gap-2 justify-between md:justify-end flex-wrap">
             <Button
@@ -80,7 +80,7 @@ const EmailNotVerify : React.FC<{ openModal?: boolean; setOpenModal?: any, user:
               Change email
             </Button>
 
-            {!user?.isEmailVerified && <Button
+            {(user.email!==''&&!user.isEmailVerified) && <Button
               variant="secondary"
               size="small"
               className="h-[36px] text-xs md:text-sm !px-2 md:px-3"
@@ -113,7 +113,7 @@ const EmailNotVerify : React.FC<{ openModal?: boolean; setOpenModal?: any, user:
           Register your wallet and upload KYC documents for Launchpad
           participation. KYC is mandatory to participate in launchpad projects.
         </p>
-        <div  className="flex items-center justify-between md:justify-end gap-3 flex-wrap">
+        <div className="flex items-center justify-between md:justify-end gap-3 flex-wrap">
           <span className="text-sm text-[#919EAB]">Takes about 15 minutes</span>
           <Button id="blockpass-kyc-connect" variant="primary" size="small" className="px-3 h-[36px]">
             Complete KYC
