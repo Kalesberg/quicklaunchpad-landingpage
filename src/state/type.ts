@@ -87,13 +87,80 @@ export type User = {
   isAdmin: boolean;
   email: string;
   isEmailVerified: boolean;
-  kycStatus: string;
+  kycStatus: KycStatus;
   kycEmail: string;
   altWallets: any;
   swapScore: number;
   notifConfig: {
     emailNotifications?: boolean
   }
+}
+
+export enum KycStatus {
+  PENDING = 'pending',
+  APPROVED = 'approved',
+  REJECTED = 'rejected',
+  IN_REVIEW = 'inreview',
+  BLOCKED = 'blocked',
+  NOT_STARTED = 'notstarted',
+  EXPIRED = 'expired',
+}
+
+export const kycStatuses: Record<KycStatus, {msg?: string, btn?: string, icon?: string, iconBg?:string, iconColor?: string, isCheck?: boolean}> = {
+  [KycStatus.PENDING]: {
+    msg: 'Your KYC information has been successfully submitted. Verification may take up to 24 hours. Please check your profile page for updates.',
+    btn: 'Check KYC details',
+    icon: 'Pending verification',
+    iconBg: '#00B8D929',
+    iconColor: '#61F3F3',
+    isCheck: true
+  },
+  [KycStatus.APPROVED]: {
+    msg: 'Your KYC information has been approved.',
+    btn: 'Check KYC details',
+    icon: 'Approved',
+    iconBg: '#0FC67929',
+    iconColor: '#0FC679',
+    isCheck: true
+  },
+  [KycStatus.REJECTED]: {
+    msg: 'Your KYC application has been rejected. Please check your email address for more information from the KYC provider.',
+    btn: 'Check KYC details',
+    icon: 'Rejected',
+    iconBg: '#FF5C5C29',
+    iconColor: '#FF5C5C',
+    isCheck: true
+  },
+  [KycStatus.IN_REVIEW]: {
+    msg: 'Your KYC information has been successfully submitted. Verification may take up to 24 hours. Please check your profile page for updates.',
+    btn: 'Check KYC details',
+    icon: 'Pending verification',
+    iconBg: '#00B8D929',
+    iconColor: '#61F3F3',
+    isCheck: true
+  },
+  [KycStatus.BLOCKED]: {
+    msg: 'There is a problem with the KYC details you submitted. Please contact BlockPass for details.',
+    btn: 'Check KYC details',
+    icon: 'Blocked',
+    iconBg: '#FF5C5C29',
+    iconColor: '#FF5C5C',
+    isCheck: true
+  },
+  [KycStatus.NOT_STARTED]: {
+    msg: 'Register your wallet and upload KYC documents at any time to be eligible for participation in the QuickSwap Launchpad. KYC documents are required to be updated every year.',
+    btn: 'Complete KYC',
+    icon: 'Required',
+    iconBg: '#FF5C5C29',
+    iconColor: '#FF5C5C',
+  },
+  [KycStatus.EXPIRED]: {
+    msg: 'Your KYC registration has expired. KYC documents are required to be updated every year.',
+    btn: 'Re-Complete KYC',
+    icon: 'Expired',
+    iconBg: '#FF5C5C29',
+    iconColor: '#FF5C5C',
+  },
 }
 
 export const ChainIdToName: Record<string, string> = { "0x89": "Polygon" };

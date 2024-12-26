@@ -163,7 +163,8 @@ export const logIn = async ( message: any, signature: string) => {
  */
 export const getUser = async () => {
   const res = await authApi.get(`/identity/users`);
-  return res?.data
+  const user = res?.data
+  return user
 };
 
 /**
