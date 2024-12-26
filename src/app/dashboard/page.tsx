@@ -44,7 +44,7 @@ export default function DashboardPage() {
         <ChevronLeftIcon className="w-4 h-4 mr-1" />
         Back
       </Link>
-      <div className="mx-6">
+      <div className="mx-0 sm:mx-6">
         {caseLaunch !== 0 && <LaunchNotice status="upcoming" />}
         {caseLaunch > 1 && <LiveUpcomingLaunches />}
         {caseLaunch > 2 && <PreviousLaunches />}

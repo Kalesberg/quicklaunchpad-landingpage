@@ -21,7 +21,7 @@ export default function RootLayout({
       <body className="antialiased bg-[#12131A] text-white">
         <MainProvider>
           <Header />
-          <main className="min-h-screen">{children}</main>
+          <main className="min-h-screen mb-24 sm:mb-0">{children}</main>
         </MainProvider>
       </body>
     </html>
