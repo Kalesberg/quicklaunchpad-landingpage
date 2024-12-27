@@ -186,7 +186,7 @@ const StepsToJoin: React.FC<{
         className="min-w-[250px] !bg-[#448AFF] !h-12 mx-auto mt-8 lg:mt-6"
         onClick={handleModal}
       >
-        Get started now
+        {caseLaunch !== 0 ? " Get started now" : "I’m Interested - Keep Me Updated"}        
       </Button>
     </section>
   );
