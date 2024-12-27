@@ -27,7 +27,11 @@ export default function Home() {
       />
       <div className="max-w-[1248px] mx-auto px-4 lg:px-2">
         {caseLaunch !== 0 && <LaunchNotice status="upcoming" />}
-        <StepsToJoin />
+        <StepsToJoin
+          caseLaunch={caseLaunch}
+          openModal={openModal}
+          setOpenModal={setOpenModal}
+        />
         {caseLaunch > 1 && <LiveUpcomingLaunches />}
         <JoinSocialMedia />
         {caseLaunch > 2 && <PreviousLaunches />}

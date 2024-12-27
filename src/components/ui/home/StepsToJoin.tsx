@@ -2,7 +2,11 @@ import React from "react";
 import Button from "components/common/Button";
 import { useRouter } from "next/navigation";
 
-const StepsToJoin: React.FC = () => {
+const StepsToJoin: React.FC<{
+  caseLaunch: number;
+  openModal?: boolean;
+  setOpenModal?: any;
+}> = ({ caseLaunch, openModal, setOpenModal }) => {
   const router = useRouter();
   const steps = [
     {
@@ -96,8 +100,11 @@ const StepsToJoin: React.FC = () => {
   ];
 
   const handleModal = () => {
-    router.push("/dashboard");
-    // setOpenModal(!openModal);
+    if (caseLaunch === 0) {
+      setOpenModal(!openModal);
+    } else {
+      router.push("/dashboard");
+    }
   };
 
   return (
