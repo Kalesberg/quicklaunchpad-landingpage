@@ -176,17 +176,11 @@ const SignUpModal: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
               <div className="text-xs font-normal leading-5 text-[#696C80] text-center">
                 <p>By sending this form, you agree to the</p>{" "}
                 <a
-                  href="#"
+                  href="https://quickswap.exchange/#/tos"
+                  target="_blank"
                   className="text-xs font-normal leading-5 text-[#448AFF] underline"
                 >
                   Terms and Conditions
-                </a>{" "}
-                and{" "}
-                <a
-                  href="#"
-                  className="text-xs font-normal leading-5 text-[#448AFF] underline"
-                >
-                  Privacy Policy
                 </a>
               </div>
             </div>
