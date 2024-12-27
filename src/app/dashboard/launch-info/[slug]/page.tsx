@@ -207,24 +207,24 @@ export default function LaunchInfoDetailPage() {
                       {project.description}
                     </p>
                     <div className="flex items-center gap-2 mb-4">
-                      <Link
+                      {project.websiteUrl&&(<Link
                         href={project.websiteUrl}
                         className="max-w-[80px] md:max-w-full md:min-w-[80px] h-6 md:h-9 bg-[#448AFF14] text-[#448AFF] text-center text-xs md:text-sm font-bold leading-6 md:leading-9 rounded-lg px-2 md:px-3"
                       >
                         Website
-                      </Link>
-                      <Link
+                      </Link>)}
+                      {project.whitepaperUrl && (<Link
                         href={project.whitepaperUrl}
                         className="max-w-[80px] md:max-w-full md:min-w-[80px] h-6 md:h-9 bg-[#448AFF14] text-[#448AFF] text-center text-xs md:text-sm font-bold leading-6 md:leading-9 rounded-lg px-2 md:px-3"
                       >
                         Whitepaper
-                      </Link>
-                      <Link
+                      </Link>)}
+                      {project.blogUrl&&(<Link
                         href={project.blogUrl}
                         className="max-w-[80px] md:max-w-full md:min-w-[80px] h-6 md:h-9 bg-[#448AFF14] text-[#448AFF] text-center text-xs md:text-sm font-bold leading-6 md:leading-9 rounded-lg px-2 md:px-3"
                       >
                         Blog
-                      </Link>
+                      </Link>)}
                     </div>
                     <div className="flex space-x-5 mt-2 mb-4">
                       {project.socials?.telegram && (
