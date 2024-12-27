@@ -11,9 +11,12 @@ const SignUpModal: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
   setOpenModal,
 }) => {
   const [email, setEmail] = useState("");
-  const [noValidEmail, setNoValidEmail] = useState(false);
-  const [noValidText, setNoValidText] = useState("");
+  // const [noValidEmail, setNoValidEmail] = useState(false);
+  // const [noValidText, setNoValidText] = useState("");
   const [confirm, setConfirm] = useState(false);
+  const [status, setStatus] = useState<number | null>(null);
+  const [message, setMessage] = useState<string | null>(null);
+
   const handleModal = (isClose: boolean = false) => {
     if (!isClose) {
       setConfirm(!confirm);
@@ -24,18 +27,39 @@ const SignUpModal: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
 
   const handleOnChange = (e: any) => {
     setEmail(e.target.value);
+    setMessage(null);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!email) {
-      setNoValidEmail(true);
-      setNoValidText("Please fill out all the required fields.");
+      setMessage("Please fill out all the required fields.");
     } else if (isValidEmail(email)) {
-      setNoValidEmail(false);
-      setConfirm(true);
+      setMessage(null);
+      try {
+        const response = await fetch("/api/subscribe", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email })
+        });
+        const result = await response.json();
+        console.log('result', result)
+        if (result.error) {
+          setStatus(response.status);
+          setMessage(result.error);
+          return;
+        }
+        setStatus(201);
+        setMessage(null);
+        setConfirm(true);
+      } catch (error) {
+        console.log(error);
+        setStatus(500);
+        setMessage("Error joining the waitlist.");
+      }
     } else {
-      setNoValidEmail(true);
-      setNoValidText("Email invalid.");
+      setMessage("Email invalid.");
     }
   };
 
@@ -94,10 +118,10 @@ const SignUpModal: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
               <div className="mb-6">
                 <div
                   className={`w-full h-[54px] bg-[#1B1E29] flex items-center gap-2 border border-solid border-[#919EAB33] rounded-lg text-white px-3 py-2 ${
-                    noValidEmail && "border-[#FF5C5C7A]"
+                    message && "border-[#FF5C5C7A]"
                   }`}
                 >
-                  {noValidEmail && (
+                  {message && (
                     <ExclamationCircleIcon className="w-6 h-6 text-[#FF5C5C]" />
                   )}
                   <input
@@ -108,13 +132,13 @@ const SignUpModal: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
                     className="w-full h-auto bg-transparent text-white"
                   />
                 </div>
-                {noValidEmail && (
+                {message && (
                   <p className="text-xs text-[#FF5C5C] leading-5 px-2 mt-2">
-                    {noValidText}
+                    {message}
                   </p>
                 )}
               </div>
-
+              
               <Button
                 variant="primary"
                 size="large"
