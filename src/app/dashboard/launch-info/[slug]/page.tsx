@@ -496,7 +496,7 @@ export default function LaunchInfoDetailPage() {
                       </p>
                       <Button
                         variant={kycStatus ? kycStatus.variant : 'primary'}
-                        className="!min-w-16 !h-9 capitalize"
+                        className="!min-w-16 !h-9 capitalize max-w-[250px]"
                         onClick={() => kycStatus ? handleParticipate() : open()}
                       >
                         {kycStatus ? kycStatus.title : "Connect wallet to participate"}

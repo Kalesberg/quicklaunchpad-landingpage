@@ -29,16 +29,16 @@ export const contentApi = axios.create({
 
 export const getProjectsByStatus = async (status: ProjectStatus) => {
   try {
-    // const res = await projectApi.get(`/projects?status=${status}`);
-    // const projects = res.data as any[];
-    let projects = []
-    if (status === ProjectStatus.Completed) {
-      projects = previousProjects;
-    } else if (status === ProjectStatus.Upcoming) {
-      projects = upcomingProjects;
-    } else {
-      projects = liveProjects;
-    }
+    const res = await projectApi.get(`/projects?status=${status}`);
+    const projects = res.data as any[];
+    // let projects = []
+    // if (status === ProjectStatus.Completed) {
+    //   projects = previousProjects;
+    // } else if (status === ProjectStatus.Upcoming) {
+    //   projects = upcomingProjects;
+    // } else {
+    //   projects = liveProjects;
+    // }
     return projects.map(p => {
       p.pledgeStartDate = convertDateTime(p.pledgeStartDate);
       p.pledgeEndDate = convertDateTime(p.pledgeEndDate);
@@ -58,12 +58,12 @@ export const getProjectsByStatus = async (status: ProjectStatus) => {
 };
 
 export const getUpcomingProject= async () => {
-  // const p = await getProjectsByStatus(ProjectStatus.Upcoming);
-  // if (p?.length) {
-  //   return p[0];
-  // }
-  // return null
-  return upcomingProjects[0];
+  const p = await getProjectsByStatus(ProjectStatus.Upcoming);
+  if (p?.length) {
+    return p[0];
+  }
+  return null
+  // return upcomingProjects[0];
 };
 
 
@@ -95,9 +95,9 @@ export const getProjectsById = async (pid: string, status: string) => {
 };
 
 export const getProjectsContent = async (contentId: string) => {
-  // const res = await contentApi.get(`${contentId}?populate=*`);
-  // return res.data;
-  return contentTemp;
+  const res = await contentApi.get(`${contentId}?populate=*`);
+  return res.data;
+  // return contentTemp;
 };
 
 
@@ -135,21 +135,6 @@ export const getAuthCode = async () => { // return auth code - ex: 1KoMhhKDBbxw6
  * 
  */
 export const logIn = async ( message: any, signature: string) => { 
-  // const nonce = await getAuthCode()
-  // if (!code) {
-  //   return;
-  // }
-  // const message = {
-  //   address,
-  //   chainId,
-  //   domain: 'quicklaunchpad.io',
-  //   issuedAt: new Date().toISOString(),
-  //   nonce,
-  //   statement: 'Please sign this message via your web3 wallet to connect to QuickSwap Launchpad Dashboard.',
-  //   uri: 'https://quicklaunchpad.io',
-  //   version: '1'
-  // }
-
   const res = await projectApi.post(`/identity/auth/login`, {message, signature});
   console.log('calling post api', res)
   return res?.data
