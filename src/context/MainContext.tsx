@@ -13,7 +13,7 @@ import {
   polygon,
 } from "@reown/appkit/networks";
 import { Provider } from "react-redux";
-import store from "../redux/store";
+import store from "../reduxStore/store";
 
 enum ChainId {
   MUMBAI = 80001,

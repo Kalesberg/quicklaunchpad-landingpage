@@ -59,7 +59,7 @@ const Header = () => {
   const { walletInfo } = useWalletInfo();
 
   const checkIsDashboardPage = () => {
-    return pathname?.includes("/dashboard");
+    return pathname?.includes("/dashboard") || pathname?.includes("/profile");
   };
 
   useEffect(() => {
@@ -102,7 +102,7 @@ const Header = () => {
     //   href: "/dashboard/my-launches",
     //   icon: "ic-label.svg",
     // },
-    { name: "Profile", href: "/dashboard/profile", icon: "ic-user.svg" },
+    { name: "Profile", href: "/profile", icon: "ic-user.svg" },
   ];
 
   const moreLinks = [
@@ -189,26 +189,30 @@ const Header = () => {
                   onClick={() => setActiveItem(item.href)}
                 >
                   <div
-                    className={`flex items-center gap-2 px-3 py-[10px] ${
-                      activeItem === item.href && "bg-[#919EAB1F] rounded-lg"
-                    }`}
+                    className={clsx({
+                      ["flex items-center gap-2 px-3 py-[10px]"]: true,
+                      ["bg-[#919EAB1F] rounded-lg"]: activeItem === item.href,
+                    })}
                   >
                     <Image
                       src={`/assets/icons/${item.icon}`}
                       alt="icon"
                       style={{
                         filter: `${
-                          activeItem === item.href &&
-                          "invert(96%) sepia(6%) saturate(164%) hue-rotate(173deg) brightness(200%) contrast(102%)"
+                          activeItem === item.href
+                            ? "invert(96%) sepia(6%) saturate(164%) hue-rotate(173deg) brightness(200%) contrast(102%)"
+                            : ""
                         }`,
                       }}
                       width={18}
                       height={18}
                     />
                     <span
-                      className={`text-[#696C80] text-sm font-medium leading-[22px] ${
-                        activeItem === item.href && "text-[#EBECF2]"
-                      }`}
+                      className={clsx({
+                        ["text-[#696C80] text-sm font-medium leading-[22px]"]:
+                          true,
+                        ["text-[#EBECF2]"]: activeItem === item.href,
+                      })}
                     >
                       {item.name}
                     </span>
@@ -236,7 +240,7 @@ const Header = () => {
                             onClick={() => handleDropdown(item.name)}
                             className={`relative hover:text-blue-400 ${
                               item.children.find(
-                                (child) => child.href === activeItem,
+                                (child) => child.href === activeItem
                               )
                                 ? "text-[#D9D9D9] after:absolute after:-bottom-4 after:left-0 after:block after:bg-[#448AFF] after:w-full after:h-[2px]"
                                 : "text-[#7c7c81]"
@@ -368,7 +372,6 @@ const Header = () => {
             open={open}
           />
         </div>
-
         {openMobileMenu && (
           <nav
             className={`absolute top-16 left-0 z-[999] w-full h-auto bg-[#12131A] animate-contentShow`}
@@ -383,7 +386,7 @@ const Header = () => {
                           onClick={() => handleDropdown(item.name)}
                           className={`relative px-4 hover:text-blue-400 ${
                             item.children.find(
-                              (child) => child.href === activeItem,
+                              (child) => child.href === activeItem
                             )
                               ? "text-[#D9D9D9] after:absolute after:-bottom-4 after:left-0 after:block after:bg-[#448AFF] after:w-full after:h-[2px] after:px-4"
                               : "text-[#7c7c81]"
@@ -444,6 +447,48 @@ const Header = () => {
           </nav>
         )}
       </div>
+      {checkIsDashboardPage() && (
+        <nav className="fixed bottom-0 z-50 w-full bg-[#1B1E29] flex md:hidden justify-between items-center gap-3 px-4 py-1">
+          {navItemsDashboard.map((item, idx) => (
+            <Link
+              key={idx}
+              href={item.href}
+              onClick={() => setActiveItem(item.href)}
+              className="w-full"
+            >
+              <div
+                className={clsx({
+                  ["flex items-center justify-center gap-2 px-3 py-[10px]"]:
+                    true,
+                  ["bg-[#919EAB1F] rounded-lg"]: activeItem === item.href,
+                })}
+              >
+                <Image
+                  src={`/assets/icons/${item.icon}`}
+                  alt="icon"
+                  style={{
+                    filter: `${
+                      activeItem === item.href
+                        ? "invert(96%) sepia(6%) saturate(164%) hue-rotate(173deg) brightness(200%) contrast(102%)"
+                        : ""
+                    }`,
+                  }}
+                  width={18}
+                  height={18}
+                />
+                <span
+                  className={clsx({
+                    ["text-[#696C80] text-sm font-medium leading-[22px]"]: true,
+                    ["text-[#EBECF2]"]: activeItem === item.href,
+                  })}
+                >
+                  {item.name}
+                </span>
+              </div>
+            </Link>
+          ))}
+        </nav>
+      )}
     </header>
   );
 };
@@ -487,7 +532,7 @@ export const ChainSelected = ({
 
       {/* Dropdown */}
       {isOpenNetwork && (
-        <div className="absolute bg-[#1b1e29] -left-[35%] top-[45px] z-10 min-w-[320px] text-white rounded-2xl mt-2 shadow-lg">
+        <div className="absolute bg-[#1b1e29] -left-[35%] top-[45px] z-[999] min-w-[320px] text-white rounded-2xl mt-2 shadow-lg">
           <p className="p-4 pb-2 text-base font-medium">Select Network</p>
           <div className="relative flex justify-start p-3 gap-8 text-sm border-b border-[#1e263d80]">
             {tabs.map((t: any) => (

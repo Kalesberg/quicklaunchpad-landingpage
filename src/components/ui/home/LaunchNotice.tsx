@@ -25,29 +25,46 @@ const LaunchNotice: React.FC<{ status?: string }> = ({ status }) => {
       console.log("[LiveUpcomingLaunches] projects Club error: ", err);
     }
   }, []);
-
   useEffect(() => {
     fetchLaunches();
   }, [fetchLaunches]);
 
-
   return (
     project && <div className="rounded-2xl p-8 mt-[30px] mb-[25px] relative overflow-hidden">
       <div className="relative z-10">
-        <div className="flex items-center mb-2">
-          <Image
-            src="/assets/images/project-logo.png"
-            alt="Launch Name"
-            width={32}
-            height={32}
-            className="rounded-full mr-2"
-          />
-          <h2 className="text-xl font-bold">{project.projectName}</h2>
+        <div className="relative flex items-center flex-wrap justify-start sm:justify-between md:flex-nowrap gap-1 md:gap-0">
+          <div className="flex items-center mb-2">
+            <Image
+              src="/assets/images/project-logo.png"
+              alt="Launch Name"
+              width={32}
+              height={32}
+              className="rounded-full mr-2"
+            />
+            <h2 className="text-xl font-bold">{project.projectName}</h2>
+          </div>
+          <div className="relative flex items-center text-sm z-10">
+            <span
+              className={`text-black font-bold px-2 py-1 rounded-md text-xs ${
+                project.status === "pledging"
+                  ? "bg-[#0FC679]"
+                  : project.status === "upcoming"
+                    ? "bg-[#FDD835]"
+                    : "bg-[#C684FF]"
+              }`}
+            >
+              {project.status === "pledging"
+                ? "Open"
+                : project.status === "upcoming"
+                  ? "Upcoming"
+                  : "Closed"}
+            </span>
+          </div>
         </div>
 
         <div className="flex space-x-5 mt-2 mb-4">
           {project.socials?.telegram && (<a href={project.socials.telegram} target="_blank">
-            <TelegramIcon className="w-4 h-4 text-gray-400 hover:text-white cursor-pointer" />
+          <TelegramIcon className="w-4 h-4 text-gray-400 hover:text-white cursor-pointer" />
           </a>)}
           {project.socials?.youtube && (<a href={project.socials.youtube} target="_blank">
             <YoutubeIcon className="w-4 h-4 text-gray-400 hover:text-white cursor-pointer" />
@@ -65,17 +82,14 @@ const LaunchNotice: React.FC<{ status?: string }> = ({ status }) => {
         <p className="text-xl font-bold text-white mb-2">
           {project.projectName} is now live on QuickSwap Launchpad
         </p>
-
         <p className="text-sm text-[#EBECF2] mb-4">
           {project.description}
         </p>
-
         <div className="flex flex-col gap-2 justify-start text-[#EBECF2] items-start text-sm mb-4">
           <p>Total raise: ${project.totalPoolAmount}</p>
           <p>Initial price: ${project.initialPrice}</p>
           <p>Launch date: {project.pledgeStartDate}</p>
         </div>
-
         <Button
           onClick={() =>
             router.push(`/dashboard/launch-info/${project.pid}?status=${project.status}`)
@@ -88,24 +102,6 @@ const LaunchNotice: React.FC<{ status?: string }> = ({ status }) => {
             More Details
           </span>
         </Button>
-      </div>
-
-      <div className="absolute top-8 right-8 flex justify-between items-center text-sm z-10">
-        <span
-          className={`text-black font-bold px-2 py-1 rounded-md text-xs ${
-            project.status === "pledging"
-              ? "bg-[#0FC679]"
-              : project.status === "upcoming"
-                ? "bg-[#FDD835]"
-                : "bg-[#C684FF]"
-          }`}
-        >
-          {project.status === "pledging"
-            ? "Open"
-            : project.status === "upcoming"
-              ? "Upcoming"
-              : "Closed"}
-        </span>
       </div>
 
       <div
