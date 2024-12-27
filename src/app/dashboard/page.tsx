@@ -18,7 +18,7 @@ export default function DashboardPage() {
   // 1: The only launch
   // 2: multiple live launches
   // 3: multiple live & previous launches
-  const caseLaunch: number = 0;
+  const caseLaunch: number = 3;
   const dispatch = useDispatch();
   const { address } = useAppKitAccount();
   const { chainId } = useAppKitNetwork();
