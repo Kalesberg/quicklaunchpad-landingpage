@@ -169,9 +169,11 @@ const Header = () => {
   return (
     <header className="bg-[#12131A]">
       <div
-        className={`hidden container w-full mx-auto lg:flex items-center justify-between text-white py-4 px-6 ${
-          checkIsDashboardPage() ? "md:px-[110px]" : ""
-        }`}
+        className={clsx({
+          ["hidden container w-full mx-auto md:flex items-center justify-between text-white py-4 px-6"]:
+            true,
+          ["xl:px-[110px]"]: checkIsDashboardPage(),
+        })}
       >
         {checkIsDashboardPage() ? (
           <>
@@ -345,7 +347,7 @@ const Header = () => {
         </div>
       </div>
       <div
-        className={`relative flex lg:hidden container w-full min-h-16 mx-auto items-center justify-between bg-[#12131A] text-white py-3 px-4`}
+        className="relative flex md:hidden container w-full min-h-16 mx-auto items-center justify-between bg-[#12131A] text-white py-3 px-4"
       >
         <Image
           src="https://beta.quickswap.exchange/static/media/quickIcon.aa0f5ef593b1a9f00bab835581e318f3.svg"
@@ -449,6 +451,7 @@ const Header = () => {
       </div>
       {checkIsDashboardPage() && (
         <nav className="fixed bottom-0 z-50 w-full bg-[#1B1E29] flex md:hidden justify-between items-center gap-3 px-4 py-1">
+          {" "}
           {navItemsDashboard.map((item, idx) => (
             <Link
               key={idx}

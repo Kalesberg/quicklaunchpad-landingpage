@@ -78,7 +78,7 @@ const Footer: React.FC = () => {
   ];
 
   return (
-    <footer className={`bg-[#12131A] text-white py-0 px-4 lg:py-8`}>
+    <footer className={`bg-[#12131A] text-white p-0 lg:py-8`}>
       {!checkIsDashboardPage() ? (
         <>
           <div className="container mx-auto px-0 flex justify-between items-start flex-col lg:flex-row gap-x-[100px] 2xl:gap-x-[120px] gap-y-10 lg:gap-y-16">
@@ -149,8 +149,8 @@ const Footer: React.FC = () => {
       ) : (
         <>
           <div className="container w-full h-[1.5px] mx-auto px-0 after:content-[''] after:block after:w-full after:h-full after:bg-[#FFFFFF0A]"></div>
-          <div className="container mx-auto mt-8 mb-6 px-10 flex justify-between items-center text-sm">
-            <div className="flex items-center gap-8">
+          <div className="container mx-auto mt-4 md:mt-8 mb-0 md:mb-6 px-2 md:px-10 flex justify-between items-center gap-3 md:gap-0 text-xs md:text-sm">
+            <div className="flex items-center gap-3 md:gap-8">
               <Link className="text-[#FFFFFFA3]" href="/terms">
                 Terms of use
               </Link>
@@ -158,11 +158,11 @@ const Footer: React.FC = () => {
                 className="text-[#FFFFFFA3] flex items-center gap-1"
                 href="https://web.telegram.org/"
               >
-                <TelegramIcon className="w-[18px] h-[18px]" />
+                <TelegramIcon className="w-[18px] h-[18px] hidden sm:block" />
                 Telegram Support
               </Link>
             </div>
-            <span className="text-xs leading-5 text-[#FFFFFFA3]">
+            <span className="text-[10px] md:text-xs leading-5 text-[#FFFFFFA3] text-right md:text-left">
               © {new Date().getFullYear()} QuickLaunch powered by TrustSwap.
               All rights reserved.
             </span>
