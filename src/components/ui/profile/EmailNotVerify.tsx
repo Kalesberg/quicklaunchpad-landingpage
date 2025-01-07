@@ -42,7 +42,7 @@ const EmailNotVerify : React.FC<{ openModal?: boolean; setOpenModal?: any, user:
   }
 
   useEffect(() => {
-    const blockpass = new BlockpassKYCConnect("quicklaunchpad_04b2e");
+    const blockpass = new BlockpassKYCConnect("visionvault_hackathon");
     blockpass.startKYCConnect();  
   }, []);
 
