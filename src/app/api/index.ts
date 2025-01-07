@@ -168,10 +168,13 @@ export const emailVerify = async (code: string) => {
   return res?.data
 };
 
-export const participateToProject = async (payload: {eoa: string, amount: string}) => {
+export const participateToProject = async (payload: {eoa: string, amount: string, pid: string}) => {
   try {
     const res = await authApi.post(`/projects/pledge`, payload);
-    return res?.data  
+    if (res.status < 400) {
+      return true;
+    }
+    return false;  
   } catch(e) {
     throw e
   }

@@ -27,7 +27,7 @@ const SubmitApplicationModal: React.FC<{
       return;
     }
     try {
-      const res =  await participateToProject({eoa: address, amount: project.minContributionSize.toString()});
+      const res =  await participateToProject({eoa: address, amount: project.minContributionSize.toString(), pid: project.pid});
       console.log(res)
       if (res) {
         setConfirm(true);
