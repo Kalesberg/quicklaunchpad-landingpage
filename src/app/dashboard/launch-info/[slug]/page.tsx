@@ -57,11 +57,14 @@ export default function LaunchInfoDetailPage() {
 
   const [content, setConent] = useState<any>(null);
   const [kycStatus, setKycStatus] = useState<any>(null);
+  const [participated, setParticipated] = useState<boolean>(false);
+
+  const [reminderLaunchTimeBig, setReminderLaunchTimeBig] = useState<string>('');
+  const [reminderDay, setReminderDay] = useState<string>('');
 
   const { chainId } = useAppKitNetwork();
   const dispatch = useDispatch();
   const router = useRouter();
-
 
   const fetchProjectById = useCallback(async () => {
     try {
@@ -90,7 +93,18 @@ export default function LaunchInfoDetailPage() {
         setKycStatus(partBtnByKyc[KycStatus.NOT_STARTED])
       }
     }
-  }, [user, setKycStatus]);
+  }, [user]);
+
+  useEffect(() => {
+    if (!user || !project) {
+      return;
+    }
+    const participants = project.allocation?.participants?.map((p: {eoa: string}) => p.eoa) || [];
+    if (participants.includes(user.uid)) {
+      setParticipated(true)
+    }
+  }, [user, project]);
+
 
   const signIn = useCallback(async () => {
     if (user || !address || !chainId) {
@@ -114,15 +128,11 @@ export default function LaunchInfoDetailPage() {
       return;
     }
     timerRef.current = setInterval(() => {
-      const updated = {
-        ...project,
-        reminderLaunchTimeBig: getReminderTimeStampString(
-          project.pledgeEndDate,
-          true
-        ),
-        reminderDay: getReminderDate(project.pledgeStartDate),
-      };
-      setProject(updated);
+      setReminderLaunchTimeBig(getReminderTimeStampString(
+        project.pledgeEndDate,
+        true
+      ))
+      setReminderDay(getReminderDate(project.pledgeStartDate))
     }, 1000);
     return () => {
       if (timerRef.current) {
@@ -479,7 +489,7 @@ export default function LaunchInfoDetailPage() {
                     </p>
                     <div className="w-full flex items-center justify-center gap-2">
                       <span className="text-[#EBECF2] text-[32px] font-bold">
-                        {project.reminderLaunchTimeBig}
+                        {reminderLaunchTimeBig}
                       </span>
                     </div>
                   </div>
