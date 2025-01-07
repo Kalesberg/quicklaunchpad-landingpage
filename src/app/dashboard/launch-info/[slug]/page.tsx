@@ -444,18 +444,31 @@ export default function LaunchInfoDetailPage() {
               </div>
             </div>
             <div className="flex-[30%] h-full bg-[#1B1E29] py-6 rounded-xl mb-5 md:mb-0">
-              {status === "upcoming" ? (
+              {status === "tba" || status === "upcoming"  ? (
                 <>
                   <h2 className="text-[#EBECF2] text-2xl leading-9 text-center font-bold border-b-2 border-[#919EAB14] pb-4">
                     Comming Soon
                   </h2>
                   <div className="flex flex-col px-6 pt-4">
-                    <div className="relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['1'] after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#DFE3E8] after:text-[#919EAB] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
+                    {status === "tba" && <div className="relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['1'] after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#DFE3E8] after:text-[#919EAB] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
                       <h3 className="text-[#696C80] text-sm md:text-base leading-6 font-semibold">
                         Whitelist
                       </h3>
                       <p className="text-[#696C80] text-xs leading-4">TBA</p>
-                    </div>
+                    </div>}
+                    {status === "upcoming" &&
+                      <div className="mb-2 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['1'] after:absolute after:top-1/4 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#448AFF] after:text-[#EBECF2] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
+                        <h3 className="text-[#EBECF2] text-sm md:text-base leading-6 font-semibold">
+                          Whitelist
+                        </h3>
+                        <p className="text-[#C7CAD9] text-xs leading-4">
+                          Application period:
+                        </p>
+                        <p className="text-[#C7CAD9] text-xs leading-4 font-semibold">
+                          {project.pledgeStartDate} – {project.pledgeEndDate}
+                        </p>
+                      </div>
+                    }
                     <div className="relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['2'] after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#DFE3E8] after:text-[#919EAB] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
                       <h3 className="text-[#696C80] text-sm md:text-base leading-6 font-semibold">
                         Lottery
@@ -478,7 +491,7 @@ export default function LaunchInfoDetailPage() {
                     </div>
                   </div>
                 </>
-              ) : status === "pledging" ? (
+              ) : status === "pledging"? (
                 <>
                   <div className="border-b-2 border-[#919EAB14] pb-4">
                     <h2 className="text-[#EBECF2] text-xl md:text-2xl leading-9 text-center font-bold">
