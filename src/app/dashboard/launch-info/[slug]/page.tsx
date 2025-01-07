@@ -16,10 +16,14 @@ import { getProjectsById, getProjectsContent } from "app/api";
 import { useSearchParams, useParams } from "next/navigation";
 import { ProjectStatus } from "state/type";
 import { getReminderTimeStampString, getReminderDate } from "utils/time";
-import { useAppKit, useAppKitAccount, useAppKitNetwork } from "@reown/appkit/react";
+import {
+  useAppKit,
+  useAppKitAccount,
+  useAppKitNetwork,
+} from "@reown/appkit/react";
 import SubmitApplicationModal from "components/common/SubmitApplicationModal";
 import ContributionModal from "components/common/ContributionModal";
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from "react-redux";
 import { User } from "state/type";
 import { partBtnByKyc, KycStatus } from "state/type";
 import { updateUser } from "../../../../reduxStore/rootReducer";
@@ -59,8 +63,9 @@ export default function LaunchInfoDetailPage() {
   const [kycStatus, setKycStatus] = useState<any>(null);
   const [participated, setParticipated] = useState<boolean>(false);
 
-  const [reminderLaunchTimeBig, setReminderLaunchTimeBig] = useState<string>('');
-  const [reminderDay, setReminderDay] = useState<string>('');
+  const [reminderLaunchTimeBig, setReminderLaunchTimeBig] =
+    useState<string>("");
+  const [reminderDay, setReminderDay] = useState<string>("");
 
   const { chainId } = useAppKitNetwork();
   const dispatch = useDispatch();
@@ -88,9 +93,9 @@ export default function LaunchInfoDetailPage() {
     if (user) {
       const s = partBtnByKyc[user.kycStatus];
       if (s) {
-        setKycStatus(s)
+        setKycStatus(s);
       } else {
-        setKycStatus(partBtnByKyc[KycStatus.NOT_STARTED])
+        setKycStatus(partBtnByKyc[KycStatus.NOT_STARTED]);
       }
     }
   }, [user]);
@@ -99,18 +104,19 @@ export default function LaunchInfoDetailPage() {
     if (!user || !project) {
       return;
     }
-    const participants = project.allocation?.participants?.map((p: {eoa: string}) => p.eoa) || [];
+    const participants =
+      project.allocation?.participants?.map((p: { eoa: string }) => p.eoa) ||
+      [];
     if (participants.includes(user.uid)) {
-      setParticipated(true)
+      setParticipated(true);
     }
   }, [user, project]);
 
-
   const signIn = useCallback(async () => {
     if (user || !address || !chainId) {
-      return
+      return;
     }
-    const res = await signInWithWallet(address, chainId as number)
+    const res = await signInWithWallet(address, chainId as number);
     if (res) {
       dispatch(updateUser(res));
     }
@@ -120,7 +126,6 @@ export default function LaunchInfoDetailPage() {
     signIn();
   }, [signIn]);
 
-
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
@@ -128,11 +133,10 @@ export default function LaunchInfoDetailPage() {
       return;
     }
     timerRef.current = setInterval(() => {
-      setReminderLaunchTimeBig(getReminderTimeStampString(
-        project.pledgeEndDate,
-        true
-      ))
-      setReminderDay(getReminderDate(project.pledgeStartDate))
+      setReminderLaunchTimeBig(
+        getReminderTimeStampString(project.pledgeEndDate, true)
+      );
+      setReminderDay(getReminderDate(project.pledgeStartDate));
     }, 1000);
     return () => {
       if (timerRef.current) {
@@ -145,7 +149,7 @@ export default function LaunchInfoDetailPage() {
     if (kycStatus?.canPart) {
       setOpenSubmitApplicationModal(!openSubmitApplicationModal);
     } else {
-      router.push(`/profile`)
+      router.push(`/profile`);
     }
   };
 
@@ -217,24 +221,30 @@ export default function LaunchInfoDetailPage() {
                       {project.description}
                     </p>
                     <div className="flex items-center gap-2 mb-4">
-                      {project.websiteUrl&&(<Link
-                        href={project.websiteUrl}
-                        className="max-w-[80px] md:max-w-full md:min-w-[80px] h-6 md:h-9 bg-[#448AFF14] text-[#448AFF] text-center text-xs md:text-sm font-bold leading-6 md:leading-9 rounded-lg px-2 md:px-3"
-                      >
-                        Website
-                      </Link>)}
-                      {project.whitepaperUrl && (<Link
-                        href={project.whitepaperUrl}
-                        className="max-w-[80px] md:max-w-full md:min-w-[80px] h-6 md:h-9 bg-[#448AFF14] text-[#448AFF] text-center text-xs md:text-sm font-bold leading-6 md:leading-9 rounded-lg px-2 md:px-3"
-                      >
-                        Whitepaper
-                      </Link>)}
-                      {project.blogUrl&&(<Link
-                        href={project.blogUrl}
-                        className="max-w-[80px] md:max-w-full md:min-w-[80px] h-6 md:h-9 bg-[#448AFF14] text-[#448AFF] text-center text-xs md:text-sm font-bold leading-6 md:leading-9 rounded-lg px-2 md:px-3"
-                      >
-                        Blog
-                      </Link>)}
+                      {project.websiteUrl && (
+                        <Link
+                          href={project.websiteUrl}
+                          className="max-w-[80px] md:max-w-full md:min-w-[80px] h-6 md:h-9 bg-[#448AFF14] text-[#448AFF] text-center text-xs md:text-sm font-bold leading-6 md:leading-9 rounded-lg px-2 md:px-3"
+                        >
+                          Website
+                        </Link>
+                      )}
+                      {project.whitepaperUrl && (
+                        <Link
+                          href={project.whitepaperUrl}
+                          className="max-w-[80px] md:max-w-full md:min-w-[80px] h-6 md:h-9 bg-[#448AFF14] text-[#448AFF] text-center text-xs md:text-sm font-bold leading-6 md:leading-9 rounded-lg px-2 md:px-3"
+                        >
+                          Whitepaper
+                        </Link>
+                      )}
+                      {project.blogUrl && (
+                        <Link
+                          href={project.blogUrl}
+                          className="max-w-[80px] md:max-w-full md:min-w-[80px] h-6 md:h-9 bg-[#448AFF14] text-[#448AFF] text-center text-xs md:text-sm font-bold leading-6 md:leading-9 rounded-lg px-2 md:px-3"
+                        >
+                          Blog
+                        </Link>
+                      )}
                     </div>
                     <div className="flex space-x-5 mt-2 mb-4">
                       {project.socials?.telegram && (
@@ -320,17 +330,45 @@ export default function LaunchInfoDetailPage() {
                   </div>
                 </div>
               </div>
-              {status === "upcoming" && !address && (
+              {!address && status === "upcoming" && (
+                <div className="bg-[#FDD83533] flex justify-between items-center gap-4 rounded-2xl p-6 mb-5">
+                  <div className="flex-[75%]">
+                    <span className="text-[#FFF6CC] text-lg font-bold leading-7">
+                      To participate in QuickSwap Launches, KYC is mandatory
+                    </span>
+                    <p className="flex-none text-[#FFF6CC] text-sm font-normal leading-6 mt-2">
+                      Please complete your KYC verification to unlock full
+                      access to all launchpad features. Jurisdictional
+                      restrictions may apply.
+                    </p>
+                  </div>
+
+                  <div className="flex-[25%] justify-items-end">
+                    <Button
+                      variant="primary"
+                      className="flex-1 md:flex-none !h-9 !bg-[#FDD835] !text-[#1B1E29] !text-sm text-center !font-bold !leading-3 rounded-lg px-4 hover:bg-[#FDD83566]"
+                      onClick={() => open()}
+                    >
+                      Complete KYC
+                    </Button>
+                    <p className="text-xs text-[#FFF6CC] font-normal leading-5 mt-2">
+                      Takes about 15 minutes
+                    </p>
+                  </div>
+                </div>
+              )}
+              {!address && status === "signin-required" && (
                 <div className="bg-[#00B8D933] flex justify-between items-center gap-4 rounded-2xl p-6 mb-5">
-                  <p className="flex-1 md:flex-none text-[#CAFDF5] text-lg font-bold leading-7">
-                    Connect your wallet to participate in QuickSwap launches
+                  <p className="flex-[60%] md:flex-none text-[#CAFDF5] text-lg font-bold leading-7">
+                    Sign-in with your wallet to participate in QuickSwap
+                    launches
                   </p>
                   <Button
                     variant="primary"
-                    className="flex-1 md:flex-none bg-[#00B8D914] text-[#61F3F3] !text-sm text-center !font-bold leading-6 rounded-lg px-3 hover:bg-[#00B8D966]"
+                    className="flex-1 md:flex-none !h-9 !bg-[#00B8D914] !text-[#61F3F3] !text-sm text-center !font-bold leading-6 rounded-lg !px-10 hover:bg-[#00B8D966]"
                     onClick={() => open()}
                   >
-                    Connect Wallet
+                    Sign-In
                   </Button>
                 </div>
               )}
@@ -444,19 +482,21 @@ export default function LaunchInfoDetailPage() {
               </div>
             </div>
             <div className="flex-[30%] h-full bg-[#1B1E29] py-6 rounded-xl mb-5 md:mb-0">
-              {status === "tba" || status === "upcoming"  ? (
+              {status === "tba" || status === "upcoming" ? (
                 <>
                   <h2 className="text-[#EBECF2] text-2xl leading-9 text-center font-bold border-b-2 border-[#919EAB14] pb-4">
                     Comming Soon
                   </h2>
                   <div className="flex flex-col px-6 pt-4">
-                    {status === "tba" && <div className="relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['1'] after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#DFE3E8] after:text-[#919EAB] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
-                      <h3 className="text-[#696C80] text-sm md:text-base leading-6 font-semibold">
-                        Whitelist
-                      </h3>
-                      <p className="text-[#696C80] text-xs leading-4">TBA</p>
-                    </div>}
-                    {status === "upcoming" &&
+                    {status === "tba" && (
+                      <div className="relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['1'] after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#DFE3E8] after:text-[#919EAB] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
+                        <h3 className="text-[#696C80] text-sm md:text-base leading-6 font-semibold">
+                          Whitelist
+                        </h3>
+                        <p className="text-[#696C80] text-xs leading-4">TBA</p>
+                      </div>
+                    )}
+                    {status === "upcoming" && (
                       <div className="mb-2 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['1'] after:absolute after:top-1/4 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#448AFF] after:text-[#EBECF2] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
                         <h3 className="text-[#EBECF2] text-sm md:text-base leading-6 font-semibold">
                           Whitelist
@@ -468,7 +508,7 @@ export default function LaunchInfoDetailPage() {
                           {project.pledgeStartDate} – {project.pledgeEndDate}
                         </p>
                       </div>
-                    }
+                    )}
                     <div className="relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['2'] after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#DFE3E8] after:text-[#919EAB] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
                       <h3 className="text-[#696C80] text-sm md:text-base leading-6 font-semibold">
                         Lottery
@@ -491,11 +531,11 @@ export default function LaunchInfoDetailPage() {
                     </div>
                   </div>
                 </>
-              ) : status === "pledging"? (
+              ) : status === "pledging" ? (
                 <>
                   <div className="border-b-2 border-[#919EAB14] pb-4">
                     <h2 className="text-[#EBECF2] text-xl md:text-2xl leading-9 text-center font-bold">
-                       {participated ? 'Good Luck!': 'Whitelist Is Open'}
+                      {participated ? "Good Luck!" : "Whitelist Is Open"}
                     </h2>
                     {!participated ? (
                       <div>
@@ -507,11 +547,13 @@ export default function LaunchInfoDetailPage() {
                             {reminderLaunchTimeBig}
                           </span>
                         </div>
-                      </div>) : (
-                        <p className="text-[#C7CAD9] text-center mt-2">
-                          You will receive the results of the lottery to your email on {project.pledgeEndOnlyDate}. 
-                        </p>)
-                    }
+                      </div>
+                    ) : (
+                      <p className="text-[#C7CAD9] text-center mt-2">
+                        You will receive the results of the lottery to your
+                        email on {project.pledgeEndOnlyDate}.
+                      </p>
+                    )}
                   </div>
                   <div className="flex flex-col px-6 pt-4">
                     <div className="mb-2 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['1'] after:absolute after:top-1/4 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#448AFF] after:text-[#EBECF2] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
@@ -524,14 +566,25 @@ export default function LaunchInfoDetailPage() {
                       <p className="text-[#C7CAD9] text-xs leading-4 font-semibold">
                         {project.pledgeStartDate} – {project.pledgeEndDate}
                       </p>
-                      {!participated && <Button
-                        variant={kycStatus ? kycStatus.variant : 'primary'}
-                        className="!min-w-16 !h-9 capitalize max-w-[250px]"
-                        onClick={() => kycStatus ? handleParticipate() : open()}
-                      >
-                        {kycStatus ? kycStatus.title : "Sign-in with your wallet"}
-                      </Button>}
-                      {!kycStatus?.canPart && <span className="text-[#C7CAD9] text-xs">Once your KYC is approved, you will be able to participate in this launch.</span>}
+                      {!participated && (
+                        <Button
+                          variant={kycStatus ? kycStatus.variant : "primary"}
+                          className="!min-w-16 !h-9 capitalize max-w-[250px]"
+                          onClick={() =>
+                            kycStatus ? handleParticipate() : open()
+                          }
+                        >
+                          {kycStatus
+                            ? kycStatus.title
+                            : "Sign-in with your wallet"}
+                        </Button>
+                      )}
+                      {!kycStatus?.canPart && (
+                        <span className="text-[#C7CAD9] text-xs">
+                          Once your KYC is approved, you will be able to
+                          participate in this launch.
+                        </span>
+                      )}
                     </div>
                     <div className="mb-2 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['2'] after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#DFE3E8] after:text-[#919EAB] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
                       <h3 className="text-[#696C80] text-sm md:text-base leading-6 font-semibold">
