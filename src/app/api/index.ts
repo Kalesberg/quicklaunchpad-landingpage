@@ -165,3 +165,13 @@ export const emailVerify = async (code: string) => {
   const res = await authApi.get(`/identity/auth/validate/email/${code}`);
   return res?.data
 };
+
+export const participateToProject = async (payload: {eoa: string, amount: string}) => {
+  try {
+    const res = await authApi.post(`/projects/pledge`, payload);
+    return res?.data  
+  } catch(e) {
+    throw e
+  }
+};
+

@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import Button from "./Button";
 import Image from "next/image";
 import { Project } from "state/type";
+import { participateToProject } from "app/api";
+import { useAppKitAccount } from "@reown/appkit/react";
 
 const SubmitApplicationModal: React.FC<{
   openModal: boolean | undefined;
@@ -11,6 +13,7 @@ const SubmitApplicationModal: React.FC<{
 }> = ({ openModal, setOpenModal, project }) => {
   const [confirm, setConfirm] = useState(false);
   const [error, setError] = useState(false);
+  const { address } = useAppKitAccount();
 
   
   const handleModal = () => {
@@ -18,8 +21,20 @@ const SubmitApplicationModal: React.FC<{
     setOpenModal(!openModal);
   };
 
-  const handleSubmit = () => {
-    setConfirm(true);
+  const handleSubmit = async () => {
+    setError(false);
+    if (!address) {
+      return;
+    }
+    try {
+      const res =  await participateToProject({eoa: address, amount: project.minContributionSize.toString()});
+      console.log(res)
+      if (res) {
+        setConfirm(true);
+      }
+    } catch(e) {
+      setError(true);
+    }
   };
 
   return (
@@ -103,7 +118,7 @@ const SubmitApplicationModal: React.FC<{
                       Contribution
                     </p>
                     <p className="text-[#EBECF2] text-lg font-bold leading-7">
-                      $2,000
+                      ${project.minContributionSize}
                     </p>
                   </div>
                   <div className="flex flex-col gap-1">

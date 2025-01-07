@@ -499,7 +499,7 @@ export default function LaunchInfoDetailPage() {
                         className="!min-w-16 !h-9 capitalize max-w-[250px]"
                         onClick={() => kycStatus ? handleParticipate() : open()}
                       >
-                        {kycStatus ? kycStatus.title : "Connect wallet to participate"}
+                        {kycStatus ? kycStatus.title : "Sign-in with your wallet"}
                       </Button>
                       {!kycStatus?.canPart && <span className="text-[#C7CAD9] text-xs">Once your KYC is approved, you will be able to participate in this launch.</span>}
                     </div>
