@@ -1,6 +1,6 @@
 const days = 3600 * 24;
 
-export const convertDateTime = (dateTimeString: string) => {
+export const convertDateTime = (dateTimeString: string, onlyDate = false) => {
     if (!dateTimeString) return "";
   
     const formattedDate = new Date(dateTimeString);
@@ -17,7 +17,9 @@ export const convertDateTime = (dateTimeString: string) => {
       minute: "numeric",
       hour12: true,
     }).format(formattedDate);
-  
+    if (onlyDate) {
+      return date;
+    }
     return date + " " + time;
 };
   

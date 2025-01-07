@@ -482,16 +482,23 @@ export default function LaunchInfoDetailPage() {
                 <>
                   <div className="border-b-2 border-[#919EAB14] pb-4">
                     <h2 className="text-[#EBECF2] text-xl md:text-2xl leading-9 text-center font-bold">
-                      Whitelist Is Open
+                       {participated ? 'Good Luck!': 'Whitelist Is Open'}
                     </h2>
-                    <p className="text-[#C7CAD9] text-center">
-                      Participation time remaining
-                    </p>
-                    <div className="w-full flex items-center justify-center gap-2">
-                      <span className="text-[#EBECF2] text-[32px] font-bold">
-                        {reminderLaunchTimeBig}
-                      </span>
-                    </div>
+                    {!participated ? (
+                      <div>
+                        <p className="text-[#C7CAD9] text-center">
+                          Participation time remaining
+                        </p>
+                        <div className="w-full flex items-center justify-center gap-2">
+                          <span className="text-[#EBECF2] text-[32px] font-bold">
+                            {reminderLaunchTimeBig}
+                          </span>
+                        </div>
+                      </div>) : (
+                        <p className="text-[#C7CAD9] text-center mt-2">
+                          You will receive the results of the lottery to your email on {project.pledgeEndOnlyDate}. 
+                        </p>)
+                    }
                   </div>
                   <div className="flex flex-col px-6 pt-4">
                     <div className="mb-2 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['1'] after:absolute after:top-1/4 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#448AFF] after:text-[#EBECF2] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
@@ -504,13 +511,13 @@ export default function LaunchInfoDetailPage() {
                       <p className="text-[#C7CAD9] text-xs leading-4 font-semibold">
                         {project.pledgeStartDate} – {project.pledgeEndDate}
                       </p>
-                      <Button
+                      {!participated && <Button
                         variant={kycStatus ? kycStatus.variant : 'primary'}
                         className="!min-w-16 !h-9 capitalize max-w-[250px]"
                         onClick={() => kycStatus ? handleParticipate() : open()}
                       >
                         {kycStatus ? kycStatus.title : "Sign-in with your wallet"}
-                      </Button>
+                      </Button>}
                       {!kycStatus?.canPart && <span className="text-[#C7CAD9] text-xs">Once your KYC is approved, you will be able to participate in this launch.</span>}
                     </div>
                     <div className="mb-2 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['2'] after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#DFE3E8] after:text-[#919EAB] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">

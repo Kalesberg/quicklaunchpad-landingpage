@@ -42,6 +42,7 @@ export const getProjectsByStatus = async (status: ProjectStatus) => {
     return projects.map(p => {
       p.pledgeStartDate = convertDateTime(p.pledgeStartDate);
       p.pledgeEndDate = convertDateTime(p.pledgeEndDate);
+      p.pledgeEndOnlyDate = convertDateTime(p.pledgeEndDate, true);
       p.contributionStartDate = convertDateTime(p.contributionStartDate);
       p.contributionEndDate = convertDateTime(p.contributionEndDate);
       p.reminderLaunchTime = getReminderTimeStampString(p.pledgeEndDate);
@@ -81,6 +82,7 @@ export const getProjectsById = async (pid: string, status: string) => {
     // }
     p.pledgeStartDate = convertDateTime(p.pledgeStartDate);
     p.pledgeEndDate = convertDateTime(p.pledgeEndDate);
+    p.pledgeEndOnlyDate = convertDateTime(p.pledgeEndDate, true);
     p.contributionStartDate = convertDateTime(p.contributionStartDate);
     p.contributionEndDate = convertDateTime(p.contributionEndDate);
     p.reminderLaunchTime = getReminderTimeStampString(p.pledgeEndDate);
