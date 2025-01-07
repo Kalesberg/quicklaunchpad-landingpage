@@ -27,7 +27,7 @@ const SubmitApplicationModal: React.FC<{
       return;
     }
     try {
-      const res =  await participateToProject({eoa: address, amount: project.minContributionSize.toString(), pid: project.pid});
+      const res =  await participateToProject({eoa: address, amount: project.maxUserPledgeSize.toString(), pid: project.pid});
       console.log(res)
       if (res) {
         setConfirm(true);
@@ -118,7 +118,7 @@ const SubmitApplicationModal: React.FC<{
                       Contribution
                     </p>
                     <p className="text-[#EBECF2] text-lg font-bold leading-7">
-                      ${project.minContributionSize}
+                      ${project.maxUserPledgeSize}
                     </p>
                   </div>
                   <div className="flex flex-col gap-1">
