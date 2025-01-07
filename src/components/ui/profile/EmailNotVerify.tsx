@@ -41,6 +41,10 @@ const EmailNotVerify : React.FC<{ openModal?: boolean; setOpenModal?: any, user:
     }
   }
 
+  const handleCheckKyc = async () => {
+    window.open('https://identity.blockpass.org/', '_blank');
+  }
+
   useEffect(() => {
     const blockpass = new BlockpassKYCConnect("visionvault_hackathon");
     blockpass.startKYCConnect();  
@@ -128,14 +132,18 @@ const EmailNotVerify : React.FC<{ openModal?: boolean; setOpenModal?: any, user:
         </p>
         <div className="flex items-center justify-between md:justify-end gap-3 flex-wrap">
           {!kycStatus?.isCheck&&<span className="text-sm text-[#919EAB]">Takes about 15 minutes</span>}
-          <Button id="blockpass-kyc-connect" variant={kycStatus?.isCheck ? "secondary": "primary"} size="small" className="px-3 h-[36px]">
+          {!kycStatus?.isCheck &&<Button id="blockpass-kyc-connect" variant="primary" size="small" className="px-3 h-[36px]">
+            {kycStatus?.btn}
+          </Button>}
+          {kycStatus?.isCheck &&<Button variant="secondary" size="small" className="px-3 h-[36px]" onClick={() => handleCheckKyc()}>
             {kycStatus?.btn}
             {kycStatus?.isCheck && <Image src={"/assets/icons/ic-external-link.png"}
               alt="external link"
               width={20}
               height={20}
             />}
-          </Button>
+          </Button>}
+
         </div>
       </div>
 
