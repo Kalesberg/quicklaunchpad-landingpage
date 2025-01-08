@@ -106,6 +106,19 @@ export enum KycStatus {
   EXPIRED = 'expired',
 }
 
+export enum ProStatus {
+  TBA = 'tba',
+  UPCOMING = 'upcoming',
+  PLEDGING = 'pledging',
+  PARTICIPATED = 'participated',
+  LOTTERY = 'lottery',
+  WIN = 'win',
+  NOTWIN = 'notwin',
+  CONTRIBUTING = 'contributing',
+  CONTRIBUTED = 'contributed',
+  COMPLETED = 'completed'
+}
+
 export const kycStatuses: Record<KycStatus, Record<string, boolean | string>> = {
   [KycStatus.PENDING]: {
     msg: 'Your KYC information has been successfully submitted. Verification may take up to 24 hours. Please check your profile page for updates.',

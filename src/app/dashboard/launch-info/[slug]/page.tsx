@@ -14,7 +14,7 @@ import Button from "components/common/Button";
 import clsx from "clsx";
 import { getProjectsById, getProjectsContent } from "app/api";
 import { useSearchParams, useParams } from "next/navigation";
-import { ProjectStatus } from "state/type";
+import { ProjectStatus, ProStatus } from "state/type";
 import { getReminderTimeStampString, getReminderDate } from "utils/time";
 import {
   useAppKit,
@@ -29,6 +29,7 @@ import { partBtnByKyc, KycStatus } from "state/type";
 import { updateUser } from "../../../../reduxStore/rootReducer";
 import { signInWithWallet } from "app/service/userService";
 import { useRouter } from "next/navigation";
+import { getProjectStatus } from "utils/project";
 
 export default function LaunchInfoDetailPage() {
   // const { project } = useSelector((state: { project: Project }) => state || {});
@@ -61,7 +62,7 @@ export default function LaunchInfoDetailPage() {
 
   const [content, setConent] = useState<any>(null);
   const [kycStatus, setKycStatus] = useState<any>(null);
-  const [participated, setParticipated] = useState<boolean>(false);
+  const [proStatus, setProStatus] = useState<ProStatus>(ProStatus.TBA);
 
   const [reminderLaunchTimeBig, setReminderLaunchTimeBig] =
     useState<string>("");
@@ -101,15 +102,11 @@ export default function LaunchInfoDetailPage() {
   }, [user]);
 
   useEffect(() => {
-    if (!user || !project) {
+    if (!project) {
       return;
     }
-    const participants =
-      project.allocation?.participants?.map((p: { eoa: string }) => p.eoa) ||
-      [];
-    if (participants.includes(user.uid)) {
-      setParticipated(true);
-    }
+    const status = getProjectStatus(project, user?.uid);
+    setProStatus(status);
   }, [user, project]);
 
   const signIn = useCallback(async () => {
