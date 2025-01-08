@@ -40,3 +40,187 @@ export const getProjectStatus = (p:any, address?: any) => {
     }
     return ProStatus.COMPLETED;
 }
+  
+export const getProjectUI = (p:any, status: ProStatus) => {
+    if (status === ProStatus.TBA) {
+        return {
+            header: {
+                title: 'Coming Soon',
+            },
+            whitelist: {
+                disable: true
+            },
+            lottery: {
+                disable: true
+            },
+            contribution: {
+                disable: true
+            },
+            completed: {
+                disable: true
+            },
+            claim: {
+                disable: true
+            }
+        }
+    } else if (status === ProStatus.UPCOMING) {
+        return {
+            header: {
+                title: 'Coming Soon',
+            },
+            whitelist: {
+                desc1: `Application period:`,
+                desc2: `${p.pledgeStartDate} – ${p.pledgeEndDate}`
+            },
+            lottery: {
+                desc1: `Winners will be announced on ${p.pledgeEndDate}`,
+                disable: true
+            },
+            contribution: {
+                desc1: `Expires on ${p.contributionEndDate}`,
+                disable: true
+            },
+            completed: {
+                disable: true
+            },
+            claim: {
+                disable: true
+            }
+        }
+    } else if (status === ProStatus.PLEDGING) {
+        return {
+            header: {
+                title: 'Whitelist Is Open',
+                subTitle: 'Participation time remaining',
+                hasPtTimer: true
+            },
+            whitelist: {
+                desc1: `Application period:`,
+                desc2: `${p.pledgeStartDate} – ${p.pledgeEndDate}`
+            },
+            lottery: {
+                desc1: `Winners will be announced on ${p.pledgeEndDate}`,
+                disable: true
+            },
+            contribution: {
+                desc1: `Expires on ${p.contributionEndDate}`,
+                disable: true
+            },
+            completed: {
+                disable: true
+            },
+            claim: {
+                disable: true
+            }
+        }
+    }else if (status === ProStatus.PARTICIPATED) {
+        return {
+            header: {
+                title: 'Good Luck!',
+                subTitle: `You will receive the results of the lottery to your email on ${p.pledgeEndOnlyDate}.`
+            },
+            whitelist: {
+                desc1: `You have been successfully whitelisted`
+            },
+            lottery: {
+                desc1: `Winners will be announced on ${p.pledgeEndDate}`,
+            },
+            contribution: {
+                desc1: `Expires on ${p.contributionEndDate}`,
+                disable: true
+            },
+            completed: {
+                disable: true
+            },
+            claim: {
+                disable: true
+            }
+        }
+    } else if (status === ProStatus.WIN) {
+        return {
+            header: {
+                title: 'Contributions Are Open',
+                subTitle: `Time remaining to send funds`,
+                hasConTimer: true
+            },
+            whitelist: {
+                desc1: `You have been successfully whitelisted`
+            },
+            lottery: {
+                desc1: `Congratulations, your entry was randomly selected to participate in this launch!`,
+            },
+            contribution: {
+                desc1: `Contribution period:`,
+                desc2: `${p.contributionStartDate} – ${p.contributionEndDate}`,
+                hasBtn: true
+            },
+            completed: {
+                disable: true
+            },
+            claim: {
+                disable: true
+            }
+        }
+    } else if (status === ProStatus.NOTWIN) {
+        return {
+            header: {
+                title: `You didn't win`,
+                subTitle: 'Better luck next time!'
+            },
+            whitelist: {
+                desc1: `You have been successfully whitelisted`
+            },
+            lottery: {
+                desc1: `You didn't win. Better luck next time!`,
+            },
+        }
+    } else if (status === ProStatus.CONTRIBUTING) {
+        return {
+            header: {
+                title: 'Launch Timeline',
+            },
+            whitelist: {
+                desc1: `Application period:`,
+                desc2: `${p.pledgeStartDate} – ${p.pledgeEndDate}`
+            },
+            lottery: {
+                desc1: `Winners have been announced on ${p.pledgeEndDate}`,
+            },
+            contribution: {
+                desc1: `Contribution period:`,
+                desc2: `${p.contributionStartDate} – ${p.contributionEndDate}`,
+            },
+            completed: {
+                disable: true
+            },
+            claim: {
+                disable: true
+            }
+        }
+    } else if (status === ProStatus.CONTRIBUTED) {
+        return {
+            header: {
+                title: 'Success!',
+                subTitle: 'Congratulations! Check your email for next steps and be sure to confirm your PIN for security.'
+            },
+            whitelist: {
+                desc1: `You have been successfully whitelisted`
+            },
+            lottery: {
+                desc1: `Congratulations, your entry was randomly selected to participate in this launch!`,
+            },
+            contribution: {
+                desc1: `Contributed on `
+            },
+            completed: {},
+            claim: { disable: true }
+        }
+    } else {
+        return {
+            header: {
+                title: 'Coming Soon',
+            }
+        }
+    }
+    
+}

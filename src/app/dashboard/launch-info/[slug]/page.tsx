@@ -12,7 +12,7 @@ import {
 } from "../../../../../public/assets/images/social-icons";
 import Button from "components/common/Button";
 import clsx from "clsx";
-import { getProjectsById, getProjectsContent } from "app/api";
+import { getProjectsById, getProjectsByIdTemp, getProjectsContent } from "app/api";
 import { useSearchParams, useParams } from "next/navigation";
 import { ProjectStatus, ProStatus } from "state/type";
 import { getReminderTimeStampString, getReminderDate } from "utils/time";
@@ -29,7 +29,7 @@ import { partBtnByKyc, KycStatus } from "state/type";
 import { updateUser } from "../../../../reduxStore/rootReducer";
 import { signInWithWallet } from "app/service/userService";
 import { useRouter } from "next/navigation";
-import { getProjectStatus } from "utils/project";
+import { getProjectStatus, getProjectUI } from "utils/project";
 
 export default function LaunchInfoDetailPage() {
   // const { project } = useSelector((state: { project: Project }) => state || {});
@@ -63,6 +63,7 @@ export default function LaunchInfoDetailPage() {
   const [content, setConent] = useState<any>(null);
   const [kycStatus, setKycStatus] = useState<any>(null);
   const [proStatus, setProStatus] = useState<ProStatus>(ProStatus.TBA);
+  const [projectUI, setProjectUI] = useState<any>(null);
 
   const [reminderLaunchTimeBig, setReminderLaunchTimeBig] =
     useState<string>("");
@@ -74,10 +75,8 @@ export default function LaunchInfoDetailPage() {
 
   const fetchProjectById = useCallback(async () => {
     try {
-      const res = await getProjectsById(projectId as string, status);
-      if (res.status === ProjectStatus.Pledging) {
-        setStartTimer(true);
-      }
+      const res = await getProjectsById(projectId as string);
+      // const res = await getProjectsByIdTemp(projectId as string); //TODO - remove this for testing
       setProject(res);
       const res1 = await getProjectsContent(res.contentUrl);
       setConent(res1?.data?.attributes?.content);
@@ -105,8 +104,16 @@ export default function LaunchInfoDetailPage() {
     if (!project) {
       return;
     }
-    const status = getProjectStatus(project, user?.uid);
+    let status = getProjectStatus(project, user?.uid);
+    status = ProStatus.PLEDGING
+    if (status === ProStatus.PLEDGING) {
+      setStartTimer(true);
+      console.log('000000')
+    }
     setProStatus(status);
+    const proUI = getProjectUI(project, status);
+    setProjectUI(proUI);
+    console.log('11111', proUI);
   }, [user, project]);
 
   const signIn = useCallback(async () => {
@@ -327,7 +334,7 @@ export default function LaunchInfoDetailPage() {
                   </div>
                 </div>
               </div>
-              {!address && status === "upcoming" && (
+              {user?.kycStatus === "notstarted" && (
                 <div className="bg-[#FDD83533] flex justify-between items-center gap-4 rounded-2xl p-6 mb-5">
                   <div className="flex-[75%]">
                     <span className="text-[#FFF6CC] text-lg font-bold leading-7">
@@ -354,7 +361,7 @@ export default function LaunchInfoDetailPage() {
                   </div>
                 </div>
               )}
-              {!address && status === "signin-required" && (
+              {!user && (
                 <div className="bg-[#00B8D933] flex justify-between items-center gap-4 rounded-2xl p-6 mb-5">
                   <p className="flex-[60%] md:flex-none text-[#CAFDF5] text-lg font-bold leading-7">
                     Sign-in with your wallet to participate in QuickSwap
@@ -478,7 +485,45 @@ export default function LaunchInfoDetailPage() {
                 </div>
               </div>
             </div>
-            <div className="flex-[30%] h-full bg-[#1B1E29] py-6 rounded-xl mb-5 md:mb-0">
+            {
+            projectUI &&(<div className="flex-[30%] h-full bg-[#1B1E29] py-6 rounded-xl mb-5 md:mb-0">
+              <div className="border-b-2 border-[#919EAB14] pb-4">
+                <h2 className="text-[#EBECF2] text-xl md:text-2xl leading-9 text-center font-bold">
+                  {projectUI.header.title}
+                </h2>
+                <p className="text-[#C7CAD9] text-center">
+                  {projectUI.header.subTitle}
+                </p>
+                {projectUI.header.hasPtTimer&&(<div className="w-full flex items-center justify-center gap-2">
+                  <span className="text-[#EBECF2] text-[32px] font-bold">
+                    {project.reminderLaunchTimeBig}
+                  </span>
+                </div>)}
+              </div>
+              <div className="flex flex-col px-6 pt-4">
+                <div className="mb-2 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['1'] after:absolute after:top-1/4 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#448AFF] after:text-[#EBECF2] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
+                  <h3 className={`${projectUI.whitelist.disable ? 'text-[#696C80]' : 'text-[#EBECF2]'} text-sm md:text-base leading-6 font-semibold`}>
+                    Whitelist
+                  </h3>
+                  <p className={`${projectUI.whitelist.disable ? 'text-[#696C80]' : 'text-[#EBECF2]'} text-xs leading-4`}>
+                    {projectUI.whitelist.desc1}
+                  </p>
+                  {projectUI.whitelist.desc2 && <p className={`${projectUI.whitelist.disable ? 'text-[#696C80]' : 'text-[#EBECF2]'} text-xs leading-4 font-semibold`}>
+                    {projectUI.whitelist.desc2}
+                  </p>}
+                </div>
+                <div className="mb-2 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['2'] after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#DFE3E8] after:text-[#919EAB] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
+                  <h3 className={`${projectUI.lottery.disable ? 'text-[#696C80]' : 'text-[#EBECF2]'} text-sm md:text-base leading-6 font-semibold`}>
+                    Lottery
+                  </h3>
+                  <p className={`${projectUI.lottery.disable ? 'text-[#696C80]' : 'text-[#C7CAD9]'} text-xs leading-4`}>
+                    {projectUI.lottery.desc1}
+                  </p>
+                </div>
+              </div>
+            </div>)
+            
+            /* <div className="flex-[30%] h-full bg-[#1B1E29] py-6 rounded-xl mb-5 md:mb-0">
               {status === "tba" || status === "upcoming" ? (
                 <>
                   <h2 className="text-[#EBECF2] text-2xl leading-9 text-center font-bold border-b-2 border-[#919EAB14] pb-4">
@@ -771,7 +816,7 @@ export default function LaunchInfoDetailPage() {
                   </div>
                 </>
               )}
-            </div>
+            </div> */}
           </div>
         </div>
         <SubmitApplicationModal

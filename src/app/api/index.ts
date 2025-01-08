@@ -68,7 +68,7 @@ export const getUpcomingProject= async () => {
 };
 
 
-export const getProjectsById = async (pid: string, status: string) => {
+export const getProjectsById = async (pid: string) => {
   try {
     const res = await projectApi.get(`/projects/${pid}`);
     let p = null;
@@ -95,6 +95,33 @@ export const getProjectsById = async (pid: string, status: string) => {
     return null;
   }
 };
+
+export const getProjectsByIdTemp = async (status: string) => {
+  try {
+    let p = null;
+    if (status === ProjectStatus.Completed) {
+      p = previousProjects[0];
+    } else if (status === ProjectStatus.Upcoming) {
+      p = upcomingProjects[0];
+    } else {
+      p = liveProjects[1];
+    }
+    p.pledgeStartDate = convertDateTime(p.pledgeStartDate);
+    p.pledgeEndDate = convertDateTime(p.pledgeEndDate);
+    p.pledgeEndOnlyDate = convertDateTime(p.pledgeEndDate, true);
+    p.contributionStartDate = convertDateTime(p.contributionStartDate);
+    p.contributionEndDate = convertDateTime(p.contributionEndDate);
+    p.reminderLaunchTime = getReminderTimeStampString(p.pledgeEndDate);
+    p.reminderLaunchTimeBig = getReminderTimeStampString(p.pledgeEndDate ,true);
+    p.reminderDay = getReminderDate(p.pledgeStartDate);
+    p.network = getConfig(parseInt(p.chainId, 16));
+    return p;  
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+};
+
 
 export const getProjectsContent = async (contentId: string) => {
   const res = await contentApi.get(`${contentId}?populate=*`);
