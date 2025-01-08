@@ -30,6 +30,7 @@ import { updateUser } from "../../../../reduxStore/rootReducer";
 import { signInWithWallet } from "app/service/userService";
 import { useRouter } from "next/navigation";
 import { getProjectStatus, getProjectUI } from "utils/project";
+import { stepStyle, disableStepStyle } from "utils/const";
 
 export default function LaunchInfoDetailPage() {
   // const { project } = useSelector((state: { project: Project }) => state || {});
@@ -104,16 +105,13 @@ export default function LaunchInfoDetailPage() {
     if (!project) {
       return;
     }
-    let status = getProjectStatus(project, user?.uid);
-    status = ProStatus.PLEDGING
+    const status = getProjectStatus(project, user?.uid);
     if (status === ProStatus.PLEDGING) {
       setStartTimer(true);
-      console.log('000000')
     }
     setProStatus(status);
     const proUI = getProjectUI(project, status);
     setProjectUI(proUI);
-    console.log('11111', proUI);
   }, [user, project]);
 
   const signIn = useCallback(async () => {
@@ -501,7 +499,7 @@ export default function LaunchInfoDetailPage() {
                 </div>)}
               </div>
               <div className="flex flex-col px-6 pt-4">
-                <div className="mb-2 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['1'] after:absolute after:top-1/4 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#448AFF] after:text-[#EBECF2] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
+                <div className={`${projectUI.whitelist.disable ?  disableStepStyle : stepStyle} after:content-['1']`}>
                   <h3 className={`${projectUI.whitelist.disable ? 'text-[#696C80]' : 'text-[#EBECF2]'} text-sm md:text-base leading-6 font-semibold`}>
                     Whitelist
                   </h3>
@@ -511,104 +509,9 @@ export default function LaunchInfoDetailPage() {
                   {projectUI.whitelist.desc2 && <p className={`${projectUI.whitelist.disable ? 'text-[#696C80]' : 'text-[#EBECF2]'} text-xs leading-4 font-semibold`}>
                     {projectUI.whitelist.desc2}
                   </p>}
-                </div>
-                <div className="mb-2 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['2'] after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#DFE3E8] after:text-[#919EAB] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
-                  <h3 className={`${projectUI.lottery.disable ? 'text-[#696C80]' : 'text-[#EBECF2]'} text-sm md:text-base leading-6 font-semibold`}>
-                    Lottery
-                  </h3>
-                  <p className={`${projectUI.lottery.disable ? 'text-[#696C80]' : 'text-[#C7CAD9]'} text-xs leading-4`}>
-                    {projectUI.lottery.desc1}
-                  </p>
-                </div>
-              </div>
-            </div>)
-            
-            /* <div className="flex-[30%] h-full bg-[#1B1E29] py-6 rounded-xl mb-5 md:mb-0">
-              {status === "tba" || status === "upcoming" ? (
-                <>
-                  <h2 className="text-[#EBECF2] text-2xl leading-9 text-center font-bold border-b-2 border-[#919EAB14] pb-4">
-                    Comming Soon
-                  </h2>
-                  <div className="flex flex-col px-6 pt-4">
-                    {status === "tba" && (
-                      <div className="relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['1'] after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#DFE3E8] after:text-[#919EAB] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
-                        <h3 className="text-[#696C80] text-sm md:text-base leading-6 font-semibold">
-                          Whitelist
-                        </h3>
-                        <p className="text-[#696C80] text-xs leading-4">TBA</p>
-                      </div>
-                    )}
-                    {status === "upcoming" && (
-                      <div className="mb-2 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['1'] after:absolute after:top-1/4 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#448AFF] after:text-[#EBECF2] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
-                        <h3 className="text-[#EBECF2] text-sm md:text-base leading-6 font-semibold">
-                          Whitelist
-                        </h3>
-                        <p className="text-[#C7CAD9] text-xs leading-4">
-                          Application period:
-                        </p>
-                        <p className="text-[#C7CAD9] text-xs leading-4 font-semibold">
-                          {project.pledgeStartDate} – {project.pledgeEndDate}
-                        </p>
-                      </div>
-                    )}
-                    <div className="relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['2'] after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#DFE3E8] after:text-[#919EAB] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
-                      <h3 className="text-[#696C80] text-sm md:text-base leading-6 font-semibold">
-                        Lottery
-                      </h3>
-                    </div>
-                    <div className="relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['3'] after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#DFE3E8] after:text-[#919EAB] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
-                      <h3 className="text-[#696C80] text-sm md:text-base leading-6 font-semibold">
-                        Contribution
-                      </h3>
-                    </div>
-                    <div className="relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['4'] after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#DFE3E8] after:text-[#919EAB] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
-                      <h3 className="text-[#696C80] text-sm md:text-base leading-6 font-semibold">
-                        Completed
-                      </h3>
-                    </div>
-                    <div className="relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 after:content-['5'] after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#DFE3E8] after:text-[#919EAB] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
-                      <h3 className="text-[#696C80] text-sm md:text-base leading-6 font-semibold">
-                        Claim
-                      </h3>
-                    </div>
-                  </div>
-                </>
-              ) : status === "pledging" ? (
-                <>
-                  <div className="border-b-2 border-[#919EAB14] pb-4">
-                    <h2 className="text-[#EBECF2] text-xl md:text-2xl leading-9 text-center font-bold">
-                      {participated ? "Good Luck!" : "Whitelist Is Open"}
-                    </h2>
-                    {!participated ? (
+                  
+                  {projectUI.whitelist.hasBtn && (
                       <div>
-                        <p className="text-[#C7CAD9] text-center">
-                          Participation time remaining
-                        </p>
-                        <div className="w-full flex items-center justify-center gap-2">
-                          <span className="text-[#EBECF2] text-[32px] font-bold">
-                            {reminderLaunchTimeBig}
-                          </span>
-                        </div>
-                      </div>
-                    ) : (
-                      <p className="text-[#C7CAD9] text-center mt-2">
-                        You will receive the results of the lottery to your
-                        email on {project.pledgeEndOnlyDate}.
-                      </p>
-                    )}
-                  </div>
-                  <div className="flex flex-col px-6 pt-4">
-                    <div className="mb-2 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['1'] after:absolute after:top-1/4 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#448AFF] after:text-[#EBECF2] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
-                      <h3 className="text-[#EBECF2] text-sm md:text-base leading-6 font-semibold">
-                        Whitelist
-                      </h3>
-                      <p className="text-[#C7CAD9] text-xs leading-4">
-                        Application period:
-                      </p>
-                      <p className="text-[#C7CAD9] text-xs leading-4 font-semibold">
-                        {project.pledgeStartDate} – {project.pledgeEndDate}
-                      </p>
-                      {!participated && (
                         <Button
                           variant={kycStatus ? kycStatus.variant : "primary"}
                           className="!min-w-16 !h-9 capitalize max-w-[250px]"
@@ -620,203 +523,53 @@ export default function LaunchInfoDetailPage() {
                             ? kycStatus.title
                             : "Sign-in with your wallet"}
                         </Button>
-                      )}
-                      {!kycStatus?.canPart && (
-                        <span className="text-[#C7CAD9] text-xs">
-                          Once your KYC is approved, you will be able to
-                          participate in this launch.
-                        </span>
-                      )}
-                    </div>
-                    <div className="mb-2 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['2'] after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#DFE3E8] after:text-[#919EAB] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
-                      <h3 className="text-[#696C80] text-sm md:text-base leading-6 font-semibold">
-                        Lottery
-                      </h3>
-                      <p className="text-[#696C80] text-xs leading-4">
-                        Winners will be announced {project.pledgeEndDate}
-                      </p>
-                    </div>
-                    <div className="mb-2 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['3'] after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#DFE3E8] after:text-[#919EAB] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
-                      <h3 className="text-[#696C80] text-sm md:text-base leading-6 font-semibold">
-                        Contribution
-                      </h3>
-                      <p className="text-[#696C80] text-xs leading-4">
-                        Expires on 18 Mar 04:00 AM
-                      </p>
-                    </div>
-                    <div className="mb-2 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['4'] after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#DFE3E8] after:text-[#919EAB] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
-                      <h3 className="text-[#696C80] text-sm md:text-base leading-6 font-semibold">
-                        Completed
-                      </h3>
-                    </div>
-                    <div className="relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 after:content-['5'] after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#DFE3E8] after:text-[#919EAB] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
-                      <h3 className="text-[#696C80] text-base leading-6 font-semibold">
-                        Claim
-                      </h3>
-                    </div>
-                  </div>
-                </>
-              ) : status === "contribute" ? (
-                <>
-                  <div className="border-b-2 border-[#919EAB14] pb-4">
-                    <h2 className="text-[#EBECF2] text-xl md:text-2xl leading-9 text-center font-bold">
-                      Contributions Are Open
-                    </h2>
-                    <p className="text-[#C7CAD9] text-center">
-                      Time remaining to send funds
-                    </p>
-                    <div className="w-full flex items-center justify-center gap-2">
-                      <span className="text-[#EBECF2] text-[32px] font-bold">
-                        {project.reminderLaunchTimeBig}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex flex-col px-6 pt-4">
-                    <div className="relative left-7 w-fit min-h-12 px-1 py-2 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-[18px] before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80]">
-                      <Image
-                        src="/assets/icons/ic-checkmark.svg"
-                        alt="icon"
-                        width={24}
-                        height={24}
-                        className="block absolute top-1/2 -left-[30px] -translate-y-1/2"
-                      />
-                      <h3 className="text-[#EBECF2] text-sm md:text-base leading-6 font-semibold">
-                        Whitelist
-                      </h3>
-                      <p className="text-[#C7CAD9] text-xs leading-4">
-                        You have been successfully whitelisted
-                      </p>
-                    </div>
-                    <div className="relative left-7 w-fit min-h-12 px-1 py-2 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-[18px] before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80]">
-                      <Image
-                        src="/assets/icons/ic-checkmark.svg"
-                        alt="icon"
-                        width={24}
-                        height={24}
-                        className="block absolute top-1/2 -left-[30px] -translate-y-1/2"
-                      />
-                      <h3 className="text-[#EBECF2] text-sm md:text-base leading-6 font-semibold">
-                        Lottery
-                      </h3>
-                      <p className="text-[#C7CAD9] text-xs leading-4">
-                        Congratulations, your entry was randomly selected to
-                        participate in this launch!
-                      </p>
-                    </div>
-                    <div className="mb-2 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['3'] after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#448AFF] after:text-[#EBECF2] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
-                      <h3 className="text-[#EBECF2] text-sm md:text-base leading-6 font-semibold">
-                        Contribution
-                      </h3>
-                      <p className="text-[#C7CAD9] text-xs leading-4">
-                        Contribution period:
-                      </p>
-                      <p className="text-[#C7CAD9] text-xs font-semibold leading-4">
-                        17 Mar 2024 04:00 AM – 18 Mar 2024 04:00 AM
-                      </p>
-                      <Button
-                        variant="primary"
-                        className="!min-w-16 !h-9 capitalize"
-                        onClick={() => handleContribute()}
-                      >
-                        Contribute
-                      </Button>
-                    </div>
-                    <div className="mb-2 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80] after:content-['4'] after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#DFE3E8] after:text-[#919EAB] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
-                      <h3 className="text-[#696C80] text-sm md:text-base leading-6 font-semibold">
-                        Completed
-                      </h3>
-                    </div>
-                    <div className="relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 after:content-['5'] after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:bg-[#DFE3E8] after:text-[#919EAB] after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]">
-                      <h3 className="text-[#696C80] text-base leading-6 font-semibold">
-                        Claim
-                      </h3>
-                    </div>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className="border-b-2 border-[#919EAB14] pb-4">
-                    <h2 className="text-[#EBECF2] text-xl md:text-2xl leading-9 text-center font-bold">
-                      Launch Timeline
-                    </h2>
-                  </div>
-                  <div className="flex flex-col px-6 pt-4">
-                    <div className="relative left-7 w-fit min-h-12 px-1 py-2 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-[18px] before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80]">
-                      <Image
-                        src="/assets/icons/ic-checkmark.svg"
-                        alt="icon"
-                        width={24}
-                        height={24}
-                        className="block absolute top-1/2 -left-[30px] -translate-y-1/2"
-                      />
-                      <h3 className="text-[#EBECF2] text-sm md:text-base leading-6 font-semibold">
-                        Whitelist
-                      </h3>
-                      <p className="text-[#C7CAD9] text-xs leading-4">
-                        Application period:
-                      </p>
-                      <p className="text-[#C7CAD9] text-xs leading-4 font-semibold">
-                        {project.pledgeStartDate} – {project.pledgeEndDate}
-                      </p>
-                    </div>
-                    <div className="relative left-7 w-fit min-h-12 px-1 py-2 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-[18px] before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80]">
-                      <Image
-                        src="/assets/icons/ic-checkmark.svg"
-                        alt="icon"
-                        width={24}
-                        height={24}
-                        className="block absolute top-1/2 -left-[30px] -translate-y-1/2"
-                      />
-                      <h3 className="text-[#EBECF2] text-sm md:text-base leading-6 font-semibold">
-                        Lottery
-                      </h3>
-                      <p className="text-[#C7CAD9] text-xs leading-4">
-                        Winners have been announced on {project.pledgeEndDate}
-                      </p>
-                    </div>
-                    <div className="relative left-7 w-fit min-h-12 px-1 py-2 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-[18px] before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80]">
-                      <Image
-                        src="/assets/icons/ic-checkmark.svg"
-                        alt="icon"
-                        width={24}
-                        height={24}
-                        className="block absolute top-1/2 -left-[30px] -translate-y-1/2"
-                      />
-                      <h3 className="text-[#EBECF2] text-sm md:text-base leading-6 font-semibold">
-                        Contribution
-                      </h3>
-                      <p className="text-[#cCAD9] text-xs leading-4">
-                        Expires on {project.contributionEndDate}
-                      </p>
-                    </div>
-                    <div className="relative left-7 w-fit min-h-12 px-1 py-2 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-[18px] before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block before:bg-[#282D3D80]">
-                      <Image
-                        src="/assets/icons/ic-checkmark.svg"
-                        alt="icon"
-                        width={24}
-                        height={24}
-                        className="block absolute top-1/2 -left-[30px] -translate-y-1/2"
-                      />
-                      <h3 className="text-[#EBECF2] text-sm md:text-base leading-6 font-semibold">
-                        Completed
-                      </h3>
-                    </div>
-                    <div className="relative left-7 w-fit min-h-12 px-1 py-2 flex flex-col justify-center gap-2">
-                      <Image
-                        src="/assets/icons/ic-checkmark.svg"
-                        alt="icon"
-                        width={24}
-                        height={24}
-                        className="block absolute top-1/2 -left-[30px] -translate-y-1/2"
-                      />
-                      <h3 className="text-[#EBECF2] text-sm md:text-base leading-6 font-semibold">
-                        Claim
-                      </h3>
-                    </div>
-                  </div>
-                </>
-              )}
-            </div> */}
+                        {(kycStatus && !kycStatus.canPart) && (
+                          <span className="text-[#C7CAD9] text-xs">
+                            Once your KYC is approved, you will be able to
+                            participate in this launch.
+                          </span>
+                        )}
+                      </div>
+                    )}
+                </div>
+                <div className={`${projectUI.lottery.disable ?  disableStepStyle : stepStyle} after:content-['2']`}>
+                  <h3 className={`${projectUI.lottery.disable ? 'text-[#696C80]' : 'text-[#EBECF2]'} text-sm md:text-base leading-6 font-semibold`}>
+                    Lottery
+                  </h3>
+                  <p className={`${projectUI.lottery.disable ? 'text-[#696C80]' : 'text-[#C7CAD9]'} text-xs leading-4`}>
+                    {projectUI.lottery.desc1}
+                  </p>
+                </div>
+                {projectUI.contribution && <div className={`${projectUI.contribution.disable ?  disableStepStyle : stepStyle} after:content-['3']`}>
+                  <h3 className={`${projectUI.contribution.disable ? 'text-[#696C80]' : 'text-[#EBECF2]'} text-sm md:text-base leading-6 font-semibold`}>
+                    Contribution
+                  </h3>
+                  <p className={`${projectUI.contribution.disable ? 'text-[#696C80]' : 'text-[#EBECF2]'} text-xs leading-4`}>
+                    {projectUI.contribution.desc1}
+                  </p>
+                  {projectUI.contribution.desc2 && <p className={`${projectUI.contribution.disable ? 'text-[#696C80]' : 'text-[#EBECF2]'} text-xs leading-4 font-semibold`}>
+                    {projectUI.contribution.desc2}
+                  </p>}
+                  {projectUI.contribution.hasBtn && <Button
+                    variant="primary"
+                    className="!min-w-16 !h-9 capitalize"
+                    onClick={() => handleContribute()}
+                  >
+                    Contribute
+                  </Button>}
+                </div>}
+                {projectUI.completed && <div className={`${projectUI.completed.disable ?  disableStepStyle : stepStyle} after:content-['4']`}>
+                  <h3 className={`${projectUI.completed.disable ? 'text-[#696C80]' : 'text-[#EBECF2]'} text-sm md:text-base leading-6 font-semibold`}>
+                    Completed
+                  </h3>
+                </div>}
+                {projectUI.claim && <div className={`${projectUI.claim.disable ?  disableStepStyle : stepStyle} after:content-['5']`}>
+                  <h3 className={`${projectUI.claim.disable ? 'text-[#696C80]' : 'text-[#EBECF2]'} text-sm md:text-base leading-6 font-semibold`}>
+                    Claim
+                  </h3>
+                </div>}
+              </div>
+            </div>)}
           </div>
         </div>
         <SubmitApplicationModal

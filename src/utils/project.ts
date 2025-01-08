@@ -48,6 +48,7 @@ export const getProjectUI = (p:any, status: ProStatus) => {
                 title: 'Coming Soon',
             },
             whitelist: {
+                desc1: 'TBA',
                 disable: true
             },
             lottery: {
@@ -96,7 +97,8 @@ export const getProjectUI = (p:any, status: ProStatus) => {
             },
             whitelist: {
                 desc1: `Application period:`,
-                desc2: `${p.pledgeStartDate} – ${p.pledgeEndDate}`
+                desc2: `${p.pledgeStartDate} – ${p.pledgeEndDate}`,
+                hasBtn: true
             },
             lottery: {
                 desc1: `Winners will be announced on ${p.pledgeEndDate}`,
@@ -218,7 +220,22 @@ export const getProjectUI = (p:any, status: ProStatus) => {
     } else {
         return {
             header: {
-                title: 'Coming Soon',
+                title: 'Launch Timeline',
+            },
+            whitelist: {
+                desc1: `Application period:`,
+                desc2: `${p.pledgeStartDate} – ${p.pledgeEndDate}`
+            },
+            lottery: {
+                desc1: `Winners have been announced on ${p.pledgeEndDate}`,
+            },
+            contribution: {
+                desc1: `Contribution period:`,
+                desc2: `${p.contributionStartDate} – ${p.contributionEndDate}`,
+            },
+            completed: {
+            },
+            claim: {
             }
         }
     }
