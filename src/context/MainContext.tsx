@@ -17,6 +17,7 @@ import store from "../reduxStore/store";
 
 enum ChainId {
   MUMBAI = 80001,
+  POL=80002,
   MATIC = 137,
   DOEGCHAIN_TESTNET = 568,
   DOGECHAIN = 2000,

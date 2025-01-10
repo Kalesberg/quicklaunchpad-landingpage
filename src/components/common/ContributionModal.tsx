@@ -9,6 +9,7 @@ import { useState } from "react";
 import Button from "./Button";
 import { CheckIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
+import { Project } from "state/type";
 
 interface Network {
   id: string;
@@ -26,23 +27,25 @@ interface Token {
 interface ContributionModalProps {
   openModal: boolean;
   setOpenModal: (arg: boolean) => void;
+  project: Project
 }
 
 const ContributionModal: React.FC<ContributionModalProps> = ({
   openModal,
   setOpenModal,
+  project
 }) => {
   const [selectedNetwork, setSelectedNetwork] = useState<string>("polygon");
   const [selectedToken, setSelectedToken] = useState<string>("USDT");
-
+  console.log('1111', project)
   const networks: Network[] = [
     {
-      id: "polygon",
-      name: "Polygon",
-      icon: "/assets/images/4dee09caf5949d0260bcdbb0b8e9a52a.png",
+      id: project.network?.chainId,
+      name: project.network?.networkName,
+      icon: project.network?.nativeCurrencyImage,
     },
-    { id: "bsc", name: "BSC", icon: "/assets/images/bsc.png" },
-    { id: "ethereum", name: "Ethereum", icon: "/assets/images/ethereum.png" },
+    // { id: "bsc", name: "BSC", icon: "/assets/images/bsc.png" },
+    // { id: "ethereum", name: "Ethereum", icon: "/assets/images/ethereum.png" },
   ];
 
   const tokens: Token[] = [

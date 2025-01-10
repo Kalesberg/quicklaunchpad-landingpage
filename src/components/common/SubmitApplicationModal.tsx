@@ -5,19 +5,18 @@ import Image from "next/image";
 import { Project } from "state/type";
 import { participateToProject } from "app/api";
 import { useAppKitAccount } from "@reown/appkit/react";
+import { ethers } from 'ethers';
 
 const SubmitApplicationModal: React.FC<{
   openModal: boolean | undefined;
   setOpenModal: (arg: boolean) => void;
   onParticipate: (arg: boolean) => void;
-
   project: Project
 }> = ({ openModal, setOpenModal, project, onParticipate }) => {
   const [confirm, setConfirm] = useState(false);
   const [error, setError] = useState(false);
   const { address } = useAppKitAccount();
 
-  
   const handleModal = () => {
     setConfirm(false);
     setOpenModal(!openModal);
@@ -105,13 +104,13 @@ const SubmitApplicationModal: React.FC<{
                     </p>
                     <div className="flex item-center gap-1">
                       <Image
-                        src="/assets/images/4dee09caf5949d0260bcdbb0b8e9a52a.png"
+                        src={`${project.network.nativeCurrencyImage}`}
                         alt="polygon"
                         width={24}
                         height={24}
                       />
                       <p className="text-[#EBECF2] text-lg font-bold leading-7">
-                        Polygon
+                        {project.network?.networkName || ''}
                       </p>
                     </div>
                   </div>

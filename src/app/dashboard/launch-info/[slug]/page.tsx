@@ -593,6 +593,7 @@ export default function LaunchInfoDetailPage() {
         <ContributionModal
           openModal={openContributionModal}
           setOpenModal={setOpenContributionModal}
+          project={project}
         />
       </>
     )

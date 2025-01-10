@@ -11,9 +11,11 @@ import IMX from "./imx.json";
 import astarZkevm from "./astarzkevm.json";
 import layerX from "./layerx.json";
 import orderlyFeeTiers from "./orderlyFeeTiers.json";
+import polygonPos from "./polygonPos.json";
 
 enum ChainId {
   MUMBAI = 80001,
+  POL=80002,
   MATIC = 137,
   DOEGCHAIN_TESTNET = 568,
   DOGECHAIN = 2000,
@@ -42,6 +44,8 @@ const configs: any = {
   [ChainId.IMX]: IMX,
   [ChainId.ASTARZKEVM]: astarZkevm,
   [ChainId.LAYERX]: layerX,
+  [ChainId.POL]: polygonPos,
+
 };
 
 export const getConfig = (network: ChainId | undefined) => {
