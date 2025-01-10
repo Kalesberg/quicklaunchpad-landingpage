@@ -67,7 +67,6 @@ export default function LaunchInfoDetailPage() {
 
   const [reminderLaunchTimeBig, setReminderLaunchTimeBig] =
     useState<string>("");
-  const [reminderDay, setReminderDay] = useState<string>("");
 
   const { chainId } = useAppKitNetwork();
   const dispatch = useDispatch();
@@ -105,11 +104,12 @@ export default function LaunchInfoDetailPage() {
       return;
     }
     const status = getProjectStatus(project, user?.uid);
-    if (status === ProStatus.PLEDGING) {
-      setStartTimer(true);
-    }
     setProStatus(status);
     const proUI = getProjectUI(project, status);
+    if (proUI.header?.hasTimer ) {
+      setStartTimer(true);
+    }
+
     setProjectUI(proUI);
   }, [user, project]);
 
@@ -135,10 +135,15 @@ export default function LaunchInfoDetailPage() {
       return;
     }
     timerRef.current = setInterval(() => {
-      setReminderLaunchTimeBig(
-        getReminderTimeStampString(project.pledgeEndDate, true)
-      );
-      setReminderDay(getReminderDate(project.pledgeStartDate));
+      if (status === ProStatus.PLEDGING) {
+        setReminderLaunchTimeBig(
+          getReminderTimeStampString(project.pledgeEndDate, true)
+        );
+      } else {
+        setReminderLaunchTimeBig(
+          getReminderTimeStampString(project.contributionEndDate, true)
+        );
+      }
     }, 1000);
     return () => {
       if (timerRef.current) {
@@ -498,9 +503,9 @@ export default function LaunchInfoDetailPage() {
                 <p className="text-[#C7CAD9] text-center">
                   {projectUI.header.subTitle}
                 </p>
-                {projectUI.header.hasPtTimer&&(<div className="w-full flex items-center justify-center gap-2">
+                {projectUI.header.hasTimer && (<div className="w-full flex items-center justify-center gap-2">
                   <span className="text-[#EBECF2] text-[32px] font-bold">
-                    {project.reminderLaunchTimeBig}
+                    {reminderLaunchTimeBig}
                   </span>
                 </div>)}
               </div>

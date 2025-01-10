@@ -93,7 +93,7 @@ export const getProjectUI = (p:any, status: ProStatus) => {
             header: {
                 title: 'Whitelist Is Open',
                 subTitle: 'Participation time remaining',
-                hasPtTimer: true
+                hasTimer: true
             },
             whitelist: {
                 desc1: `Application period:`,
@@ -143,7 +143,7 @@ export const getProjectUI = (p:any, status: ProStatus) => {
             header: {
                 title: 'Contributions Are Open',
                 subTitle: `Time remaining to send funds`,
-                hasConTimer: true
+                hasTimer: true
             },
             whitelist: {
                 desc1: `You have been successfully whitelisted`
