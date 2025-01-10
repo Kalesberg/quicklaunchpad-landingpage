@@ -499,7 +499,7 @@ export default function LaunchInfoDetailPage() {
                 </div>)}
               </div>
               <div className="flex flex-col px-6 pt-4">
-                <div className={`${projectUI.whitelist.disable ?  disableStepStyle : stepEnableStyle} mb-6 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block after:absolute after:top-1/4 after:-left-8 after:w-6 after:h-6 after:rounded-full after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%] after:content-['1']`}>
+                <div className={`${projectUI.whitelist.disable ?  disableStepStyle : stepEnableStyle} before:bg-[#282D3D80] mb-6 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%] after:content-['1']`}>
                   <h3 className={`${projectUI.whitelist.disable ? 'text-[#696C80]' : 'text-[#EBECF2]'} text-sm md:text-base leading-6 font-semibold`}>
                     Whitelist
                   </h3>
@@ -532,7 +532,7 @@ export default function LaunchInfoDetailPage() {
                       </div>
                     )}
                 </div>
-                <div className={`${projectUI.lottery.disable ?  disableStepStyle : stepEnableStyle} mb-6 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block after:absolute after:top-1/4 after:-left-8 after:w-6 after:h-6 after:rounded-full after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%] after:content-['2']`}>
+                <div className={`${projectUI.lottery.disable ?  disableStepStyle : stepEnableStyle} before:bg-[#282D3D80] mb-6 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%] after:content-['2']`}>
                   <h3 className={`${projectUI.lottery.disable ? 'text-[#696C80]' : 'text-[#EBECF2]'} text-sm md:text-base leading-6 font-semibold`}>
                     Lottery
                   </h3>
@@ -541,7 +541,7 @@ export default function LaunchInfoDetailPage() {
                   </p>
                 </div>
                 {projectUI.contribution && (
-                <div className={`${projectUI.contribution.disable ? disableStepStyle : stepEnableStyle} mb-6 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block after:absolute after:top-1/4 after:-left-8 after:w-6 after:h-6 after:rounded-full after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%] after:content-['3']`}>
+                <div className={`${projectUI.contribution.disable ? disableStepStyle : stepEnableStyle} before:bg-[#282D3D80] mb-6 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%] after:content-['3']`}>
                   <h3 className={`${projectUI.contribution.disable ? 'text-[#696C80]' : 'text-[#EBECF2]'} text-sm md:text-base leading-6 font-semibold`}>
                     Contribution
                   </h3>
@@ -559,12 +559,12 @@ export default function LaunchInfoDetailPage() {
                     Contribute
                   </Button>}
                 </div>)}
-                {projectUI.completed && <div className={`${projectUI.completed.disable ?  disableStepStyle : stepEnableStyle} mb-6 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block after:absolute after:top-1/4 after:-left-8 after:w-6 after:h-6 after:rounded-full after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%] after:content-['4']`}>
+                {projectUI.completed && <div className={`${projectUI.completed.disable ?  disableStepStyle : stepEnableStyle} before:bg-[#282D3D80] mb-6 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%] after:content-['4']`}>
                   <h3 className={`${projectUI.completed.disable ? 'text-[#696C80]' : 'text-[#EBECF2]'} text-sm md:text-base leading-6 font-semibold`}>
                     Completed
                   </h3>
                 </div>}
-                {projectUI.claim && <div className={`${projectUI.claim.disable ?  disableStepStyle : stepEnableStyle} ${claimStepStyle} relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 after:content-['5'] after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]`}>
+                {projectUI.claim && <div className={`${projectUI.claim.disable ?  disableStepStyle : stepEnableStyle} before:bg-[#282D3D80] after:top-1/2 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 after:content-['5'] after:absolute after:-left-8 after:w-6 after:h-6 after:rounded-full after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]`}>
                   <h3 className={`${projectUI.claim.disable ? 'text-[#696C80]' : 'text-[#EBECF2]'} text-sm md:text-base leading-6 font-semibold`}>
                     Claim
                   </h3>
