@@ -9,8 +9,10 @@ import { useAppKitAccount } from "@reown/appkit/react";
 const SubmitApplicationModal: React.FC<{
   openModal: boolean | undefined;
   setOpenModal: (arg: boolean) => void;
+  onParticipate: (arg: boolean) => void;
+
   project: Project
-}> = ({ openModal, setOpenModal, project }) => {
+}> = ({ openModal, setOpenModal, project, onParticipate }) => {
   const [confirm, setConfirm] = useState(false);
   const [error, setError] = useState(false);
   const { address } = useAppKitAccount();
@@ -19,6 +21,7 @@ const SubmitApplicationModal: React.FC<{
   const handleModal = () => {
     setConfirm(false);
     setOpenModal(!openModal);
+    onParticipate(true);
   };
 
   const handleSubmit = async () => {
@@ -28,7 +31,6 @@ const SubmitApplicationModal: React.FC<{
     }
     try {
       const res =  await participateToProject({eoa: address, amount: project.maxUserPledgeSize.toString(), pid: project.pid});
-      console.log(res)
       if (res) {
         setConfirm(true);
       }

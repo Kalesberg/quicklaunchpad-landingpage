@@ -113,6 +113,7 @@ export default function LaunchInfoDetailPage() {
     setProjectUI(proUI);
   }, [user, project]);
 
+
   const signIn = useCallback(async () => {
     if (user || !address || !chainId) {
       return;
@@ -145,6 +146,12 @@ export default function LaunchInfoDetailPage() {
       }
     };
   }, [startTimer]);
+
+  const onParticipate = (success: boolean) => {
+    if(success) {
+      fetchProjectById();
+    }
+  }
 
   const handleParticipate = () => {
     if (kycStatus?.canPart) {
@@ -576,6 +583,7 @@ export default function LaunchInfoDetailPage() {
           openModal={openSubmitApplicationModal}
           setOpenModal={setOpenSubmitApplicationModal}
           project={project}
+          onParticipate={onParticipate}
         />
         <ContributionModal
           openModal={openContributionModal}

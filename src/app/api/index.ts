@@ -13,6 +13,7 @@ const CONTENT_BASE_URL =
 
 import axios from "axios";
 import { getProjectStatus } from "utils/project";
+import { isAddress } from "utils";
 
 export const projectApi = axios.create({
   baseURL: BASE_URL,
@@ -196,6 +197,14 @@ export const emailVerify = async (code: string) => {
 };
 
 export const participateToProject = async (payload: {eoa: string, amount: string, pid: string}) => {
+  const addr = isAddress(payload.eoa);
+  if (!addr) {
+    return false;
+  }
+  payload = {
+    ...payload,
+    eoa: addr
+  }
   try {
     const res = await authApi.post(`/projects/pledge`, payload);
     if (res.status < 400) {
