@@ -5,11 +5,24 @@ import Button from "components/common/Button";
 import { useRouter } from "next/navigation";
 
 import { getProjectsByStatus } from "app/api";
-import { Project, ProjectStatus, ChainIdToName } from "state/type";
+import { Project, ProStatus, User, ProjectStatus } from "state/type";
 import { getReminderTimeStampString, getReminderDate } from "utils/time";
+import { getProjectStatus } from "utils/project";
+import { useSelector } from "react-redux";
 
-const LaunchCard: React.FC<Project> = (p: Project) => {
+const LaunchCard: React.FC<{p: Project, user: User}> = ({p, user}) => {
+  
   const router = useRouter();
+  const [proStatus, setProStatus] = useState<ProStatus>(ProStatus.TBA);
+
+  useEffect(() => {
+    if (!p) {
+      return;
+    }
+    const status = getProjectStatus(p, user?.uid);
+    setProStatus(status);
+  }, [user, p]);
+
   return (
     <div className="bg-[#1B1E29] rounded-2xl overflow-hidden">
       <div className="relative h-48 py-4">
@@ -22,17 +35,18 @@ const LaunchCard: React.FC<Project> = (p: Project) => {
         />
         <span
           className={`absolute top-4 right-4 px-2 py-1 rounded-md text-xs ${
-            p.status === "pledging"
+            (proStatus === "pledging" || proStatus === "participated")
               ? "bg-[#0FC679]"
-              : p.status === "upcoming"
+              : (proStatus !== "tba")
                 ? "bg-blue-500"
                 : "bg-[#FDD835]"
           }`}
         >
-          {p.status === "pledging"
+          { (proStatus === "pledging" || proStatus === "participated")
             ? `${p.reminderLaunchTime} left`
-            : p.status === "upcoming"
-              ? `In ${p.reminderDay} days`
+            : proStatus === "upcoming"
+              ? `In ${p.reminderDay} days` :
+              (proStatus !== "tba") ? "Live"
               : "TBA"}
         </span>
       </div>
@@ -78,11 +92,11 @@ const LaunchCard: React.FC<Project> = (p: Project) => {
           onClick={() =>
             router.push(`/dashboard/launch-info/${p.pid}?status=${p.status}`)
           }
-          variant={p.status === "pledging" ? "primary" : "secondary"}
+          variant={(proStatus === "pledging" || proStatus === "win") ? "primary" : "secondary"}
           size="medium"
           fullWidth
         >
-          {p.status === "pledging" ? "Participate Now" : "More Details"}
+          {proStatus === "pledging" ? "Participate Now" : proStatus === "win" ? "Contribute" : "More Details"}
         </Button>
       </div>
     </div>
@@ -95,6 +109,8 @@ const LiveUpcomingLaunches: React.FC = () => {
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const [launches, setLaunches] = useState<Project[]>([]);
+  const { user } = useSelector((state: { user: User }) => state || null);
+
   const fetchLaunches = useCallback(async () => {
     try {
       const projects = await getProjectsByStatus(ProjectStatus.Live);
@@ -140,7 +156,7 @@ const LiveUpcomingLaunches: React.FC = () => {
       </p>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {launches.map((launch, index) => (
-          <LaunchCard key={index} {...launch} />
+          <LaunchCard key={index} p={launch} user={user} />
         ))}
       </div>
     </section>
