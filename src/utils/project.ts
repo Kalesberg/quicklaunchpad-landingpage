@@ -1,4 +1,5 @@
 import { ProStatus } from "state/type"
+import { convertDateTime } from "./time";
 
 export const getProjectStatus = (p:any, address?: any) => {
     if (p.status !== ProStatus.COMPLETED) {
@@ -41,7 +42,7 @@ export const getProjectStatus = (p:any, address?: any) => {
     return ProStatus.COMPLETED;
 }
   
-export const getProjectUI = (p:any, status: ProStatus) => {
+export const getProjectUI = (p:any, status: ProStatus, uid?: string) => {
     if (status === ProStatus.TBA) {
         return {
             header: {
@@ -200,6 +201,11 @@ export const getProjectUI = (p:any, status: ProStatus) => {
             }
         }
     } else if (status === ProStatus.CONTRIBUTED) {
+        const contribution = p.contributions.find((c: any) => c.eoa === uid)
+        let contributeDate = ''
+        if (contribution) {
+            contributeDate = convertDateTime(parseInt(contribution.txTimestamp) * 1000);
+        }
         return {
             header: {
                 title: 'Success!',
@@ -212,7 +218,7 @@ export const getProjectUI = (p:any, status: ProStatus) => {
                 desc1: `Congratulations, your entry was randomly selected to participate in this launch!`,
             },
             contribution: {
-                desc1: `Contributed on `
+                desc1: `Contributed on ${contributeDate}`
             },
             completed: {},
             claim: { disable: true }

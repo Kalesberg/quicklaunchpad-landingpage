@@ -79,6 +79,7 @@ export default function LaunchInfoDetailPage() {
       setProject(res);
       const res1 = await getProjectsContent(res.contentUrl);
       setConent(res1?.data?.attributes?.content);
+      console.log(project)
     } catch (err) {
       console.log("[PreviousLaunches] projects Club error: ", err);
     }
@@ -105,7 +106,7 @@ export default function LaunchInfoDetailPage() {
     }
     const status = getProjectStatus(project, user?.uid);
     setProStatus(status);
-    const proUI = getProjectUI(project, status);
+    const proUI = getProjectUI(project, status, user?.uid);
     if (proUI.header?.hasTimer ) {
       setStartTimer(true);
     }
@@ -496,7 +497,7 @@ export default function LaunchInfoDetailPage() {
             </div>
             {
             projectUI &&(<div className="flex-[30%] h-full bg-[#1B1E29] py-6 rounded-xl mb-5 md:mb-0">
-              <div className="border-b-2 border-[#919EAB14] pb-4">
+              <div className="border-b-2 border-[#919EAB14] pb-4 pl-2 pr-2">
                 <h2 className="text-[#EBECF2] text-xl md:text-2xl leading-9 text-center font-bold">
                   {projectUI.header.title}
                 </h2>
