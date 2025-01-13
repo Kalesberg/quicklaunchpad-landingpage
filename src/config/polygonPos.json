@@ -106,5 +106,6 @@
   },
   "maxHops": 3,
   "maxChunks": 400,
-  "blocksPerFetch": 30
+  "blocksPerFetch": 30,
+  "usdtAddr": "0x3a53c2319F8d7cb9DfaE2aABE9E58595221B890d"
 }

@@ -10,6 +10,11 @@ import Button from "./Button";
 import { CheckIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { Project } from "state/type";
+import { useAppKitProvider, useAppKitAccount } from "@reown/appkit/react"
+import { Contract, ethers, utils } from 'ethers'
+
+import { usdtAbi } from 'config/contract'
+import { contributeToProject } from "app/api";
 
 interface Network {
   id: string;
@@ -65,26 +70,63 @@ const ContributionModal: React.FC<ContributionModalProps> = ({
 
   const [confirm, setConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState('');
 
   const handleModal = () => {
     setConfirm(false);
     setOpenModal(!openModal);
   };
+  const { walletProvider } = useAppKitProvider('eip155')
+  console.log('project is', project)
 
   const handleSubmit = async () => {
-    setLoading(true);
-    // The Contract object
-    // const USDTContract = new Contract(USDTAddress, USDTAbi, signer)
-    // const USDTBalance = await USDTContract.balanceOf(address)
 
-    // console.log(formatUnits(USDTBalance, 18))
-
-    // setTimeout(() => {
-    //   setLoading(false);
-    //   setConfirm(true);
-    // }, 1500);
-  };
+    try {
+      const ethersProvider = new ethers.providers.Web3Provider(walletProvider as any)
+      const signer = await ethersProvider.getSigner()
+      setError('');
+  
+      if (!signer) {
+        alert("Unable to fetch signer. Please connect your wallet.");
+        return;
+      }
+      const address = await signer.getAddress();
+      const USDTContract = new Contract(project.network.usdtAddr, usdtAbi, signer)
+      const USDTBalance = await USDTContract.balanceOf(address)
+      const balance = parseInt(USDTBalance)
+      if (balance < project.maxUserPledgeSize) {
+        setError('Insufficient balance. Top up your wallet or try another network.');
+        return;
+      }
+      setLoading(true);
+      const amountInUnits = ethers.utils.parseUnits(project.maxUserPledgeSize.toString(), 18);
+      // Send the transaction
+      const tx = await USDTContract.transfer(project.depositWallet, amountInUnits);
+  
+      console.log("Transaction sent. Hash:", tx.hash);
+      await tx.wait();
+      const res = await contributeToProject({
+        pid: project.pid,
+        eoa: address,
+        amount: project.maxUserPledgeSize.toString(),
+        tx_hash: tx.hash,
+        chain_id: project.chainId,
+        token: project.network.usdtAddr,
+        tx_timestamp: Date.now()/1000
+      })
+      if (!res) {
+        throw Error('failed to calling the contribution API')
+      }
+      if (res) {
+        setLoading(false);
+        setConfirm(true);  
+      }
+  
+    } catch (e) {
+      setLoading(false);
+      setError('Something went wrong! Please try again.')
+    }
+};
 
   return (
     openModal && (
@@ -242,7 +284,7 @@ const ContributionModal: React.FC<ContributionModalProps> = ({
                       className="w-6 h-6"
                     />
                     <p className="text-[#FFD6D6] text-sm leading-5">
-                      Wrong network! Please switch to BSC to contribute.
+                      {error}
                     </p>
                   </div>
                 )}

@@ -216,3 +216,26 @@ export const participateToProject = async (payload: {eoa: string, amount: string
   }
 };
 
+export const contributeToProject = async (payload: {pid: string, eoa: string, amount: string, tx_hash: string, chain_id: string, token: string, tx_timestamp: number }) => {
+
+  const addr = isAddress(payload.eoa);
+  if (!addr) {
+    return false;
+  }
+  payload = {
+    ...payload,
+    eoa: addr
+  }
+  try {
+    const res = await authApi.post(`/projects/contribute`, payload);
+    console.log('1111', res)
+    if (res.status < 400) {
+      return true;
+    }
+    return false;  
+  } catch(e) {
+    throw e
+  }
+};
+
+

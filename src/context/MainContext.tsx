@@ -11,6 +11,7 @@ import {
   base,
   optimism,
   polygon,
+  polygonAmoy
 } from "@reown/appkit/networks";
 import { Provider } from "react-redux";
 import store from "../reduxStore/store";
@@ -51,7 +52,7 @@ const metadata = {
 createAppKit({
   adapters: [new Ethers5Adapter()],
   metadata,
-  networks: [mainnet, arbitrum, avalanche, base, optimism, polygon],
+  networks: [mainnet, arbitrum, avalanche, base, optimism, polygon, polygonAmoy],
   projectId,
 });
 
