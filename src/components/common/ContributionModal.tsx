@@ -5,7 +5,7 @@ import {
   XMarkIcon,
 } from "@heroicons/react/20/solid";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "./Button";
 import { CheckIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
@@ -41,7 +41,9 @@ const ContributionModal: React.FC<ContributionModalProps> = ({
   project
 }) => {
   const [selectedNetwork, setSelectedNetwork] = useState<string>("polygon");
-  const [selectedToken, setSelectedToken] = useState<string>("USDT");
+  const [tokens, setTokens] = useState<any>([]);
+  const [selectedToken, setSelectedToken] = useState<any>(null);
+  const [txHash, setTxHash] = useState<string>("polygon");
 
   const networks: Network[] = [
     {
@@ -53,45 +55,52 @@ const ContributionModal: React.FC<ContributionModalProps> = ({
     // { id: "ethereum", name: "Ethereum", icon: "/assets/images/ethereum.png" },
   ];
 
-  const tokens: Token[] = [
-    {
-      symbol: "USDT",
-      name: "Tether",
-      icon: "/assets/images/usdt.png",
-      balance: project.maxUserPledgeSize
-    },
-    // {
-    //   symbol: "USDC",
-    //   name: "USDCoin",
-    //   icon: "/assets/images/usdc.png",
-    //   balance: 150.0,
-    // },
-  ];
-
   const [confirm, setConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (!project) {
+      return
+    }
+    const tokens = project.fundingTokens.map(token => {
+      const symbol = token.name === 'USDT' ? 'Tether' : 'USDCoin'
+      const icon = token.name === 'USDT' ? '/assets/images/usdt.png' : '/assets/images/usdc.png'
+      return  {
+        ...token,
+        symbol,
+        icon,
+        balance: project.maxUserPledgeSize
+      }
+    });
+    setTokens(tokens);
+    setSelectedToken(tokens[0]);
+  }, []);
+
 
   const handleModal = () => {
     setConfirm(false);
     setOpenModal(!openModal);
   };
   const { walletProvider } = useAppKitProvider('eip155')
-  console.log('project is', project)
 
   const handleSubmit = async () => {
-
     try {
+      setTxHash('');
+      setError('');
+      if (!selectedToken) {
+        setError('Please choose a funding token.');
+        return;
+      }
       const ethersProvider = new ethers.providers.Web3Provider(walletProvider as any)
       const signer = await ethersProvider.getSigner()
-      setError('');
   
       if (!signer) {
-        alert("Unable to fetch signer. Please connect your wallet.");
+        setError('Unable to fetch signer. Please connect your wallet.');
         return;
       }
       const address = await signer.getAddress();
-      const USDTContract = new Contract(project.network.usdtAddr, usdtAbi, signer)
+      const USDTContract = new Contract(selectedToken.address, usdtAbi, signer)
       const USDTBalance = await USDTContract.balanceOf(address)
       const balance = parseInt(USDTBalance)
       if (balance < project.maxUserPledgeSize) {
@@ -99,11 +108,12 @@ const ContributionModal: React.FC<ContributionModalProps> = ({
         return;
       }
       setLoading(true);
-      const amountInUnits = ethers.utils.parseUnits(project.maxUserPledgeSize.toString(), 18);
+      const amountInUnits = ethers.utils.parseUnits(project.maxUserPledgeSize.toString(), selectedToken.decimals);
       // Send the transaction
       const tx = await USDTContract.transfer(project.depositWallet, amountInUnits);
   
       console.log("Transaction sent. Hash:", tx.hash);
+      setTxHash(tx.hash);
       await tx.wait();
       const res = await contributeToProject({
         pid: project.pid,
@@ -111,7 +121,12 @@ const ContributionModal: React.FC<ContributionModalProps> = ({
         amount: project.maxUserPledgeSize.toString(),
         tx_hash: tx.hash,
         chain_id: project.chainId,
-        token: project.network.usdtAddr,
+        token: {
+          address: selectedToken.address,
+          chainId: selectedToken.chainId,
+          decimals: selectedToken.decimals,
+          name: selectedToken.name
+        },
         tx_timestamp: Date.now()/1000
       })
       if (!res) {
@@ -123,6 +138,7 @@ const ContributionModal: React.FC<ContributionModalProps> = ({
       }
   
     } catch (e) {
+      console.log(e)
       setLoading(false);
       setError('Something went wrong! Please try again.')
     }
@@ -136,7 +152,7 @@ const ContributionModal: React.FC<ContributionModalProps> = ({
             {/* Header */}
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-[#EBECF2] text-xl font-semibold">
-                Contribute 2,000 {selectedToken}
+                Contribute {project.maxUserPledgeSize} {selectedToken.name}
               </h2>
             </div>
             <div className="max-w-[520px] min-h-80 flex flex-col justify-center items-center gap-6">
@@ -171,10 +187,11 @@ const ContributionModal: React.FC<ContributionModalProps> = ({
                     height={126}
                   />
                   <p className="text-[#EBECF2] text-lg font-bold leading-7">
-                    2,000 USDT has been contributed successfully!
+                    {project.maxUserPledgeSize} {selectedToken.name} has been contributed successfully!
                   </p>
                   <Link
-                    href="#"
+                    href={`${project.network.blockExplorer}/tx/${txHash}`}
+                    target="_blank"
                     className="flex items-center gap-2 text-[#448AFF] text-[15px] font-bold leading-6 hover:underline"
                   >
                     View on block explorer{" "}
@@ -240,12 +257,12 @@ const ContributionModal: React.FC<ContributionModalProps> = ({
                     Funding token
                   </label>
                   <div className="flex gap-2">
-                    {tokens.map((token) => (
+                    {tokens.map((token: any) => (
                       <button
                         key={token.symbol}
-                        onClick={() => setSelectedToken(token.symbol)}
+                        onClick={() => setSelectedToken(token)}
                         className={`flex items-center justify-between w-full px-4 py-2 rounded-lg ${
-                          selectedToken === token.symbol
+                          (selectedToken && selectedToken.symbol === token.symbol)
                             ? "bg-[#448AFF1F] border border-[#448AFF]"
                             : "bg-[#919EAB14]"
                         }`}
@@ -259,10 +276,10 @@ const ContributionModal: React.FC<ContributionModalProps> = ({
                           />
                           <div className="text-left">
                             <div className="text-[#EBECF2] text-sm leading-6 font-semibold">
-                              {token.symbol}
+                              {token.name}
                             </div>
                             <div className="text-[#EBECF2] text-xs leading-5 font-normal">
-                              {token.name}
+                              {token.symbol}
                             </div>
                           </div>
                         </div>
@@ -297,7 +314,7 @@ const ContributionModal: React.FC<ContributionModalProps> = ({
                     Contribution amount:
                   </label>
                   <span className="text-[#C7CAD9] text-lg font-bold">
-                    {project.maxUserPledgeSize} {selectedToken}
+                    {project.maxUserPledgeSize} {selectedToken.name}
                   </span>
                 </div>
 
@@ -308,7 +325,7 @@ const ContributionModal: React.FC<ContributionModalProps> = ({
                   className="w-full !text-[15px] font-bold capitalize leading-6 hover:!bg-blue-600"
                   onClick={handleSubmit}
                 >
-                  Contribute {project.maxUserPledgeSize} {selectedToken}
+                  Contribute {project.maxUserPledgeSize} {selectedToken.name}
                 </Button>
               </div>
             )}

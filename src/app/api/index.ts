@@ -216,7 +216,7 @@ export const participateToProject = async (payload: {eoa: string, amount: string
   }
 };
 
-export const contributeToProject = async (payload: {pid: string, eoa: string, amount: string, tx_hash: string, chain_id: string, token: string, tx_timestamp: number }) => {
+export const contributeToProject = async (payload: {pid: string, eoa: string, amount: string, tx_hash: string, chain_id: string, token: any, tx_timestamp: number }) => {
 
   const addr = isAddress(payload.eoa);
   if (!addr) {
