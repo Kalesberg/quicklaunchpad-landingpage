@@ -206,18 +206,18 @@ export default function LaunchInfoDetailPage() {
                       <div className="flex justify-start md:justify-between gap-2">
                         <span
                           className={`max-w-20 md:max-w-full md:min-w-24 h-[24px] px-2 py-1 rounded-md text-xs text-center font-bold ${
-                            project.status === "pledging"
-                              ? "bg-[#0FC67929] text-[#0FC679]"
-                              : project.status === "upcoming"
-                                ? "bg-[#FDD83529] text-[#FDD835]"
-                                : "bg-[#8E33FF29] text-[#C684FF]"
+                            (proStatus === "upcoming" || proStatus === "tba")
+                              ? "bg-[#FDD83529] text-[#FDD835]" 
+                              : proStatus === "completed"
+                                ? "bg-[#8E33FF29] text-[#C684FF]"
+                                : "bg-[#0FC67929] text-[#0FC679]"
                           }`}
                         >
-                          {project.status === "pledging"
-                            ? "Open"
-                            : project.status === "upcoming"
-                              ? "Upcoming"
-                              : "Closed"}
+                          {(proStatus === "upcoming" || proStatus === "tba")
+                            ? "Upcoming"
+                            : proStatus === "completed"
+                              ? "Closed"
+                              : "Open"}
                         </span>
                         <span
                           className={`min-w-24 h-[24px] px-2 py-1 rounded-md text-xs text-center font-bold ${
@@ -510,7 +510,7 @@ export default function LaunchInfoDetailPage() {
                 </div>)}
               </div>
               <div className="flex flex-col px-6 pt-4">
-                <div className={`${projectUI.whitelist.disable ?  'after:bg-[#DFE3E8] after:text-[#919EAB]' : 'after:bg-[#448AFF] after:text-[#EBECF2]'} before:bg-[#282D3D80] mb-6 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%] after:content-['1']`}>
+                <div className={`${projectUI.whitelist.disable ?  'after:bg-[#DFE3E8] after:text-[#919EAB]' : 'after:bg-[#448AFF] after:text-[#EBECF2]'} before:bg-[#282D3D80] mb-6 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%] after:content-['1'] mr-3`}>
                   <h3 className={`${projectUI.whitelist.disable ? 'text-[#696C80]' : 'text-[#EBECF2]'} text-sm md:text-base leading-6 font-semibold`}>
                     Whitelist
                   </h3>
@@ -543,7 +543,7 @@ export default function LaunchInfoDetailPage() {
                       </div>
                     )}
                 </div>
-                <div className={`${projectUI.lottery.disable ?  'after:bg-[#DFE3E8] after:text-[#919EAB]' : 'after:bg-[#448AFF] after:text-[#EBECF2]'} before:bg-[#282D3D80] mb-6 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%] after:content-['2']`}>
+                <div className={`${projectUI.lottery.disable ?  'after:bg-[#DFE3E8] after:text-[#919EAB]' : 'after:bg-[#448AFF] after:text-[#EBECF2]'} before:bg-[#282D3D80] mb-6 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%] after:content-['2'] mr-3`}>
                   <h3 className={`${projectUI.lottery.disable ? 'text-[#696C80]' : 'text-[#EBECF2]'} text-sm md:text-base leading-6 font-semibold`}>
                     Lottery
                   </h3>
@@ -552,7 +552,7 @@ export default function LaunchInfoDetailPage() {
                   </p>
                 </div>
                 {projectUI.contribution && (
-                <div className={`${projectUI.contribution.disable ? 'after:bg-[#DFE3E8] after:text-[#919EAB]' : 'after:bg-[#448AFF] after:text-[#EBECF2]'} before:bg-[#282D3D80] mb-6 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%] after:content-['3']`}>
+                <div className={`${projectUI.contribution.disable ? 'after:bg-[#DFE3E8] after:text-[#919EAB]' : 'after:bg-[#448AFF] after:text-[#EBECF2]'} before:bg-[#282D3D80] mb-6 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%] after:content-['3'] mr-3`}>
                   <h3 className={`${projectUI.contribution.disable ? 'text-[#696C80]' : 'text-[#EBECF2]'} text-sm md:text-base leading-6 font-semibold`}>
                     Contribution
                   </h3>
@@ -570,7 +570,7 @@ export default function LaunchInfoDetailPage() {
                     Contribute
                   </Button>}
                 </div>)}
-                {projectUI.completed && <div className={`${projectUI.completed.disable ?  'after:bg-[#DFE3E8] after:text-[#919EAB]' : 'after:bg-[#448AFF] after:text-[#EBECF2]'} before:bg-[#282D3D80] mb-6 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%] after:content-['4']`}>
+                {projectUI.completed && <div className={`${projectUI.completed.disable ?  'after:bg-[#DFE3E8] after:text-[#919EAB]' : 'after:bg-[#448AFF] after:text-[#EBECF2]'} before:bg-[#282D3D80] mb-6 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%] after:content-['4'] mr-3`}>
                   <h3 className={`${projectUI.completed.disable ? 'text-[#696C80]' : 'text-[#EBECF2]'} text-sm md:text-base leading-6 font-semibold`}>
                     Completed
                   </h3>
