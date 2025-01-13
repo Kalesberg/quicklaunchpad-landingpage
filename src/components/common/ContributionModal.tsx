@@ -37,7 +37,7 @@ const ContributionModal: React.FC<ContributionModalProps> = ({
 }) => {
   const [selectedNetwork, setSelectedNetwork] = useState<string>("polygon");
   const [selectedToken, setSelectedToken] = useState<string>("USDT");
-  console.log('1111', project)
+
   const networks: Network[] = [
     {
       id: project.network?.chainId,
@@ -53,14 +53,14 @@ const ContributionModal: React.FC<ContributionModalProps> = ({
       symbol: "USDT",
       name: "Tether",
       icon: "/assets/images/usdt.png",
-      balance: 150000.0,
+      balance: project.maxUserPledgeSize
     },
-    {
-      symbol: "USDC",
-      name: "USDCoin",
-      icon: "/assets/images/usdc.png",
-      balance: 150.0,
-    },
+    // {
+    //   symbol: "USDC",
+    //   name: "USDCoin",
+    //   icon: "/assets/images/usdc.png",
+    //   balance: 150.0,
+    // },
   ];
 
   const [confirm, setConfirm] = useState(false);
@@ -72,12 +72,18 @@ const ContributionModal: React.FC<ContributionModalProps> = ({
     setOpenModal(!openModal);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setConfirm(true);
-    }, 1500);
+    // The Contract object
+    // const USDTContract = new Contract(USDTAddress, USDTAbi, signer)
+    // const USDTBalance = await USDTContract.balanceOf(address)
+
+    // console.log(formatUnits(USDTBalance, 18))
+
+    // setTimeout(() => {
+    //   setLoading(false);
+    //   setConfirm(true);
+    // }, 1500);
   };
 
   return (
@@ -249,7 +255,7 @@ const ContributionModal: React.FC<ContributionModalProps> = ({
                     Contribution amount:
                   </label>
                   <span className="text-[#C7CAD9] text-lg font-bold">
-                    2,000 {selectedToken}
+                    {project.maxUserPledgeSize} {selectedToken}
                   </span>
                 </div>
 
@@ -260,7 +266,7 @@ const ContributionModal: React.FC<ContributionModalProps> = ({
                   className="w-full !text-[15px] font-bold capitalize leading-6 hover:!bg-blue-600"
                   onClick={handleSubmit}
                 >
-                  Contribute 2,000 {selectedToken}
+                  Contribute {project.maxUserPledgeSize} {selectedToken}
                 </Button>
               </div>
             )}
