@@ -98,11 +98,11 @@ const Header = () => {
 
   const navItemsDashboard = [
     { name: "Launchpads", href: "/dashboard", icon: "ic-dashboard.svg" },
-    // {
-    //   name: "My Launches",
-    //   href: "/dashboard/my-launches",
-    //   icon: "ic-label.svg",
-    // },
+    {
+      name: "My Launches",
+      href: "/dashboard/my-launches",
+      icon: "ic-label.svg",
+    },
     { name: "Profile", href: "/profile", icon: "ic-user.svg" },
   ];
 

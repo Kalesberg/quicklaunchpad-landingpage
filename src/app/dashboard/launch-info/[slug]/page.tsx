@@ -12,7 +12,7 @@ import {
 } from "../../../../../public/assets/images/social-icons";
 import Button from "components/common/Button";
 import clsx from "clsx";
-import { getProjectsById, getProjectsByIdTemp, getProjectsContent } from "app/api";
+import { getProjectsById, getProjectsContent } from "app/api";
 import { useSearchParams, useParams } from "next/navigation";
 import { ProjectStatus, ProStatus } from "state/type";
 import { getReminderTimeStampString, getReminderDate } from "utils/time";
@@ -78,11 +78,9 @@ export default function LaunchInfoDetailPage() {
   const fetchProjectById = useCallback(async () => {
     try {
       const res = await getProjectsById(projectId as string);
-      // const res = await getProjectsByIdTemp(projectId as string); //TODO - remove this for testing
       setProject(res);
       const res1 = await getProjectsContent(res.contentUrl);
       setConent(res1?.data?.attributes?.content);
-      console.log(project)
     } catch (err) {
       console.log("[PreviousLaunches] projects Club error: ", err);
     }
@@ -113,7 +111,6 @@ export default function LaunchInfoDetailPage() {
     if (proUI.header?.hasTimer ) {
       setStartTimer(true);
     }
-
     setProjectUI(proUI);
     if (user?.kycStatus === "notstarted") {
       const blockpass = new BlockpassKYCConnect(BLOCKPASS_CLIENTID);
