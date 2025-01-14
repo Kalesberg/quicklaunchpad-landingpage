@@ -13,6 +13,7 @@ import { updateUser } from "../../../reduxStore/rootReducer";
 import { updateUser as updateUserApi } from "app/api";
 import { useDispatch } from 'react-redux';
 import { kycStatuses, KycStatus } from "state/type";
+import { BLOCKPASS_CLIENTID } from "app/service/userService";
 
 declare const BlockpassKYCConnect: any
 
@@ -46,7 +47,7 @@ const EmailNotVerify : React.FC<{ openModal?: boolean; setOpenModal?: any, user:
   }
 
   useEffect(() => {
-    const blockpass = new BlockpassKYCConnect("visionvault_hackathon");
+    const blockpass = new BlockpassKYCConnect(BLOCKPASS_CLIENTID);
     blockpass.startKYCConnect();  
   }, []);
 

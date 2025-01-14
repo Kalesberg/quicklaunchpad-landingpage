@@ -4,6 +4,8 @@ import { getAuthCode, getUser, logIn } from "app/api";
 import { ethers } from 'ethers';
 import { SiweMessage } from 'siwe';
 
+export const BLOCKPASS_CLIENTID = 'visionvault_hackathon';
+
 export const signInWithWallet = async (address: string, chainId: number) => {
     if (!address) {
         return

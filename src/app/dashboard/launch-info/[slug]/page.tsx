@@ -30,6 +30,9 @@ import { updateUser } from "../../../../reduxStore/rootReducer";
 import { signInWithWallet } from "app/service/userService";
 import { useRouter } from "next/navigation";
 import { getProjectStatus, getProjectUI } from "utils/project";
+import { BLOCKPASS_CLIENTID } from "app/service/userService";
+
+declare const BlockpassKYCConnect: any
 
 export default function LaunchInfoDetailPage() {
   // const { project } = useSelector((state: { project: Project }) => state || {});
@@ -128,6 +131,15 @@ export default function LaunchInfoDetailPage() {
   useEffect(() => {
     signIn();
   }, [signIn]);
+
+  useEffect(() => {
+    // startKYCConnect();
+    if (user?.kycStatus === "notstarted") {
+      const blockpass = new BlockpassKYCConnect(BLOCKPASS_CLIENTID);
+      blockpass.startKYCConnect();    
+    }
+  }, [user]);
+
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -359,9 +371,9 @@ export default function LaunchInfoDetailPage() {
 
                   <div className="flex-[25%] justify-items-end">
                     <Button
+                      id="blockpass-kyc-connect"
                       variant="primary"
                       className="flex-1 md:flex-none !h-9 !bg-[#FDD835] !text-[#1B1E29] !text-sm text-center !font-bold !leading-3 rounded-lg px-4 hover:bg-[#FDD83566]"
-                      onClick={() => open()}
                     >
                       Complete KYC
                     </Button>
@@ -459,6 +471,7 @@ export default function LaunchInfoDetailPage() {
                         complete KYC.
                       </p>
                       <Button
+                        id="blockpass-kyc-connect"
                         variant="primary"
                         size="small"
                         className="!h-9 mx-auto mt-4"
