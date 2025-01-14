@@ -1,5 +1,6 @@
-import { ProStatus } from "state/type"
+import { KycStatus, ProStatus } from "state/type"
 import { convertDateTime } from "./time";
+
 
 export const getProjectStatus = (p:any, address?: any) => {
     if (p.status !== ProStatus.COMPLETED) {
@@ -45,49 +46,27 @@ export const getProjectStatus = (p:any, address?: any) => {
 export const getProjectUI = (p:any, status: ProStatus, uid?: string) => {
     if (status === ProStatus.TBA) {
         return {
-            header: {
-                title: 'Coming Soon',
-            },
+            header: comingSoon,
             whitelist: {
                 desc1: 'TBA',
                 disable: true
             },
-            lottery: {
-                disable: true
-            },
-            contribution: {
-                disable: true
-            },
-            completed: {
-                disable: true
-            },
-            claim: {
-                disable: true
-            }
+            lottery: disabled,
+            contribution: disabled,
+            completed: disabled,
+            claim: disabled
         }
     } else if (status === ProStatus.UPCOMING) {
         return {
-            header: {
-                title: 'Coming Soon',
-            },
-            whitelist: {
-                desc1: `Application period:`,
-                desc2: `${p.pledgeStartDate} – ${p.pledgeEndDate}`
-            },
-            lottery: {
-                desc1: `Winners will be announced on ${p.pledgeEndDate}`,
-                disable: true
-            },
+            header: comingSoon,
+            whitelist: defaultWhiltelist(p),
+            lottery: defaultLottery(p, true),
             contribution: {
                 desc1: `Expires on ${p.contributionEndDate}`,
                 disable: true
             },
-            completed: {
-                disable: true
-            },
-            claim: {
-                disable: true
-            }
+            completed: disabled,
+            claim: disabled
         }
     } else if (status === ProStatus.PLEDGING) {
         return {
@@ -96,25 +75,12 @@ export const getProjectUI = (p:any, status: ProStatus, uid?: string) => {
                 subTitle: 'Participation time remaining',
                 hasTimer: true
             },
-            whitelist: {
-                desc1: `Application period:`,
-                desc2: `${p.pledgeStartDate} – ${p.pledgeEndDate}`,
-                hasBtn: true
-            },
-            lottery: {
-                desc1: `Winners will be announced on ${p.pledgeEndDate}`,
-                disable: true
-            },
-            contribution: {
-                desc1: `Expires on ${p.contributionEndDate}`,
-                disable: true
-            },
-            completed: {
-                disable: true
-            },
-            claim: {
-                disable: true
-            }
+            whitelist: defaultWhiltelist(p, true),
+            lottery:defaultLottery(p, true),
+            contribution: defaultContribution(p, true),
+            completed:disabled,
+            claim: disabled,
+            expandTab: {}
         }
     }else if (status === ProStatus.PARTICIPATED) {
         return {
@@ -125,19 +91,10 @@ export const getProjectUI = (p:any, status: ProStatus, uid?: string) => {
             whitelist: {
                 desc1: `You have been successfully whitelisted`
             },
-            lottery: {
-                desc1: `Winners will be announced on ${p.pledgeEndDate}`,
-            },
-            contribution: {
-                desc1: `Expires on ${p.contributionEndDate}`,
-                disable: true
-            },
-            completed: {
-                disable: true
-            },
-            claim: {
-                disable: true
-            }
+            lottery: defaultLottery(p),
+            contribution: defaultContribution(p, true),
+            completed: disabled,
+            claim: disabled
         }
     } else if (status === ProStatus.WIN) {
         return {
@@ -157,12 +114,9 @@ export const getProjectUI = (p:any, status: ProStatus, uid?: string) => {
                 desc2: `${p.contributionStartDate} – ${p.contributionEndDate}`,
                 hasBtn: true
             },
-            completed: {
-                disable: true
-            },
-            claim: {
-                disable: true
-            }
+            completed: disabled,
+            claim: disabled,
+            expandTab: true
         }
     } else if (status === ProStatus.NOTWIN) {
         return {
@@ -181,11 +135,9 @@ export const getProjectUI = (p:any, status: ProStatus, uid?: string) => {
         return {
             header: {
                 title: 'Launch Timeline',
+                subTitle: 'You are not participating in this launch.'
             },
-            whitelist: {
-                desc1: `Application period:`,
-                desc2: `${p.pledgeStartDate} – ${p.pledgeEndDate}`
-            },
+            whitelist: defaultWhiltelist(p),
             lottery: {
                 desc1: `Winners have been announced on ${p.pledgeEndDate}`,
             },
@@ -193,12 +145,9 @@ export const getProjectUI = (p:any, status: ProStatus, uid?: string) => {
                 desc1: `Contribution period:`,
                 desc2: `${p.contributionStartDate} – ${p.contributionEndDate}`,
             },
-            completed: {
-                disable: true
-            },
-            claim: {
-                disable: true
-            }
+            completed: disabled,
+            claim:disabled,
+            expandTab: true
         }
     } else if (status === ProStatus.CONTRIBUTED) {
         const contribution = p.contributions.find((c: any) => c.eoa === uid)
@@ -221,17 +170,15 @@ export const getProjectUI = (p:any, status: ProStatus, uid?: string) => {
                 desc1: `Contributed on ${contributeDate}`
             },
             completed: {},
-            claim: { disable: true }
+            claim: disabled,
+            expandTab: true
         }
     } else {
         return {
             header: {
                 title: 'Launch Timeline',
             },
-            whitelist: {
-                desc1: `Application period:`,
-                desc2: `${p.pledgeStartDate} – ${p.pledgeEndDate}`
-            },
+            whitelist: defaultWhiltelist(p),
             lottery: {
                 desc1: `Winners have been announced on ${p.pledgeEndDate}`,
             },
@@ -239,11 +186,109 @@ export const getProjectUI = (p:any, status: ProStatus, uid?: string) => {
                 desc1: `Contribution period:`,
                 desc2: `${p.contributionStartDate} – ${p.contributionEndDate}`,
             },
-            completed: {
-            },
-            claim: {
-            }
+            completed: {},
+            claim: {}
         }
     }
-    
 }
+
+export enum ContributionTabButton {
+    CompleteKyc = 'Complete KYC',
+    CheckKyc = 'Check your KYC status',
+    Participate = 'Participate now',
+    Contribution = 'Contribute now'
+}
+
+export const getTabsUI = (p: any, status: ProStatus, kycStatus : KycStatus) => {
+    if ([ProStatus.COMPLETED, ProStatus.TBA, ProStatus.UPCOMING, ProStatus.NOTWIN, ProStatus.CONTRIBUTING].includes(status)) {
+        return;
+    }  
+    if ([KycStatus.NOT_STARTED, KycStatus.EXPIRED].includes(kycStatus)) {
+        return ContributionNeedKyc(ContributionTabButton.CompleteKyc)
+    }
+    if ([KycStatus.PENDING, KycStatus.REJECTED, KycStatus.IN_REVIEW, KycStatus.BLOCKED].includes(kycStatus)) {
+        return ContributionNeedKyc(ContributionTabButton.CheckKyc)
+    }
+    if (status === ProStatus.PLEDGING) {
+        return  {
+            contribution: {
+                title: 'Contributions Have Not Started For This Launch',
+                subTitle: `Contribution is not available as the lottery winners haven't been announced yet. If you would like to participate, you must submit application.`,
+                btn: ContributionTabButton.Participate
+            },
+            claim: {
+                title: `Claim Isn't Available At The Moment`,
+                subTitle: `Tokens are not claimable yet. If you would like to participate, you must submit application.`,
+                btn: ContributionTabButton.Participate
+            }
+        }
+    } else if (status === ProStatus.PARTICIPATED) {
+        return  {
+            contribution: {
+                title: 'Contributions Have Not Started For This Launch',
+                subTitle: `Contributions will be available to those who win the lottery.`
+            },
+            claim: {
+                title: `Claim Isn't Available At The Moment`,
+                subTitle: `Tokens are not claimable yet.`,
+            }
+        }
+    } else if (status === ProStatus.WIN) {
+        return  {
+            contribution: {
+                title: 'Applications Are Now Open',
+                subTitle: `Contribution expires on ${p.contributionEndDate}`,
+                btn: ContributionTabButton.Contribution
+            },
+            claim: {
+                title: `Claim Isn't Available At The Moment`,
+                subTitle: `Tokens are not claimable yet. If you would like to participate, you must contribute.`,
+                btn: ContributionTabButton.Contribution
+            }
+        }
+    } else if (status === ProStatus.CONTRIBUTED) {
+        return  {
+            contribution: { contributed: true },
+            claim: {
+                title: `Claim Isn't Available At The Moment`,
+                subTitle: `Tokens are not claimable yet.`,
+            }
+        }
+    } else {
+        return null;
+    }
+}
+
+const ContributionNeedKyc = (btn: ContributionTabButton) => {
+    return  {
+        contribution: {
+            title: 'Contributions Have Not Started For This Launch',
+            subTitle: 'Contributions will be available to those who win the lottery. If you would like to participate, you must complete KYC.',
+            btn
+        },
+        claim: {
+            title: `Claim Isn't Available At The Moment`,
+            subTitle: `Tokens are not claimable yet. If you would like to participate, you must complete KYC.`,
+            btn
+        }
+    }
+}
+
+const defaultWhiltelist = (p:any, hasBtn = false) => {
+    return {
+        desc1: `Application period:`,
+        desc2: `${p.pledgeStartDate} – ${p.pledgeEndDate}`,
+        hasBtn
+    }
+}
+
+const defaultLottery = (p:any, disable = false) => {
+    return { desc1: `Winners have been announced on ${p.pledgeEndDate}`, disable}
+}
+
+const defaultContribution = (p:any, disable = false) => {
+    return { desc1: `Expires on ${p.contributionEndDate}`, disable: true}
+}
+
+const disabled = {disable: true}
+const comingSoon = {title: 'Coming Soon'}

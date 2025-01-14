@@ -29,7 +29,7 @@ import { partBtnByKyc, KycStatus } from "state/type";
 import { updateUser } from "../../../../reduxStore/rootReducer";
 import { signInWithWallet } from "app/service/userService";
 import { useRouter } from "next/navigation";
-import { getProjectStatus, getProjectUI } from "utils/project";
+import { ContributionTabButton, getProjectStatus, getProjectUI, getTabsUI } from "utils/project";
 import { BLOCKPASS_CLIENTID } from "app/service/userService";
 
 declare const BlockpassKYCConnect: any
@@ -45,20 +45,14 @@ export default function LaunchInfoDetailPage() {
     useState(false);
   const [openContributionModal, setOpenContributionModal] = useState(false);
   const [selectedTab, setSelectedTab] = useState<string>("about");
-  const tabs = [{ label: "About the Launch", value: "about" }];
-  // .concat(
-  //   status === "upcoming"
-  //     ? []
-  //     : [
-  //         { label: "My Contribution", value: "contribution" },
-  //         { label: "Claim", value: "claim" },
-  //       ],
-  // );
 
-  const searchParams = useSearchParams();
+  const tabs = [
+    { label: "About the Launch", value: "about" },
+    { label: "My Contribution", value: "contribution", expand: true },
+    { label: "Claim", value: "claim", expand: true },
+  ];
+
   const params = useParams();
-
-  const status = searchParams.get("status") || "";
   const projectId = params["slug"] || "";
 
   const [startTimer, setStartTimer] = useState(false);
@@ -67,6 +61,7 @@ export default function LaunchInfoDetailPage() {
   const [kycStatus, setKycStatus] = useState<any>(null);
   const [proStatus, setProStatus] = useState<ProStatus>(ProStatus.TBA);
   const [projectUI, setProjectUI] = useState<any>(null);
+  const [tabsUI, setTabsUI] = useState<any>(null);
 
   const [reminderLaunchTimeBig, setReminderLaunchTimeBig] =
     useState<string>("");
@@ -107,17 +102,22 @@ export default function LaunchInfoDetailPage() {
     }
     const status = getProjectStatus(project, user?.uid);
     setProStatus(status);
-    const proUI = getProjectUI(project, status, user?.uid);
+    const proUI: any = getProjectUI(project, status, user?.uid);
     if (proUI.header?.hasTimer ) {
       setStartTimer(true);
     }
     setProjectUI(proUI);
-    if (user?.kycStatus === "notstarted") {
+    if (!user) {
+      return;
+    }
+    if (user.kycStatus === "notstarted") {
       const blockpass = new BlockpassKYCConnect(BLOCKPASS_CLIENTID);
       blockpass.startKYCConnect();    
     }
-  }, [user, project]);
+    const tabsUI = getTabsUI(project, status, user.kycStatus);
+    setTabsUI(tabsUI);
 
+}, [user, project, kycStatus]);
 
   const signIn = useCallback(async () => {
     if (user || !address || !chainId) {
@@ -171,6 +171,27 @@ export default function LaunchInfoDetailPage() {
     }
   };
 
+  const handleContributionTabBtn = () => {
+    if (tabsUI.contribution.btn === ContributionTabButton.CheckKyc) {
+      window.open('https://identity.blockpass.org/', '_blank');
+    } else if (tabsUI.contribution.btn === ContributionTabButton.Participate) {
+      setOpenSubmitApplicationModal(!openSubmitApplicationModal);
+    } else if (tabsUI.contribution.btn === ContributionTabButton.Contribution) {
+      setOpenContributionModal(!openContributionModal);
+    }
+  };
+
+  const handleClaimTabBtn = () => {
+    if (tabsUI.claim.btn === ContributionTabButton.CheckKyc) {
+      window.open('https://identity.blockpass.org/', '_blank');
+    } else if (tabsUI.claim.btn === ContributionTabButton.Participate) {
+      setOpenSubmitApplicationModal(!openSubmitApplicationModal);
+    } else if (tabsUI.claim.btn === ContributionTabButton.Contribution) {
+      setOpenContributionModal(!openContributionModal);
+    }
+  };
+
+
   const handleContribute = () => {
     setOpenContributionModal(!openContributionModal);
   };
@@ -183,7 +204,7 @@ export default function LaunchInfoDetailPage() {
             <ChevronLeftIcon className="w-5 h-5 mr-2" />
             Back to Launchpads
           </Link>
-          <div className="flex flex-col md:flex-row gap-5">
+          <div className="flex flex-col md:flex-row gap-5 pb-4">
             <div className="flex-[70%] flex-grow-[2] flex-shrink">
               <div className="bg-[#1B1E29] p-5 rounded-xl mb-5">
                 <div className="w-full overflow-hidden md:flex md:gap-5">
@@ -393,7 +414,7 @@ export default function LaunchInfoDetailPage() {
               <div className="bg-[#1B1E29] w-full rounded-2xl">
                 <div className="relative min-h-12 flex justify-start px-6 gap-8 text-sm after:content-[''] after:w-full after:h-[2px] after:absolute after:bottom-0 after:left-0 after:bg-[#919EAB14]">
                   {tabs.map((t: any) => (
-                    <button
+                    (!t.expand || (t.expand && tabsUI)) &&<button
                       key={t.value}
                       className={clsx({
                         ["transition-all duration-100 ease-in-out"]: true,
@@ -455,21 +476,20 @@ export default function LaunchInfoDetailPage() {
                         className="mx-auto"
                       />
                       <h2 className="text-lg leading-7 font-bold">
-                        Contributions Have Not Started For This Launch
+                        {tabsUI.contribution.title}
                       </h2>
                       <p className="text-sm leading-6">
-                        Contributions will be available to those who win the
-                        lottery. If you would like to participate, you must
-                        complete KYC.
+                        {tabsUI.contribution.subTitle}
                       </p>
-                      <Button
-                        id="blockpass-kyc-connect"
+                      {tabsUI.contribution.btn && (<Button
+                        id={tabsUI.contribution.btn === ContributionTabButton.CompleteKyc ? "blockpass-kyc-connect" : ""}
                         variant="primary"
                         size="small"
                         className="!h-9 mx-auto mt-4"
+                        onClick={() => tabsUI.contribution.btn !== ContributionTabButton.CompleteKyc && handleContributionTabBtn()}
                       >
-                        Check your KYC status
-                      </Button>
+                        {tabsUI.contribution.btn}
+                      </Button>)}
                     </div>
                   )}
                   {selectedTab === "claim" && (
@@ -482,19 +502,20 @@ export default function LaunchInfoDetailPage() {
                         className="mx-auto"
                       />
                       <h2 className="text-lg leading-7 font-bold">
-                        Claim Isn&apos;t Available At The Moment
+                        {tabsUI.claim.title}
                       </h2>
                       <p className="text-sm leading-6">
-                        Tokens are not claimable yet. If you would like to
-                        participate, you must complete KYC.
+                        {tabsUI.claim.subTitle}
                       </p>
-                      <Button
+                      {tabsUI.claim.btn && <Button
+                        id={tabsUI.claim.btn === ContributionTabButton.CompleteKyc ? "blockpass-kyc-connect" : ""}
                         variant="primary"
                         size="small"
                         className="!h-9 mx-auto mt-4"
+                        onClick={() => tabsUI.claim.btn !== ContributionTabButton.CompleteKyc && handleClaimTabBtn()}
                       >
-                        Check your KYC status
-                      </Button>
+                        {tabsUI.claim.btn}
+                      </Button>}
                     </div>
                   )}
                 </div>
