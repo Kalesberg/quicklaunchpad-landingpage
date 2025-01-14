@@ -115,6 +115,10 @@ export default function LaunchInfoDetailPage() {
     }
 
     setProjectUI(proUI);
+    if (user?.kycStatus === "notstarted") {
+      const blockpass = new BlockpassKYCConnect(BLOCKPASS_CLIENTID);
+      blockpass.startKYCConnect();    
+    }
   }, [user, project]);
 
 
@@ -131,15 +135,6 @@ export default function LaunchInfoDetailPage() {
   useEffect(() => {
     signIn();
   }, [signIn]);
-
-  useEffect(() => {
-    // startKYCConnect();
-    if (user?.kycStatus === "notstarted") {
-      const blockpass = new BlockpassKYCConnect(BLOCKPASS_CLIENTID);
-      blockpass.startKYCConnect();    
-    }
-  }, [user]);
-
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
