@@ -12,8 +12,8 @@ import { useRouter } from "next/navigation";
 export default function MyLaunchesPage() {
   const { user } = useSelector((state: { user: User }) => state || {});
   const [projects, setProjects] = useState<any[]>([]);
-  const [contribution, setContribtion] = useState(null);
-  const [fundingToken, setFundingToken] = useState(null);
+  const [myLaunchesInfo, setMyLaunchesInfo] = useState<any[]>([]);
+
   const router = useRouter();
 
   const getLaunches = useCallback(async () => {
@@ -21,7 +21,6 @@ export default function MyLaunchesPage() {
       return;
     }
     const res = await getMyLaunches(user.uid as string);
-    console.log(res);
     const projects = res.map((p: any) => {
       const contribution = p.contributions.find((c: any) => c.eoa === user.uid);
       const participate = p.allocation.participants.find((f: any) => f.eoa === user.uid);
@@ -30,77 +29,33 @@ export default function MyLaunchesPage() {
         contribution,
         participate
       }
-
-    })
+    });
+    const launchesInfo = [
+      {
+        name: "Launches Participated",
+        value: projects.filter((p:any) => !!p.participate).length ?? 0,
+      },
+      {
+        name: "Total Contributed",
+        value: projects.filter((p:any) => !!p.contribution).length,
+      },
+      {
+        name: "Largest Contribution",
+        value: `$${projects.filter((p:any) => !!p.contribution).reduce((acc: number, p: any) => {
+          if (+p.contribution.formattedAmount > acc) {
+            acc = +p.contribution.formattedAmount
+          }
+          return acc
+        }, 0) ?? 0}`,
+      },
+    ];
     setProjects(projects);
-    
+    setMyLaunchesInfo(launchesInfo);
   }, [user]);
 
   useEffect(() => {
     getLaunches();
   }, [getMyLaunches]);
-
-  const MyLaunchesInfo = [
-    {
-      name: "Launches Participated",
-      value: 7,
-    },
-    {
-      name: "Total Contributed",
-      value: "$5,000.00",
-    },
-    {
-      name: "Largest Contribution",
-      value: "$2,000.00",
-    },
-  ];
-
-  // const TableData = [
-  //   {
-  //     launchName: "[Launch Name]",
-  //     contribution: "_",
-  //     tokenAllocation: "_",
-  //     status: "closed",
-  //     launchPhase: "ended",
-  //   },
-  //   {
-  //     launchName: "[Launch Name]",
-  //     contribution: "_",
-  //     tokenAllocation: "_",
-  //     status: "closed",
-  //     launchPhase: "ended",
-  //   },
-  //   {
-  //     launchName: "[Launch Name]",
-  //     contribution: "$2,000.00",
-  //     tokenAllocation: "2,000,000.00",
-  //     status: "closed",
-  //     launchPhase: "claim",
-  //   },
-  //   {
-  //     launchName: "[Launch Name]",
-  //     contribution: "$1,000.00",
-  //     tokenAllocation: "1,000,000.00",
-  //     status: "open",
-  //     launchPhase: "completed",
-  //   },
-  //   {
-  //     launchName: "[Launch Name]",
-  //     contribution: "_",
-  //     tokenAllocation: "_",
-  //     status: "open",
-  //     launchPhase: "contribution",
-  //     ContributionDate: "March 25th - March 27th",
-  //   },
-  //   {
-  //     launchName: "[Launch Name]",
-  //     contribution: "_",
-  //     tokenAllocation: "_",
-  //     status: "open",
-  //     launchPhase: "lottery",
-  //     LotteryDate: "27 Jul 2024",
-  //   },
-  // ];
 
   return (
     <div className="container-dashboard mx-auto px-4 md:px-14 xl:px-24">
@@ -109,7 +64,7 @@ export default function MyLaunchesPage() {
         Keep track of all your launches and participation details.
       </p>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {MyLaunchesInfo.map((info, index) => (
+        {myLaunchesInfo.map((info, index) => (
           <div key={index} className="bg-[#1B1E29] rounded-2xl p-6">
             <h3 className="text-[#EBECF2] text-sm font-semibold leading-5">
               {info.name}
@@ -135,7 +90,6 @@ export default function MyLaunchesPage() {
                 fill="#696C80"
               />
             </svg>
-
             <input
               type="text"
               placeholder="Search..."
