@@ -29,10 +29,16 @@ import { partBtnByKyc, KycStatus } from "state/type";
 import { updateUser } from "../../../../reduxStore/rootReducer";
 import { signInWithWallet } from "app/service/userService";
 import { useRouter } from "next/navigation";
-import { ContributionTabButton, getProjectStatus, getProjectUI, getTabsUI } from "utils/project";
+import {
+  ContributionTabButton,
+  getProjectStatus,
+  getProjectUI,
+  getTabsUI,
+} from "utils/project";
 import { BLOCKPASS_CLIENTID } from "app/service/userService";
+import { ArrowTopRightOnSquareIcon } from "@heroicons/react/20/solid";
 
-declare const BlockpassKYCConnect: any
+declare const BlockpassKYCConnect: any;
 
 export default function LaunchInfoDetailPage() {
   // const { project } = useSelector((state: { project: Project }) => state || {});
@@ -50,6 +56,15 @@ export default function LaunchInfoDetailPage() {
     { label: "About the Launch", value: "about" },
     { label: "My Contribution", value: "contribution", expand: true },
     { label: "Claim", value: "claim", expand: true },
+  ];
+
+  const tableData = [
+    {
+      tokenName: "USDT",
+      amount: "2,000.00 ",
+      date: "18 Mar 2024 ",
+      status: "success",
+    },
   ];
 
   const params = useParams();
@@ -103,7 +118,7 @@ export default function LaunchInfoDetailPage() {
     const status = getProjectStatus(project, user?.uid);
     setProStatus(status);
     const proUI: any = getProjectUI(project, status, user?.uid);
-    if (proUI.header?.hasTimer ) {
+    if (proUI.header?.hasTimer) {
       setStartTimer(true);
     }
     setProjectUI(proUI);
@@ -112,12 +127,11 @@ export default function LaunchInfoDetailPage() {
     }
     if (user.kycStatus === "notstarted") {
       const blockpass = new BlockpassKYCConnect(BLOCKPASS_CLIENTID);
-      blockpass.startKYCConnect();    
+      blockpass.startKYCConnect();
     }
     const tabsUI = getTabsUI(project, status, user.kycStatus);
     setTabsUI(tabsUI);
-
-}, [user, project, kycStatus]);
+  }, [user, project, kycStatus]);
 
   const signIn = useCallback(async () => {
     if (user || !address || !chainId) {
@@ -158,10 +172,10 @@ export default function LaunchInfoDetailPage() {
   }, [startTimer]);
 
   const onParticipate = (success: boolean) => {
-    if(success) {
+    if (success) {
       fetchProjectById();
     }
-  }
+  };
 
   const handleParticipate = () => {
     if (kycStatus?.canPart) {
@@ -173,7 +187,7 @@ export default function LaunchInfoDetailPage() {
 
   const handleContributionTabBtn = () => {
     if (tabsUI.contribution.btn === ContributionTabButton.CheckKyc) {
-      window.open('https://identity.blockpass.org/', '_blank');
+      window.open("https://identity.blockpass.org/", "_blank");
     } else if (tabsUI.contribution.btn === ContributionTabButton.Participate) {
       setOpenSubmitApplicationModal(!openSubmitApplicationModal);
     } else if (tabsUI.contribution.btn === ContributionTabButton.Contribution) {
@@ -183,7 +197,7 @@ export default function LaunchInfoDetailPage() {
 
   const handleClaimTabBtn = () => {
     if (tabsUI.claim.btn === ContributionTabButton.CheckKyc) {
-      window.open('https://identity.blockpass.org/', '_blank');
+      window.open("https://identity.blockpass.org/", "_blank");
     } else if (tabsUI.claim.btn === ContributionTabButton.Participate) {
       setOpenSubmitApplicationModal(!openSubmitApplicationModal);
     } else if (tabsUI.claim.btn === ContributionTabButton.Contribution) {
@@ -191,11 +205,9 @@ export default function LaunchInfoDetailPage() {
     }
   };
 
-
   const handleContribute = () => {
     setOpenContributionModal(!openContributionModal);
   };
-
   return (
     project && (
       <>
@@ -232,14 +244,14 @@ export default function LaunchInfoDetailPage() {
                       <div className="flex justify-start md:justify-between gap-2">
                         <span
                           className={`max-w-20 md:max-w-full md:min-w-24 h-[24px] px-2 py-1 rounded-md text-xs text-center font-bold ${
-                            (proStatus === "upcoming" || proStatus === "tba")
-                              ? "bg-[#FDD83529] text-[#FDD835]" 
+                            proStatus === "upcoming" || proStatus === "tba"
+                              ? "bg-[#FDD83529] text-[#FDD835]"
                               : proStatus === "completed"
                                 ? "bg-[#8E33FF29] text-[#C684FF]"
                                 : "bg-[#0FC67929] text-[#0FC679]"
                           }`}
                         >
-                          {(proStatus === "upcoming" || proStatus === "tba")
+                          {proStatus === "upcoming" || proStatus === "tba"
                             ? "Upcoming"
                             : proStatus === "completed"
                               ? "Closed"
@@ -414,7 +426,8 @@ export default function LaunchInfoDetailPage() {
               <div className="bg-[#1B1E29] w-full rounded-2xl">
                 <div className="relative min-h-12 flex justify-start px-6 gap-8 text-sm after:content-[''] after:w-full after:h-[2px] after:absolute after:bottom-0 after:left-0 after:bg-[#919EAB14]">
                   {tabs.map((t: any) => (
-                    (!t.expand || (t.expand && tabsUI)) &&<button
+                    // (!t.expand || (t.expand && tabsUI)) &&
+                    <button
                       key={t.value}
                       className={clsx({
                         ["transition-all duration-100 ease-in-out"]: true,
@@ -467,29 +480,133 @@ export default function LaunchInfoDetailPage() {
                     </div>
                   )}
                   {selectedTab === "contribution" && (
-                    <div className="min-w-0 md:min-w-[440px] w-full rounded-xl mx-auto px-6 text-center text-[#696C80]">
-                      <Image
-                        src="/assets/images/ic-mail.png"
-                        alt="ic-mail"
-                        width={160}
-                        height={160}
-                        className="mx-auto"
-                      />
-                      <h2 className="text-lg leading-7 font-bold">
-                        {tabsUI.contribution.title}
-                      </h2>
-                      <p className="text-sm leading-6">
-                        {tabsUI.contribution.subTitle}
-                      </p>
-                      {tabsUI.contribution.btn && (<Button
-                        id={tabsUI.contribution.btn === ContributionTabButton.CompleteKyc ? "blockpass-kyc-connect" : ""}
-                        variant="primary"
-                        size="small"
-                        className="!h-9 mx-auto mt-4"
-                        onClick={() => tabsUI.contribution.btn !== ContributionTabButton.CompleteKyc && handleContributionTabBtn()}
-                      >
-                        {tabsUI.contribution.btn}
-                      </Button>)}
+                    <div className="min-w-0 md:min-w-[440px] w-full rounded-xl mx-auto text-center text-[#696C80]">
+                      {tableData.length ? (
+                        <div className="bg-[#282D3D] w-full rounded-2xl overflow-x-auto">
+                        <table className="min-w-full">
+                          <thead>
+                            <tr className="max-h-14 w-full h-full text-[#C7CAD9] text-sm text-left font-semibold border-b border-[#919EAB29]">
+                              <th className="h-14 py-1.5 px-4">
+                                <span>
+                                  Token
+                                </span>
+                              </th>
+                              <th className="h-14 py-1.5 px-4">
+                                <span>
+                                  Amount
+                                </span>
+                              </th>
+                              <th className="h-14 py-1.5 px-4">
+                                <span>
+                                  Date
+                                </span>
+                              </th>
+                              <th className="h-14 py-1.5 px-4">
+                                <span>
+                                  Status
+                                </span>
+                              </th>
+                              <th className="h-14 py-1.5 px-4"></th>
+                            </tr>
+                          </thead>
+
+                          <tbody>
+                            {tableData?.map((row, index) => (
+                              <tr
+                                key={index}
+                                className="text-[#EBECF2] font-normal"
+                              >
+                                <td className="py-1.5 px-4 min-h-14">
+                                  <Image
+                                    src="/assets/images/avatar.png"
+                                    alt="avatar"
+                                    width={32}
+                                    height={32}
+                                    className="float-left mr-2"
+                                  />
+                                  <p className="text-[#C7CAD9] text-sm leading-8 float-left">
+                                    {row.tokenName}
+                                  </p>
+                                </td>
+
+                                <td className="py-1.5 px-4 min-h-14">
+                                  <a href="#">
+                                    <p className="text-sm text-left">
+                                      {" "}
+                                      {row.amount}
+                                    </p>
+                                  </a>
+                                </td>
+
+                                <td className="py-1.5 px-4 min-h-14">
+                                  <p className="text-sm text-left">{row.date}</p>
+                                </td>
+
+                                <td className="py-1.5 px-4 min-h-14">
+                                  <div
+                                    className={`${row.status === "failure" ? "bg-[#FF5C5C29] text-[#FF5C5C]" : "bg-[#0FC67929] text-[#0FC679]"} inline-block float-start rounded-md px-2`}
+                                  >
+                                    <p className="text-xs leading-normal font-bold capitalize">
+                                      {row.status}
+                                    </p>
+                                  </div>
+                                </td>
+                                <td className="py-1.5 px-4 min-h-14 float-end">
+                                  <Button
+                                    className={clsx({
+                                      ["bg-transparent !px-0 hover:bg-transparent"]:
+                                        true,
+                                    })}
+                                  >
+                                    <ArrowTopRightOnSquareIcon
+                                      width={20}
+                                      height={20}
+                                      fill="#919EAB"
+                                    />
+                                  </Button>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                      ) : (
+                        <>
+                          <Image
+                            src="/assets/images/ic-mail.png"
+                            alt="ic-mail"
+                            width={160}
+                            height={160}
+                            className="mx-auto"
+                          />
+                          <h2 className="text-lg leading-7 font-bold">
+                            {tabsUI.contribution?.title}
+                          </h2>
+                          <p className="text-sm leading-6">
+                            {tabsUI.contribution?.subTitle}
+                          </p>
+                          {tabsUI.contribution?.btn && (
+                            <Button
+                              id={
+                                tabsUI.contribution.btn ===
+                                ContributionTabButton.CompleteKyc
+                                  ? "blockpass-kyc-connect"
+                                  : ""
+                              }
+                              variant="primary"
+                              size="small"
+                              className="!h-9 mx-auto mt-4"
+                              onClick={() =>
+                                tabsUI.contribution.btn !==
+                                  ContributionTabButton.CompleteKyc &&
+                                handleContributionTabBtn()
+                              }
+                            >
+                              {tabsUI.contribution.btn}
+                            </Button>
+                          )}
+                        </>
+                      )}
                     </div>
                   )}
                   {selectedTab === "claim" && (
@@ -502,53 +619,76 @@ export default function LaunchInfoDetailPage() {
                         className="mx-auto"
                       />
                       <h2 className="text-lg leading-7 font-bold">
-                        {tabsUI.claim.title}
+                        {tabsUI?.claim?.title}
                       </h2>
                       <p className="text-sm leading-6">
-                        {tabsUI.claim.subTitle}
+                        {tabsUI?.claim?.subTitle}
                       </p>
-                      {tabsUI.claim.btn && <Button
-                        id={tabsUI.claim.btn === ContributionTabButton.CompleteKyc ? "blockpass-kyc-connect" : ""}
-                        variant="primary"
-                        size="small"
-                        className="!h-9 mx-auto mt-4"
-                        onClick={() => tabsUI.claim.btn !== ContributionTabButton.CompleteKyc && handleClaimTabBtn()}
-                      >
-                        {tabsUI.claim.btn}
-                      </Button>}
+                      {tabsUI?.claim?.btn && (
+                        <Button
+                          id={
+                            tabsUI.claim.btn ===
+                            ContributionTabButton.CompleteKyc
+                              ? "blockpass-kyc-connect"
+                              : ""
+                          }
+                          variant="primary"
+                          size="small"
+                          className="!h-9 mx-auto mt-4"
+                          onClick={() =>
+                            tabsUI.claim.btn !==
+                              ContributionTabButton.CompleteKyc &&
+                            handleClaimTabBtn()
+                          }
+                        >
+                          {tabsUI.claim.btn}
+                        </Button>
+                      )}
                     </div>
                   )}
                 </div>
               </div>
             </div>
-            {
-            projectUI &&(<div className="flex-[30%] h-full bg-[#1B1E29] py-6 rounded-xl mb-5 md:mb-0">
-              <div className="border-b-2 border-[#919EAB14] pb-4 pl-2 pr-2">
-                <h2 className="text-[#EBECF2] text-xl md:text-2xl leading-9 text-center font-bold">
-                  {projectUI.header.title}
-                </h2>
-                <p className="text-[#C7CAD9] text-center">
-                  {projectUI.header.subTitle}
-                </p>
-                {projectUI.header.hasTimer && (<div className="w-full flex items-center justify-center gap-2">
-                  <span className="text-[#EBECF2] text-[32px] font-bold">
-                    {reminderLaunchTimeBig}
-                  </span>
-                </div>)}
-              </div>
-              <div className="flex flex-col px-6 pt-4">
-                <div className={`${projectUI.whitelist.disable ?  'after:bg-[#DFE3E8] after:text-[#919EAB]' : 'after:bg-[#448AFF] after:text-[#EBECF2]'} before:bg-[#282D3D80] mb-6 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%] after:content-['1'] mr-3`}>
-                  <h3 className={`${projectUI.whitelist.disable ? 'text-[#696C80]' : 'text-[#EBECF2]'} text-sm md:text-base leading-6 font-semibold`}>
-                    Whitelist
-                  </h3>
-                  <p className={`${projectUI.whitelist.disable ? 'text-[#696C80]' : 'text-[#EBECF2]'} text-xs leading-4`}>
-                    {projectUI.whitelist.desc1}
+            {projectUI && (
+              <div className="flex-[30%] h-full bg-[#1B1E29] py-6 rounded-xl mb-5 md:mb-0">
+                <div className="border-b-2 border-[#919EAB14] pb-4 pl-2 pr-2">
+                  <h2 className="text-[#EBECF2] text-xl md:text-2xl leading-9 text-center font-bold">
+                    {projectUI.header.title}
+                  </h2>
+                  <p className="text-[#C7CAD9] text-center">
+                    {projectUI.header.subTitle}
                   </p>
-                  {projectUI.whitelist.desc2 && <p className={`${projectUI.whitelist.disable ? 'text-[#696C80]' : 'text-[#EBECF2]'} text-xs leading-4 font-semibold`}>
-                    {projectUI.whitelist.desc2}
-                  </p>}
-                  
-                  {projectUI.whitelist.hasBtn && (
+                  {projectUI.header.hasTimer && (
+                    <div className="w-full flex items-center justify-center gap-2">
+                      <span className="text-[#EBECF2] text-[32px] font-bold">
+                        {reminderLaunchTimeBig}
+                      </span>
+                    </div>
+                  )}
+                </div>
+                <div className="flex flex-col px-6 pt-4">
+                  <div
+                    className={`${projectUI.whitelist.disable ? "after:bg-[#DFE3E8] after:text-[#919EAB]" : "after:bg-[#448AFF] after:text-[#EBECF2]"} before:bg-[#282D3D80] mb-6 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%] after:content-['1'] mr-3`}
+                  >
+                    <h3
+                      className={`${projectUI.whitelist.disable ? "text-[#696C80]" : "text-[#EBECF2]"} text-sm md:text-base leading-6 font-semibold`}
+                    >
+                      Whitelist
+                    </h3>
+                    <p
+                      className={`${projectUI.whitelist.disable ? "text-[#696C80]" : "text-[#EBECF2]"} text-xs leading-4`}
+                    >
+                      {projectUI.whitelist.desc1}
+                    </p>
+                    {projectUI.whitelist.desc2 && (
+                      <p
+                        className={`${projectUI.whitelist.disable ? "text-[#696C80]" : "text-[#EBECF2]"} text-xs leading-4 font-semibold`}
+                      >
+                        {projectUI.whitelist.desc2}
+                      </p>
+                    )}
+
+                    {projectUI.whitelist.hasBtn && (
                       <div>
                         <Button
                           variant={kycStatus ? kycStatus.variant : "primary"}
@@ -561,7 +701,7 @@ export default function LaunchInfoDetailPage() {
                             ? kycStatus.title
                             : "Sign-in with your wallet"}
                         </Button>
-                        {(kycStatus && !kycStatus.canPart) && (
+                        {kycStatus && !kycStatus.canPart && (
                           <span className="text-[#C7CAD9] text-xs">
                             Once your KYC is approved, you will be able to
                             participate in this launch.
@@ -569,46 +709,78 @@ export default function LaunchInfoDetailPage() {
                         )}
                       </div>
                     )}
-                </div>
-                <div className={`${projectUI.lottery.disable ?  'after:bg-[#DFE3E8] after:text-[#919EAB]' : 'after:bg-[#448AFF] after:text-[#EBECF2]'} before:bg-[#282D3D80] mb-6 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%] after:content-['2'] mr-3`}>
-                  <h3 className={`${projectUI.lottery.disable ? 'text-[#696C80]' : 'text-[#EBECF2]'} text-sm md:text-base leading-6 font-semibold`}>
-                    Lottery
-                  </h3>
-                  <p className={`${projectUI.lottery.disable ? 'text-[#696C80]' : 'text-[#C7CAD9]'} text-xs leading-4`}>
-                    {projectUI.lottery.desc1}
-                  </p>
-                </div>
-                {projectUI.contribution && (
-                <div className={`${projectUI.contribution.disable ? 'after:bg-[#DFE3E8] after:text-[#919EAB]' : 'after:bg-[#448AFF] after:text-[#EBECF2]'} before:bg-[#282D3D80] mb-6 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%] after:content-['3'] mr-3`}>
-                  <h3 className={`${projectUI.contribution.disable ? 'text-[#696C80]' : 'text-[#EBECF2]'} text-sm md:text-base leading-6 font-semibold`}>
-                    Contribution
-                  </h3>
-                  <p className={`${projectUI.contribution.disable ? 'text-[#696C80]' : 'text-[#EBECF2]'} text-xs leading-4`}>
-                    {projectUI.contribution.desc1}
-                  </p>
-                  {projectUI.contribution.desc2 && <p className={`${projectUI.contribution.disable ? 'text-[#696C80]' : 'text-[#EBECF2]'} text-xs leading-4 font-semibold`}>
-                    {projectUI.contribution.desc2}
-                  </p>}
-                  {projectUI.contribution.hasBtn && <Button
-                    variant="primary"
-                    className="!min-w-16 !h-9 capitalize"
-                    onClick={() => handleContribute()}
+                  </div>
+                  <div
+                    className={`${projectUI.lottery.disable ? "after:bg-[#DFE3E8] after:text-[#919EAB]" : "after:bg-[#448AFF] after:text-[#EBECF2]"} before:bg-[#282D3D80] mb-6 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%] after:content-['2'] mr-3`}
                   >
-                    Contribute
-                  </Button>}
-                </div>)}
-                {projectUI.completed && <div className={`${projectUI.completed.disable ?  'after:bg-[#DFE3E8] after:text-[#919EAB]' : 'after:bg-[#448AFF] after:text-[#EBECF2]'} before:bg-[#282D3D80] mb-6 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%] after:content-['4'] mr-3`}>
-                  <h3 className={`${projectUI.completed.disable ? 'text-[#696C80]' : 'text-[#EBECF2]'} text-sm md:text-base leading-6 font-semibold`}>
-                    Completed
-                  </h3>
-                </div>}
-                {projectUI.claim && <div className={`${projectUI.claim.disable ?  'after:bg-[#DFE3E8] after:text-[#919EAB]' : 'after:bg-[#448AFF] after:text-[#EBECF2]'} before:bg-[#282D3D80] after:top-1/2 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 after:content-['5'] after:absolute after:-left-8 after:w-6 after:h-6 after:rounded-full after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]`}>
-                  <h3 className={`${projectUI.claim.disable ? 'text-[#696C80]' : 'text-[#EBECF2]'} text-sm md:text-base leading-6 font-semibold`}>
-                    Claim
-                  </h3>
-                </div>}
+                    <h3
+                      className={`${projectUI.lottery.disable ? "text-[#696C80]" : "text-[#EBECF2]"} text-sm md:text-base leading-6 font-semibold`}
+                    >
+                      Lottery
+                    </h3>
+                    <p
+                      className={`${projectUI.lottery.disable ? "text-[#696C80]" : "text-[#C7CAD9]"} text-xs leading-4`}
+                    >
+                      {projectUI.lottery.desc1}
+                    </p>
+                  </div>
+                  {projectUI.contribution && (
+                    <div
+                      className={`${projectUI.contribution.disable ? "after:bg-[#DFE3E8] after:text-[#919EAB]" : "after:bg-[#448AFF] after:text-[#EBECF2]"} before:bg-[#282D3D80] mb-6 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%] after:content-['3'] mr-3`}
+                    >
+                      <h3
+                        className={`${projectUI.contribution.disable ? "text-[#696C80]" : "text-[#EBECF2]"} text-sm md:text-base leading-6 font-semibold`}
+                      >
+                        Contribution
+                      </h3>
+                      <p
+                        className={`${projectUI.contribution.disable ? "text-[#696C80]" : "text-[#EBECF2]"} text-xs leading-4`}
+                      >
+                        {projectUI.contribution.desc1}
+                      </p>
+                      {projectUI.contribution.desc2 && (
+                        <p
+                          className={`${projectUI.contribution.disable ? "text-[#696C80]" : "text-[#EBECF2]"} text-xs leading-4 font-semibold`}
+                        >
+                          {projectUI.contribution.desc2}
+                        </p>
+                      )}
+                      {projectUI.contribution.hasBtn && (
+                        <Button
+                          variant="primary"
+                          className="!min-w-16 !h-9 capitalize"
+                          onClick={() => handleContribute()}
+                        >
+                          Contribute
+                        </Button>
+                      )}
+                    </div>
+                  )}
+                  {projectUI.completed && (
+                    <div
+                      className={`${projectUI.completed.disable ? "after:bg-[#DFE3E8] after:text-[#919EAB]" : "after:bg-[#448AFF] after:text-[#EBECF2]"} before:bg-[#282D3D80] mb-6 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 before:content-[''] before:absolute before:-left-5 before:top-full before:translate-y-[-50%] before:w-[1px] before:h-full before:inline-block after:absolute after:top-1/2 after:-left-8 after:w-6 after:h-6 after:rounded-full after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%] after:content-['4'] mr-3`}
+                    >
+                      <h3
+                        className={`${projectUI.completed.disable ? "text-[#696C80]" : "text-[#EBECF2]"} text-sm md:text-base leading-6 font-semibold`}
+                      >
+                        Completed
+                      </h3>
+                    </div>
+                  )}
+                  {projectUI.claim && (
+                    <div
+                      className={`${projectUI.claim.disable ? "after:bg-[#DFE3E8] after:text-[#919EAB]" : "after:bg-[#448AFF] after:text-[#EBECF2]"} before:bg-[#282D3D80] after:top-1/2 relative left-7 w-fit min-h-12 flex flex-col justify-center gap-2 after:content-['5'] after:absolute after:-left-8 after:w-6 after:h-6 after:rounded-full after:text-sm after:font-semibold after:leading-6 after:text-center after:translate-y-[-50%]`}
+                    >
+                      <h3
+                        className={`${projectUI.claim.disable ? "text-[#696C80]" : "text-[#EBECF2]"} text-sm md:text-base leading-6 font-semibold`}
+                      >
+                        Claim
+                      </h3>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>)}
+            )}
           </div>
         </div>
         <SubmitApplicationModal
