@@ -189,4 +189,17 @@ export const contributeToProject = async (payload: {pid: string, eoa: string, am
   }
 };
 
+export const getMyLaunches = async (eoa: string) => {
+  try {
+    const res = await authApi.get(`/projects/?eoa=${eoa}`);
+    if (res.status < 400) {
+      return res.data;
+    }
+    return false;  
+  } catch(e) {
+    throw e
+  }
+
+}
+
 

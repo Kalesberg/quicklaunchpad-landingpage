@@ -1,8 +1,30 @@
+
+"use client";
+import React, { useCallback, useEffect, useState, useRef } from "react";
+import { getMyLaunches } from "app/api";
 import clsx from "clsx";
 import Button from "components/common/Button";
 import TablePagination from "components/common/TablePagination";
+import { useSelector } from "react-redux";
+import { User } from "state/type";
 
 export default function MyLaunchesPage() {
+  const { user } = useSelector((state: { user: User }) => state || {});
+  const [projects, setProjects] = useState<any[]>([]);
+
+
+  const getLaunches = useCallback(async () => {
+    if (!user) {
+      return;
+    }
+    const res = await getMyLaunches(user.uid as string);
+    setProjects(res);
+  }, [user]);
+
+  useEffect(() => {
+    getLaunches();
+  }, [getMyLaunches]);
+
   const MyLaunchesInfo = [
     {
       name: "Launches Participated",
@@ -18,52 +40,52 @@ export default function MyLaunchesPage() {
     },
   ];
 
-  const TableData = [
-    {
-      launchName: "[Launch Name]",
-      contribution: "_",
-      tokenAllocation: "_",
-      status: "closed",
-      launchPhase: "ended",
-    },
-    {
-      launchName: "[Launch Name]",
-      contribution: "_",
-      tokenAllocation: "_",
-      status: "closed",
-      launchPhase: "ended",
-    },
-    {
-      launchName: "[Launch Name]",
-      contribution: "$2,000.00",
-      tokenAllocation: "2,000,000.00",
-      status: "closed",
-      launchPhase: "claim",
-    },
-    {
-      launchName: "[Launch Name]",
-      contribution: "$1,000.00",
-      tokenAllocation: "1,000,000.00",
-      status: "open",
-      launchPhase: "completed",
-    },
-    {
-      launchName: "[Launch Name]",
-      contribution: "_",
-      tokenAllocation: "_",
-      status: "open",
-      launchPhase: "contribution",
-      ContributionDate: "March 25th - March 27th",
-    },
-    {
-      launchName: "[Launch Name]",
-      contribution: "_",
-      tokenAllocation: "_",
-      status: "open",
-      launchPhase: "lottery",
-      LotteryDate: "27 Jul 2024",
-    },
-  ];
+  // const TableData = [
+  //   {
+  //     launchName: "[Launch Name]",
+  //     contribution: "_",
+  //     tokenAllocation: "_",
+  //     status: "closed",
+  //     launchPhase: "ended",
+  //   },
+  //   {
+  //     launchName: "[Launch Name]",
+  //     contribution: "_",
+  //     tokenAllocation: "_",
+  //     status: "closed",
+  //     launchPhase: "ended",
+  //   },
+  //   {
+  //     launchName: "[Launch Name]",
+  //     contribution: "$2,000.00",
+  //     tokenAllocation: "2,000,000.00",
+  //     status: "closed",
+  //     launchPhase: "claim",
+  //   },
+  //   {
+  //     launchName: "[Launch Name]",
+  //     contribution: "$1,000.00",
+  //     tokenAllocation: "1,000,000.00",
+  //     status: "open",
+  //     launchPhase: "completed",
+  //   },
+  //   {
+  //     launchName: "[Launch Name]",
+  //     contribution: "_",
+  //     tokenAllocation: "_",
+  //     status: "open",
+  //     launchPhase: "contribution",
+  //     ContributionDate: "March 25th - March 27th",
+  //   },
+  //   {
+  //     launchName: "[Launch Name]",
+  //     contribution: "_",
+  //     tokenAllocation: "_",
+  //     status: "open",
+  //     launchPhase: "lottery",
+  //     LotteryDate: "27 Jul 2024",
+  //   },
+  // ];
 
   return (
     <div className="container-dashboard mx-auto px-4 md:px-14 xl:px-24">
@@ -185,13 +207,13 @@ export default function MyLaunchesPage() {
               </thead>
 
               <tbody>
-                {TableData?.map((row, index) => (
+                {projects && projects.map((row, index) => (
                   <tr
                     key={index}
                     className="text-[#EBECF2] text-base font-normal border-b border-[#282D3D80]"
                   >
                     <td className="py-1.5 px-4 pl-6 min-h-14">
-                      <span>{row.launchName}</span>
+                      <span>{row.projectName}</span>
                     </td>
 
                     <td className="py-1.5 px-4 min-h-14">
@@ -253,7 +275,7 @@ export default function MyLaunchesPage() {
               </tbody>
             </table>
           </div>
-          <TablePagination count={TableData.length} />
+          <TablePagination count={projects.length} />
         </>
       </div>
     </div>
