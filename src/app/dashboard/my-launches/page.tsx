@@ -7,18 +7,33 @@ import Button from "components/common/Button";
 import TablePagination from "components/common/TablePagination";
 import { useSelector } from "react-redux";
 import { User } from "state/type";
+import { useRouter } from "next/navigation";
 
 export default function MyLaunchesPage() {
   const { user } = useSelector((state: { user: User }) => state || {});
   const [projects, setProjects] = useState<any[]>([]);
-
+  const [contribution, setContribtion] = useState(null);
+  const [fundingToken, setFundingToken] = useState(null);
+  const router = useRouter();
 
   const getLaunches = useCallback(async () => {
     if (!user) {
       return;
     }
     const res = await getMyLaunches(user.uid as string);
-    setProjects(res);
+    console.log(res);
+    const projects = res.map((p: any) => {
+      const contribution = p.contributions.find((c: any) => c.eoa === user.uid);
+      const participate = p.allocation.participants.find((f: any) => f.eoa === user.uid);
+      return {
+        ...p,
+        contribution,
+        participate
+      }
+
+    })
+    setProjects(projects);
+    
   }, [user]);
 
   useEffect(() => {
@@ -219,21 +234,34 @@ export default function MyLaunchesPage() {
                     <td className="py-1.5 px-4 min-h-14">
                       <div className="flex justify-start">
                         <a href="#">
-                          <small className="text-sm"> {row.contribution}</small>
+                          <small className="text-sm"> {row.contribution ? `$${row.contribution.formattedAmount}` : '-'}</small>
                         </a>
                       </div>
                     </td>
 
                     <td className="py-1.5 px-4 min-h-14">
-                      <small className="text-sm">{row.tokenAllocation}</small>
+                      <small className="text-sm">
+                        {row.participate ? `$${row.participate.amount}` : '-'}
+                      </small>
                     </td>
 
                     <td className="py-1.5 px-4 min-h-14">
                       <div
                         className={`flex items-center justify-center rounded-md ${row.status === "closed" ? "bg-[#8E33FF29] text-[#C684FF]" : "bg-[#0FC67929] text-[#0FC679]"}`}
                       >
-                        <small className="text-xs leading-5 font-bold capitalize px-[6px]">
-                          {row.status}
+                        <small className={`text-xs leading-5 font-bold capitalize px-[6px] ${
+                            (row.status === "upcoming" || row.status === "tba")
+                              ? "bg-[#FDD83529] text-[#FDD835]" 
+                              : row.status === "completed"
+                                ? "bg-[#8E33FF29] text-[#C684FF]"
+                                : "bg-[#0FC67929] text-[#0FC679]"
+                          }`}>
+                            {(row.status === "upcoming" || row.status === "tba")
+                            ? "Upcoming"
+                            : row.status === "completed"
+                              ? "Closed"
+                              : "Open"}
+
                         </small>
                       </div>
                     </td>
@@ -262,6 +290,9 @@ export default function MyLaunchesPage() {
                             "contribution",
                           ].some((value) => value === row.launchPhase),
                         })}
+                        onClick={() =>
+                          router.push(`/dashboard/launch-info/${row.pid}?status=${row.status}`)
+                        }
                       >
                         {row.launchPhase === "claim"
                           ? "check claim status"
