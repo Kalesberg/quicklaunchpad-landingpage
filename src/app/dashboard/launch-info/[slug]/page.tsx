@@ -37,6 +37,7 @@ import {
 } from "utils/project";
 import { BLOCKPASS_CLIENTID } from "app/service/userService";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/20/solid";
+import { getConfig } from "config";
 
 declare const BlockpassKYCConnect: any;
 
@@ -51,20 +52,12 @@ export default function LaunchInfoDetailPage() {
     useState(false);
   const [openContributionModal, setOpenContributionModal] = useState(false);
   const [selectedTab, setSelectedTab] = useState<string>("about");
+  const [config, setConfig] = useState<any>(null);
 
   const tabs = [
     { label: "About the Launch", value: "about" },
     { label: "My Contribution", value: "contribution", expand: true },
     { label: "Claim", value: "claim", expand: true },
-  ];
-
-  const tableData = [
-    {
-      tokenName: "USDT",
-      amount: "2,000.00 ",
-      date: "18 Mar 2024 ",
-      status: "success",
-    },
   ];
 
   const params = useParams();
@@ -138,6 +131,10 @@ export default function LaunchInfoDetailPage() {
         ...contributed,
         date: convertDateTime(contributed.txTimestamp * 1000, true),
       });
+      console.log('contributed', contributed);
+      const config = getConfig(parseInt(contributed.chainId, 16));
+      console.log('config', config);
+      setConfig(config);
     }
   }, [user, project, kycStatus]);
 
@@ -557,19 +554,21 @@ export default function LaunchInfoDetailPage() {
                                     </p>
                                   </div>
                                 </td>
-                                <td className="py-1.5 px-4 min-h-14 float-end">
-                                  <Button
+                                <td className="py-1.5 px-4 min-h-14 float-end flex items-center">
+                                  <Link
                                     className={clsx({
                                       ["bg-transparent !px-0 hover:bg-transparent"]:
                                         true,
                                     })}
+                                    href={`${config?.blockExplorer}tx/${contributed.txHash}`}
+                                    target="_blank"
                                   >
                                     <ArrowTopRightOnSquareIcon
                                       width={20}
                                       height={20}
                                       fill="#919EAB"
                                     />
-                                  </Button>
+                                  </Link>
                                 </td>
                               </tr>
                           </tbody>
