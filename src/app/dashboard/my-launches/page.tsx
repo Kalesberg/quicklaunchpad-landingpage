@@ -8,13 +8,37 @@ import TablePagination from "components/common/TablePagination";
 import { useSelector } from "react-redux";
 import { User } from "state/type";
 import { useRouter } from "next/navigation";
+import { useAppKitAccount, useAppKitNetwork } from "@reown/appkit/react";
+import { signInWithWallet } from "app/service/userService";
+import { useDispatch } from 'react-redux';
+import { updateUser } from "../../../reduxStore/rootReducer";
+import { ProStatus } from "state/type";
+import { getProjectStatus } from "utils/project";
+import { getTableData } from "./service";
 
 export default function MyLaunchesPage() {
   const { user } = useSelector((state: { user: User }) => state || {});
   const [projects, setProjects] = useState<any[]>([]);
   const [myLaunchesInfo, setMyLaunchesInfo] = useState<any[]>([]);
-
+  const { address } = useAppKitAccount();
+  const { chainId } = useAppKitNetwork();
+  const dispatch = useDispatch();
   const router = useRouter();
+
+
+  const signIn = useCallback(async () => {
+    if (user || !address || !chainId) {
+      return
+    }
+    const res = await signInWithWallet(address, chainId as number)
+    if (res) {
+      dispatch(updateUser(res));
+    }
+  }, [address, user]);
+
+  useEffect(() => {
+    signIn();
+  }, [signIn]);
 
   const getLaunches = useCallback(async () => {
     if (!user) {
@@ -24,12 +48,18 @@ export default function MyLaunchesPage() {
     const projects = res.map((p: any) => {
       const contribution = p.contributions.find((c: any) => c.eoa === user.uid);
       const participate = p.allocation.participants.find((f: any) => f.eoa === user.uid);
+      let status = getProjectStatus(p, user?.uid);
+      // status = ProStatus.PLEDGING
+      const tableData = getTableData(p, status, user?.uid)
       return {
         ...p,
         contribution,
-        participate
+        participate,
+        tableData,
+        status
       }
     });
+    console.log(projects);
     const launchesInfo = [
       {
         name: "Launches Participated",
@@ -55,7 +85,7 @@ export default function MyLaunchesPage() {
 
   useEffect(() => {
     getLaunches();
-  }, [getMyLaunches]);
+  }, [getMyLaunches, user]);
 
   return (
     <div className="container-dashboard mx-auto px-4 md:px-14 xl:px-24">
@@ -200,38 +230,27 @@ export default function MyLaunchesPage() {
                     </td>
 
                     <td className="py-1.5 px-4 min-h-14">
-                      <div
-                        className={`flex items-center justify-center rounded-md ${row.status === "closed" ? "bg-[#8E33FF29] text-[#C684FF]" : "bg-[#0FC67929] text-[#0FC679]"}`}
-                      >
-                        <small className={`text-xs leading-5 font-bold capitalize px-[6px] ${
-                            (row.status === "upcoming" || row.status === "tba")
-                              ? "bg-[#FDD83529] text-[#FDD835]" 
+                      <span
+                          className={`max-w-20 md:max-w-full md:min-w-24 h-[24px] px-2 py-1 rounded-md text-xs text-center font-bold ${
+                            row.status === "upcoming" || row.status === "tba"
+                              ? "bg-[#FDD83529] text-[#FDD835]"
                               : row.status === "completed"
                                 ? "bg-[#8E33FF29] text-[#C684FF]"
                                 : "bg-[#0FC67929] text-[#0FC679]"
-                          }`}>
-                            {(row.status === "upcoming" || row.status === "tba")
+                          }`}
+                        >
+                          {row.status === "upcoming" || row.status === "tba"
                             ? "Upcoming"
                             : row.status === "completed"
                               ? "Closed"
                               : "Open"}
-
-                        </small>
-                      </div>
-                    </td>
+                        </span>
+                      </td>
                     <td className="py-1.5 px-4 min-h-14">
                       <div className="flex flex-col justify-start">
-                        {(row.launchPhase === "contribution" ||
-                          row.launchPhase === "lottery") && (
-                          <span className="text-[#C7CAD9] text-xs capitalize block">
-                            {row.launchPhase}:
-                          </span>
-                        )}
-                        <p className="text-sm capitalize m-0">
-                          {row.ContributionDate ??
-                            row.LotteryDate ??
-                            row.launchPhase}
-                        </p>
+                          {row.tableData.phase.map((p: String) => <span className="text-[#C7CAD9] text-xs capitalize block">
+                            {p}
+                          </span>)}
                       </div>
                     </td>
                     <td className="py-1.5 px-4 pr-6 min-h-14 float-end">
@@ -239,20 +258,13 @@ export default function MyLaunchesPage() {
                         className={clsx({
                           ["min-w-[168px] !h-9 px-3 !rounded-lg !text-sm capitalize"]:
                             true,
-                          ["!bg-[#448AFF14] !text-[#448AFF]"]: ![
-                            "claim",
-                            "contribution",
-                          ].some((value) => value === row.launchPhase),
+                          ["!bg-[#448AFF14] !text-[#448AFF]"]:row.tableData.btn === 'View Details',
                         })}
                         onClick={() =>
                           router.push(`/dashboard/launch-info/${row.pid}?status=${row.status}`)
                         }
                       >
-                        {row.launchPhase === "claim"
-                          ? "check claim status"
-                          : row.launchPhase === "contribution"
-                            ? "Contribute"
-                            : "view details"}
+                        {row.tableData.btn}
                       </Button>
                     </td>
                   </tr>

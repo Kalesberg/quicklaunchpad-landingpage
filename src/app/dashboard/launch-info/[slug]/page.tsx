@@ -13,8 +13,8 @@ import {
 import Button from "components/common/Button";
 import clsx from "clsx";
 import { getProjectsById, getProjectsContent } from "app/api";
-import { useSearchParams, useParams } from "next/navigation";
-import { ProjectStatus, ProStatus } from "state/type";
+import { useParams } from "next/navigation";
+import { ProStatus } from "state/type";
 import { getReminderTimeStampString, getReminderDate } from "utils/time";
 import {
   useAppKit,

@@ -118,7 +118,6 @@ export const getAuthCode = async () => { // return auth code - ex: 1KoMhhKDBbxw6
  */
 export const logIn = async ( message: any, signature: string) => { 
   const res = await projectApi.post(`/identity/auth/login`, {message, signature});
-  console.log('calling post api', res)
   return res?.data
 };
 
@@ -183,7 +182,7 @@ export const contributeToProject = async (payload: {pid: string, eoa: string, am
     if (res.status < 400) {
       return true;
     }
-    return false;  
+    return false;
   } catch(e) {
     throw e
   }
@@ -193,7 +192,19 @@ export const getMyLaunches = async (eoa: string) => {
   try {
     const res = await authApi.get(`/projects/?eoa=${eoa}`);
     if (res.status < 400) {
-      return res.data;
+      const projects = res.data;
+      return projects.map((p: any)=> {
+        p.pledgeStartDate = convertDateTime(p.pledgeStartDate);
+        p.pledgeEndDate = convertDateTime(p.pledgeEndDate);
+        p.pledgeEndOnlyDate = convertDateTime(p.pledgeEndDate, true);
+        p.contributionStartDate = convertDateTime(p.contributionStartDate);
+        p.contributionEndDate = convertDateTime(p.contributionEndDate);
+        p.reminderLaunchTime = getReminderTimeStampString(p.pledgeEndDate);
+        p.reminderLaunchTimeBig = getReminderTimeStampString(p.pledgeEndDate ,true);
+        p.reminderDay = getReminderDate(p.pledgeStartDate);
+        p.network = getConfig(parseInt(p.chainId, 16));
+        return p;
+      })
     }
     return false;  
   } catch(e) {
