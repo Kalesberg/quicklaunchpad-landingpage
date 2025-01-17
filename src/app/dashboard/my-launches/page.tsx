@@ -19,7 +19,11 @@ import { getTableData } from "./service";
 export default function MyLaunchesPage() {
   const { user } = useSelector((state: { user: User }) => state || {});
   const [projects, setProjects] = useState<any[]>([]);
+  const [filteredProjects, setFilteredProjects] = useState<any[]>([]);
+
   const [myLaunchesInfo, setMyLaunchesInfo] = useState<any[]>([]);
+  const [searchValue, setSearchValue] = useState('');
+
   const { address } = useAppKitAccount();
   const { chainId } = useAppKitNetwork();
   const dispatch = useDispatch();
@@ -48,8 +52,7 @@ export default function MyLaunchesPage() {
     const projects = res.map((p: any) => {
       const contribution = p.contributions.find((c: any) => c.eoa === user.uid);
       const participate = p.allocation.participants.find((f: any) => f.eoa === user.uid);
-      let status = getProjectStatus(p, user?.uid);
-      // status = ProStatus.PLEDGING
+      const status = getProjectStatus(p, user?.uid);
       const tableData = getTableData(p, status, user?.uid)
       return {
         ...p,
@@ -59,7 +62,6 @@ export default function MyLaunchesPage() {
         status
       }
     });
-    console.log(projects);
     const launchesInfo = [
       {
         name: "Launches Participated",
@@ -82,6 +84,13 @@ export default function MyLaunchesPage() {
     setProjects(projects);
     setMyLaunchesInfo(launchesInfo);
   }, [user]);
+
+  useEffect(() => {
+    const filtered = projects.filter((p: any) => p.projectName.toLowerCase()
+      .includes(searchValue.toLowerCase()));
+    setFilteredProjects(filtered);
+  }, [searchValue, projects]);
+
 
   useEffect(() => {
     getLaunches();
@@ -124,6 +133,8 @@ export default function MyLaunchesPage() {
               type="text"
               placeholder="Search..."
               className="bg-transparent text-[#696C80] placeholder-[#696C80] text-sm focus:outline-none"
+              value={searchValue}
+              onChange={(evt: any) => setSearchValue(evt.target.value)}    
             />
           </div>
           <div className="flex items-center gap-2">
@@ -206,7 +217,7 @@ export default function MyLaunchesPage() {
               </thead>
 
               <tbody>
-                {projects && projects.map((row, index) => (
+                {filteredProjects && filteredProjects.map((row, index) => (
                   <tr
                     key={index}
                     className="text-[#EBECF2] text-base font-normal border-b border-[#282D3D80]"
