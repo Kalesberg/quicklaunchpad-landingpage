@@ -15,7 +15,7 @@ import clsx from "clsx";
 import { getProjectsById, getProjectsContent } from "app/api";
 import { useParams } from "next/navigation";
 import { ProStatus } from "state/type";
-import { getReminderTimeStampString, getReminderDate } from "utils/time";
+import { getReminderTimeStampString, getReminderDate, convertDateTime } from "utils/time";
 import {
   useAppKit,
   useAppKitAccount,
@@ -77,6 +77,7 @@ export default function LaunchInfoDetailPage() {
   const [proStatus, setProStatus] = useState<ProStatus>(ProStatus.TBA);
   const [projectUI, setProjectUI] = useState<any>(null);
   const [tabsUI, setTabsUI] = useState<any>(null);
+  const [contributed, setContributed] = useState<any>(null);
 
   const [reminderLaunchTimeBig, setReminderLaunchTimeBig] =
     useState<string>("");
@@ -131,6 +132,13 @@ export default function LaunchInfoDetailPage() {
     }
     const tabsUI = getTabsUI(project, status, user.kycStatus);
     setTabsUI(tabsUI);
+    const contributed = project.contributions.find((c: any) => c.eoa === user?.uid)
+    if (contributed) {
+      setContributed({
+        ...contributed,
+        date: convertDateTime(contributed.txTimestamp * 1000, true),
+      });
+    }
   }, [user, project, kycStatus]);
 
   const signIn = useCallback(async () => {
@@ -426,7 +434,7 @@ export default function LaunchInfoDetailPage() {
               <div className="bg-[#1B1E29] w-full rounded-2xl">
                 <div className="relative min-h-12 flex justify-start px-6 gap-8 text-sm after:content-[''] after:w-full after:h-[2px] after:absolute after:bottom-0 after:left-0 after:bg-[#919EAB14]">
                   {tabs.map((t: any) => (
-                    // (!t.expand || (t.expand && tabsUI)) &&
+                    (!t.expand || (t.expand && tabsUI)) &&
                     <button
                       key={t.value}
                       className={clsx({
@@ -481,7 +489,7 @@ export default function LaunchInfoDetailPage() {
                   )}
                   {selectedTab === "contribution" && (
                     <div className="min-w-0 md:min-w-[440px] w-full rounded-xl mx-auto text-center text-[#696C80]">
-                      {tableData.length ? (
+                      {contributed ? (
                         <div className="bg-[#282D3D] w-full rounded-2xl overflow-x-auto">
                         <table className="min-w-full">
                           <thead>
@@ -511,9 +519,7 @@ export default function LaunchInfoDetailPage() {
                           </thead>
 
                           <tbody>
-                            {tableData?.map((row, index) => (
                               <tr
-                                key={index}
                                 className="text-[#EBECF2] font-normal"
                               >
                                 <td className="py-1.5 px-4 min-h-14">
@@ -525,7 +531,7 @@ export default function LaunchInfoDetailPage() {
                                     className="float-left mr-2"
                                   />
                                   <p className="text-[#C7CAD9] text-sm leading-8 float-left">
-                                    {row.tokenName}
+                                    {contributed.token.name}
                                   </p>
                                 </td>
 
@@ -533,21 +539,21 @@ export default function LaunchInfoDetailPage() {
                                   <a href="#">
                                     <p className="text-sm text-left">
                                       {" "}
-                                      {row.amount}
-                                    </p>
+                                      {contributed.formattedAmount}
+                                      </p>
                                   </a>
                                 </td>
 
                                 <td className="py-1.5 px-4 min-h-14">
-                                  <p className="text-sm text-left">{row.date}</p>
+                                  <p className="text-sm text-left">{contributed.date}</p>
                                 </td>
 
                                 <td className="py-1.5 px-4 min-h-14">
                                   <div
-                                    className={`${row.status === "failure" ? "bg-[#FF5C5C29] text-[#FF5C5C]" : "bg-[#0FC67929] text-[#0FC679]"} inline-block float-start rounded-md px-2`}
+                                    className={`${contributed.txIsConfirmed === "failure" ? "bg-[#FF5C5C29] text-[#FF5C5C]" : "bg-[#0FC67929] text-[#0FC679]"} inline-block float-start rounded-md px-2`}
                                   >
                                     <p className="text-xs leading-normal font-bold capitalize">
-                                      {row.status}
+                                      {contributed.txIsConfirmed}
                                     </p>
                                   </div>
                                 </td>
@@ -566,7 +572,6 @@ export default function LaunchInfoDetailPage() {
                                   </Button>
                                 </td>
                               </tr>
-                            ))}
                           </tbody>
                         </table>
                       </div>
