@@ -23,12 +23,14 @@ export default function MyLaunchesPage() {
 
   const [myLaunchesInfo, setMyLaunchesInfo] = useState<any[]>([]);
   const [searchValue, setSearchValue] = useState('');
+  const [sortValue, setSortValue] = useState('Name');
 
   const { address } = useAppKitAccount();
   const { chainId } = useAppKitNetwork();
   const dispatch = useDispatch();
   const router = useRouter();
 
+  const columns = ['Name', 'Contribution', 'Token Allocation', 'Status', 'Launch Phase']
 
   const signIn = useCallback(async () => {
     if (user || !address || !chainId) {
@@ -88,9 +90,30 @@ export default function MyLaunchesPage() {
   useEffect(() => {
     const filtered = projects.filter((p: any) => p.projectName.toLowerCase()
       .includes(searchValue.toLowerCase()));
+    if (sortValue === 'Name') {
+      filtered.sort((p1: any, p2: any) => {
+        return p1.projectName.localeCompare(p2.projectName)
+      })
+    } else if (sortValue === 'Contribution') {
+      filtered.sort((p1: any, p2: any) => {
+        return p1.contribution?.formattedAmount ?? 0 > p2.contribution?.formattedAmount ?? 0 
+      })
+    }
+    else if (sortValue === 'Token Allocation') {
+      filtered.sort((p1: any, p2: any) => {
+        return p1.participate?.amount ?? 0 > p2.participate?.amount ?? 0 
+      })
+    } else if (sortValue === 'Status') {
+      filtered.sort((p1: any, p2: any) => {
+        return new Date(p1.pledgeEndDate).getTime() - new Date(p2.pledgeEndDate).getTime()
+      })
+    } else if (sortValue === 'Launch Phase') {
+      filtered.sort((p1: any, p2: any) => {
+        return new Date(p1.pledgeEndDate).getTime() - new Date(p2.pledgeEndDate).getTime()
+      })
+    }
     setFilteredProjects(filtered);
-  }, [searchValue, projects]);
-
+  }, [searchValue, projects, sortValue]);
 
   useEffect(() => {
     getLaunches();
@@ -167,9 +190,19 @@ export default function MyLaunchesPage() {
               </svg>
               Filters
             </Button>
-            <Button className="flex items-center gap-2 bg-transparent !text-sm !text-[#448AFF] font-bold px-2 hover:!text-white">
-              Sort by: Status
-              <svg
+            <div className="flex items-center gap-2 bg-transparent !text-sm !text-[#448AFF] font-bold px-2">
+              <label>Sort by:</label>
+              <select className="bg-[#1b1e29] border-none"
+                value={sortValue}
+                onChange={(e) => {
+                  setSortValue(e.target.value);
+                }}
+              >
+                {columns.map((col) => (
+                  <option className="text-[#C7CAD9]" value={col}>{col}</option>
+                ))}
+              </select>
+              {/* <svg
                 width="20"
                 height="21"
                 viewBox="0 0 20 21"
@@ -177,8 +210,8 @@ export default function MyLaunchesPage() {
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path d="M10.0002 12.9296C9.80546 12.93 9.61676 12.8622 9.46683 12.7379L4.46683 8.57128C4.11245 8.27673 4.06395 7.75066 4.3585 7.39628C4.65305 7.04189 5.17912 6.99339 5.5335 7.28794L10.0002 11.0213L14.4668 7.42128C14.639 7.28147 14.8598 7.21605 15.0803 7.23951C15.3009 7.26298 15.5029 7.37338 15.6418 7.54628C15.7961 7.71949 15.8712 7.94917 15.8491 8.18008C15.8269 8.41098 15.7096 8.6222 15.5252 8.76294L10.5252 12.7879C10.3709 12.8925 10.1861 12.9424 10.0002 12.9296Z" />
-              </svg>
-            </Button>
+              </svg> */}
+            </div>
           </div>
         </div>
         <>
@@ -187,35 +220,16 @@ export default function MyLaunchesPage() {
             <table className="min-w-full">
               <thead>
                 <tr className="max-h-14 w-full h-full text-[#C7CAD9] text-sm text-left font-semibold border-b border-[#82b1ff14]">
-                  <th className="h-14 py-1.5 px-4 pl-6">
-                    <span className="flex justify-start items-center gap-1 cursor-pointer">
-                      Launch Name
-                    </span>
-                  </th>
-                  <th className="h-14 py-1.5 px-4">
-                    <span className="flex justify-start items-center gap-1 cursor-pointer">
-                      Contribution
-                    </span>
-                  </th>
-                  <th className="h-14 py-1.5 px-4">
-                    <span className="flex justify-start items-center gap-1 cursor-pointer">
-                      Token Allocation
-                    </span>
-                  </th>
-                  <th className="h-14 py-1.5 px-4">
-                    <span className="flex justify-start items-center gap-1 cursor-pointer">
-                      Status
-                    </span>
-                  </th>
-                  <th className="h-14 py-1.5 px-4">
-                    <span className="flex justify-start items-center gap-1 cursor-pointer">
-                      Launch Phase
-                    </span>
-                  </th>
+                  {columns.map((col) => (
+                    <th className="h-14 py-1.5 px-4 pl-6">
+                      <span className="flex justify-start items-center gap-1 cursor-pointer">
+                        {col}
+                      </span>
+                    </th>
+                  ))}
                   <th className="h-14 py-1.5 px-4 pr-6"></th>
                 </tr>
               </thead>
-
               <tbody>
                 {filteredProjects && filteredProjects.map((row, index) => (
                   <tr
