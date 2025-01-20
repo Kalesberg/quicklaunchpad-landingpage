@@ -262,15 +262,15 @@ export default function LaunchInfoDetailPage() {
                               ? "Closed"
                               : "Open"}
                         </span>
-                        <span
+                        {(!!project.kycProvider && user.kycStatus !== 'approved') && <span
                           className={`min-w-24 h-[24px] px-2 py-1 rounded-md text-xs text-center font-bold ${
                             !!project.kycProvider
                               ? "bg-[#FF5C5C29] text-[#FF5C5C]"
                               : ""
                           }`}
                         >
-                          {!!project.kycProvider ? "KYC Required" : ""}
-                        </span>
+                          KYC Required
+                        </span>}
                       </div>
                     </div>
                     <p className="max-w-[500px] w-full md:w-3/4 leading-6 text-sm md:text-base font-medium text-[#EBECF2] md:whitespace-nowrap md:overflow-hidden md:text-ellipsis mb-4">
