@@ -40,14 +40,14 @@ const TablePagination: React.FC<{
         </p>
         <div className="hidden sm:block ml-2 mr-8">
           <select
-            className="relative inline-flex items-center text-sm font-medium leading-[1.1876em] cursor-pointer box-border bg-[#1b1e29] border-none"
+            className="relative bg-[#1b1e29] focus:outline-none cursor-pointer"
             value={perPage}
             onChange={(e) => {
               setPerPage(e.target.value);
             }}
           >
             {perPages.map((col) => (
-              <option className="text-[#C7CAD9]" value={col}>{col}</option>
+              <option className="text-[#C7CAD9] outline-none border-none cursor-pointer" value={col}>{col}</option>
             ))}
           </select>
         </div>
