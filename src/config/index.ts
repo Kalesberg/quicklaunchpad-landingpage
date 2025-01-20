@@ -17,7 +17,7 @@ import polygonPos from "./polygonPos.json";
 // 1: The only launch
 // 2: multiple live launches
 // 3: multiple live & previous launches
-export const caseLaunch: number = 3;
+export const caseLaunch: number = 0;
 
 enum ChainId {
   MUMBAI = 80001,
