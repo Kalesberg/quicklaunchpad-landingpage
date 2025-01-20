@@ -17,6 +17,7 @@ import {
   useWalletInfo,
 } from "@reown/appkit/react";
 import { shortenAddress } from "utils";
+import { caseLaunch } from "config";
 
 interface Network {
   chainId: number;
@@ -73,7 +74,7 @@ const Header = () => {
       name: "QuickLaunch",
       children: [
         { name: "Launchpad Homepage", href: "/" },
-        { name: "QuickLaunch Dashboard", href: "/dashboard" },
+        { name: "QuickLaunch Dashboard", href: "/dashboard", caseLaunch: 1},
       ],
       isNew: true,
     },
@@ -261,7 +262,8 @@ const Header = () => {
                         </div>
                         {openDropdown === item.name && (
                           <ul className="absolute left-0 z-10 mt-2 w-48 rounded-md shadow-lg bg-[#1B1E29] ring-1 ring-black ring-opacity-5">
-                            {item.children.map((child) => (
+                            {item.children.map((child: {href: string, name: string, caseLaunch?: number}) => 
+                            (!child.caseLaunch || child.caseLaunch < caseLaunch) && (
                               <li key={child.name}>
                                 <Link
                                   href={child.href}

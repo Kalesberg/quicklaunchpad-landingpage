@@ -12,13 +12,9 @@ import { useAppKitAccount, useAppKitNetwork } from "@reown/appkit/react";
 import { signInWithWallet } from "app/service/userService";
 import { useSelector } from 'react-redux';
 import { User } from "state/type";
+import { caseLaunch } from "config";
 
 export default function DashboardPage() {
-  // 0: no launches
-  // 1: The only launch
-  // 2: multiple live launches
-  // 3: multiple live & previous launches
-  const caseLaunch: number = 3;
   const dispatch = useDispatch();
   const { address } = useAppKitAccount();
   const { chainId } = useAppKitNetwork();

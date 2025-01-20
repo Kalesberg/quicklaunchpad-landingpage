@@ -13,6 +13,12 @@ import layerX from "./layerx.json";
 import orderlyFeeTiers from "./orderlyFeeTiers.json";
 import polygonPos from "./polygonPos.json";
 
+// 0: no launches
+// 1: The only launch
+// 2: multiple live launches
+// 3: multiple live & previous launches
+export const caseLaunch: number = 0;
+
 enum ChainId {
   MUMBAI = 80001,
   POL=80002,

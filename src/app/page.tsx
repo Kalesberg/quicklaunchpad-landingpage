@@ -10,13 +10,10 @@ import HeroSection from "components/ui/home/HeroSection";
 import { useState } from "react";
 import SignUpModal from "components/common/SignUpModal";
 import Footer from "components/layout/Footer";
+import { caseLaunch } from "config";
 
 export default function Home() {
-  // 0: no launches
-  // 1: The only launch
-  // 2: multiple live launches
-  // 3: multiple live & previous launches
-  const caseLaunch: number = 3;
+
   const [openModal, setOpenModal] = useState(false);
   return (
     <div className="container mx-auto">
