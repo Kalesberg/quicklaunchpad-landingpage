@@ -12,9 +12,8 @@ import { useAppKitAccount, useAppKitNetwork } from "@reown/appkit/react";
 import { signInWithWallet } from "app/service/userService";
 import { useDispatch } from 'react-redux';
 import { updateUser } from "../../../reduxStore/rootReducer";
-import { ProStatus } from "state/type";
 import { getProjectStatus } from "utils/project";
-import { getTableData } from "./service";
+import { getPaginatedList, getTableData } from "./service";
 
 export default function MyLaunchesPage() {
   const { user } = useSelector((state: { user: User }) => state || {});
@@ -24,13 +23,14 @@ export default function MyLaunchesPage() {
   const [myLaunchesInfo, setMyLaunchesInfo] = useState<any[]>([]);
   const [searchValue, setSearchValue] = useState('');
   const [sortValue, setSortValue] = useState('Name');
-
+  const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(10);
   const { address } = useAppKitAccount();
   const { chainId } = useAppKitNetwork();
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const columns = ['Name', 'Contribution', 'Token Allocation', 'Status', 'Launch Phase']
+  const columns = ['Name', 'Contribution', 'Token Allocation', 'Status', 'Launch Phase'];
 
   const signIn = useCallback(async () => {
     if (user || !address || !chainId) {
@@ -83,7 +83,7 @@ export default function MyLaunchesPage() {
         }, 0) ?? 0}`,
       },
     ];
-    setProjects(projects);
+    setProjects(projects.concat(projects).concat(projects).concat(projects).concat(projects).concat(projects).concat(projects));
     setMyLaunchesInfo(launchesInfo);
   }, [user]);
 
@@ -112,8 +112,9 @@ export default function MyLaunchesPage() {
         return new Date(p1.pledgeEndDate).getTime() - new Date(p2.pledgeEndDate).getTime()
       })
     }
-    setFilteredProjects(filtered);
-  }, [searchValue, projects, sortValue]);
+    const paginatedList = getPaginatedList(filtered, page, perPage);
+    setFilteredProjects(paginatedList);
+  }, [searchValue, projects, sortValue, page, perPage]);
 
   useEffect(() => {
     getLaunches();
@@ -297,7 +298,7 @@ export default function MyLaunchesPage() {
               </tbody>
             </table>
           </div>
-          <TablePagination count={projects.length} />
+          <TablePagination count={projects.length} page={page} perPage={perPage} setPage={setPage} setPerPage={setPerPage} />
         </>
       </div>
     </div>
