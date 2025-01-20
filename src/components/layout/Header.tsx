@@ -244,7 +244,7 @@ const Header = () => {
             />
             <nav>
               <ul className="flex items-center space-x-8">
-                {navItems.map((item) => (
+                {navItems.map((item: any) => (
                   <li key={item.name} className="relative">
                     {item.children ? (
                       <div>
@@ -253,7 +253,7 @@ const Header = () => {
                             onClick={() => handleDropdown(item.name)}
                             className={`relative hover:text-blue-400 ${
                               item.children.find(
-                                (child) => child.href === activeItem
+                                (child: any) => child.href === activeItem
                               )
                                 ? "text-[#D9D9D9] after:absolute after:-bottom-4 after:left-0 after:block after:bg-[#448AFF] after:w-full after:h-[2px]"
                                 : "text-[#7c7c81]"
@@ -391,7 +391,7 @@ const Header = () => {
             className={`absolute top-16 left-0 z-[999] w-full h-auto bg-[#12131A] animate-contentShow`}
           >
             <ul className="flex flex-col items-center space-y-8">
-              {navItems.concat(moreLinks).map((item) => (
+              {navItems.concat(moreLinks).map((item: any) => (
                 <li key={item.name} className="relative">
                   {item.children ? (
                     <div>
@@ -400,7 +400,7 @@ const Header = () => {
                           onClick={() => handleDropdown(item.name)}
                           className={`relative px-4 hover:text-blue-400 ${
                             item.children.find(
-                              (child) => child.href === activeItem
+                              (child: any) => child.href === activeItem
                             )
                               ? "text-[#D9D9D9] after:absolute after:-bottom-4 after:left-0 after:block after:bg-[#448AFF] after:w-full after:h-[2px] after:px-4"
                               : "text-[#7c7c81]"
@@ -418,7 +418,7 @@ const Header = () => {
                       </div>
                       {openDropdown === item.name && (
                         <ul className="absolute left-0 z-10 mt-2 w-48 rounded-md shadow-lg bg-[#1B1E29] ring-1 ring-black ring-opacity-5">
-                          {item.children.map((child) => (
+                          {item.children.map((child: any) => (
                             <li key={child.name}>
                               <Link
                                 href={child.href}
