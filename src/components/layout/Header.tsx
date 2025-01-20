@@ -244,7 +244,7 @@ const Header = () => {
             />
             <nav>
               <ul className="flex items-center space-x-8">
-                {navItems.map((item) => (
+                {navItems.map((item: any) => (
                   <li key={item.name} className="relative">
                     {item.children ? (
                       <div>
@@ -253,7 +253,7 @@ const Header = () => {
                             onClick={() => handleDropdown(item.name)}
                             className={`relative hover:text-blue-400 ${
                               item.children.find(
-                                (child) => child.href === activeItem
+                                (child: any) => child.href === activeItem
                               )
                                 ? "text-[#D9D9D9] after:absolute after:-bottom-4 after:left-0 after:block after:bg-[#448AFF] after:w-full after:h-[2px]"
                                 : "text-[#7c7c81]"
