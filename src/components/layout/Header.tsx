@@ -68,16 +68,23 @@ const Header = () => {
     setActiveItem(pathname);
   }, [pathname]);
 
-  const navItems = [
-    { name: "Swap", href: "/swap" },
-    {
-      name: "QuickLaunch",
-      children: [
-        { name: "Launchpad Homepage", href: "/" },
-        { name: "QuickLaunch Dashboard", href: "/dashboard", caseLaunch: 1},
-      ],
-      isNew: true,
-    },
+  let navItems = [
+    { name: "Swap", href: "/swap" }
+  ] as any;
+
+  navItems.push(caseLaunch > 0 ? {
+    name: "QuickLaunch",
+    children: [
+      { name: "Launchpad Homepage", href: "/" },
+      { name: "QuickLaunch Dashboard", href: "/dashboard", caseLaunch: 1},
+    ],
+    isNew: true,
+  } : {
+    name: "QuickLaunch",
+    isNew: true,
+    href: "/"
+  })
+  navItems.push(...[
     { name: "Farms", href: "/farms" },
     { name: "Pool", href: "/pool" },
     {
@@ -94,8 +101,10 @@ const Header = () => {
         { name: "Integrations", href: "/partners/integrations" },
       ],
     },
-    { name: "Dragons Lair", href: "/dragons-lair" },
-  ];
+    { name: "Dragons Lair", href: "/dragons-lair" }
+  ])
+
+
 
   const navItemsDashboard = [
     { name: "Launchpads", href: "/dashboard", icon: "ic-dashboard.svg" },
