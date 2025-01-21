@@ -696,7 +696,7 @@ export default function LaunchInfoDetailPage() {
                       <div>
                         <Button
                           variant={kycStatus ? kycStatus.variant : "primary"}
-                          className="!min-w-16 !h-9 capitalize max-w-[250px]"
+                          className="!min-w-16 !h-9 capitalize max-w-[250px] text-sm md:text-base"
                           onClick={() =>
                             kycStatus ? handleParticipate() : open()
                           }
