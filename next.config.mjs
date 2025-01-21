@@ -7,7 +7,8 @@ const nextConfig = {
             hostname: "strapi.quicklaunchpad.io"
           },
         ]    
-    }
+    },
+    reactStrictMode: false,
 };
 
 export default nextConfig;
