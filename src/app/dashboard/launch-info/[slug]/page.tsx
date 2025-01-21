@@ -262,7 +262,7 @@ export default function LaunchInfoDetailPage() {
                               ? "Closed"
                               : "Open"}
                         </span>
-                        {(!!project.kycProvider && user.kycStatus !== 'approved') && <span
+                        {(!!project.kycProvider && user?.kycStatus !== 'approved') && <span
                           className={`min-w-24 h-[24px] px-2 py-1 rounded-md text-xs text-center font-bold ${
                             !!project.kycProvider
                               ? "bg-[#FF5C5C29] text-[#FF5C5C]"
