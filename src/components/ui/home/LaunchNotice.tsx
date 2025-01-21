@@ -21,7 +21,6 @@ const LaunchNotice: React.FC<{ status?: string }> = ({ status }) => {
   const router = useRouter();
   const { upcomingProject } = useSelector((state: { upcomingProject: Project }) => state || {});
 
-  // const [project, setProject] = useState<Project | null>(null);
   const fetchLaunches = useCallback(async () => {
     try {
       const p = await getUpcomingProject();

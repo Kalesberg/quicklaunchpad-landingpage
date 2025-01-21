@@ -8,7 +8,8 @@ import { getProjectsByStatus } from "app/api";
 import { Project, ProStatus, User, ProjectStatus } from "state/type";
 import { getReminderTimeStampString, getReminderDate } from "utils/time";
 import { getProjectStatus } from "utils/project";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { updateLiveProjects } from "../../../reduxStore/rootReducer";
 
 const LaunchCard: React.FC<{p: Project, user: User}> = ({p, user}) => {
   
@@ -104,17 +105,16 @@ const LaunchCard: React.FC<{p: Project, user: User}> = ({p, user}) => {
 };
 
 const LiveUpcomingLaunches: React.FC = () => {
-
+  const dispatch = useDispatch();
   const [startTimer, setStartTimer] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
-
-  const [launches, setLaunches] = useState<Project[]>([]);
+  const { liveProjects } = useSelector((state: { liveProjects: any[] }) => state || []);
   const { user } = useSelector((state: { user: User }) => state || null);
 
   const fetchLaunches = useCallback(async () => {
     try {
       const projects = await getProjectsByStatus(ProjectStatus.Live);
-      setLaunches(projects);
+      dispatch(updateLiveProjects(projects));
       setStartTimer(true);
     } catch (err) {
       console.log("[LiveUpcomingLaunches] projects Club error: ", err);
@@ -130,14 +130,14 @@ const LiveUpcomingLaunches: React.FC = () => {
       return;
     }
     timerRef.current = setInterval(() => {
-      const updated = launches.map(item => {
+      const updated = liveProjects.map(item => {
         return {
           ...item,
           reminderLaunchTime: getReminderTimeStampString(item.pledgeEndDate),
           reminderDay: getReminderDate(item.pledgeStartDate)       
         }
       });
-      setLaunches(updated);
+      dispatch(updateLiveProjects(updated));
     }, 1000);
     return () => {
       if (timerRef.current) {
@@ -155,7 +155,7 @@ const LiveUpcomingLaunches: React.FC = () => {
         Get early access to the hottest new projects.
       </p>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {launches.map((launch, index) => (
+        {liveProjects.map((launch, index) => (
           <LaunchCard key={index} p={launch} user={user} />
         ))}
       </div>
