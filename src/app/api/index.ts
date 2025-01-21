@@ -128,9 +128,14 @@ export const logIn = async ( message: any, signature: string) => {
  * 
  */
 export const getUser = async () => {
-  const res = await authApi.get(`/identity/users`);
-  const user = res?.data
-  return user
+  try {
+    const res = await authApi.get(`/identity/users`);
+    const user = res?.data
+    return user
+  } catch(e) {
+    console.error(e);
+    return null
+  }
 };
 
 /**

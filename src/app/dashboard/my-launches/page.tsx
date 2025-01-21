@@ -48,7 +48,7 @@ export default function MyLaunchesPage() {
 
   useEffect(() => {
     signIn();
-  }, [signIn]);
+  }, [signIn, address, user]);
 
   const getLaunches = useCallback(async () => {
     if (!user) {
@@ -126,10 +126,9 @@ export default function MyLaunchesPage() {
 
   useEffect(() => {
     if (!address) {
-      console.log('disconnected');
-      removeToken();
       dispatch(updateMyprojects([]));
       dispatch(updateMylaunchInfo([]));
+      dispatch(updateUser(null));
     }
   }, [address]);
 

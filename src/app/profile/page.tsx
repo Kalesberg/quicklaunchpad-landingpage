@@ -39,7 +39,7 @@ export default function Page() {
         dispatch(updateUser(res1));
       }
     }
-  }, []);
+  }, [address, user]);
 
   useEffect(() => {
     signIn();
@@ -47,8 +47,6 @@ export default function Page() {
 
   useEffect(() => {
     if (!address) {
-      console.log('disconnected');
-      removeToken();
       dispatch(updateUser(null));
     }
   }, [address]);

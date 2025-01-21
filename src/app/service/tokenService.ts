@@ -1,15 +1,23 @@
-const TOKEN_KEY = 'access_token';
 
-export const setToken = (token: string) => {
-    localStorage.setItem(TOKEN_KEY, token);
+const ADDRESS_KEY = 'address'
+export const setToken = (address: string, token: string) => {
+    localStorage.setItem(address, token);
 };
-  
-export const getToken = () => {
-    return localStorage.getItem(TOKEN_KEY);
-};
-  
 
-export const removeToken = () => {
-    return localStorage.removeItem(TOKEN_KEY);
+export const setAddress = (address: string) => {
+    localStorage.setItem(ADDRESS_KEY, address);
+};
+
+  
+export const getToken = (address?: string) => {
+    if (!address) {
+        address = localStorage.getItem(ADDRESS_KEY) || '';
+    }
+    return localStorage.getItem(address);
+};
+
+export const removeToken = (address: string) => {
+    localStorage.removeItem(ADDRESS_KEY);
+    return localStorage.removeItem(address);
 };
 
