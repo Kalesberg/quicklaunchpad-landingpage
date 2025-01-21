@@ -5,8 +5,9 @@ import { getProjectsByStatus } from "app/api";
 import { Project, ProjectStatus, ChainIdToName } from "state/type";
 import Button from "components/common/Button";
 import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateSelectedProject } from "state/projectSlice";
+import { updatePreviousProjects } from "../../../reduxStore/rootReducer";
 
 const LaunchRow: React.FC<Project> = (p: Project) => {
   const router = useRouter();
@@ -79,13 +80,14 @@ const LaunchRow: React.FC<Project> = (p: Project) => {
 };
 
 const PreviousLaunches: React.FC = () => {
+  const dispatch = useDispatch();
   const [launches, setLaunches] = useState<Project[]>([]);
-  const [allLaunches, setAllLaunches] = useState<Project[]>([]);
+  const { previousProjects } = useSelector((state: { previousProjects: any[] }) => state || []);
 
   const fetchLaunches = useCallback(async () => {
     try {
       const projects = await getProjectsByStatus(ProjectStatus.Completed);
-      setAllLaunches(projects);
+      dispatch(updatePreviousProjects(projects));
       setLaunches(projects.slice(0, 5));
     } catch (err) {
       console.log("[PreviousLaunches] projects Club error: ", err);
@@ -95,6 +97,15 @@ const PreviousLaunches: React.FC = () => {
   useEffect(() => {
     fetchLaunches();
   }, [fetchLaunches]);
+
+  useEffect(() => {
+    if (previousProjects.length > 5) {
+      setLaunches(previousProjects.slice(0, 5));
+    } else {
+      setLaunches(previousProjects);
+    }
+  }, [previousProjects]);
+
 
   return (
     <section className="mb-12 px-4">
@@ -112,7 +123,7 @@ const PreviousLaunches: React.FC = () => {
       <div className="text-center mt-6">
         <Button
           className="bg-transparent md:!bg-blue-500 !text-[#448AFF] md:!text-white text-sm !font-bold hover:text-blue-400 hover:bg-transparent m-auto"
-          onClick={() => setLaunches(allLaunches)}
+          onClick={() => setLaunches(previousProjects)}
         >
           See All Previous Launches
         </Button>
