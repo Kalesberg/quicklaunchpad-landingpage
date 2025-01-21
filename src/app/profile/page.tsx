@@ -12,6 +12,7 @@ import { useAppKitAccount, useAppKitNetwork } from "@reown/appkit/react";
 import { signInWithWallet } from "app/service/userService";
 import { useParams } from "next/navigation";
 import { emailVerify } from "app/api";
+import { removeToken } from "app/service/tokenService";
 
 export default function Page() {
 
@@ -38,11 +39,20 @@ export default function Page() {
         dispatch(updateUser(res1));
       }
     }
-  }, [address, user]);
+  }, []);
 
   useEffect(() => {
     signIn();
-  }, [signIn]);
+  }, [signIn, address, user]);
+
+  useEffect(() => {
+    if (!address) {
+      console.log('disconnected');
+      removeToken();
+      dispatch(updateUser(null));
+    }
+  }, [address]);
+
 
   return (
     <div className="container-dashboard mx-auto px-4 md:px-14 xl:px-24">

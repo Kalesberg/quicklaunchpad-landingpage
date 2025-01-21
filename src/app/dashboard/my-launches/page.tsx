@@ -14,6 +14,7 @@ import { useDispatch } from 'react-redux';
 import { updateMylaunchInfo, updateMyprojects, updateUser } from "../../../reduxStore/rootReducer";
 import { getProjectStatus } from "utils/project";
 import { getPaginatedList, getTableData } from "./service";
+import { removeToken } from "app/service/tokenService";
 
 export default function MyLaunchesPage() {
   const dispatch = useDispatch();
@@ -122,6 +123,16 @@ export default function MyLaunchesPage() {
   useEffect(() => {
     getLaunches();
   }, [getMyLaunches, user]);
+
+  useEffect(() => {
+    if (!address) {
+      console.log('disconnected');
+      removeToken();
+      dispatch(updateMyprojects([]));
+      dispatch(updateMylaunchInfo([]));
+    }
+  }, [address]);
+
 
   return (
     <div className="container-dashboard mx-auto px-4 md:px-14 xl:px-24">
