@@ -139,8 +139,8 @@ export default function MyLaunchesPage() {
         ))}
       </div>
       <div className="bg-[#1b1d26] rounded-2xl mt-8">
-        <div className="flex justify-between items-center px-6 py-4">
-          <div className="flex items-center gap-2 min-w-[320px] text-[#696C80] border border-[#919EAB33] rounded-lg px-[14px] py-3">
+        <div className="flex justify-between items-center px-6 py-4 flex-wrap">
+          <div className="flex items-center gap-2 min-w-[100%] sm:min-w-[320px] text-[#696C80] border border-[#919EAB33] rounded-lg px-[14px] py-3">
             <svg
               width="24"
               height="25"
@@ -161,7 +161,7 @@ export default function MyLaunchesPage() {
               onChange={(evt: any) => setSearchValue(evt.target.value)}    
             />
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 sm:pt-2">
             {/* <Button className="flex items-center gap-2 bg-transparent !text-sm !text-[#448AFF] font-bold px-2 hover:!text-white">
               <svg
                 width="20"
@@ -191,7 +191,7 @@ export default function MyLaunchesPage() {
               </svg>
               Filters
             </Button> */}
-            <div className="flex items-center gap-2 bg-transparent !text-sm !text-[#448AFF] font-bold px-2">
+            <div className="flex items-center gap-2 bg-transparent !text-sm !text-[#448AFF] font-bold px-2 pt-2">
               <label>Sort by:</label>
               <select className="bg-[#1b1e29] focus:outline-none cursor-pointer"
                 value={sortValue}
@@ -217,7 +217,7 @@ export default function MyLaunchesPage() {
         </div>
         <>
           {/* Desktop Table */}
-          <div className="hidden md:block w-full overflow-x-auto">
+          <div className=" w-full overflow-x-auto">
             <table className="min-w-full">
               <thead>
                 <tr className="max-h-14 w-full h-full text-[#C7CAD9] text-sm text-left font-semibold border-b border-[#82b1ff14]">
