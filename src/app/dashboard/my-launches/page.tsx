@@ -11,23 +11,26 @@ import { useRouter } from "next/navigation";
 import { useAppKitAccount, useAppKitNetwork } from "@reown/appkit/react";
 import { signInWithWallet } from "app/service/userService";
 import { useDispatch } from 'react-redux';
-import { updateUser } from "../../../reduxStore/rootReducer";
+import { updateMylaunchInfo, updateMyprojects, updateUser } from "../../../reduxStore/rootReducer";
 import { getProjectStatus } from "utils/project";
 import { getPaginatedList, getTableData } from "./service";
 
 export default function MyLaunchesPage() {
+  const dispatch = useDispatch();
+
   const { user } = useSelector((state: { user: User }) => state || {});
-  const [projects, setProjects] = useState<any[]>([]);
+  const { myprojects, mylaunchInfo } = useSelector((state: { myprojects: any, mylaunchInfo: any }) => state || {});
+
+  // const [projects, setProjects] = useState<any[]>([]);
   const [filteredProjects, setFilteredProjects] = useState<any[]>([]);
 
-  const [myLaunchesInfo, setMyLaunchesInfo] = useState<any[]>([]);
+  // const [myLaunchesInfo, setMyLaunchesInfo] = useState<any[]>([]);
   const [searchValue, setSearchValue] = useState('');
   const [sortValue, setSortValue] = useState('Name');
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
   const { address } = useAppKitAccount();
   const { chainId } = useAppKitNetwork();
-  const dispatch = useDispatch();
   const router = useRouter();
 
   const columns = ['Name', 'Contribution', 'Token Allocation', 'Status', 'Launch Phase'];
@@ -83,12 +86,12 @@ export default function MyLaunchesPage() {
         }, 0) ?? 0}`,
       },
     ];
-    setProjects(projects);
-    setMyLaunchesInfo(launchesInfo);
+    dispatch(updateMyprojects(projects));
+    dispatch(updateMylaunchInfo(launchesInfo));
   }, [user]);
 
   useEffect(() => {
-    const filtered = projects.filter((p: any) => p.projectName.toLowerCase()
+    const filtered = myprojects.filter((p: any) => p.projectName.toLowerCase()
       .includes(searchValue.toLowerCase()));
     if (sortValue === 'Name') {
       filtered.sort((p1: any, p2: any) => {
@@ -114,7 +117,7 @@ export default function MyLaunchesPage() {
     }
     const paginatedList = getPaginatedList(filtered, page, perPage);
     setFilteredProjects(paginatedList);
-  }, [searchValue, projects, sortValue, page, perPage]);
+  }, [searchValue, myprojects, sortValue, page, perPage]);
 
   useEffect(() => {
     getLaunches();
@@ -127,7 +130,7 @@ export default function MyLaunchesPage() {
         Keep track of all your launches and participation details.
       </p>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {myLaunchesInfo.map((info, index) => (
+        {mylaunchInfo.map((info: any, index: any) => (
           <div key={index} className="bg-[#1B1E29] rounded-2xl p-6">
             <h3 className="text-[#EBECF2] text-sm font-semibold leading-5">
               {info.name}
@@ -298,7 +301,7 @@ export default function MyLaunchesPage() {
               </tbody>
             </table>
           </div>
-          <TablePagination count={projects.length} page={page} perPage={perPage} setPage={setPage} setPerPage={setPerPage} />
+          <TablePagination count={filteredProjects.length} page={page} perPage={perPage} setPage={setPage} setPerPage={setPerPage} />
         </>
       </div>
     </div>
