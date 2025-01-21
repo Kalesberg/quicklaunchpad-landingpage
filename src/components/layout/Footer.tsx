@@ -141,7 +141,7 @@ const Footer: React.FC = () => {
             <span className="text-[#FFFFFFA3]">
               © {new Date().getFullYear()} QuickSwap
             </span>
-            <Link className="text-[#FFFFFFA3]" href="/terms">
+            <Link className="text-[#FFFFFFA3]" href="https://quickswap.exchange/#/tos" target="_blank">
               Terms of use
             </Link>
           </div>
@@ -151,12 +151,13 @@ const Footer: React.FC = () => {
           <div className="container w-full h-[1.5px] mx-auto px-0 after:content-[''] after:block after:w-full after:h-full after:bg-[#FFFFFF0A]"></div>
           <div className="container mx-auto mt-4 md:mt-8 mb-0 md:mb-6 px-2 md:px-10 flex justify-between items-center gap-3 md:gap-0 text-xs md:text-sm">
             <div className="flex items-center gap-3 md:gap-8">
-              <Link className="text-[#FFFFFFA3]" href="/terms">
+              <Link className="text-[#FFFFFFA3]" href="https://quickswap.exchange/#/tos" target="_blank">
                 Terms of use
               </Link>
               <Link
                 className="text-[#FFFFFFA3] flex items-center gap-1"
-                href="https://web.telegram.org/"
+                href="https://t.me/QuickLaunchOfficial"
+                target="_blank"
               >
                 <TelegramIcon className="w-[18px] h-[18px] hidden sm:block" />
                 Telegram Support
