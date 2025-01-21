@@ -421,7 +421,7 @@ export default function LaunchInfoDetailPage() {
                   </p>
                   <Button
                     variant="primary"
-                    className="flex-1 md:flex-none !h-9 !bg-[#00B8D914] !text-[#61F3F3] !text-sm text-center !font-bold leading-6 rounded-lg !px-10 hover:bg-[#00B8D966]"
+                    className="flex-1 md:flex-none min-w-[80px] !h-9 !bg-[#00B8D914] !text-[#61F3F3] !text-sm text-center !font-bold leading-6 rounded-lg md:!px-10 hover:bg-[#00B8D966]"
                     onClick={() => open()}
                   >
                     Sign-In
