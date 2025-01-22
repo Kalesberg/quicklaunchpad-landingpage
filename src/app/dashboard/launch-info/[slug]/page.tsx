@@ -221,7 +221,7 @@ export default function LaunchInfoDetailPage() {
             <ChevronLeftIcon className="w-5 h-5 mr-2" />
             Back to Launchpads
           </Link>
-          <div className="flex flex-col md:flex-row gap-5 pb-4">
+          <div className="flex flex-col lg:flex-row gap-5 pb-4">
             <div className="flex-[70%] flex-grow-[2] flex-shrink">
               <div className="bg-[#1B1E29] p-5 rounded-xl mb-5">
                 <div className="w-full overflow-hidden md:flex md:gap-5">
@@ -352,7 +352,7 @@ export default function LaunchInfoDetailPage() {
                   </div>
                 </div>
                 <div className="grid grid-cols-auto-fit-100 lg:grid-cols-4 gap-2 md:gap-4">
-                  <div className="bg-[#282D3D] min-w-0 md:min-w-[158px] h-[106px] p-4 rounded-2xl flex flex-col">
+                  <div className="bg-[#282D3D] min-w-0 h-[106px] p-4 rounded-2xl flex flex-col">
                     <h3 className="text-[#EBECF2] text-xs md:text-sm font-semibold mb-2">
                       Total Raise
                     </h3>
@@ -360,7 +360,7 @@ export default function LaunchInfoDetailPage() {
                       ${project.totalPoolAmount}
                     </p>
                   </div>
-                  <div className="bg-[#282D3D] min-w-0 md:min-w-[158px] h-[106px] p-4 rounded-2xl flex flex-col">
+                  <div className="bg-[#282D3D] min-w-0 h-[106px] p-4 rounded-2xl flex flex-col">
                     <h3 className="text-[#EBECF2] text-xs md:text-sm font-semibold mb-2">
                       Token Price
                     </h3>
@@ -368,7 +368,7 @@ export default function LaunchInfoDetailPage() {
                       ${project.initialPrice}
                     </p>
                   </div>
-                  <div className="bg-[#282D3D] min-w-0 md:min-w-[158px] h-[106px] p-4 rounded-2xl flex flex-col">
+                  <div className="bg-[#282D3D] min-w-0 h-[106px] p-4 rounded-2xl flex flex-col">
                     <h3 className="text-[#EBECF2] text-xs md:text-sm font-semibold mb-2">
                       Number of Winners
                     </h3>
@@ -376,7 +376,7 @@ export default function LaunchInfoDetailPage() {
                       ${project.numberLotteryWinners || 0}
                     </p>
                   </div>
-                  <div className="bg-[#282D3D] min-w-0 md:min-w-[158px] h-[106px] p-4 rounded-2xl flex flex-col">
+                  <div className="bg-[#282D3D] min-w-0 h-[106px] p-4 rounded-2xl flex flex-col">
                     <h3 className="text-[#EBECF2] text-xs md:text-sm font-semibold mb-2">
                       Allocation
                     </h3>
