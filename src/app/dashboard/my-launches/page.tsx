@@ -22,10 +22,19 @@ import FilterModal from "components/common/FilterModal";
 export default function MyLaunchesPage() {
   const dispatch = useDispatch();
 
+  const totalColumns = ['Name', 'Contribution', 'Token Allocation', 'Status', 'Launch Phase'];
+
   const { user } = useSelector((state: { user: User }) => state || {});
   const { myprojects, mylaunchInfo } = useSelector((state: { myprojects: any, mylaunchInfo: any }) => state || {});
 
   // const [projects, setProjects] = useState<any[]>([]);
+  const [columns, setColumns] = useState<any>({
+    'Name': true,
+    'Contribution': true,
+    'Token Allocation': true,
+    'Status': true,
+    'Launch Phase': true
+  });
   const [filteredProjects, setFilteredProjects] = useState<any[]>([]);
   const [openFilterModal, setOpenFilterModal] = useState<boolean>(false);
   const [openColumnsModal, setOpenColumnsModal] = useState<boolean>(false);
@@ -39,7 +48,6 @@ export default function MyLaunchesPage() {
   const { chainId } = useAppKitNetwork();
   const router = useRouter();
 
-  const columns = ['Name', 'Contribution', 'Token Allocation', 'Status', 'Launch Phase'];
 
   const signIn = useCallback(async () => {
     if (user || !address || !chainId) {
@@ -204,6 +212,8 @@ export default function MyLaunchesPage() {
               <ColumnsModal
                 openModal={openColumnsModal}
                 setOpenModal={setOpenColumnsModal}
+                columns={columns}
+                setColumns={setColumns}
               />
               <Button
                 className="flex items-center gap-2 bg-transparent !text-sm !text-[#448AFF] font-bold px-2 hover:!text-white"
@@ -232,7 +242,7 @@ export default function MyLaunchesPage() {
                     setSortValue(e.target.value);
                   }}
                 >
-                  {columns.map((col) => (
+                  {Object.keys(columns).filter(key => columns[key]).map((col) => (
                     <option className="text-[#C7CAD9] cursor-pointer" value={col}>{col}</option>
                   ))}
                 </select>
@@ -254,7 +264,7 @@ export default function MyLaunchesPage() {
               <table className="min-w-full">
                 <thead>
                   <tr className="max-h-14 w-full h-full text-[#C7CAD9] text-sm text-left font-semibold border-b border-[#82b1ff14]">
-                    {columns.map((col) => (
+                    {Object.keys(columns).filter(key => columns[key]).map((col) => (
                       <th className="h-14 py-1.5 px-4 pl-6">
                         <span className="flex justify-start items-center gap-1 cursor-pointer">
                           {col}
@@ -270,25 +280,25 @@ export default function MyLaunchesPage() {
                       key={index}
                       className="text-[#EBECF2] text-base font-normal border-b border-[#282D3D80]"
                     >
-                      <td className="py-1.5 px-4 pl-6 min-h-14">
+                      {columns['Name'] && <td className="py-1.5 px-4 pl-6 min-h-14">
                         <span>{row.projectName}</span>
-                      </td>
+                      </td>}
 
-                      <td className="py-1.5 px-4 min-h-14">
+                      {columns['Contribution'] && <td className="py-1.5 px-4 min-h-14">
                         <div className="flex justify-start">
                           <a href="#">
                             <small className="text-sm"> {row.contribution ? `$${row.contribution.formattedAmount}` : '-'}</small>
                           </a>
                         </div>
-                      </td>
+                      </td>}
 
-                      <td className="py-1.5 px-4 min-h-14">
+                      {columns['Token Allocation'] && <td className="py-1.5 px-4 min-h-14">
                         <small className="text-sm">
                           {row.participate ? `$${row.participate.amount}` : '-'}
                         </small>
-                      </td>
+                      </td>}
 
-                      <td className="py-1.5 px-4 min-h-14">
+                      {columns['Status'] && <td className="py-1.5 px-4 min-h-14">
                         <span
                             className={`max-w-20 md:max-w-full md:min-w-24 h-[24px] px-2 py-1 rounded-md text-xs text-center font-bold ${
                               row.status === "upcoming" || row.status === "tba"
@@ -303,15 +313,15 @@ export default function MyLaunchesPage() {
                               : row.status === "completed"
                                 ? "Closed"
                                 : "Open"}
-                          </span>
-                        </td>
-                      <td className="py-1.5 px-4 min-h-14">
+                        </span>
+                      </td>}
+                      {columns['Launch Phase'] && <td className="py-1.5 px-4 min-h-14">
                         <div className="flex flex-col justify-start">
                             {row.tableData.phase.map((p: String) => <span className="text-[#C7CAD9] text-xs capitalize block">
                               {p}
                             </span>)}
                         </div>
-                      </td>
+                      </td>}
                       <td className="py-1.5 px-4 pr-6 min-h-14 float-end">
                         <Button
                           className={clsx({
