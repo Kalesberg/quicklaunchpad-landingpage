@@ -63,7 +63,7 @@ const SubmitApplicationModal: React.FC<{
               <p className="text-sm text-[#C7CAD9] mb-6 text-center">
                 The winners will be announced on{" "}
                 <span className="font-semibold">{project.pledgeEndDate}</span>.
-                If successful, you’ll be notified via email with further
+                If successful, you'll be notified via email with further
                 instructions.
               </p>
               <Button
