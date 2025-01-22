@@ -10,9 +10,6 @@ const ColumnsModal: React.FC<{
 
 
     const handleCheckboxChange = async (event: any) => {
-        console.log(event.target.checked);
-        console.log(event.target.id);
-
         setColumns({
             ...columns,
             [event.target.id]: event.target.checked

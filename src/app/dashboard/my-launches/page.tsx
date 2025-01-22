@@ -215,7 +215,7 @@ export default function MyLaunchesPage() {
                 columns={columns}
                 setColumns={setColumns}
               />
-              <Button
+              {/* <Button
                 className="flex items-center gap-2 bg-transparent !text-sm !text-[#448AFF] font-bold px-2 hover:!text-white"
                 onClick={() => setOpenFilterModal(!openFilterModal)}
               >
@@ -233,7 +233,7 @@ export default function MyLaunchesPage() {
               <FilterModal
                 openModal={openFilterModal}
                 setOpenModal={setOpenFilterModal}
-              />
+              /> */}
               <div className="flex items-center gap-2 bg-transparent !text-sm !text-[#448AFF] font-bold px-2">
                 <label>Sort by:</label>
                 <select className="bg-[#1b1e29] focus:outline-none cursor-pointer"
