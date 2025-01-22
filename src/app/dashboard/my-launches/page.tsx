@@ -16,6 +16,8 @@ import { getProjectStatus } from "utils/project";
 import { getPaginatedList, getTableData } from "./service";
 import EmptyImage from "../../../../public/assets/images/stack.png";
 import Image from "next/image";
+import ColumnsModal from "components/common/ColumnsModal";
+import FilterModal from "components/common/FilterModal";
 
 export default function MyLaunchesPage() {
   const dispatch = useDispatch();
@@ -25,6 +27,8 @@ export default function MyLaunchesPage() {
 
   // const [projects, setProjects] = useState<any[]>([]);
   const [filteredProjects, setFilteredProjects] = useState<any[]>([]);
+  const [openFilterModal, setOpenFilterModal] = useState<boolean>(false);
+  const [openColumnsModal, setOpenColumnsModal] = useState<boolean>(false);
 
   // const [myLaunchesInfo, setMyLaunchesInfo] = useState<any[]>([]);
   const [searchValue, setSearchValue] = useState('');
@@ -176,8 +180,11 @@ export default function MyLaunchesPage() {
                 onChange={(evt: any) => setSearchValue(evt.target.value)}    
               />
             </div>
-            <div className="flex items-center gap-2 sm:pt-2">
-              <Button className="flex items-center gap-2 bg-transparent !text-sm !text-[#448AFF] font-bold px-2 hover:!text-white">
+            <div className="relative flex items-center gap-2 sm:pt-2">
+              <Button
+                className="flex items-center gap-2 bg-transparent !text-sm !text-[#448AFF] font-bold px-2 hover:!text-white"
+                onClick={() => setOpenColumnsModal(!openColumnsModal)}
+              >
                 <svg
                   width="20"
                   height="21"
@@ -194,7 +201,14 @@ export default function MyLaunchesPage() {
                 </svg>
                 Columns
               </Button>
-              <Button className="flex items-center gap-2 bg-transparent !text-sm !text-[#448AFF] font-bold px-2 hover:!text-white">
+              <ColumnsModal
+                openModal={openColumnsModal}
+                setOpenModal={setOpenColumnsModal}
+              />
+              <Button
+                className="flex items-center gap-2 bg-transparent !text-sm !text-[#448AFF] font-bold px-2 hover:!text-white"
+                onClick={() => setOpenFilterModal(!openFilterModal)}
+              >
                 <svg
                   width="20"
                   height="21"
@@ -206,6 +220,10 @@ export default function MyLaunchesPage() {
                 </svg>
                 Filters
               </Button>
+              <FilterModal
+                openModal={openFilterModal}
+                setOpenModal={setOpenFilterModal}
+              />
               <div className="flex items-center gap-2 bg-transparent !text-sm !text-[#448AFF] font-bold px-2">
                 <label>Sort by:</label>
                 <select className="bg-[#1b1e29] focus:outline-none cursor-pointer"
