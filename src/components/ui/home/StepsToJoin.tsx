@@ -56,7 +56,7 @@ const StepsToJoin: React.FC<{
     {
       title: "Lottery Participation",
       description:
-        "Once eligible, users will be randomly selected via a lottery system to participate in the launch.",
+        "After KYC is approved, you can whitelist for your desired QuickLaunches and automatically enter the launch lottery.",
       icon: (
         <svg
           width="22"
@@ -78,7 +78,7 @@ const StepsToJoin: React.FC<{
     {
       title: "Contribute funds",
       description:
-        "Selected users can contribute their funds to the launchpad project and await the IDO date to receive tokens.",
+        "When you win the lottery you can contribute the allocated funds via the dashboard and wait for the IDO date to start claiming your tokens.",
       icon: (
         <svg
           width="22"
