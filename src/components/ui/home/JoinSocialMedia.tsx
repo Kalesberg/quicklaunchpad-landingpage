@@ -32,12 +32,6 @@ const JoinSocialMedia: React.FC = () => {
             >
               <TwitterIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
             </a>
-            <a
-              href="https://docs.google.com/forms/d/e/1FAIpQLSf5C5pJwVt7jNrlO6TmmWdRB1UvLcxYZDbtALJgAlQzwQeOxw/viewform"
-              target="_blank"
-            >
-              <EnvelopeIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
-            </a>
           </div>
         </div>
       </div>

@@ -12,7 +12,7 @@ const StepsToJoin: React.FC<{
     {
       title: "Connect Wallet",
       description:
-        "Connect your Web3 wallet to the launchpad and switch to the Polygon PoS network.",
+        "Connect your Web3 wallet and, if you are not already on it, switch to the Polygon PoS network.",
       icon: (
         <svg
           width="20"
@@ -34,7 +34,7 @@ const StepsToJoin: React.FC<{
     {
       title: "Complete KYC",
       description:
-        "To confirm eligibility to participate in launchpad projects, get whitelisted by completing the KYC (Know Your Customer) process.",
+        "To confirm your eligibility for participation in launchpad projects, please complete the KYC (Know Your Customer) process.",
       icon: (
         <svg
           width="22"
