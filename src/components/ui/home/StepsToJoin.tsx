@@ -108,7 +108,7 @@ const StepsToJoin: React.FC<{
   };
 
   return (
-    <section className="mb-[88px] lg:mb-12 rounded-lg">
+    <section className="mb-[88px] rounded-lg">
       <div className="mb-8">
         <h2 className="text-[#EBECF2] text-[32px] lg:text-2xl font-semibold mb-3 lg:mb-4 leading-[48px] lg:leading-10">
           Getting Started

@@ -53,7 +53,7 @@ const LaunchCard: React.FC<{p: Project, user: User}> = ({p, user}) => {
       </div>
 
       <div className="p-6 flex flex-col h-[calc(100%-12rem)]">
-        <div className="flex flex-col justify-between">
+        <div className="flex flex-col justify-between h-[100%]">
           <div>
             <div className="flex justify-between items-center">
               <div className="flex items-center mb-2">

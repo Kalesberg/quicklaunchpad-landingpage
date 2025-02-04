@@ -29,7 +29,7 @@ const LaunchRow: React.FC<Project> = (p: Project) => {
       <div className="w-full flex items-baseline gap-x-2 md:gap-0 md:flex-row md:justify-around px-2 md:px-0">
         <div className="flex-1 md:flex-initial">
           <span className="text-[#C7CAD9] text-xs leading-4">Blockchain</span>
-          <div className="flex items-center">
+          <div className="flex items-center mt-2">
             <Image
               src={
                 p?.network?.nativeCurrencyImage
@@ -119,7 +119,7 @@ const PreviousLaunches: React.FC = () => {
 
 
   return (
-    <section className="mb-12 px-4">
+    <section className="mb-[88px] px-4">
       <h2 className="text-[32px] text-left md:text-center font-semibold mb-4">
         Previous Launches
       </h2>
