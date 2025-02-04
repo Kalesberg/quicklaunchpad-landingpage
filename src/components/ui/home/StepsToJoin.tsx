@@ -122,7 +122,7 @@ const StepsToJoin: React.FC<{
         {steps.map((step, index) => (
           <div
             key={index}
-            className="bg-[#1B1E29] h-[250px] w-full size-0 lg:size-[294px] p-6 lg:p-6 rounded-3xl flex flex-col"
+            className="bg-[#1B1E29] h-[250px] w-full size-0 p-6 lg:p-6 rounded-3xl flex flex-col"
           >
             <div className="w-full flex justify-between gap-3 items-center mb-6 lg:mb-4">
               <div className="relative w-12 h-12 p-2 text-[#448AFF] bg-[#222735] rounded-lg">

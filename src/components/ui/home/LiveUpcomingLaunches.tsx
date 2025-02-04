@@ -53,52 +53,53 @@ const LaunchCard: React.FC<{p: Project, user: User}> = ({p, user}) => {
       </div>
 
       <div className="p-6 flex flex-col h-[calc(100%-12rem)]">
-        <div className="flex justify-between items-center">
-          <div className="flex items-center mb-2">
-            <Image
-              src="/assets/images/project-logo.png"
-              alt={p.projectName}
-              width={24}
-              height={24}
-              className="rounded-full mr-2"
-            />
-            <h3 className="text-xl font-semibold">{p.projectName}</h3>
+        <div className="flex flex-col justify-between">
+          <div>
+            <div className="flex justify-between items-center">
+              <div className="flex items-center mb-2">
+                <Image
+                  src="/assets/images/project-logo.png"
+                  alt={p.projectName}
+                  width={24}
+                  height={24}
+                  className="rounded-full mr-2"
+                />
+                <h3 className="text-xl font-semibold">{p.projectName}</h3>
+              </div>
+              <Image
+                src="/assets/images/chain-avatar.png"
+                alt="chain avatar"
+                width={24}
+                height={24}
+              />
+            </div>
+            <p className="text-sm text-[#EBECF2] mb-4">{p.description}</p>
           </div>
-          <Image
-            src="/assets/images/chain-avatar.png"
-            alt="chain avatar"
-            width={24}
-            height={24}
-          />
+          <div className="text-sm">
+            <div className="w-full flex justify-between items-center mb-2">
+              <p className="text-[#C7CAD9]">Total raise</p>
+              <p>{p.totalPoolAmount}</p>
+            </div>
+            <div className="w-full flex justify-between items-center mb-2">
+              <p className="text-[#C7CAD9]">Initial price</p>
+              <p>{p.initialPrice}</p>
+            </div>
+            <div className="w-full flex justify-between items-center mb-4">
+              <p className="text-[#C7CAD9]">Launch date</p>
+              <p>{p.pledgeStartDate}</p>
+            </div>
+            <Button
+              onClick={() =>
+                router.push(`/dashboard/launch-info/${p.pid}?status=${p.status}`)
+              }
+              variant={(proStatus === "pledging" || proStatus === "win") ? "primary" : "secondary"}
+              size="medium"
+              fullWidth
+            >
+              {proStatus === "pledging" ? "Participate Now" : proStatus === "win" ? "Contribute" : "More Details"}
+            </Button>
+          </div>
         </div>
-
-        <p className="text-sm text-[#EBECF2] mb-4">{p.description}</p>
-
-        <div className="grid grid-cols-1 gap-2 text-sm mb-4">
-          <div className="w-full flex justify-between items-center gap-3">
-            <p className="text-[#C7CAD9]">Total raise</p>
-            <p>{p.totalPoolAmount}</p>
-          </div>
-          <div className="w-full flex justify-between items-center gap-3">
-            <p className="text-[#C7CAD9]">Initial price</p>
-            <p>{p.initialPrice}</p>
-          </div>
-          <div className="w-full flex justify-between items-center gap-3">
-            <p className="text-[#C7CAD9]">Launch date</p>
-            <p>{p.pledgeStartDate}</p>
-          </div>
-        </div>
-        <div className="flex-grow"></div>
-        <Button
-          onClick={() =>
-            router.push(`/dashboard/launch-info/${p.pid}?status=${p.status}`)
-          }
-          variant={(proStatus === "pledging" || proStatus === "win") ? "primary" : "secondary"}
-          size="medium"
-          fullWidth
-        >
-          {proStatus === "pledging" ? "Participate Now" : proStatus === "win" ? "Contribute" : "More Details"}
-        </Button>
       </div>
     </div>
   );
