@@ -82,13 +82,24 @@ const LaunchRow: React.FC<Project> = (p: Project) => {
 const PreviousLaunches: React.FC = () => {
   const dispatch = useDispatch();
   const [launches, setLaunches] = useState<Project[]>([]);
+  const [seeAll, setSeeAll] = useState<boolean>(false);
+
   const { previousProjects } = useSelector((state: { previousProjects: any[] }) => state || []);
+
+  const handleSeeAll = () => {
+    if (!seeAll || previousProjects.length < 3) {
+      setLaunches(previousProjects)
+    } else {
+      setLaunches(previousProjects.slice(0, 3))
+    }
+    setSeeAll(!seeAll);
+  };
+
 
   const fetchLaunches = useCallback(async () => {
     try {
       const projects = await getProjectsByStatus(ProjectStatus.Completed);
       dispatch(updatePreviousProjects(projects));
-      setLaunches(projects.slice(0, 5));
     } catch (err) {
       console.log("[PreviousLaunches] projects Club error: ", err);
     }
@@ -99,8 +110,8 @@ const PreviousLaunches: React.FC = () => {
   }, [fetchLaunches]);
 
   useEffect(() => {
-    if (previousProjects.length > 5) {
-      setLaunches(previousProjects.slice(0, 5));
+    if (previousProjects.length > 3) {
+      setLaunches(previousProjects.slice(0, 3));
     } else {
       setLaunches(previousProjects);
     }
@@ -123,9 +134,9 @@ const PreviousLaunches: React.FC = () => {
       <div className="text-center mt-6">
         <Button
           className="bg-transparent !text-[#448AFF] text-sm !font-bold hover:!text-[#FFFFFF] hover:bg-[#448AFF] m-auto"
-          onClick={() => setLaunches(previousProjects)}
+          onClick={() => handleSeeAll()}
         >
-          See All Previous Launches
+          {seeAll ? 'Show less' : 'See All Previous Launches'}
         </Button>
       </div>
     </section>
