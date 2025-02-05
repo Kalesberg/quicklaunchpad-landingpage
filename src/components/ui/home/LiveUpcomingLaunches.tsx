@@ -73,8 +73,8 @@ const LaunchCard: React.FC<{p: Project, user: User}> = ({p, user}) => {
                 height={24}
               />
             </div>
-            <p className="text-sm text-[#EBECF2] mb-4">{p.description}</p>
           </div>
+          <p className="text-sm text-[#EBECF2] mb-4">{p.description}</p>
           <div className="text-sm">
             <div className="w-full flex justify-between items-center mb-2">
               <p className="text-[#C7CAD9]">Total raise</p>

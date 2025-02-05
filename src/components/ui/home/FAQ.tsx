@@ -153,6 +153,7 @@ You should see a prompt from BlockPass saying, “If you have previously created
 
   const [openItems, setOpenItems] = useState<number[]>([]);
   const [tabActive, setTabActive] = useState<string>(faqList[0].id);
+  const [clickedTab, setClickedTab] = useState<boolean>(false);
 
   const toggleItem = (index: number) => {
     setOpenItems((prevOpenItems) =>
@@ -160,9 +161,17 @@ You should see a prompt from BlockPass saying, “If you have previously created
         ? prevOpenItems.filter((i) => i !== index)
         : [...prevOpenItems, index],
     );
+    setClickedTab(true);
   };
 
   const handleSelectTab = (tabId: string) => {
+    const element = document.getElementById("mobile-faq-list");
+    if (element && clickedTab) { // Fix scrolling issue on mobile
+      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+      const offsetPosition = elementPosition - 30;
+      window.scrollTo({ top: offsetPosition});
+    }
+    setClickedTab(true);
     setOpenItems([]);
     setTabActive(tabId);
   };
@@ -245,9 +254,9 @@ You should see a prompt from BlockPass saying, “If you have previously created
         </div>
       </div>
       <div className="flex lg:hidden flex-col gap-4">
-        <div className="grid grid-cols-1 gap-6">
+        <div className="grid grid-cols-1 gap-6" id="mobile-faq-list">
           {faqList.map((item) => (
-            <div key={item.id}>
+            <div key={item.id} id={item.id}>
               <div
                 className={`flex items-center gap-4 text-[#696C80] cursor-pointer text-2xl text-center font-bold leading-9 hover:text-[#EBECF2] transition-all ${
                   tabActive === item.id && "text-[#EBECF2]"
