@@ -27,9 +27,9 @@ const LaunchRow: React.FC<Project> = (p: Project) => {
         </span>
       </div>
       <div className="w-full flex items-baseline gap-x-2 md:gap-0 md:flex-row md:justify-around px-2 md:px-0">
-        <div className="flex-1 md:flex-initial">
+        <div className="flex-1 md:flex-initial flex flex-col h-[50px] justify-between">
           <span className="text-[#C7CAD9] text-xs leading-4">Blockchain</span>
-          <div className="flex items-center mt-2">
+          <div className="flex items-center">
             <Image
               src={
                 p?.network?.nativeCurrencyImage
@@ -46,20 +46,20 @@ const LaunchRow: React.FC<Project> = (p: Project) => {
             </span>
           </div>
         </div>
-        <div className="flex-1 md:flex-initial">
-          <p className="text-xs text-[#C7CAD9] ">Total Raise</p>
+        <div className="flex-1 md:flex-initial flex flex-col h-[50px] justify-between">
+          <p className="text-xs text-[#C7CAD9]">Total Raise</p>
           <p className="text-base leading-6 font-normal text-[#EBECF2]">
             {p.totalPoolAmount}
           </p>
         </div>
-        <div className="hidden md:block">
-          <p className="text-xs text-[#C7CAD9] ">Participants</p>
+        <div className="hidden md:flex flex-col h-[50px] justify-between">
+          <p className="text-xs text-[#C7CAD9]">Participants</p>
           <p className="text-base leading-6 font-normal text-[#EBECF2]">
             {p.allocation?.participants?.length || 0}
           </p>
         </div>
-        <div className="hidden md:block">
-          <p className="text-xs text-[#C7CAD9] ">Initial Price</p>
+        <div className="hidden md:flex flex-col h-[50px] justify-between">
+          <p className="text-xs text-[#C7CAD9]">Initial Price</p>
           <p className="text-base leading-6 font-normal text-[#EBECF2]">
             {p.initialPrice}
           </p>
