@@ -88,7 +88,7 @@ const PreviousLaunches: React.FC = () => {
     (state: { previousProjects: any[] }) => state || [],
   );
   const [page, setPage] = useState(1);
-  const perPage = 10;
+  const perPage = 5;
 
   const fetchLaunches = useCallback(async () => {
     try {
