@@ -8,7 +8,7 @@ const TablePagination2: React.FC<{
   perPage: number;
   setPage: any;
 }> = ({ count, page, perPage, setPage }) => {
-  const maxPage = Math.floor(count / perPage) + 1;
+  const maxPage = Math.floor(count / perPage);
   const getPaginationArray = (
     totalPages: number,
     currentPage: number,
