@@ -28,7 +28,7 @@ interface Network {
 
 enum ChainId {
   MUMBAI = 80001,
-  POL=80002,
+  POL = 80002,
   MATIC = 137,
   DOEGCHAIN_TESTNET = 568,
   DOGECHAIN = 2000,
@@ -68,43 +68,49 @@ const Header = () => {
     setActiveItem(pathname);
   }, [pathname]);
 
-  let navItems = [
-    { name: "Swap", href: "/swap" }
-  ] as any;
+  let navItems = [{ name: "Swap", href: "/swap" }] as any;
 
-  navItems.push(caseLaunch > 0 ? {
-    name: "QuickLaunch",
-    children: [
-      { name: "Launchpad Homepage", href: "/" },
-      { name: "QuickLaunch Dashboard", href: "/dashboard", caseLaunch: 1},
+  navItems.push(
+    caseLaunch > 0
+      ? {
+          name: "QuickLaunch",
+          children: [
+            { name: "Launchpad Homepage", href: "/" },
+            {
+              name: "QuickLaunch Dashboard",
+              href: "/dashboard",
+              caseLaunch: 1,
+            },
+          ],
+          isNew: true,
+        }
+      : {
+          name: "QuickLaunch",
+          isNew: true,
+          href: "/",
+        },
+  );
+  navItems.push(
+    ...[
+      { name: "Farms", href: "/farms" },
+      { name: "Pool", href: "/pool" },
+      {
+        name: "Earn",
+        children: [
+          { name: "Staking", href: "/earn/staking" },
+          { name: "Yield Farming", href: "/earn/yield-farming" },
+        ],
+      },
+      {
+        name: "Partners",
+        children: [
+          { name: "Ecosystem", href: "/partners/ecosystem" },
+          { name: "Integrations", href: "/partners/integrations" },
+        ],
+      },
+      { name: "Dragons Lair", href: "/dragons-lair" },
     ],
-    isNew: true,
-  } : {
-    name: "QuickLaunch",
-    isNew: true,
-    href: "/"
-  })
-  navItems.push(...[
-    { name: "Farms", href: "/farms" },
-    { name: "Pool", href: "/pool" },
-    {
-      name: "Earn",
-      children: [
-        { name: "Staking", href: "/earn/staking" },
-        { name: "Yield Farming", href: "/earn/yield-farming" },
-      ],
-    },
-    {
-      name: "Partners",
-      children: [
-        { name: "Ecosystem", href: "/partners/ecosystem" },
-        { name: "Integrations", href: "/partners/integrations" },
-      ],
-    },
-    { name: "Dragons Lair", href: "/dragons-lair" }
-  ])
-
-
+  );
 
   const navItemsDashboard = [
     { name: "Launchpads", href: "/dashboard", icon: "ic-dashboard.svg" },
@@ -253,7 +259,7 @@ const Header = () => {
                             onClick={() => handleDropdown(item.name)}
                             className={`relative hover:text-blue-400 ${
                               item.children.find(
-                                (child: any) => child.href === activeItem
+                                (child: any) => child.href === activeItem,
                               )
                                 ? "text-[#D9D9D9] after:absolute after:-bottom-4 after:left-0 after:block after:bg-[#448AFF] after:w-full after:h-[2px]"
                                 : "text-[#7c7c81]"
@@ -271,21 +277,28 @@ const Header = () => {
                         </div>
                         {openDropdown === item.name && (
                           <ul className="absolute left-0 z-10 mt-2 w-48 rounded-md shadow-lg bg-[#1B1E29] ring-1 ring-black ring-opacity-5">
-                            {item.children.map((child: {href: string, name: string, caseLaunch?: number}) => 
-                            (!child.caseLaunch || child.caseLaunch < caseLaunch) && (
-                              <li key={child.name}>
-                                <Link
-                                  href={child.href}
-                                  className={`block px-4 py-2 text-sm text-[#696C80] hover:bg-gray-700 ${
-                                    activeItem === child.href &&
-                                    "text-[#D9D9D9]"
-                                  }`}
-                                  onClick={() => setActiveItem(child.href)}
-                                >
-                                  {child.name}
-                                </Link>
-                              </li>
-                            ))}
+                            {item.children.map(
+                              (child: {
+                                href: string;
+                                name: string;
+                                caseLaunch?: number;
+                              }) =>
+                                (!child.caseLaunch ||
+                                  child.caseLaunch < caseLaunch) && (
+                                  <li key={child.name}>
+                                    <Link
+                                      href={child.href}
+                                      className={`block px-4 py-2 text-sm text-[#696C80] hover:bg-gray-700 ${
+                                        activeItem === child.href &&
+                                        "text-[#D9D9D9]"
+                                      }`}
+                                      onClick={() => setActiveItem(child.href)}
+                                    >
+                                      {child.name}
+                                    </Link>
+                                  </li>
+                                ),
+                            )}
                           </ul>
                         )}
                       </div>
@@ -358,9 +371,7 @@ const Header = () => {
           />
         </div>
       </div>
-      <div
-        className="relative flex md:hidden container w-full min-h-16 mx-auto items-center justify-between bg-[#12131A] text-white py-3 px-4"
-      >
+      <div className="relative flex md:hidden container w-full min-h-16 mx-auto items-center justify-between bg-[#12131A] text-white py-3 px-4">
         <Image
           src="https://beta.quickswap.exchange/static/media/quickIcon.aa0f5ef593b1a9f00bab835581e318f3.svg"
           alt="Logo"
@@ -400,7 +411,7 @@ const Header = () => {
                           onClick={() => handleDropdown(item.name)}
                           className={`relative px-4 hover:text-blue-400 ${
                             item.children.find(
-                              (child: any) => child.href === activeItem
+                              (child: any) => child.href === activeItem,
                             )
                               ? "text-[#D9D9D9] after:absolute after:-bottom-4 after:left-0 after:block after:bg-[#448AFF] after:w-full after:h-[2px] after:px-4"
                               : "text-[#7c7c81]"

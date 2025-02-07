@@ -6,11 +6,11 @@ import LaunchNotice from "components/ui/home/LaunchNotice";
 import LiveUpcomingLaunches from "components/ui/home/LiveUpcomingLaunches";
 import PreviousLaunches from "components/ui/home/PreviousLaunches";
 import Link from "next/link";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 import { updateUser } from "../../reduxStore/rootReducer";
 import { useAppKitAccount, useAppKitNetwork } from "@reown/appkit/react";
 import { signInWithWallet } from "app/service/userService";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 import { User } from "state/type";
 import { caseLaunch } from "config";
 
@@ -22,9 +22,9 @@ export default function DashboardPage() {
 
   const signIn = useCallback(async () => {
     if (user || !address || !chainId) {
-      return
+      return;
     }
-    const res = await signInWithWallet(address, chainId as number)
+    const res = await signInWithWallet(address, chainId as number);
     if (res) {
       dispatch(updateUser(res));
     }

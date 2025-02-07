@@ -30,7 +30,8 @@ const HeroSection: React.FC<{
           Get exclusive early access to new project IDOs on Polygon
         </h1>
         <p className="mb-10 text-[#C7CAD9] text-base leading-6">
-          Web3 projects you can trust, supported by industry-leading creators and funds.
+          Web3 projects you can trust, supported by industry-leading creators
+          and funds.
         </p>
 
         <Button

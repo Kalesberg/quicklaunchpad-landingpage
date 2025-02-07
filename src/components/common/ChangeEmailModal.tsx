@@ -5,13 +5,13 @@ import { isValidEmail } from "utils";
 import { updateUser } from "../../reduxStore/rootReducer";
 import { updateUser as updateUserApi } from "app/api";
 
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 import { User } from "state/type";
 
 const ChangeEmailModal: React.FC<{
   openModal: boolean;
   setOpenModal: (arg: boolean) => void;
-  user: User
+  user: User;
 }> = ({ openModal, setOpenModal, user }) => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState(user?.email);
@@ -33,9 +33,9 @@ const ChangeEmailModal: React.FC<{
     } else if (isValidEmail(email)) {
       setNoValidEmail(false);
       const res = await updateUserApi({ email });
-      console.log('updated user', res);
+      console.log("updated user", res);
       if (res) {
-        dispatch(updateUser(res))
+        dispatch(updateUser(res));
       }
       setOpenModal(false);
     } else {

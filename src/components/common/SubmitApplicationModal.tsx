@@ -5,13 +5,13 @@ import Image from "next/image";
 import { Project } from "state/type";
 import { participateToProject } from "app/api";
 import { useAppKitAccount } from "@reown/appkit/react";
-import { ethers } from 'ethers';
+import { ethers } from "ethers";
 
 const SubmitApplicationModal: React.FC<{
   openModal: boolean | undefined;
   setOpenModal: (arg: boolean) => void;
   onParticipate: (arg: boolean) => void;
-  project: Project
+  project: Project;
 }> = ({ openModal, setOpenModal, project, onParticipate }) => {
   const [confirm, setConfirm] = useState(false);
   const [error, setError] = useState(false);
@@ -29,11 +29,15 @@ const SubmitApplicationModal: React.FC<{
       return;
     }
     try {
-      const res =  await participateToProject({eoa: address, amount: project.maxUserPledgeSize.toString(), pid: project.pid});
+      const res = await participateToProject({
+        eoa: address,
+        amount: project.maxUserPledgeSize.toString(),
+        pid: project.pid,
+      });
       if (res) {
         setConfirm(true);
       }
-    } catch(e) {
+    } catch (e) {
       setError(true);
     }
   };
@@ -110,7 +114,7 @@ const SubmitApplicationModal: React.FC<{
                         height={24}
                       />
                       <p className="text-[#EBECF2] text-lg font-bold leading-7">
-                        {project.network?.networkName || ''}
+                        {project.network?.networkName || ""}
                       </p>
                     </div>
                   </div>
@@ -154,7 +158,7 @@ const SubmitApplicationModal: React.FC<{
                 className="w-full !text-[15px] font-bold capitalize leading-6 hover:!bg-blue-600"
                 onClick={handleSubmit}
               >
-                {error ? 'Re-Submit application' : 'Submit application'}
+                {error ? "Re-Submit application" : "Submit application"}
               </Button>
             </div>
           </div>

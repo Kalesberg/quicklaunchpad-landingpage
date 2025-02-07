@@ -38,7 +38,7 @@ const LaunchRow: React.FC<Project> = (p: Project) => {
                   ? p?.network?.nativeCurrencyImage
                   : "https://beta.quickswap.exchange/static/media/quickIcon.aa0f5ef593b1a9f00bab835581e318f3.svg"
               }
-              alt=''
+              alt=""
               width={24}
               height={24}
               className="w-6 h-6"
@@ -84,7 +84,9 @@ const LaunchRow: React.FC<Project> = (p: Project) => {
 const PreviousLaunches: React.FC = () => {
   const dispatch = useDispatch();
   const [launches, setLaunches] = useState<Project[]>([]);
-  const { previousProjects } = useSelector((state: { previousProjects: any[] }) => state || []);
+  const { previousProjects } = useSelector(
+    (state: { previousProjects: any[] }) => state || [],
+  );
   const [page, setPage] = useState(1);
   const perPage = 10;
 
@@ -104,9 +106,7 @@ const PreviousLaunches: React.FC = () => {
   useEffect(() => {
     const paginatedList = getPaginatedList(previousProjects, page, perPage);
     setLaunches(paginatedList);
-
   }, [previousProjects, page]);
-
 
   return (
     <section className="mb-[88px] px-4">

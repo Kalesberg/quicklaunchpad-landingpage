@@ -15,7 +15,11 @@ import clsx from "clsx";
 import { getProjectsById, getProjectsContent } from "app/api";
 import { useParams } from "next/navigation";
 import { ProStatus } from "state/type";
-import { getReminderTimeStampString, getReminderDate, convertDateTime } from "utils/time";
+import {
+  getReminderTimeStampString,
+  getReminderDate,
+  convertDateTime,
+} from "utils/time";
 import {
   useAppKit,
   useAppKitAccount,
@@ -125,15 +129,17 @@ export default function LaunchInfoDetailPage() {
     }
     const tabsUI = getTabsUI(project, status, user.kycStatus);
     setTabsUI(tabsUI);
-    const contributed = project.contributions.find((c: any) => c.eoa === user?.uid)
+    const contributed = project.contributions.find(
+      (c: any) => c.eoa === user?.uid,
+    );
     if (contributed) {
       setContributed({
         ...contributed,
         date: convertDateTime(contributed.txTimestamp * 1000, true),
       });
-      console.log('contributed', contributed);
+      console.log("contributed", contributed);
       const config = getConfig(parseInt(contributed.chainId, 16));
-      console.log('config', config);
+      console.log("config", config);
       setConfig(config);
     }
   }, [user, project, kycStatus]);
@@ -161,11 +167,11 @@ export default function LaunchInfoDetailPage() {
     timerRef.current = setInterval(() => {
       if (status === ProStatus.PLEDGING) {
         setReminderLaunchTimeBig(
-          getReminderTimeStampString(project.pledgeEndDate, true)
+          getReminderTimeStampString(project.pledgeEndDate, true),
         );
       } else {
         setReminderLaunchTimeBig(
-          getReminderTimeStampString(project.contributionEndDate, true)
+          getReminderTimeStampString(project.contributionEndDate, true),
         );
       }
     }, 1000);
@@ -262,15 +268,18 @@ export default function LaunchInfoDetailPage() {
                               ? "Closed"
                               : "Open"}
                         </span>
-                        {(!!project.kycProvider && user?.kycStatus !== 'approved') && <span
-                          className={`min-w-24 h-[24px] px-2 py-1 rounded-md text-xs text-center font-bold ${
-                            !!project.kycProvider
-                              ? "bg-[#FF5C5C29] text-[#FF5C5C]"
-                              : ""
-                          }`}
-                        >
-                          KYC Required
-                        </span>}
+                        {!!project.kycProvider &&
+                          user?.kycStatus !== "approved" && (
+                            <span
+                              className={`min-w-24 h-[24px] px-2 py-1 rounded-md text-xs text-center font-bold ${
+                                !!project.kycProvider
+                                  ? "bg-[#FF5C5C29] text-[#FF5C5C]"
+                                  : ""
+                              }`}
+                            >
+                              KYC Required
+                            </span>
+                          )}
                       </div>
                     </div>
                     <p className="max-w-[500px] w-full md:w-3/4 leading-6 text-sm md:text-base font-medium text-[#EBECF2] md:whitespace-nowrap md:overflow-hidden md:text-ellipsis mb-4">
@@ -430,22 +439,24 @@ export default function LaunchInfoDetailPage() {
               )}
               <div className="bg-[#1B1E29] w-full rounded-2xl">
                 <div className="relative min-h-12 flex justify-start px-6 gap-8 text-sm after:content-[''] after:w-full after:h-[2px] after:absolute after:bottom-0 after:left-0 after:bg-[#919EAB14]">
-                  {tabs.map((t: any) => (
-                    (!t.expand || (t.expand && tabsUI)) &&
-                    <button
-                      key={t.value}
-                      className={clsx({
-                        ["transition-all duration-100 ease-in-out"]: true,
-                        ["text-[#C7CAD9] text-xs md:text-sm leading-6 font-semibold"]:
-                          selectedTab !== t.value,
-                        ["text-[#EBECF2] text-xs md:text-sm leading-6 font-semibold border-b-2 border-[#EBECF2]"]:
-                          selectedTab === t.value,
-                      })}
-                      onClick={() => setSelectedTab(t.value)}
-                    >
-                      {t.label}
-                    </button>
-                  ))}
+                  {tabs.map(
+                    (t: any) =>
+                      (!t.expand || (t.expand && tabsUI)) && (
+                        <button
+                          key={t.value}
+                          className={clsx({
+                            ["transition-all duration-100 ease-in-out"]: true,
+                            ["text-[#C7CAD9] text-xs md:text-sm leading-6 font-semibold"]:
+                              selectedTab !== t.value,
+                            ["text-[#EBECF2] text-xs md:text-sm leading-6 font-semibold border-b-2 border-[#EBECF2]"]:
+                              selectedTab === t.value,
+                          })}
+                          onClick={() => setSelectedTab(t.value)}
+                        >
+                          {t.label}
+                        </button>
+                      ),
+                  )}
                 </div>
                 <div className="p-6 flex flex-col w-full justify-start items-start gap-2">
                   {selectedTab === "about" && (
@@ -469,7 +480,7 @@ export default function LaunchInfoDetailPage() {
                                   >
                                     {ch.url}
                                   </a>
-                                ) : null
+                                ) : null,
                               )}
                             </p>
                           ) : c.type === "image" ? (
@@ -480,7 +491,7 @@ export default function LaunchInfoDetailPage() {
                               height={c.image.height}
                               className="mx-auto pb-2"
                             />
-                          ) : null
+                          ) : null,
                         )}
                     </div>
                   )}
@@ -488,37 +499,27 @@ export default function LaunchInfoDetailPage() {
                     <div className="min-w-0 md:min-w-[440px] w-full rounded-xl mx-auto text-center text-[#696C80]">
                       {contributed ? (
                         <div className="bg-[#282D3D] w-full rounded-2xl overflow-x-auto">
-                        <table className="min-w-full">
-                          <thead>
-                            <tr className="max-h-14 w-full h-full text-[#C7CAD9] text-sm text-left font-semibold border-b border-[#919EAB29]">
-                              <th className="h-14 py-1.5 px-4">
-                                <span>
-                                  Token
-                                </span>
-                              </th>
-                              <th className="h-14 py-1.5 px-4">
-                                <span>
-                                  Amount
-                                </span>
-                              </th>
-                              <th className="h-14 py-1.5 px-4">
-                                <span>
-                                  Date
-                                </span>
-                              </th>
-                              <th className="h-14 py-1.5 px-4">
-                                <span>
-                                  Status
-                                </span>
-                              </th>
-                              <th className="h-14 py-1.5 px-4"></th>
-                            </tr>
-                          </thead>
+                          <table className="min-w-full">
+                            <thead>
+                              <tr className="max-h-14 w-full h-full text-[#C7CAD9] text-sm text-left font-semibold border-b border-[#919EAB29]">
+                                <th className="h-14 py-1.5 px-4">
+                                  <span>Token</span>
+                                </th>
+                                <th className="h-14 py-1.5 px-4">
+                                  <span>Amount</span>
+                                </th>
+                                <th className="h-14 py-1.5 px-4">
+                                  <span>Date</span>
+                                </th>
+                                <th className="h-14 py-1.5 px-4">
+                                  <span>Status</span>
+                                </th>
+                                <th className="h-14 py-1.5 px-4"></th>
+                              </tr>
+                            </thead>
 
-                          <tbody>
-                              <tr
-                                className="text-[#EBECF2] font-normal"
-                              >
+                            <tbody>
+                              <tr className="text-[#EBECF2] font-normal">
                                 <td className="py-1.5 px-4 min-h-14">
                                   <Image
                                     src="/assets/images/avatar.png"
@@ -537,12 +538,14 @@ export default function LaunchInfoDetailPage() {
                                     <p className="text-sm text-left">
                                       {" "}
                                       {contributed.formattedAmount}
-                                      </p>
+                                    </p>
                                   </a>
                                 </td>
 
                                 <td className="py-1.5 px-4 min-h-14">
-                                  <p className="text-sm text-left">{contributed.date}</p>
+                                  <p className="text-sm text-left">
+                                    {contributed.date}
+                                  </p>
                                 </td>
 
                                 <td className="py-1.5 px-4 min-h-14">
@@ -571,9 +574,9 @@ export default function LaunchInfoDetailPage() {
                                   </Link>
                                 </td>
                               </tr>
-                          </tbody>
-                        </table>
-                      </div>
+                            </tbody>
+                          </table>
+                        </div>
                       ) : (
                         <>
                           <Image

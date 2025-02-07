@@ -33,16 +33,13 @@ export async function POST(req: Request) {
 
     if (!response.ok) {
       const errorData = await response.json();
-      let error = ''
-      if (errorData.detail.includes('already a list member')) {
-        error = `${email} is already a list member.`
+      let error = "";
+      if (errorData.detail.includes("already a list member")) {
+        error = `${email} is already a list member.`;
       } else {
-        error = errorData.detail
+        error = errorData.detail;
       }
-      return Response.json(
-        { error: error },
-        { status: response.status },
-      );
+      return Response.json({ error: error }, { status: response.status });
     }
 
     const received = await response.json();

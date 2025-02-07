@@ -21,7 +21,7 @@ export const caseLaunch: number = 3;
 
 enum ChainId {
   MUMBAI = 80001,
-  POL=80002,
+  POL = 80002,
   MATIC = 137,
   DOEGCHAIN_TESTNET = 568,
   DOGECHAIN = 2000,
@@ -51,7 +51,6 @@ const configs: any = {
   [ChainId.ASTARZKEVM]: astarZkevm,
   [ChainId.LAYERX]: layerX,
   [ChainId.POL]: polygonPos,
-
 };
 
 export const getConfig = (network: ChainId | undefined) => {

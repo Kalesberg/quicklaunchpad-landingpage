@@ -11,14 +11,14 @@ import {
   base,
   optimism,
   polygon,
-  polygonAmoy
+  polygonAmoy,
 } from "@reown/appkit/networks";
 import { Provider } from "react-redux";
 import store from "../reduxStore/store";
 
 enum ChainId {
   MUMBAI = 80001,
-  POL=80002,
+  POL = 80002,
   MATIC = 137,
   DOEGCHAIN_TESTNET = 568,
   DOGECHAIN = 2000,
@@ -52,7 +52,15 @@ const metadata = {
 createAppKit({
   adapters: [new Ethers5Adapter()],
   metadata,
-  networks: [mainnet, arbitrum, avalanche, base, optimism, polygon, polygonAmoy],
+  networks: [
+    mainnet,
+    arbitrum,
+    avalanche,
+    base,
+    optimism,
+    polygon,
+    polygonAmoy,
+  ],
   projectId,
 });
 

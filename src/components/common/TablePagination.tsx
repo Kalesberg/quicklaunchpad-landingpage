@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-} from "@heroicons/react/16/solid";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/16/solid";
 
 const TablePagination: React.FC<{
   count: number;
@@ -12,24 +9,22 @@ const TablePagination: React.FC<{
   setPage: any;
   setPerPage: any;
 }> = ({ count, page, perPage, setPage, setPerPage }) => {
-  
-  const perPages = [5, 10,  25];
+  const perPages = [5, 10, 25];
 
   const previous = () => {
     if (page === 1) {
-      return
+      return;
     }
     setPage(page - 1);
   };
 
   const next = () => {
-    const tp = count/perPage;
+    const tp = count / perPage;
     if (page >= tp) {
       return;
     }
     setPage(page + 1);
   };
-
 
   return (
     <div className="overflow-auto text-sm px-6 ">
@@ -47,12 +42,18 @@ const TablePagination: React.FC<{
             }}
           >
             {perPages.map((col) => (
-              <option className="text-[#C7CAD9] outline-none border-none cursor-pointer" value={col}>{col}</option>
+              <option
+                className="text-[#C7CAD9] outline-none border-none cursor-pointer"
+                value={col}
+              >
+                {col}
+              </option>
             ))}
           </select>
         </div>
         <p className="text-sm font-medium leading-[1.43] flex-shrink-0">
-          {(page - 1) * perPage + 1} - {page * perPage >= count ? count : page * perPage} of {count}
+          {(page - 1) * perPage + 1} -{" "}
+          {page * perPage >= count ? count : page * perPage} of {count}
         </p>
         <div className="ml-[20px] flex-shrink-0">
           <button className="inline-flex p-2" onClick={() => previous()}>
@@ -77,6 +78,6 @@ const TablePagination: React.FC<{
       </div>
     </div>
   );
-}
+};
 
 export default TablePagination;

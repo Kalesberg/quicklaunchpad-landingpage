@@ -41,10 +41,10 @@ const SignUpModal: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ email })
+          body: JSON.stringify({ email }),
         });
         const result = await response.json();
-        console.log('result', result)
+        console.log("result", result);
         if (result.error) {
           setStatus(response.status);
           setMessage(result.error);
@@ -138,7 +138,7 @@ const SignUpModal: React.FC<{ openModal?: boolean; setOpenModal?: any }> = ({
                   </p>
                 )}
               </div>
-              
+
               <Button
                 variant="primary"
                 size="large"

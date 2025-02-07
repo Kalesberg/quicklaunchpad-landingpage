@@ -72,7 +72,8 @@ const FAQ: React.FC = () => {
             "The QuickLaunch Launchpad uses a Lottery system where a certain amount of whitelisted users are randomly selected to participate in a project launch.<br> There are three simple steps.<br> First, you sign into the dashboard and then KYC with our KYC provider. Once you are successfully KYC’d, you are eligible to participate in a QuickLaunch.<br> Next, you find a project you would like to participate in and register to be whitelisted for the project’s launch. This means you would like to enter in the lottery in order to win an allocation.<br> Then, once the lottery is run, if you are selected, you will receive a notification that you can contribute your allocated amount to the project via the dashboard.<br> When the project launch is completed, you will be notified via the dashboard about where and how to claim your tokens.",
         },
         {
-          question: "Do I have to complete KYC to participate in a QuickLaunch?",
+          question:
+            "Do I have to complete KYC to participate in a QuickLaunch?",
           answer:
             "Yes. KYC is required for all users participating in any project on QuickLaunch. Through a partnership with Blockpass, the KYC process has been simplified and allows you to register via the QuickLaunch dashboard.",
         },
@@ -166,10 +167,12 @@ You should see a prompt from BlockPass saying, “If you have previously created
 
   const handleSelectTab = (tabId: string) => {
     const element = document.getElementById("mobile-faq-list");
-    if (element && clickedTab) { // Fix scrolling issue on mobile
-      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+    if (element && clickedTab) {
+      // Fix scrolling issue on mobile
+      const elementPosition =
+        element.getBoundingClientRect().top + window.scrollY;
       const offsetPosition = elementPosition - 30;
-      window.scrollTo({ top: offsetPosition});
+      window.scrollTo({ top: offsetPosition });
     }
     setClickedTab(true);
     setOpenItems([]);

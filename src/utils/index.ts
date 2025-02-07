@@ -12,7 +12,7 @@ export function isAddress(value: string | null | undefined): string | false {
 export function shortenAddress(address: string, chars = 4): string {
   const parsed = isAddress(address);
   if (!parsed) {
-    return '';
+    return "";
   }
   return `${parsed.substring(0, chars + 2)}...${parsed.substring(42 - chars)}`;
 }

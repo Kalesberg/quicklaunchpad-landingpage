@@ -13,7 +13,6 @@ import Footer from "components/layout/Footer";
 import { caseLaunch } from "config";
 
 export default function Home() {
-
   const [openModal, setOpenModal] = useState(false);
   return (
     <div className="container mx-auto">
