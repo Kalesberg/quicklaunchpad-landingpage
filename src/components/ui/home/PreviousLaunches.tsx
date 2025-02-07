@@ -8,6 +8,8 @@ import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { updateSelectedProject } from "state/projectSlice";
 import { updatePreviousProjects } from "../../../reduxStore/rootReducer";
+import TablePagination2 from "components/common/TablePagination2";
+import { getPaginatedList } from "utils/array";
 
 const LaunchRow: React.FC<Project> = (p: Project) => {
   const router = useRouter();
@@ -82,19 +84,9 @@ const LaunchRow: React.FC<Project> = (p: Project) => {
 const PreviousLaunches: React.FC = () => {
   const dispatch = useDispatch();
   const [launches, setLaunches] = useState<Project[]>([]);
-  const [seeAll, setSeeAll] = useState<boolean>(false);
-
   const { previousProjects } = useSelector((state: { previousProjects: any[] }) => state || []);
-
-  const handleSeeAll = () => {
-    if (!seeAll || previousProjects.length < 3) {
-      setLaunches(previousProjects)
-    } else {
-      setLaunches(previousProjects.slice(0, 3))
-    }
-    setSeeAll(!seeAll);
-  };
-
+  const [page, setPage] = useState(1);
+  const perPage = 10;
 
   const fetchLaunches = useCallback(async () => {
     try {
@@ -110,12 +102,10 @@ const PreviousLaunches: React.FC = () => {
   }, [fetchLaunches]);
 
   useEffect(() => {
-    if (previousProjects.length > 3) {
-      setLaunches(previousProjects.slice(0, 3));
-    } else {
-      setLaunches(previousProjects);
-    }
-  }, [previousProjects]);
+    const paginatedList = getPaginatedList(previousProjects, page, perPage);
+    setLaunches(paginatedList);
+
+  }, [previousProjects, page]);
 
 
   return (
@@ -131,14 +121,12 @@ const PreviousLaunches: React.FC = () => {
           <LaunchRow key={index} {...launch} />
         ))}
       </div>
-      <div className="text-center mt-6">
-        <Button
-          className="bg-transparent !text-[#448AFF] text-sm !font-bold hover:!text-[#FFFFFF] hover:bg-[#448AFF] m-auto"
-          onClick={() => handleSeeAll()}
-        >
-          {seeAll ? 'Show less' : 'See All Previous Launches'}
-        </Button>
-      </div>
+      <TablePagination2
+        count={previousProjects.length}
+        page={page}
+        perPage={perPage}
+        setPage={setPage}
+      ></TablePagination2>
     </section>
   );
 };

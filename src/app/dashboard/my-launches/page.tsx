@@ -13,7 +13,9 @@ import { signInWithWallet } from "app/service/userService";
 import { useDispatch } from 'react-redux';
 import { updateMylaunchInfo, updateMyprojects, updateUser } from "../../../reduxStore/rootReducer";
 import { getProjectStatus } from "utils/project";
-import { getPaginatedList, getTableData } from "./service";
+import { getTableData } from "./service";
+import { getPaginatedList } from "utils/array";
+
 import EmptyImage from "../../../../public/assets/images/stack.png";
 import Image from "next/image";
 import ColumnsModal from "components/common/ColumnsModal";
