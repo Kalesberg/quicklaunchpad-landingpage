@@ -14,33 +14,29 @@ const TablePagination2: React.FC<{
     currentPage: number,
     delta = 1,
   ) => {
-    const range = [];
-    const left = currentPage - delta;
-    const right = currentPage + delta;
-
-    for (let i = 1; i <= totalPages; i++) {
-      if (
-        i === 1 ||
-        i === totalPages ||
-        (i >= left && i <= right) ||
-        (currentPage <= 2 && i <= 4) || // Ensure first few numbers are shown when on pages 1 or 2
-        (currentPage >= totalPages - 1 && i >= totalPages - 3) // Ensure last few numbers are shown when near the end
-      ) {
-        range.push(i);
-      }
-    }
-
-    // Add dots (`...`) where gaps exist
     const pagination = [];
-    let lastPage = 0;
-    for (let page of range) {
-      if (lastPage && page - lastPage > 1) {
-        pagination.push("...");
-      }
-      pagination.push(page);
-      lastPage = page;
-    }
 
+    if (totalPages <= 4) {
+        // If total pages are 4 or less, show all
+        for (let i = 1; i <= totalPages; i++) {
+            pagination.push(i);
+        }
+    } else if (currentPage === 1) {
+        // First page: Show first 3 pages + "..."
+        pagination.push(1, 2, 3, "...", totalPages);
+    } else if (currentPage === 2) {
+        // Second page: Show first 3 pages + "..."
+        pagination.push(1, 2, 3, "...", totalPages);
+    } else if (currentPage === totalPages) {
+        // Last page: Show "...", last 3 pages
+        pagination.push(1, "...", totalPages - 2, totalPages - 1, totalPages);
+    } else if (currentPage === totalPages - 1) {
+        // Second last page: Show "...", last 3 pages
+        pagination.push(1, "...", totalPages - 2, totalPages - 1, totalPages);
+    } else {
+        // Middle pages: Show "1", "...", currentPage, next page, "...", last page
+        pagination.push(1, "...", currentPage, currentPage + 1, "...", totalPages);
+    }
     return pagination;
   };
 
