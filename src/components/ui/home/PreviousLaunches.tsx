@@ -106,10 +106,19 @@ const PreviousLaunches: React.FC = () => {
   useEffect(() => {
     const paginatedList = getPaginatedList(previousProjects, page, perPage);
     setLaunches(paginatedList);
+    const element = document.getElementById("launches-section");
+    if (element) {
+      // Fix scrolling issue on mobile
+      const elementPosition =
+        element.getBoundingClientRect().top + window.scrollY;
+      const offsetPosition = elementPosition - 30;
+      window.scrollTo({ top: offsetPosition });
+    }
+
   }, [previousProjects, page]);
 
   return (
-    <section className="mb-[88px] px-4">
+    <section id="launches-section" className="mb-[88px] px-4">
       <h2 className="text-[32px] text-left md:text-center font-semibold mb-4">
         Previous Launches
       </h2>
