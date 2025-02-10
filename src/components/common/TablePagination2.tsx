@@ -33,7 +33,14 @@ const TablePagination2: React.FC<{
     } else if (currentPage === totalPages - 1) {
         // Second last page: Show "...", last 3 pages
         pagination.push(1, "...", totalPages - 2, totalPages - 1, totalPages);
-    } else {
+    } else if (currentPage === totalPages - 2) {
+      // Second last page: Show "...", last 3 pages
+      pagination.push(1, "...", totalPages - 2, totalPages - 1, totalPages);
+    } else if (currentPage === totalPages - 3) {
+      // Second last page: Show "...", last 3 pages
+      pagination.push(1, "...",  totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
+    }
+    else {
         // Middle pages: Show "1", "...", currentPage, next page, "...", last page
         pagination.push(1, "...", currentPage, currentPage + 1, "...", totalPages);
     }
@@ -41,18 +48,19 @@ const TablePagination2: React.FC<{
   };
 
   const previous = () => {
-    if (page === 1) {
+    if ((page - 3) <= 1) {
+      setPage(1);
       return;
     }
-    setPage(page - 1);
+    setPage(page - 3);
   };
 
   const next = () => {
-    const tp = count / perPage;
-    if (page >= tp) {
+    if (page+3 >= maxPage) {
+      setPage(maxPage)
       return;
     }
-    setPage(page + 1);
+    setPage(page + 3);
   };
 
   return (
