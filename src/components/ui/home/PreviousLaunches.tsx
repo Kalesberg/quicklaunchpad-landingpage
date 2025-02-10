@@ -10,6 +10,7 @@ import { updateSelectedProject } from "state/projectSlice";
 import { updatePreviousProjects } from "../../../reduxStore/rootReducer";
 import TablePagination2 from "components/common/TablePagination2";
 import { getPaginatedList } from "utils/array";
+import EmptyImage from "../../../../public/assets/images/stack.png";
 
 const LaunchRow: React.FC<Project> = (p: Project) => {
   const router = useRouter();
@@ -125,17 +126,29 @@ const PreviousLaunches: React.FC = () => {
       <p className="text-gray-400 text-left md:text-center text-base mb-6">
         Previous launches on QuickSwap Launchpad.
       </p>
-      <div className="flex flex-col gap-[18px]">
-        {launches.map((launch, index) => (
-          <LaunchRow key={index} {...launch} />
-        ))}
-      </div>
-      <TablePagination2
-        count={previousProjects.length}
-        page={page}
-        perPage={perPage}
-        setPage={setPage}
-      ></TablePagination2>
+      {previousProjects.length > 0 ? (<>
+        <div className="flex flex-col gap-[18px]">
+          {launches.map((launch, index) => (
+            <LaunchRow key={index} {...launch} />
+          ))}
+        </div>
+        <TablePagination2
+          count={previousProjects.length}
+          page={page}
+          perPage={perPage}
+          setPage={setPage}
+        ></TablePagination2>
+      </>) : (
+        <div className="mx-6 my-24 flex flex-col items-center justify-center">
+          <Image
+            src={EmptyImage.src}
+            alt="empty"
+            className=""
+            width={128}
+            height={128}
+          />
+        </div>
+      )}
     </section>
   );
 };

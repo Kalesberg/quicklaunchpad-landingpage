@@ -47,6 +47,13 @@ const TablePagination2: React.FC<{
     return pagination;
   };
 
+  const handlePageClick = (value) => {
+    if (value === '...') {
+      return;
+    }
+    setPage(value);
+  }
+
   const previous = () => {
     if ((page - 3) <= 1) {
       setPage(1);
@@ -79,7 +86,7 @@ const TablePagination2: React.FC<{
           {getPaginationArray(maxPage, page).map((p) => (
             <button
               className={`${page === p ? "bg-[#919EAB14]" : "bg-transparent"} w-[32px] h-[32px]`}
-              onClick={() => setPage(p)}
+              onClick={() => handlePageClick(p)}
             >
               {p}
             </button>
