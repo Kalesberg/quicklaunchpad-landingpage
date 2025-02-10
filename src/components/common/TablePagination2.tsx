@@ -63,19 +63,19 @@ const TablePagination2: React.FC<{
   };
 
   const previous = () => {
-    if (page - 3 <= 1) {
+    if (page - 1 <= 1) {
       setPage(1);
       return;
     }
-    setPage(page - 3);
+    setPage(page - 1);
   };
 
   const next = () => {
-    if (page + 3 >= maxPage) {
+    if (page + 1 >= maxPage) {
       setPage(maxPage);
       return;
     }
-    setPage(page + 3);
+    setPage(page + 1);
   };
 
   return (
