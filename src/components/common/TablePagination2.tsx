@@ -8,7 +8,10 @@ const TablePagination2: React.FC<{
   perPage: number;
   setPage: any;
 }> = ({ count, page, perPage, setPage }) => {
-  const maxPage = count % perPage === 0 ? Math.floor(count / perPage) : Math.floor(count / perPage) + 1;
+  const maxPage =
+    count % perPage === 0
+      ? Math.floor(count / perPage)
+      : Math.floor(count / perPage) + 1;
   const getPaginationArray = (
     totalPages: number,
     currentPage: number,
@@ -17,45 +20,50 @@ const TablePagination2: React.FC<{
     const pagination = [];
 
     if (totalPages <= 4) {
-        // If total pages are 4 or less, show all
-        for (let i = 1; i <= totalPages; i++) {
-            pagination.push(i);
-        }
+      for (let i = 1; i <= totalPages; i++) {
+        pagination.push(i);
+      }
     } else if (currentPage === 1) {
-        // First page: Show first 3 pages + "..."
-        pagination.push(1, 2, 3, "...", totalPages);
+      pagination.push(1, 2, 3, "...", totalPages);
     } else if (currentPage === 2) {
-        // Second page: Show first 3 pages + "..."
-        pagination.push(1, 2, 3, "...", totalPages);
+      pagination.push(1, 2, 3, "...", totalPages);
     } else if (currentPage === totalPages) {
-        // Last page: Show "...", last 3 pages
-        pagination.push(1, "...", totalPages - 2, totalPages - 1, totalPages);
+      pagination.push(1, "...", totalPages - 2, totalPages - 1, totalPages);
     } else if (currentPage === totalPages - 1) {
-        // Second last page: Show "...", last 3 pages
-        pagination.push(1, "...", totalPages - 2, totalPages - 1, totalPages);
+      pagination.push(1, "...", totalPages - 2, totalPages - 1, totalPages);
     } else if (currentPage === totalPages - 2) {
-      // Second last page: Show "...", last 3 pages
       pagination.push(1, "...", totalPages - 2, totalPages - 1, totalPages);
     } else if (currentPage === totalPages - 3) {
-      // Second last page: Show "...", last 3 pages
-      pagination.push(1, "...",  totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
-    }
-    else {
-        // Middle pages: Show "1", "...", currentPage, next page, "...", last page
-        pagination.push(1, "...", currentPage, currentPage + 1, "...", totalPages);
+      pagination.push(
+        1,
+        "...",
+        totalPages - 3,
+        totalPages - 2,
+        totalPages - 1,
+        totalPages,
+      );
+    } else {
+      pagination.push(
+        1,
+        "...",
+        currentPage,
+        currentPage + 1,
+        "...",
+        totalPages,
+      );
     }
     return pagination;
   };
 
-  const handlePageClick = (value) => {
-    if (value === '...') {
+  const handlePageClick = (value: number | string) => {
+    if (value === "...") {
       return;
     }
     setPage(value);
-  }
+  };
 
   const previous = () => {
-    if ((page - 3) <= 1) {
+    if (page - 3 <= 1) {
       setPage(1);
       return;
     }
@@ -63,8 +71,8 @@ const TablePagination2: React.FC<{
   };
 
   const next = () => {
-    if (page+3 >= maxPage) {
-      setPage(maxPage)
+    if (page + 3 >= maxPage) {
+      setPage(maxPage);
       return;
     }
     setPage(page + 3);
